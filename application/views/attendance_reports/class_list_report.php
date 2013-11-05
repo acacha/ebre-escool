@@ -1,18 +1,3 @@
-<script>
-$(function(){
-	
-	$("[rel='tooltip']").tooltipster();	
-	
-	$(".chosen-select,.chosen-multiple-select").chosen({allow_single_deselect:true});	
-	
-	$('#grup').chosen().change(function(event) {
-		selectedValue = $(this).find("option:selected").val();
-		window.location.href = "<?php echo base_url('index.php/managment/massive_change_password');?>/" + selectedValue;
-	}); 
-</script>
-
-
-
 <!-- TITLE -->
 <div style='height:30px;'></div>
 	<div style="margin:10px;">

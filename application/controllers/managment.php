@@ -458,6 +458,20 @@ class managment extends skeleton_main {
 
 	public function course() {
 
+		if (!$this->skeleton_auth->logged_in())
+		{
+			//redirect them to the login page
+			redirect($this->skeleton_auth->login_page, 'refresh');
+		}
+		
+		//CHECK IF USER IS READONLY --> unset add, edit & delete actions
+		$readonly_group = $this->config->item('readonly_group');
+		if ($this->skeleton_auth->in_group($readonly_group)) {
+			$this->grocery_crud->unset_add();
+			$this->grocery_crud->unset_edit();
+			$this->grocery_crud->unset_delete();
+		}
+
 		/* Grocery Crud */
 		$this->current_table="course";
         $this->grocery_crud->set_table($this->current_table);
@@ -477,11 +491,8 @@ class managment extends skeleton_main {
         $this->grocery_crud->required_fields('course_name','course_shortname','course_markedForDeletion');
 
         //CALLBACKS        
-        $this->grocery_crud->callback_add_field('course_entryDate',array($this,'add_field_callback_entryDate'));
+        $this->grocery_crud->callback_add_field('course_entryDate',array($this,'add_field_callback_course_entryDate'));
         $this->grocery_crud->callback_edit_field('course_entryDate',array($this,'edit_field_callback_entryDate'));
-        
-        //Camps last update no editable i automàtic        
-        $this->grocery_crud->callback_edit_field('course_last_update',array($this,'edit_field_callback_lastupdate'));
         
         //Camps last update no editable i automàtic        
         $this->grocery_crud->callback_edit_field('course_last_update',array($this,'edit_field_callback_lastupdate'));
@@ -551,7 +562,7 @@ class managment extends skeleton_main {
 		$default_values["field_prefix"]="course_";
 		$this->load->view('defaultvalues_view.php',$default_values); 
 
-               $this->load->view('managment/course.php',$output);     
+        $this->load->view('managment/course.php',$output);     
        
        /*******************
 	   /*      FOOTER     *
@@ -571,7 +582,7 @@ class managment extends skeleton_main {
         $this->grocery_crud->required_fields('studies_name','studies_shortname','studies_markedForDeletion');
 
         //CALLBACKS        
-        $this->grocery_crud->callback_add_field('studies_entryDate',array($this,'add_field_callback_entryDate'));
+        $this->grocery_crud->callback_add_field('studies_entryDate',array($this,'add_field_callback_studies_entryDate'));
         $this->grocery_crud->callback_edit_field('studies_entryDate',array($this,'edit_field_callback_entryDate'));
         
         //Camps last update no editable i automàtic        
@@ -631,6 +642,11 @@ class managment extends skeleton_main {
 	   /*      BODY       *
 	   /******************/
 	   $this->_load_body_header();
+
+		$default_values=$this->_get_default_values();
+		$default_values["table_name"]=$this->current_table;
+		$default_values["field_prefix"]="studies_";
+		$this->load->view('defaultvalues_view.php',$default_values); 
 	   
                $this->load->view('managment/studies.php');     
        
@@ -646,13 +662,13 @@ class managment extends skeleton_main {
         $this->grocery_crud->set_table($this->current_table);
         
         //ESTABLISH SUBJECT
-        $this->grocery_crud->set_subject(lang('cycle'));          
+        $this->grocery_crud->set_subject(lang('cycles'));          
 
 		//Mandatory fields
         $this->grocery_crud->required_fields('cycle_name','cycle_shortname','cycle_markedForDeletion');
 
         //CALLBACKS        
-        $this->grocery_crud->callback_add_field('cycle_entryDate',array($this,'add_field_callback_entryDate'));
+        $this->grocery_crud->callback_add_field('cycle_entryDate',array($this,'add_field_callback_cycle_entryDate'));
         $this->grocery_crud->callback_edit_field('cycle_entryDate',array($this,'edit_field_callback_entryDate'));
         
         //Camps last update no editable i automàtic        
@@ -712,6 +728,12 @@ class managment extends skeleton_main {
 	   /*      BODY       *
 	   /******************/
 	   $this->_load_body_header(); 
+
+		$default_values=$this->_get_default_values();
+		$default_values["table_name"]=$this->current_table;
+		$default_values["field_prefix"]="cycle_";
+		$this->load->view('defaultvalues_view.php',$default_values); 
+
         $this->load->view('managment/cycle.php');     
        
        /*******************
@@ -732,7 +754,7 @@ class managment extends skeleton_main {
         $this->grocery_crud->required_fields('studiesOU_name','studiesOU_shortname','studiesOU_markedForDeletion');
 
         //CALLBACKS        
-        $this->grocery_crud->callback_add_field('studiesOU_entryDate',array($this,'add_field_callback_entryDate'));
+        $this->grocery_crud->callback_add_field('studiesOU_entryDate',array($this,'add_field_callback_studiesOU_entryDate'));
         $this->grocery_crud->callback_edit_field('studiesOU_entryDate',array($this,'edit_field_callback_entryDate'));
         
         //Camps last update no editable i automàtic        
@@ -792,6 +814,12 @@ class managment extends skeleton_main {
 	   /*      BODY       *
 	   /******************/
 	   $this->_load_body_header();
+
+		$default_values=$this->_get_default_values();
+		$default_values["table_name"]=$this->current_table;
+		$default_values["field_prefix"]="studiesOU_";
+		$this->load->view('defaultvalues_view.php',$default_values); 
+
         $this->load->view('managment/studies_organizational_unit.php');     
        
        /*******************

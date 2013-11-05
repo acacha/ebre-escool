@@ -18,10 +18,16 @@ $( "#data_final" ).datepicker({ dateFormat: 'dd-mm-yy' });
 		<form method="post" action="#" class="form-horizontal" role="form">
 			<table class="table table-bordered" cellspacing="10" cellpadding="5">
 
+
 				<div class="form-group">
 					<tr>
-						<td><label for="data_inicial">Select Group:</label></td>
-						<td></td>
+						<td><label for="grup">Selecciona el grup:</label></td>
+						<td><select class="chosen-select" data-place_holder="TODO" style="width:200px;" id="grup" name="grup" data-size="5" data-live-search="true">
+							<?php foreach ($grups as $key => $value) { ?>
+								<option value="<?php echo $key ?>" ><?php echo $value ?></option>
+							<?php } ?>
+							</select>	
+						</td>
 					</tr>
 				</div>
 

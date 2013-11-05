@@ -893,6 +893,26 @@ function add_field_callback_entryDate(){
 	  return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="entryDate" id="field-entryDate" readonly>';    
 }
 
+function add_field_callback_course_entryDate(){  
+	  $data= date('d/m/Y H:i:s', time());
+	  return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="course_entryDate" id="field-entryDate" readonly>';    
+}
+
+function add_field_callback_cycle_entryDate(){  
+	  $data= date('d/m/Y H:i:s', time());
+	  return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="cycle_entryDate" id="field-entryDate" readonly>';    
+}
+
+function add_field_callback_studies_entryDate(){  
+	  $data= date('d/m/Y H:i:s', time());
+	  return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="studies_entryDate" id="field-entryDate" readonly>';    
+}
+
+function add_field_callback_studiesOU_entryDate(){  
+	  $data= date('d/m/Y H:i:s', time());
+	  return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="studiesOU_entryDate" id="field-entryDate" readonly>';    
+}
+
 function edit_field_callback_entryDate($value, $primary_key){  
 	  return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', strtotime($value)) .'" name="entryDate" id="field-entryDate" readonly>';    
     }
@@ -925,7 +945,7 @@ function before_update_object_callback($post_array, $primary_key) {
 		$post_array['lastupdateUserId'] = $this->session->userdata('user_id');
 		return $post_array;
 }
-    
+
 //UPDATE AUTOMATIC FIELDS BEFORE UPDATE
 // ONLY CALLED BY USERS NOT ADMINS!
 function before_update_user_preference_callback($post_array, $primary_key) {
