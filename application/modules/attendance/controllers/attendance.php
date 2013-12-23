@@ -53,23 +53,32 @@ class attendance extends skeleton_main {
 
 	public function read($table=null){
 
-		$this->db->select('alumne, incidencia, data, hora');
+		$this->db->select('alumne, incidencia, data, hora, posicio, observacions');
 		$this->db->where('alumne', $_POST['alumne']); 
-		$this->db->where('hora', $_POST['hora']);
+		//$this->db->where('hora', $_POST['hora']);
+		$this->db->where('posicio', $_POST['posicio']);
 		$query = $this->db->get($table);
 		$resultat = array();
-		$resultat[] = "Alumne  - Incidencia - Data - Hora";
+		$resultat[] = "Alumne  - Incidencia - Data - Hora - Observacions";
 
 		foreach ($query->result() as $row)
 		{
-		    $resultat[] = $row->alumne ." - ".$row->incidencia." - ".$row->data." - ".$row->hora;
+		    $resultat[] = $row->alumne ." - ".$row->incidencia." - ".$row->data." - ".$row->hora." - ".$row->observacions;
 		}
+		//print_r($resultat);
 		print_r(json_encode($resultat));
 	}	
 
 	public function insert($table=null){
-
 		//echo $table;
+		/*
+		$observacions =array();
+		if(isset($_POST['pk'])){
+			$observacions['observacions']=$_POST['value'];
+		} else {
+			$observacions=$_POST;
+		}
+		*/
 		$this->db->insert($table, $_POST); 
 		$rows = $this->db->affected_rows();
 		print_r(json_encode($this->db->affected_rows()));
@@ -77,17 +86,17 @@ class attendance extends skeleton_main {
 		//print_r(json_encode($data));
 	}		
 
-	public function update(){
-
-		$data = array(
-           'cycle_shortname' => 'cic mod 1',
-           'cycle_name' => 'cicle modificat 1',
-           'cycle_entryDate' => date("Y-m-d H:i:s")
-        );
-
-		$this->db->where('cycle_id', '6');
-		$this->db->update('cycle', $data); 
-		print_r(json_encode($data));
+	public function update($table=null){
+		//echo $_POST['pk'];
+		$observacions =array();
+		if(isset($_POST['pk'])){
+			$observacions['observacions']=$_POST['value'];
+		} else {
+			$observacions=$_POST;
+		}
+		$this->db->where('posicio', $_POST['pk']);
+		$this->db->update($table, $observacions); 
+		print_r(json_encode($observacions));
 	}	
 
 	public function delete(){
@@ -396,7 +405,7 @@ class attendance extends skeleton_main {
         else
             $data['selected_group_names']= $this->attendance_model->getGroupNamesByGroupCode($data['selected_group']);
         
-       $data['all_students_in_group']= $this->ebre_escool_ldap->getAllGroupStudentsInfo($default_group_dn);
+        $data['all_students_in_group']= $this->ebre_escool_ldap->getAllGroupStudentsInfo($default_group_dn);
         //print_r($data['all_students_in_group']);       
         //$data['all_students']= $this->ebre_escool_ldap->getAllGroupStudentsInfo("ou=Alumnes,ou=All,dc=iesebre,dc=com");
         //Total de professors
