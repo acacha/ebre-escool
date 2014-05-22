@@ -62,6 +62,7 @@ class timetables extends skeleton_main {
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     "http://code.jquery.com/jquery-1.9.1.js");
+
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     "http://code.jquery.com/ui/1.10.3/jquery-ui.js");
@@ -102,6 +103,9 @@ class timetables extends skeleton_main {
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace.min.js'));            
+            $header_data = $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));            
 
         $header_data['menu']= $active_menu;
             return $header_data;
