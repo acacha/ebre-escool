@@ -34,14 +34,36 @@ class managment_model  extends CI_Model  {
 		$this->db->order_by('classroom_group_code', $orderby);
 		
 		$query = $this->db->get();
-		
-		if ($query->num_rows() > 0)
-			return $query;
+
+		if ($query->num_rows() > 0){
+			$groups_array = array();
+			foreach($query->result() as $row){
+				$groups_array[$row->classroom_group_code] = $row->classroom_group_name;
+			}
+			return $groups_array;
+		}	
 		else
 			return false;
 	}
 
 	function getGroupNamesByGroupCode($group_code) {
+		//classroom_group
+		$this->db->select('classroom_group_name,classroom_group_shortName');
+		$this->db->from('classroom_group');
+		$this->db->where('classroom_group_code', $group_code);
+		$this->db->count_all_results();
+		
+		$query = $this->db->get();
+
+		if ($query->num_rows() == 1) {
+			$row = $query->row(); 
+			return array($row->classroom_group_shortName,$row->classroom_group_name);
+		}
+		else
+			return false;
+	}
+	
+	function getGroupTotals($group_code) {
 		//classroom_group
 		$this->db->select('classroom_group_name,classroom_group_shortName');
 		$this->db->from('classroom_group');
@@ -56,8 +78,85 @@ class managment_model  extends CI_Model  {
 		else
 			return false;
 	}
-	
-/*
+
+function getAllGroupStudentsInfo($group){
+
+/* 
+SELECT distinct(classroom_group_code), person_givenName, person_sn1, person_sn2 
+FROM enrollment_modules 
+JOIN person ON person.person_id = enrollment_modules.enrollment_modules_personid 
+JOIN classroom_group ON enrollment_modules.enrollment_modules_group_id = classroom_group.classroom_group_id 
+WHERE classroom_group.classroom_group_id = 3 
+ORDER BY person.person_sn1
+*/
+
+		$this->db->select('classroom_group_id,person_givenName,person_sn1,person_sn2,person_official_id,person_photo');
+		$this->db->from('enrollment_modules');
+		$this->db->join('person','person.person_id = enrollment_modules.enrollment_modules_personid');
+		$this->db->join('classroom_group','enrollment_modules.enrollment_modules_group_id = classroom_group.classroom_group_id');
+		$this->db->where('classroom_group.classroom_group_code',$group);
+		$this->db->order_by('person_sn1');
+		$this->db->distinct();
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+
+		if ($query->num_rows() > 0) {
+
+			$student_info_array = array();
+
+			foreach ($query->result_array() as $row)	{
+
+				//$student_info_array[] = $row;
+   				$student = new stdClass();
+				$student->givenName = $row['person_givenName'];
+				$student->sn1 = $row['person_sn1'];
+				$student->sn2 = $row['person_sn2'];
+				$student->irisPersonalUniqueID = $row['person_official_id'];
+				$student->jpegPhoto = $row['person_photo'];
+				$student_info_array[] = $student;
+
+			}
+
+			return $student_info_array;
+		}			
+		else
+			return false;
+
+}
+
+    function get_all_teachers() {
+
+		$this->db->select('teacher_id, person_givenName, person_sn1, person_sn2, person_photo');
+		$this->db->from('teacher');
+		$this->db->join('person','teacher_person_id = person_id');
+		$query = $this->db->get();
+
+		//echo $this->db->last_query();
+		
+		if ($query->num_rows() > 0) {
+		
+		//$teacher = new stdClass();
+
+		foreach ($query->result_array() as $row)	{
+
+				$teacher = new stdClass();
+				
+				$teacher->teacher_id = $row['teacher_id'];
+				$teacher->givenName = $row['person_givenName'];
+				$teacher->sn1 = $row['person_sn1'];
+				$teacher->sn2 = $row['person_sn2'];
+				$teacher->photo_url = $row['person_photo'];
+				
+				$all_teachers[] = $teacher;
+
+			}
+			return $all_teachers;
+			//print_r($all_teachers);
+		}			
+		return false;
+	}
+
+
 	function get_all_groups($orderby="asc") {
 		$this->db->from('classroom_group');
         $this->db->select('classroom_group_id,classroom_group_code,classroom_group_shortName,classroom_group_name');
@@ -78,7 +177,7 @@ class managment_model  extends CI_Model  {
 		else
 			return false;
 	}	
-
+/*
 	function get_all_teachers_ids_and_names() {
 
 		$this->db->from('teacher');
@@ -150,7 +249,7 @@ class managment_model  extends CI_Model  {
 			return $query;
 		else
 			return false;
-		
+
 	}
 
 	function get_all_classroom_groups($orderby='asc') {

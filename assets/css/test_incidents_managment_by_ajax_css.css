@@ -1,0 +1,63 @@
+body{
+	font: normal normal 110% Arial, Serif;
+}
+	
+.customBtn {
+	cursor:pointer;
+	margin:0 .3em 0 0;
+	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+	box-shadow:inset 0px 1px 0px 0px #caefab;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811) );
+	background:-moz-linear-gradient( center top, #77d42a 5%, #5cb811 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811');
+	background-color:#77d42a;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #268a16;
+	display:inline-block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	/*text-shadow:1px 1px 0px #f1f1f1;*/
+}
+
+.customBtn:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
+	background:-moz-linear-gradient( center top, #5cb811 5%, #77d42a 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a');
+	background-color:#5cb811;
+}
+
+.customBtn:active {
+	position:relative;
+	top:1px;
+}
+
+input[type=text],
+input[type=password]{
+	padding:.5em;
+}
+
+table.tftable {font-size:12px;color:#333333;width:50%;border-width: 1px;border-color: #a9a9a9;border-collapse: collapse;}
+table.tftable th {font-size:12px;background-color:#b8b8b8;border-width: 1px;padding: 8px;border-style: solid;border-color: #a9a9a9;text-align:left;}
+table.tftable tr {background-color:#ffffff;}
+table.tftable td {font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color: #a9a9a9;}
+
+.userId{
+	display:none;
+}
+
+#viewUsers,
+#addUser{
+	float:left;
+}
+
+#loaderImage{
+	float:left;
+	line-height:32px;
+}

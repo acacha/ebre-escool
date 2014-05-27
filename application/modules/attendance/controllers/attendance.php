@@ -195,11 +195,17 @@ class attendance extends skeleton_main {
                     $header_data,
                     base_url('assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js'));
 
+		$header_data= $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));
+
+
 		$header_data['menu']= $active_menu;
 		return $header_data; 
         
     }
-	
+
+
 	function __construct()
     {
         parent::__construct();
@@ -230,20 +236,9 @@ class attendance extends skeleton_main {
         
 	}
 
-/* proves ajax, json */
 
-	public function prova () {
-
-		//CSS
-		$header_data= $this->add_css_to_html_header_data(
-			$this->_get_html_header_data(),
-			"http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
-			
-		$this->_load_html_header($header_data); 
-		$this->_load_body_header();
-        $this->load->view('attendance/prova.php');    
-		$this->_load_body_footer();	
-	}
+	/*
+	TODO: remove
 
 	public function read($table=null){
 
@@ -291,54 +286,203 @@ class attendance extends skeleton_main {
 		$this->db->where('cycle_id', '8');
 		$this->db->delete('cycle'); 
 		print_r(json_encode($data));
-	}	
+	}
 
-/* fi proves ajax json */	
+	fi proves ajax json */	
+
+	public function read_test_incidents_managment_by_ajax () {	
+
+		echo "hola!";
+	}
+
+	public function create_test_incidents_managment_by_ajax() {
+		$data = array();
+        $this->load->view('create_test_incidents_managment_by_ajax.php',$data); 
+	}
+
+	public function insert_incidents() {
+
+		if (!$this->skeleton_auth->logged_in())	{
+			//TODO check permisions!
+        	echo "User not logged";
+    	}
+
+		//TODO: validate data	
+
+    	$this->attendance_model->insert_incidence($_POST);
+
+	}
+	
+	public function test_incidents_managment_by_ajax () {	
+		
+		$active_menu = array();
+		$active_menu['menu']='#maintenances';
+		$active_menu['submenu1']='#attendance_managment';
+		$active_menu['submenu2']='#time_slots';
+
+	    $this->check_logged_user();
+
+		/* Ace */
+	    $header_data = $this->load_ace_files($active_menu); 
+
+		// HTML HEADER
+        $this->_load_html_header($header_data); 
+        $this->_load_body_header();      
+       
+       	// BODY       
+       	$data = array();
+        $this->load->view('test_incidents_managment_by_ajax.php',$data); 
+
+	}
 
 	public function time_slots () {
 
-	$active_menu = array();
-	$active_menu['menu']='#maintenances';
-	$active_menu['submenu1']='#attendance_managment';
-	$active_menu['submenu2']='#time_slots';
+		$active_menu = array();
+		$active_menu['menu']='#maintenances';
+		$active_menu['submenu1']='#attendance_managment';
+		$active_menu['submenu2']='#time_slots';
 
-    $this->check_logged_user();
+	    $this->check_logged_user();
 
-	/* Ace */
-    $header_data = $this->load_ace_files($active_menu);  
+		/* Ace */
+	    $header_data = $this->load_ace_files($active_menu);  
 
-    // Grocery Crud 
-    $this->current_table="time_slot";
-    $this->grocery_crud->set_table($this->current_table);
-        
-    $this->session->set_flashdata('table_name', $this->current_table);     
-		
-	//Establish subject:
-    $this->grocery_crud->set_subject(lang("time_slot"));
+	    // Grocery Crud 
+	    $this->current_table="time_slot";
+	    $this->grocery_crud->set_table($this->current_table);
+	        
+	    $this->session->set_flashdata('table_name', $this->current_table);     
+			
+		//Establish subject:
+	    $this->grocery_crud->set_subject(lang("time_slot"));
 
-    //COMMON_COLUMNS               
-    $this->set_common_columns_name($this->current_table);       
+	    //COMMON_COLUMNS               
+	    $this->set_common_columns_name($this->current_table);       
 
-    $this->common_callbacks($this->current_table);
+	    $this->common_callbacks($this->current_table);
 
-    //ESPECIFIC COLUMNS  
-    $this->grocery_crud->display_as($this->current_table.'_id',lang('time_slot_id'));
-    $this->grocery_crud->display_as($this->current_table.'_start_time',lang('time_slot_start_time'));       
-    $this->grocery_crud->display_as($this->current_table.'_end_time',lang('time_slot_end_time'));       
+	    //ESPECIFIC COLUMNS  
+	    $this->grocery_crud->display_as($this->current_table.'_id',lang('time_slot_id'));
+	    $this->grocery_crud->display_as($this->current_table.'_start_time',lang('time_slot_start_time'));       
+	    $this->grocery_crud->display_as($this->current_table.'_end_time',lang('time_slot_end_time'));       
 
-    //UPDATE AUTOMATIC FIELDS
-	$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
-	$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-    
-    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-		
-    $this->userCreation_userModification($this->current_table);
+	    //UPDATE AUTOMATIC FIELDS
+		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
+		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
+	    
+	    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
+			
+	    $this->userCreation_userModification($this->current_table);
 
-    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
+	    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
 
-    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
+	    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
-	$this->renderitzar($this->current_table,$header_data);	
+		$this->renderitzar($this->current_table,$header_data);	
+
+	}
+
+	public function incident () {
+
+		$active_menu = array();
+		$active_menu['menu']='#maintenances';
+		$active_menu['submenu1']='#attendance_maintainance';
+		$active_menu['submenu2']='#attendance_incident';
+
+	    $this->check_logged_user();
+
+		/* Ace */
+	    $header_data = $this->load_ace_files($active_menu);  
+
+	    // Grocery Crud 
+	    $this->current_table="incident";
+	    $this->grocery_crud->set_table($this->current_table);
+	        
+	    $this->session->set_flashdata('table_name', $this->current_table);     
+			
+		//Establish subject:
+	    $this->grocery_crud->set_subject(lang("incident"));
+
+	    //COMMON_COLUMNS               
+	    $this->set_common_columns_name($this->current_table);       
+
+	    $this->common_callbacks($this->current_table);
+
+	    //ESPECIFIC COLUMNS  
+	    $this->grocery_crud->display_as($this->current_table.'_student_id',lang('student'));
+	    $this->grocery_crud->display_as($this->current_table.'_day',lang('day'));
+	    $this->grocery_crud->display_as($this->current_table.'_time_slot_id',lang('time_slot'));
+	    $this->grocery_crud->display_as($this->current_table.'_study_submodule_id',lang('study_submodule'));
+	    $this->grocery_crud->display_as($this->current_table.'_type',lang('incident_type'));
+	    $this->grocery_crud->display_as($this->current_table.'_notes',lang('incident_notes'));
+	    
+	    //Relations
+    	$this->grocery_crud->set_relation($this->current_table.'_student_id','student','{student_person_id} - {student_code}',array('student_markedForDeletion' => 'n'));
+    	$this->grocery_crud->set_relation($this->current_table.'_time_slot_id','time_slot','{time_slot_start_time} - {time_slot_end_time}',array('time_slot_markedForDeletion' => 'n'));
+		$this->grocery_crud->set_relation($this->current_table.'_study_submodule_id','study_submodules','{study_submodules_id} - {study_submodules_name}',array('study_submodules_markedForDeletion' => 'n'));
+    	$this->grocery_crud->set_relation($this->current_table.'_type','incident_type','{incident_type_id} - {incident_type_shortName}',array('incident_type_markedForDeletion' => 'n'));
+
+	    //UPDATE AUTOMATIC FIELDS
+		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
+		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
+	    
+	    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
+			
+	    $this->userCreation_userModification($this->current_table);
+
+	    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
+
+	    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
+
+		$this->renderitzar($this->current_table,$header_data);	
+
+	}
+
+	public function incident_type () {
+
+		$active_menu = array();
+		$active_menu['menu']='#maintenances';
+		$active_menu['submenu1']='#attendance_maintainance';
+		$active_menu['submenu2']='#attendance_incident_ype';
+
+	    $this->check_logged_user();
+
+		/* Ace */
+	    $header_data = $this->load_ace_files($active_menu);  
+
+	    // Grocery Crud 
+	    $this->current_table="incident_type";
+	    $this->grocery_crud->set_table($this->current_table);
+	        
+	    $this->session->set_flashdata('table_name', $this->current_table);     
+			
+		//Establish subject:
+	    $this->grocery_crud->set_subject(lang("incident_type"));
+
+	    //COMMON_COLUMNS               
+	    $this->set_common_columns_name($this->current_table);       
+
+	    $this->common_callbacks($this->current_table);
+
+	    //ESPECIFIC COLUMNS  
+	    $this->grocery_crud->display_as($this->current_table.'_name',lang('name'));
+	    $this->grocery_crud->display_as($this->current_table.'_shortName',lang('shortName'));
+	    $this->grocery_crud->display_as($this->current_table.'_description',lang('description'));
+	    $this->grocery_crud->display_as($this->current_table.'_code',lang('code'));
+	    
+	    //UPDATE AUTOMATIC FIELDS
+		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
+		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
+	    
+	    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
+			
+	    $this->userCreation_userModification($this->current_table);
+
+	    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
+
+	    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
+
+		$this->renderitzar($this->current_table,$header_data);	
 
 	}
 
@@ -398,7 +542,7 @@ class attendance extends skeleton_main {
 
 		$this->_load_body_footer();		
 	}
-	
+
 	public function pdf_exemple() {
 		$this->load->add_package_path(APPPATH.'third_party/fpdf-codeigniter/application/');
 		#$this->load->library('fpdf');
@@ -783,31 +927,31 @@ class attendance extends skeleton_main {
 		$data['classroom_group_students'] = array ();
 		$base_photo_url = "uploads/person_photos";
 		
-		foreach($all_students_in_group as $student)	{
+		
+		if ( $data['total_number_of_students'] != 0 ) {
+			foreach($all_students_in_group as $student)	{
 
-			$studentObject = new stdClass;
+				$studentObject = new stdClass;
 			
-			$studentObject->person_id = $student->person_id;
-			$studentObject->givenName = $student->givenName;
-			$studentObject->sn1 = $student->sn1;
-			$studentObject->sn2 = $student->sn2;
-			$studentObject->username = $student->username;
-			$studentObject->email = $student->email;
+				$studentObject->person_id = $student->person_id;
+				$studentObject->givenName = $student->givenName;
+				$studentObject->sn1 = $student->sn1;
+				$studentObject->sn2 = $student->sn2;
+				$studentObject->username = $student->username;
+				$studentObject->email = $student->email;
 			
-			//TODO: get incident notes!
-			$studentObject->notes = "nota";
+				//TODO: get incident notes!
+				$studentObject->notes = "nota";
 
-			if ($student->photo_url != "") {
-				$student->photo_url = $base_photo_url."/".$student->photo_url;	
-			}	else {
-				$studentObject->photo_url = '/assets/img/alumnes/foto.png';				
-			}
-			
-
-			$data['classroom_group_students'][]=$student;
+				if ($student->photo_url != "") {
+					$student->photo_url = $base_photo_url."/".$student->photo_url;	
+				}	else {
+					$studentObject->photo_url = '/assets/img/alumnes/foto.png';				
+				}
+				$data['classroom_group_students'][]=$student;
+			}	
 		}
-
-
+		
 		$this->load->view('attendance/check_attendance_classroom_group',$data);
 		 
 		/*******************
@@ -1309,7 +1453,7 @@ function before_update_object_callback($post_array, $primary_key) {
 
 function load_ace_files($active_menu){
 
-$header_data= $this->add_css_to_html_header_data(
+		$header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
             "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
 
@@ -1324,7 +1468,10 @@ $header_data= $this->add_css_to_html_header_data(
                 base_url('assets/css/ace-responsive.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace-skins.min.css'));      
+                base_url('assets/css/ace-skins.min.css'));  
+        $header_data= $this->add_css_to_html_header_data(
+            $header_data,
+                base_url('assets/css/test_incidents_managment_by_ajax_css.css'));     
 /*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,

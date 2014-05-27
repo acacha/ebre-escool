@@ -585,6 +585,22 @@ where lesson_teacher_id=7
 			return false;
 	}
 
+	function get_teacher_id_from_person_id($person_id) {
+
+		$this->db->select('teacher_id');
+		$this->db->from('teacher');
+		$this->db->where('teacher_person_id',$person_id);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() > 0) {
+			$row = $query->row();
+			return $row->teacher_id;
+		}
+		else
+			return false;
+	}
+
 	function get_group_shift($classroom_group_id) {
 
 		$this->db->select('classroom_group_shift');

@@ -565,23 +565,28 @@ class curriculum extends skeleton_main {
         $this->grocery_crud->display_as($this->current_table.'_external_code',lang($this->current_table.'_external_code'));
         $this->grocery_crud->display_as($this->current_table.'_name',lang('name'));
         $this->grocery_crud->display_as($this->current_table.'_hoursPerWeek',lang($this->current_table.'_hoursPerWeek'));
-        $this->grocery_crud->display_as($this->current_table.'_course_id',lang('course'));        
+        $this->grocery_crud->display_as($this->current_table.'_courseid',lang($this->current_table.'_courseid'));        
         $this->grocery_crud->display_as($this->current_table.'_teacher_id',lang($this->current_table.'_teacher_id'));
         $this->grocery_crud->display_as($this->current_table.'_initialDate',lang($this->current_table.'_initialDate'));
         $this->grocery_crud->display_as($this->current_table.'_endDate',lang($this->current_table.'_endDate'));          
-        $this->grocery_crud->display_as($this->current_table.'_type',lang('type'));   
-        $this->grocery_crud->display_as($this->current_table.'_subtype',lang('subtype'));        
+        $this->grocery_crud->display_as($this->current_table.'_type',lang($this->current_table.'_type'));   
+        $this->grocery_crud->display_as($this->current_table.'_subtype',lang($this->current_table.'_subtype'));        
         $this->grocery_crud->display_as($this->current_table.'_classroom_group_id',lang($this->current_table.'_classroom_group_id'));
         $this->grocery_crud->display_as($this->current_table.'_order',lang($this->current_table.'_order'));
+        $this->grocery_crud->display_as($this->current_table.'_description',lang($this->current_table.'_description'));
 
         //RELACIONS
         //$this->grocery_crud->set_relation($this->current_table.'_course_id','course','course_shortname'); 
         $this->grocery_crud->set_relation($this->current_table.'_teacher_id','teacher','({teacher_code} - {teacher_id})');
-/*
+        $this->grocery_crud->set_relation($this->current_table.'_classroom_group_id','classroom_group','({classroom_group_id} - {classroom_group_code} | {classroom_group_shortName})');
+        $this->grocery_crud->set_relation($this->current_table.'_courseid','course','({course_id} - {course_shortname})');
+        
+        /*
         Param 1: The name of the field that we have the relation in the basic table (course_cycle_id)
         Param 2: The relation table (cycle)
         Param 3: The 'title' field that we want to use to recognize the relation (cycle_shortname)        
-*/        
+        */        
+
          //UPDATE AUTOMATIC FIELDS
         $this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
         $this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
@@ -644,13 +649,16 @@ class curriculum extends skeleton_main {
         $this->grocery_crud->display_as($this->current_table.'_shortname',lang('shortName'));
         $this->grocery_crud->display_as($this->current_table.'_name',lang('name'));
         $this->grocery_crud->display_as($this->current_table.'_study_module_id',lang($this->current_table.'_study_module_id'));        
+        $this->grocery_crud->display_as($this->current_table.'_courseid',lang($this->current_table.'_courseid'));
         $this->grocery_crud->display_as($this->current_table.'_initialDate',lang($this->current_table.'_initialDate'));
         $this->grocery_crud->display_as($this->current_table.'_endDate',lang($this->current_table.'_endDate'));
         $this->grocery_crud->display_as($this->current_table.'_totalHours',lang($this->current_table.'_totalHours'));
         $this->grocery_crud->display_as($this->current_table.'_order',lang($this->current_table.'_order'));
+        $this->grocery_crud->display_as($this->current_table.'_description',lang($this->current_table.'_description'));
 
         //RELACIONS
         $this->grocery_crud->set_relation($this->current_table.'_study_module_id','study_module','({nom_grup} - {study_module_name})');
+        $this->grocery_crud->set_relation($this->current_table.'_courseid','course','({course_id} - {course_shortname})');
         //$this->grocery_crud->set_relation($this->current_table.'_study_module_id','study_module','({study_module_id} - {study_module_name})');
 
         //UPDATE AUTOMATIC FIELDS
@@ -904,7 +912,10 @@ $header_data= $this->add_css_to_html_header_data(
                 base_url('assets/js/ace-elements.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/js/ace.min.js'));    
+                base_url('assets/js/ace.min.js')); 
+        $header_data= $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));           
 
         $header_data['menu']= $active_menu;
         return $header_data;

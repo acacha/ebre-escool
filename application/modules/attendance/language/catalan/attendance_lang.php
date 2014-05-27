@@ -87,3 +87,20 @@ $lang['time_slot_markedForDeletion']="Baixa?";
 $lang['time_slot_markedForDeletionDate']="Data de baixa";
 
 $lang['attendances_actions']="Accions";
+
+$lang['incident']="Incidència";
+$lang['incident_type']="Tipus d'incidència";
+
+$lang['student']="Estudiant";
+$lang['time_slot']="Franja horària";
+$lang['study_submodule']="Unitat Formativa";
+$lang['day']="Dia";
+$lang['incident_type']="Tipus d'incidència";
+$lang['incident_notes']="Notes";
+
+$lang['name']="Nom";
+$lang['shortName']="Nom curt";
+$lang['description']="Descripció";
+$lang['code']="Codi";
+
+

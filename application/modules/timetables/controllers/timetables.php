@@ -102,10 +102,10 @@ class timetables extends skeleton_main {
                     base_url('assets/js/ace-elements.min.js'));
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    base_url('assets/js/ace.min.js'));            
-            $header_data = $this->add_javascript_to_html_header_data(
+                    base_url('assets/js/ace.min.js'));     
+            $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    base_url('assets/js/ebre-escool.js'));            
+                    base_url('assets/js/ebre-escool.js'));       
 
         $header_data['menu']= $active_menu;
             return $header_data;
@@ -338,9 +338,16 @@ class timetables extends skeleton_main {
             $this->_load_body_header();
 
             //TODO: set teacher id by session values (current session user)
-            $teacher_id=40;
+            $person_id = $this->session->userdata['person_id'];
 
-            $teacher_code = $this->timetables_model->get_teacher_code_from_teacher_id($teacher_id);            
+            if($this->session->userdata['is_teacher'] == 1) {
+                $teacher_id = $this->timetables_model->get_teacher_id_from_person_id($person_id);
+            } else {
+                $teacher_id=40;                
+            }
+//            print_r($this->session->userdata);           
+
+            $teacher_code = $this->timetables_model->get_teacher_code_from_teacher_id($teacher_id);   
             $teacher_full_name = $this->timetables_model->get_teacher_fullname_from_teacher_id($teacher_id);
             $data["teacher_code"] = $teacher_code;
             $data["teacher_id"] = $teacher_id;
@@ -428,8 +435,13 @@ class timetables extends skeleton_main {
 
             $data['all_teacher_study_modules_count'] = $all_teacher_study_modules_count;
 
-            $teacher_study_modules_list = $this->timetables_model->get_all_teacher_study_modules($teacher_code)->result_array();
+           // $teacher_study_modules_list = $this->timetables_model->get_all_teacher_study_modules($teacher_code)->result_array();
+             $teacher_study_modules_list = $this->timetables_model->get_all_teacher_study_modules($teacher_id)->result_array();
+
+            
             $all_teacher_study_modules_list = $this->get_teacher_study_modules_list($teacher_study_modules_list);
+
+
             $data['all_teacher_study_modules_list'] = $all_teacher_study_modules_list;
 
             $this->load->view('timetables/mytimetables',$data);
@@ -690,7 +702,7 @@ class timetables extends skeleton_main {
         $this->current_table="non_lective_hours";
         $this->grocery_crud->set_table("non_lective_hours");
         $this->session->set_flashdata('table_name', $this->current_table);
-        
+
         //ESTABLISH SUBJECT
         $this->grocery_crud->set_subject(lang('non_lective_hours'));          
 
@@ -726,10 +738,10 @@ class timetables extends skeleton_main {
         $this->userCreation_userModification($this->current_table);
 
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId',$this->current_table.'_lastupdateUserId');
-   
+
         $this->set_theme($this->grocery_crud);
         $this->set_dialogforms($this->grocery_crud);
-        
+       
         //markedForDeletion
         $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
@@ -972,6 +984,7 @@ function renderitzar($table_name,$header_data=false)
        
        $default_values=$this->_get_default_values();
        $default_values["table_name"]=$table_name;
+
        $default_values["field_prefix"]=$table_name."_";
        $this->load->view('defaultvalues_view.php',$default_values); 
 

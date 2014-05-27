@@ -235,7 +235,7 @@ function renderitzar($table_name,$header_data)
 
 function load_ace_files($active_menu){
 
-$header_data= $this->add_css_to_html_header_data(
+        $header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
             "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
 
@@ -274,6 +274,10 @@ $header_data= $this->add_css_to_html_header_data(
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
                 base_url('assets/js/ace.min.js'));    
+
+        $header_data= $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));
 
         $header_data['menu']= $active_menu;
         return $header_data;

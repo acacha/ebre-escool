@@ -55,18 +55,22 @@ $lang['studies_departments']   = "Departaments";
 
 $lang['study_module_hoursPerWeek']="Hores Setmanals";
 $lang['study_module_classroom_group_id']="Id Grup";
+$lang['study_module_courseid']="Curs";
 $lang['study_module_order']="Ordre";
+$lang['study_module_description']="Descripció";
 $lang['study_module_teacher_id']="Codi Professor";
 $lang['study_module_initialDate']="Data inici";
 $lang['study_module_endDate']="Data fí";          
 $lang['study_module_external_code']="Codi extern";          
-$lang['type']="Tipus";   
-$lang['subtype']="Subtipus";   
+$lang['study_module_type']="Tipus";   
+$lang['study_module_subtype']="Subtipus";   
 $lang['study_submodules_study_module_id']="Mòdul Professional";   
+$lang['study_submodules_courseid']="Curs";   
 $lang['study_submodules_initialDate']="Data inici";
 $lang['study_submodules_endDate']="Data fi";
 $lang['study_submodules_totalHours']="Hores totals";
 $lang['study_submodules_order']="Ordre";
+$lang['study_submodules_description']="Descripció";
 
 
 $lang['study_module_hoursPerWeek']="Hores Setmanals";

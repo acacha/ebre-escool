@@ -523,6 +523,7 @@ class ebre_escool_ldap  {
 	}
 	
 	public function getGroupDNByGroupCode($groupCode,$basedn = null) {
+		
 		$groupdn="";
 		if ($basedn == null)
 			$basedn = $this->basedn;

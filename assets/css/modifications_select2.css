@@ -1,0 +1,19 @@
+.select2-container .select2-choice {
+    border-radius: 4px 4px 2px 2px!important;
+}
+
+.select2-container .select2-choice .select2-arrow {
+    border-left: 1px solid #aaa !important;
+
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee)) !important;
+    background-image: -webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%) !important;
+    background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%) !important;
+    background-image: -o-linear-gradient(bottom, #ccc 0%, #eee 60%) !important;
+    background-image: -ms-linear-gradient(top, #ccc 0%, #eee 60%) !important;
+    
+    background-image: linear-gradient(top, #ccc 0%, #eee 60%) !important;
+}
+
+.select2-search {
+	padding-top: 5px !important;
+}

@@ -13,7 +13,7 @@ $(document).ready( function () {
 
 	$('#month_summary').dataTable( {
 		"bFilter": false,
-		"bInfo": false,
+		"bInfo": true,
 		"sDom": 'T<"clear">lfrtip',
 		"aLengthMenu": [[10, 25, 50,100,200,500,1000,-1], [10, 25, 50,100,200,500,1000, "All"]],		
 		"oTableTools": {
@@ -70,69 +70,52 @@ $(document).ready( function () {
 
 </script>
 <?php
-/* Dades Alumne */
-/*
-echo "<pre>";
-print_r($all_students_in_group);
-echo "</pre>";
-*/
-$alumne =array();
-$contador = 0;
-
-foreach($all_students_in_group as $student){
-$alumne[$contador]['codi']= $student->uidnumber;
-$alumne[$contador]['nom']= $student->givenName." ".$student->sn;
-$month = rand(1,12);
-$year = rand(2008,2013);
-$faults = rand(0,3);
-$alumne[$contador]['mes']= $month;
-$alumne[$contador]['any']= $year;
-$alumne[$contador]['faltes']= $faults;
-$contador++;
-}
-/*
-echo "<pre>";
-print_r($alumne);
-echo "</pre>";
-*/
+	$alumnes =array();
+	$contador = 0;
+	if(is_array($all_incidents_in_group)){
+		foreach($all_incidents_in_group as $student){
+			$alumnes[$contador]['codi']= $student->student_id;
+			$alumnes[$contador]['nom']= $student->givenName." ".$student->sn1." ".$student->sn2;
+			$alumnes[$contador]['incident_type']= $student->incident_type;
+			$alumnes[$contador]['incident_date']= $student->incident_date;		
+			$contador++;
+		}
+	}
 ?>
 <div class="main-content" >
 
-<div id="breadcrumbs" class="breadcrumbs">
- <script type="text/javascript">
-  try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
- </script>
- <ul class="breadcrumb">
-  <li>
-   <i class="icon-home home-icon"></i>
-   <a href="#">Home</a>
-   <span class="divider">
-    <i class="icon-angle-right arrow-icon"></i>
-   </span>
-  </li>
-  <li class="active"><?php echo lang('reports');?></li>
- </ul>
-</div>
+	<div id="breadcrumbs" class="breadcrumbs">
+		<script type="text/javascript">
+	 		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+		<ul class="breadcrumb">
+	 		<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">Home</a>
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			<li class="active"><?php echo lang('reports');?></li>
+		</ul>
+	</div>
+	<div class="page-header position-relative">
+		<h1>
+			<?php echo lang("attendance").". ".lang("reports_group_reports");?>
+			<small>
+				<i class="icon-double-angle-right"></i>
+				<?php echo lang('reports_group_reports_monthly_report');?>
+			</small>
+		</h1>
+	</div><!-- /.page-header -->
 
-
-
-        <div class="page-header position-relative">
-                        <h1>
-                            <?php echo lang("attendance").". ".lang("reports_group_reports");?>
-                            <small>
-                                <i class="icon-double-angle-right"></i>
-                                <?php echo lang('reports_group_reports_monthly_report');?>
-                            </small>
-                        </h1>
-        </div><!-- /.page-header -->
-
-<!-- TITLE -->
-<div style='height:10px;'></div>
-	<div style="margin:10px; text-align:center;">
-		<h2><?php echo $title; ?></h2>
-	</div>  
+	<!-- TITLE -->
+	<div style='height:10px;'></div>
+		<div style="margin:10px; text-align:center;">
+			<h2><?php echo $title; ?></h2>
+		</div>  
 	<!-- FORM -->    
-	<div style="width:50%; margin:20px auto;">
+	<div style="width:75%; margin:20px auto;">
 		<form method="post" action="attendance_incidents_classroomgroup_month_summary_report" class="form-horizontal" role="form">
 			<table class="table table-bordered" cellspacing="10" cellpadding="5">
 				<div class="form-group">
@@ -175,7 +158,7 @@ echo "</pre>";
 				<tr><td colspan="2" style="text-align:center;"><input type="submit" value="Veure l'informe" class="btn btn-primary"/></td></tr>
 			</table>
 		</form>	
-
+		
 <!-- Proves datatables -->
 
 <?php 
@@ -186,29 +169,28 @@ if($_POST){
 ?>
 
 <table class="table table-striped table-bordered table-hover table-condensed" id="month_summary">
- <thead style="background-color: #d9edf7;">
-  <tr>
-     <th>Codi</th>
-     <th>Alumne</th>
-     <th>Faltes Injustificades</th>
-  </tr>
- </thead>
- <tbody>
-  <!-- Iteration that shows teacher groups for selected day-->
-   <?php for($i=0; $i<count($alumne);$i++){ ?>
-   <?php if($alumne[$i]['mes']==$_POST['mes'] && $alumne[$i]['any']==$_POST['any'] && $alumne[$i]['faltes']>0){ ?>
-   <tr align="center" class="{cycle values='tr0,tr1'}">
-	 <td><?php echo $alumne[$i]['codi'];?></td>     
-     <td><?php echo $alumne[$i]['nom'];?></td>
-     <td><?php echo $alumne[$i]['faltes'];?></td>
-   </tr>
-   <?php } ?>
-   <?php } ?>
-
- </tbody>
+	<thead style="background-color: #d9edf7;">
+		<tr>
+			<th>Id Alumne</th>
+			<th>Alumne</th>
+			<th>Data</th>
+			<th>Tipus Incident</th>
+		</tr>
+	</thead>
+	<tbody>
+	<!-- Iteration that shows teacher groups for selected day-->
+   <?php foreach($alumnes as $alumne): ?>
+	   <tr align="center" class="{cycle values='tr0,tr1'}">
+			<td><?php echo $alumne['codi'];?></td>     
+	    	<td><?php echo $alumne['nom'];?></td>
+	    	<td><?php echo $alumne['incident_date'];?></td>
+			<td><?php echo $alumne['incident_type'];?></td>     
+	   </tr>
+   <?php endforeach; ?>
+	</tbody>
 </table>
-<?php 
-} ?>
+<?php } ?>
 
 <!-- Fi proves datatable -->		
+</div>
 </div>

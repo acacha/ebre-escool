@@ -213,11 +213,9 @@ class persons extends skeleton_main {
          return false;
 	}
 
-
-
   /* PERSON MODIFICADA */
 
-  public function person() {
+  public function person () {
 
         $active_menu = array();
         $active_menu['menu']='#maintenances';
@@ -322,6 +320,14 @@ class persons extends skeleton_main {
         $this->grocery_crud->callback_before_update(array($this,'before_update_last_update'));
 
         $this->grocery_crud->set_field_upload('person_photo','uploads/person_photos');
+
+        //print_r($this->session->flashdata('persons_filter'));
+        if ( is_array($this->session->flashdata('persons_filter')) ) {
+          foreach ($this->session->flashdata('persons_filter') as $condition) {
+            $this->grocery_crud->or_where('person_official_id',$condition);
+            $this->grocery_crud->order_by($table_name.'_official_id','desc');
+          }            
+        }
 
         $output = $this->grocery_crud->render();
 
@@ -671,6 +677,9 @@ $header_data= $this->add_css_to_html_header_data(
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
                 base_url('assets/js/jquery.slimscroll.min.js'));    
+        $header_data= $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));
 
 
         $header_data['menu']= $active_menu;

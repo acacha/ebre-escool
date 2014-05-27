@@ -219,19 +219,34 @@ class managment extends skeleton_main {
 		
 		$this->_load_body_footer();
 	}
-	
-	
+
 	public function users_in_group($group_code=null) {
-		if (!$this->skeleton_auth->logged_in())
-		{
+		if (!$this->skeleton_auth->logged_in()){
+		
 			//redirect them to the login page
 			redirect($this->skeleton_auth->login_page, 'refresh');
 		}
 		
+		$active_menu = array();
+		$active_menu['menu']='#reports';
+		$active_menu['submenu1']='#curriculum_reports';
+		$active_menu['submenu2']='#curriculum_reports_users_in_group';
+
+        $data['title']=lang('reports_group_reports_class_list');
+
+		$header_data = $this->load_ace_files($active_menu);
+
 		$default_group_code = $this->config->item('default_group_code');
+		$default_group_id = $this->config->item('default_group_id');
+/*
 		if ($group_code==null) {
 			$group_code=$default_group_code;
+		} else {
+			$group_code = $_POST['grup'];
 		}
+
+        $data['group_code']=$group_code;
+*/
 
 /* THIS CODE HAS BEEN MOVED TO $this->set_header_data();		
 
@@ -276,29 +291,58 @@ class managment extends skeleton_main {
 */
 
 		//Load CSS & JS
-		$this->set_header_data();		
-		
+		$this->set_header_data($header_data);		
+
+		// Get All groups
+        $grups = $this->managment_model->get_all_groups();
+        $data['grups'] = $grups;
+
+        $organization = $this->config->item('organization','skeleton_auth');
+
+        $header_data['header_title']=lang("all_students") . ". " . $organization;
+
+        //Load CSS & JS
+        //$this->set_header_data();
+        $test = $this->load->model("attendance/attendance_model");
+        
+        $all_groups = $this->attendance_model->get_all_classroom_groups();
+        $data['all_groups']=$all_groups->result();
+        
+        if(isset($_POST['grup'])) {
+            $data['selected_group']= urldecode($_POST['grup']);
+        }   else {
+            $data['selected_group']=$default_group_id;
+        }
+
+
+/*		
 		$all_groups = $this->managment_model->get_all_classroom_groups();
 		
-		$data['all_groups']=$all_groups->result();
+		//$data['all_groups']=$all_groups->result();
+		$data['all_groups']=$all_groups;
 				
 		if (isset($group_code)) {
 			$data['selected_group']= urldecode($group_code);
 		}	else {
 			$data['selected_group']=$default_group_code;
 		}
-		
+*/		
 		$students_base_dn= $this->config->item('students_base_dn','skeleton_auth');
 		$default_group_dn=$students_base_dn;
+		/*
 		if ($data['selected_group']!="ALL_GROUPS")
 			$default_group_dn=$this->ebre_escool_ldap->getGroupDNByGroupCode($data['selected_group']);
-		
+		*/
 		if ($data['selected_group']=="ALL_GROUPS")
 			$data['selected_group_names']= array (lang("all_students_table_title"),"");
 		else
-			$data['selected_group_names']= $this->managment_model->getGroupNamesByGroupCode($data['selected_group']);
+			//echo $data['selected_group'];
+
+			//$data['selected_group_names']= $this->managment_model->getGroupNamesByGroupCode($data['selected_group']);
 		
-		$data['all_students_in_group']= $this->ebre_escool_ldap->getAllGroupStudentsInfo($default_group_dn);
+
+		//$data['all_students_in_group']= $this->ebre_escool_ldap->getAllGroupStudentsInfo($default_group_dn);
+		$data['all_students_in_group']= $this->attendance_model->getAllGroupStudentsInfo($data['selected_group']);
 
 		$this->load->view('managment/users_in_group',$data);
 		
@@ -413,8 +457,16 @@ class managment extends skeleton_main {
 			redirect($this->skeleton_auth->login_page, 'refresh');
 		}
 		
+		$active_menu = array();
+		$active_menu['menu']='#reports';
+		$active_menu['submenu1']='#curriculum_reports';
+		$active_menu['submenu2']='#curriculum_reports_statistics_checkings_groups';
+
+
+		$header_data = $this->load_ace_files($active_menu);
+
 		$header_data= $this->add_css_to_html_header_data(
-			$this->_get_html_header_data(),
+			$header_data,
 			base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));	
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
@@ -445,11 +497,11 @@ class managment extends skeleton_main {
 		$data['all_groups_table_title']=lang("all_groups");
 		
 		$all_groups = $this->managment_model->get_all_classroom_groups();
-		
+
 		$data['all_groups']=array();
 		
 		if ($all_groups) {
-			$data['all_groups']=$all_groups->result();
+			$data['all_groups']=$all_groups;
 		}
 		else {
 			$this->load->view('managment/statistics_checkings_groups.php',$data);		
@@ -458,9 +510,11 @@ class managment extends skeleton_main {
 		}
 		
 		$students_base_dn= $this->config->item('students_base_dn','skeleton_auth');
-		
+
+		/* LDAP */
+		/*
 		$all_groups_dns= $this->ebre_escool_ldap->getAllGroupsDNs($students_base_dn);
-		                
+
 		$all_groups_totals= array();
 		foreach ($all_groups_dns as $groupdn) {
 			if ($groupdn != ""){
@@ -468,11 +522,33 @@ class managment extends skeleton_main {
 				$all_groups_totals += array( $groupdn => $group_total);
 			}
 		}
+		*/
+
+		/* MYSQL */
+		$all_groups_totals_sql = array();		
+		foreach($all_groups as $key => $value){
+			$all_students_in_group = $this->managment_model->getAllGroupStudentsInfo($key);
+			$count_alumnes = count($all_students_in_group);
+			$all_groups_totals_sql[$key] = $count_alumnes;
+		}
+
+		$data['all_groups_totals_sql'] = $all_groups_totals_sql;
+
 		$teachers_base_dn= $this->config->item('teachers_base_dn','skeleton_auth');                     		                
+
+		/* LDAP */
+		/*
 		$all_teachers= $this->ebre_escool_ldap->getAllTeachers($teachers_base_dn);
-		
-			
+		*/
+
+		/* MYSQL */
+		$all_teachers_sql = $this->managment_model->get_all_teachers();
+		$data['all_teachers_sql'] = $all_teachers_sql;
+
+
+/*
 		foreach ($data['all_groups'] as $group_key => $group) {
+
 			$personname="";
 			if (array_key_exists($group->group_mentorId,$all_teachers))	{
 				$personname=$all_teachers[$group->group_mentorId];
@@ -491,7 +567,7 @@ class managment extends skeleton_main {
 			}
 			$group->total_students=$group_total;
 		}
-
+*/
 		
 		$this->load->view('managment/statistics_checkings_groups.php',$data);
 		
@@ -1742,11 +1818,18 @@ class managment extends skeleton_main {
 	   $this->_load_body_footer();	
 	}
 
-	private function set_header_data() {
+	private function set_header_data($header_data = false) {
 
-		$header_data= $this->add_css_to_html_header_data(
-			$this->_get_html_header_data(),
-			base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));	
+		if($header_data==false){
+
+			$header_data= $this->add_css_to_html_header_data(
+				$this->_get_html_header_data(),
+				base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));	
+		} else {
+			$header_data= $this->add_css_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));				
+		}
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
 			'http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');	
@@ -1778,12 +1861,50 @@ class managment extends skeleton_main {
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
 			base_url("assets/js/jquery.tooltipster.min.js"));		
+		$header_data= $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));
 			
 		$this->_load_html_header($header_data); 
 		
 		$this->_load_body_header();		
 
 	}
+
+  public function load_ace_files($active_menu=false) {
+        $header_data= $this->add_css_to_html_header_data(
+            $this->_get_html_header_data(),
+                base_url('assets/css/ace-fonts.css'));
+        $header_data= $this->add_css_to_html_header_data(
+            $header_data,
+                base_url('assets/css/ace.min.css'));
+        $header_data= $this->add_css_to_html_header_data(
+            $header_data,
+                base_url('assets/css/ace-responsive.min.css'));
+        $header_data= $this->add_css_to_html_header_data(
+            $header_data,
+                base_url('assets/css/ace-skins.min.css'));      
+/*
+        $header_data= $this->add_css_to_html_header_data(
+            $header_data,
+            base_url('assets/css/no_padding_top.css'));  
+*/
+        //JS
+        $header_data= $this->add_javascript_to_html_header_data(
+            $header_data,
+            base_url('assets/js/ace-extra.min.js'));
+        $header_data= $this->add_javascript_to_html_header_data(
+            $header_data,
+                base_url('assets/js/ace-elements.min.js'));
+        $header_data= $this->add_javascript_to_html_header_data(
+            $header_data,
+                base_url('assets/js/ace.min.js')); 
+        if($active_menu!=false){
+            $header_data['menu']= $active_menu;
+        }
+        return $header_data;
+
+  }	
 
 public function add_callback_last_update(){  
    
@@ -1824,5 +1945,14 @@ function before_update_object_callback($post_array, $primary_key) {
         $post_array['lastupdateUserId'] = $this->session->userdata('user_id');
         return $post_array;
 }
+ // PROVA Executar funcions d'altres mòduls
+	public function va(){
+		echo "Estic a Managments<br />";
+		$params = "Això són paràmetres";
+		echo Modules::run('attendance/test', $params);
+		//$this->load->module('attendance');
+		//$this->attendance->test($params);
+
+	}
 
 }

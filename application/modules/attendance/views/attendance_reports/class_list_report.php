@@ -1,5 +1,5 @@
- <script>
-$(function() { 
+<script>
+$(document).ready(function() { 
 	$("#grup").select2(); 
 });
 </script>
@@ -42,13 +42,13 @@ $(function() {
 
 
 	<!-- FORM -->    
-	<div style="width:40%; margin:0px auto;">
+	<div style="width:60%; margin:0px auto;">
 		<form method="post" action="#" class="form-horizontal" role="form">
 			<table class="table table-bordered" cellspacing="10" cellpadding="5">
 				<div class="form-group ui-widget">
 					<tr>
-						<td><label for="grup">Selecciona el grup:</label></td>
-						<td><select data-place_holder="TODO" style="width:400px;" id="grup" name="grup" data-size="5" data-live-search="true">
+						<td><label for="grup" style="width:150px;">Selecciona el grup:</label></td>
+						<td><select data-place_holder="TODO" style="width:580px;" id="grup" name="grup" data-size="5" data-live-search="true">
 							<?php foreach ($grups as $key => $value) { ?>
 								<option value="<?php echo $key ?>" ><?php echo $value ?></option>
 							<?php } ?>

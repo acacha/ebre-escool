@@ -3,7 +3,7 @@
 * Name:  Inventory Lang - Catalan
 *
 * Author: Sergi Tur Badenas
-* 		  sergitur@ebretic.com
+*       sergitur@ebretic.com
 *         @sergitur
 *
 * Author: ...
@@ -19,7 +19,14 @@
 //MENUS
 
 //BODY HEADER MENUS & SUBMENUS
-$lang['check_attendance']   = 'Check Attendance';
+$lang['Welcome']   = 'Benvingut/da,';
+$lang['configuration']   = 'Configuració';
+$lang['profile']   = 'Perfil';
+$lang['Exit']   = 'Sortir';
+
+$lang['control_panel'] = 'Panell de Control';
+
+$lang['check_attendance']   = 'Check attendance';
 $lang['mentoring']   = 'Tutoria';
  $lang['mentoring_groups_mentoring']   = 'Tutoritza els teus grups';
  $lang['mentoring_attendance_by_student']   = 'Llistat de faltes per alumne';
@@ -81,7 +88,7 @@ $lang['managment'] = 'Gestió';
  $lang['massive_change_password']   = 'Canvi massiu de paraules de pas';
  $lang['statistics_checkings']   = 'Estadístiques. Comprovacions';
   $lang['statistics_checkings_groups']   = 'Grups';
-  $lang['users_in_group'] = 'Usuaris per grups';
+  $lang['users_in_classroom_group'] = 'Usuaris per grup de classe';
  $lang['preferences'] = 'Preferències';
 
 
@@ -96,9 +103,9 @@ $lang['course']="Curs";
     $lang['course_cycle_id']="ID Cicle"; 
     $lang['course_estudies_id']="ID Estudi";  
 $lang['classroom_group']="Grup de Classe";
-	$lang['group_code']="Codi Grup";
-	$lang['group_EducationalLevelId']="Nivell Educatiu";
-$lang['study_module']="Assignatura | Mòdul Professional";	
+  $lang['group_code']="Codi Grup";
+  $lang['group_EducationalLevelId']="Nivell Educatiu";
+$lang['study_module']="Assignatura | Mòdul Professional"; 
 $lang['study_submodules']="Unitat Formativa";
 $lang['lessons']="Lliçons";
 $lang['studies']="Estudis";
@@ -119,6 +126,9 @@ $lang['shift'] = "Torn";
 
 //Inventari
 $lang['inventory']="Inventari";
+$lang['inventory_reports'] = "Informes d'Inventari";
+$lang['all_inventory_with_filter_options'] = "Tot l'inventar amb opció de filtres";
+$lang['material']="Material";
 
 //Dades Bancàries
 $lang['bank']="Bancs";
@@ -126,3 +136,8 @@ $lang['bank_data']="Dades bancàries";
 $lang['bank_account']="Comptes";
 $lang['bank_office']="Oficines";
 $lang['bank_account_type']="Tipus de compte";
+
+//Usuaris
+$lang['creation_user']="Usuari de Creació";
+$lang['modification_user']="Usuari de Modificació";
+$lang['user_profile'] = "Perfil de l'usuari";

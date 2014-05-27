@@ -374,6 +374,10 @@ class enrollment extends skeleton_main {
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
 			base_url("assets/js/jquery.tooltipster.min.js"));		
+        $header_data= $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));
+        
 			
 		$this->_load_html_header($header_data); 
 		

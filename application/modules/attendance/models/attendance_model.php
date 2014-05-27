@@ -27,6 +27,11 @@ class attendance_model  extends CI_Model  {
 		return false;
 	}
 
+	function insert_incidence($data_incident_array){
+		$this->db->insert('incident', $data_incident_array); 
+		echo $this->db->last_query();
+	}
+
 	function is_user_a_teacher ($person_id) {
 
 		$this->db->select('teacher_id');
@@ -83,6 +88,166 @@ class attendance_model  extends CI_Model  {
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() > 0) {
+			$student_info_array = array();
+
+			foreach ($query->result_array() as $row)	{
+
+				//$student_info_array[] = $row;
+   				$student = new stdClass();
+				
+				$student->student_id = $row['student_id'];
+				$student->person_id = $row['person_id'];
+				$student->sn1 = $row['person_sn1'];
+				$student->sn2 = $row['person_sn2'];
+				$student->givenName = $row['person_givenName'];
+				$student->username = $row['username'];
+				$student->email = $row['person_secondary_email'];
+				$student->photo_url = $row['person_photo'];
+				
+				$student_info_array[$row['student_id']] = $student;
+
+			}
+
+			return $student_info_array;
+		}			
+		else {
+			return array();
+		}
+			
+
+	}
+
+	function getAllIncidentsGroupByDate($group,$start_date,$end_date = false) {
+		$this->db->select('person.person_id, student.student_id, person.person_givenName, person.person_sn1, person.person_sn2, 
+			attendance_incident.attendance_incident_day, 
+			attendance_incident.data_incidencia, classroom_group.classroom_group_code, attendance_incident.attendance_incident_type');
+		$this->db->from('student');
+		$this->db->join('person','student.student_person_id = person.person_id');
+		$this->db->join('attendance_incident','attendance_incident.attendance_incident_student_id = student.student_id');
+		$this->db->join('enrollment_class_group','enrollment_class_group_personid = person.person_id');
+		$this->db->join('classroom_group','classroom_group.classroom_group_id = enrollment_class_group.enrollment_class_group_group_id');
+		$this->db->where('enrollment_class_group.enrollment_class_group_group_id = ', $group);
+		
+		if($end_date == false){
+			$this->db->where('attendance_incident.data_incidencia =', $start_date);
+		} else {
+			$this->db->where('attendance_incident.data_incidencia >=', $start_date);
+			$this->db->where('attendance_incident.data_incidencia <=', $end_date);
+		}
+		
+		$this->db->order_by('person.person_sn1');
+		$this->db->order_by('person.person_sn2');
+		$this->db->order_by('person.person_givenName');
+		$this->db->order_by('attendance_incident.data_incidencia');
+		$this->db->distinct();
+		$query = $this->db->get();
+		
+		//echo $this->db->last_query();
+		
+		if ($query->num_rows() > 0) {
+
+			$student_incident_array = array();
+
+			foreach ($query->result_array() as $row)	{
+
+				$incident = new stdClass();
+				
+				//$incident->person_id = $row['person_id'];
+				$incident->student_id = $row['student_id'];
+				$incident->sn1 = $row['person_sn1'];
+				$incident->sn2 = $row['person_sn2'];
+				$incident->givenName = $row['person_givenName'];
+				$incident->incident_type = $row['attendance_incident_type'];
+				$incident->incident_date = $row['data_incidencia'];				
+				
+				$student_incident_array[] = $incident;
+
+			}
+
+			return $student_incident_array;
+		}			
+		else
+			return false;
+
+	}
+
+	function getAllIncidentsGroupByMonth($group,$month,$year) {
+		$this->db->select('person.person_id, student.student_id, person.person_givenName, person.person_sn1, person.person_sn2, 
+			attendance_incident.attendance_incident_day, 
+			attendance_incident.data_incidencia, classroom_group.classroom_group_code, attendance_incident.attendance_incident_type');
+		$this->db->from('student');
+		$this->db->join('person','student.student_person_id = person.person_id');
+		$this->db->join('attendance_incident','attendance_incident.attendance_incident_student_id = student.student_id');
+		$this->db->join('enrollment_class_group','enrollment_class_group_personid = person.person_id');
+		$this->db->join('classroom_group','classroom_group.classroom_group_id = enrollment_class_group.enrollment_class_group_group_id');
+		$this->db->where('enrollment_class_group.enrollment_class_group_group_id = ', $group);
+		
+		$this->db->where('month(attendance_incident.data_incidencia)', $month);
+		$this->db->where('year(attendance_incident.data_incidencia)', $year);
+		
+		$this->db->order_by('attendance_incident.data_incidencia');		
+
+		$this->db->distinct();
+		$query = $this->db->get();
+		
+		//echo $this->db->last_query();
+		
+		if ($query->num_rows() > 0) {
+
+			$student_incident_array = array();
+
+			foreach ($query->result_array() as $row)	{
+
+				$incident = new stdClass();
+				
+				//$incident->person_id = $row['person_id'];
+				$incident->student_id = $row['student_id'];
+				$incident->sn1 = $row['person_sn1'];
+				$incident->sn2 = $row['person_sn2'];
+				$incident->givenName = $row['person_givenName'];
+				$incident->incident_type = $row['attendance_incident_type'];
+				$incident->incident_date = $row['data_incidencia'];				
+				
+				$student_incident_array[] = $incident;
+
+			}
+
+			return $student_incident_array;
+		}			
+		else
+			return false;
+
+	}
+
+
+
+	function getAllStudentsMail(){
+		/*
+		SELECT `student_id` , person.person_id, person.person_sn1, person.person_sn2, person.person_givenName, users.username, person.person_secondary_email
+		FROM `student`
+		INNER JOIN person ON student.`student_person_id` = person.person_id
+		INNER JOIN users ON person.`person_id` = users.person_id
+		INNER JOIN enrollment_class_group ON users.person_id = enrollment_class_group.enrollment_class_group_personid
+		WHERE enrollment_class_group_group_id =26
+		LIMIT 0 , 30
+		*/
+
+		$this->db->select('student.student_id,person.person_id, person.person_sn1, person.person_sn2, person.person_givenName, person.person_email, person.person_secondary_email,person.person_photo');
+		$this->db->from('student');
+		$this->db->join('person','student.student_person_id = person.person_id');
+	//	$this->db->join('users','person.person_id = users.person_id');
+	//	$this->db->join('enrollment_class_group','users.person_id = enrollment_class_group.enrollment_class_group_personid');
+		
+	//	$this->db->where('enrollment_class_group.enrollment_class_group_group_id',$class_group_id);
+		
+		$this->db->order_by('person.person_sn1');
+		$this->db->order_by('person.person_sn2');
+		$this->db->order_by('person.person_givenName');
+		$this->db->distinct();
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+
+		if ($query->num_rows() > 0) {
 
 			$student_info_array = array();
 
@@ -96,8 +261,9 @@ class attendance_model  extends CI_Model  {
 				$student->sn1 = $row['person_sn1'];
 				$student->sn2 = $row['person_sn2'];
 				$student->givenName = $row['person_givenName'];
-				$student->username = $row['username'];
-				$student->email = $row['person_secondary_email'];
+//				$student->username = $row['username'];
+				$student->email = $row['person_email'];
+				$student->secondary_email = $row['person_secondary_email'];
 				$student->photo_url = $row['person_photo'];
 				
 				$student_info_array[$row['student_id']] = $student;
@@ -1304,7 +1470,7 @@ ORDER BY person.person_sn1
 		$this->db->from('lesson');
 		$this->db->join('study_module', "lesson.lesson_study_module_id = study_module.study_module_id");
 		
-		$this->db->order_by('study_module_order', $orderby);
+	/*	$this->db->order_by('study_module_order', $orderby); */
 		$this->db->order_by('study_module_shortname', $orderby);
 		
 		$this->db->where("lesson.lesson_classroom_group_id", $class_group_id);
@@ -1347,7 +1513,7 @@ ORDER BY person.person_sn1
 		$this->db->from('lesson');
 		$this->db->join('study_module', "lesson.lesson_study_module_id = study_module.study_module_id");
 		
-		$this->db->order_by('study_module_order', $orderby);
+	/*	$this->db->order_by('study_module_order', $orderby); */
 		$this->db->order_by('study_module_shortname', $orderby);
 		
 		$this->db->where("lesson.lesson_teacher_id", $teacher_id);

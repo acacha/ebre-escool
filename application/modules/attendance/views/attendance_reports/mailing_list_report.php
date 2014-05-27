@@ -43,12 +43,15 @@
 					<tr>
 						<td><label for="data_inicial">Select an option:</label></td>
 						<td>
-							<input type="radio" name="opcio" checked="checked" value="P"/> Personal accounts<br />
-							<input type="radio" name="opcio" value="C"> Center accounts<br />
-							<input type="radio" name="opcio" value="A"> Booth accounts 
+							<input type="radio" name="opcio" <?php if(($opcio)){ if($opcio=='P') { ?> checked="checked" <?php } else { } } else { ?> checked="checked" <?php } ?> value="P"/> Personal accounts<br />
+							<input type="radio" name="opcio" <?php if(($opcio)){ if($opcio=='C') { ?> checked="checked" <?php } else { } } ?> value="C"> Center accounts<br />
+							<input type="radio" name="opcio" <?php if(($opcio)){ if($opcio=='A') { ?> checked="checked" <?php } else { } } ?> value="A"> Booth accounts 
 						</td>
 					</tr>	
 				</div>
+<?php if($opcio){
+	print_r($output);
+} ?>
 
 				<tr><td colspan="2" style="text-align:center;"><input type="submit" value="Veure l'informe" class="btn btn-primary"/></td></tr>
 			</table>

@@ -19,6 +19,13 @@
 //MENUS
 
 //BODY HEADER MENUS & SUBMENUS
+$lang['Welcome']   = 'Benvingut/da,';
+$lang['configuration']   = 'Configuració';
+$lang['profile']   = 'Perfil';
+$lang['Exit']   = 'Sortir';
+
+$lang['control_panel'] = 'Panell de Control';
+
 $lang['check_attendance']   = 'Passar llista';
 $lang['mentoring']   = 'Tutoria';
  $lang['mentoring_groups_mentoring']   = 'Tutoritza els teus grups';
@@ -81,7 +88,7 @@ $lang['managment'] = 'Gestió';
  $lang['massive_change_password']   = 'Canvi massiu de paraules de pas';
  $lang['statistics_checkings']   = 'Estadístiques. Comprovacions';
   $lang['statistics_checkings_groups']   = 'Grups';
-  $lang['users_in_group'] = 'Usuaris per grups';
+  $lang['users_in_classroom_group'] = 'Usuaris per grup de classe';
  $lang['preferences'] = 'Preferències';
 
 
@@ -119,6 +126,8 @@ $lang['shift'] = "Torn";
 
 //Inventari
 $lang['inventory']="Inventari";
+$lang['inventory_reports'] = "Informes d'Inventari";
+$lang['all_inventory_with_filter_options'] = "Tot l'inventar amb opció de filtres";
 $lang['material']="Material";
 
 //Dades Bancàries
@@ -131,3 +140,8 @@ $lang['bank_account_type']="Tipus de compte";
 //Usuaris
 $lang['creation_user']="Usuari de Creació";
 $lang['modification_user']="Usuari de Modificació";
+
+//Usuaris
+$lang['attendance_incidents']="Incidènces assistència";
+$lang['attendance_incident_types']="Tipus d'incidències d'assistència";
+

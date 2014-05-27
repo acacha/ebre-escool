@@ -419,7 +419,10 @@ CREATE TABLE IF NOT EXISTS `study_module` (
   `study_module_name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `study_module_hoursPerWeek` int(3) NOT NULL,
   `study_module_classroom_group_id` int(11) NOT NULL,
+  `study_module_courseid` int(11) NOT NULL,
   `study_module_teacher_id` int(11) NOT NULL,
+  `study_module_order` int(11) NOT NULL,
+  `study_module_description` text,
   `study_module_initialDate` datetime NOT NULL,
   `study_module_endDate` datetime NOT NULL,
   `study_module_type` enum('Troncal','Alternativa','Optativa') NOT NULL,
@@ -443,10 +446,12 @@ CREATE TABLE IF NOT EXISTS `study_submodules` (
   `study_submodules_shortname` varchar(50) CHARACTER SET utf8 NOT NULL,
   `study_submodules_name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `study_submodules_study_module_id` int(11) NOT NULL,
+  `study_submodules_courseid` int(11) NOT NULL,
   `study_submodules_initialDate` datetime NOT NULL,
   `study_submodules_endDate` datetime NOT NULL,
   `study_submodules_totalHours` int(11) NOT NULL,
   `study_submodules_order` int(11) NOT NULL,
+  `study_submodules_description` text,
   `study_submodules_entryDate` datetime NOT NULL,
   `study_submodules_last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `study_submodules_creationUserId` int(11) DEFAULT NULL,
@@ -620,7 +625,7 @@ CREATE TABLE IF NOT EXISTS `locality` (
   `locality_postal_code` varchar(255) NOT NULL,
   `locality_entryDate` datetime NOT NULL,
   `locality_last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `locality_creationUserId` int(11) DEFAULT NULL,
+  ` ` int(11) DEFAULT NULL,
   `locality_lastupdateUserId` int(11) DEFAULT NULL,
   `locality_markedForDeletion` enum('n','y') NOT NULL DEFAULT 'n',
   `locality_markedForDeletionDate` datetime NOT NULL,
@@ -1469,6 +1474,35 @@ CREATE TABLE IF NOT EXISTS `non_lective_hours` (
   PRIMARY KEY (`non_lective_hours_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de la taula `lesson`     TODO
+--
+
+CREATE TABLE IF NOT EXISTS `lesson` (
+  `lesson_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lesson_periodid` varchar(50) NOT NULL,
+  `lesson_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `lesson_codi_assignatura` varchar(30) NOT NULL COMMENT 'ESBORRAR',
+  `lesson_classroom_group_id` int(11) NOT NULL,
+  `lesson_codi_grup` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'ESBORRAR',
+  `lesson_teacher_id` int(11) NOT NULL,
+  `lesson_codi_professor` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'ESBORRAR',
+  `lesson_study_module_id` int(11) NOT NULL,
+  `lesson_location_id` int(11) NOT NULL,
+  `lesson_day` int(5) NOT NULL,
+  `lesson_time_slot_id` int(11) NOT NULL,
+  `codi_hora` tinyint(2) NOT NULL,
+  `lesson_entryDate` datetime NOT NULL,
+  `lesson_last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `lesson_creationUserId` int(11) DEFAULT NULL,
+  `lesson_lastupdateUserId` int(11) DEFAULT NULL,
+  `lesson_markedForDeletion` enum('n','y') NOT NULL,
+  `lesson_markedForDeletionDate` datetime NOT NULL,
+  PRIMARY KEY (`lesson_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 --
 -- Estructura de la taula `non_lective_lessons`
 --
@@ -1758,3 +1792,53 @@ CREATE TABLE `employees_type` (
   PRIMARY KEY (`employees_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `incident`
+--
+
+DROP TABLE IF EXISTS `incident`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `incident` (
+  `incident_id` int(11) NOT NULL AUTO_INCREMENT,
+  `incident_student_id` int(11) NOT NULL,
+  `incident_time_slot_id` int(11) NOT NULL,
+  `incident_day` int(11) NOT NULL,
+  `incident_date` date,
+  `incident_study_submodule_id` int(11) NOT NULL,
+  `incident_type` int(11) NOT NULL,
+  `incident_notes` text NOT NULL,
+  `incident_last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `incident_creationUserId` int(11) DEFAULT NULL,
+  `incident_lastupdateUserId` int(11) DEFAULT NULL,
+  `incident_markedForDeletion` enum('n','y') NOT NULL DEFAULT 'n',
+  `incident_markedForDeletionDate` datetime NOT NULL,
+  PRIMARY KEY (`incident_id`),
+  UNIQUE KEY `incident_student_id` (`incident_student_id`,`incident_time_slot_id`,`incident_day`,`incident_date`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `incident`
+--
+DROP TABLE IF EXISTS `incident_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `incident_type` (
+  `incident_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `incident_type_name` varchar(150) NOT NULL,
+  `incident_type_shortName` varchar(150) NOT NULL,
+  `incident_type_description` varchar(255) NOT NULL,
+  `incident_type_code` varchar(10) NOT NULL,
+  `incident_type_last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `incident_type_creationUserId` int(11) DEFAULT NULL,
+  `incident_type_lastupdateUserId` int(11) DEFAULT NULL,
+  `incident_type_markedForDeletion` enum('n','y') NOT NULL DEFAULT 'n',
+  `incident_type_markedForDeletionDate` datetime NOT NULL,
+  PRIMARY KEY (`incident_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+
