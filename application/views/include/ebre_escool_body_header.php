@@ -400,6 +400,16 @@
                 </li>
                 <!-- PASSAR LLISTA -->
 
+                <?php if ( isset( $is_teacher ) ): ?>
+                       <?php if ( $is_teacher ) : ?>
+                        <li id="check_attendance">
+                          <a href="<?php echo base_url('/index.php/attendance/check_attendance'); ?>">
+                            <i class="icon-bell"></i>
+                            <span class="menu-text"> <?php echo lang('check_attendance');?> </span>
+                          </a>
+                        </li>  
+                       <?php endif; ?>
+                      <?php endif; ?> 
 
 
 
