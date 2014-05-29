@@ -62,7 +62,6 @@ class timetables extends skeleton_main {
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     "http://code.jquery.com/jquery-1.9.1.js");
-
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     "http://code.jquery.com/ui/1.10.3/jquery-ui.js");
