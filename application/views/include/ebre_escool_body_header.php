@@ -515,9 +515,8 @@
                       <?php echo lang('reports_educational_center_reports_grup_mentors');?>
                     </a>
                   </li>
-           </ul>                  
-
-              </li>  
+            </ul>  
+               </li>  
 
               <!-- STUDENTS REPORTS -->
               <li id="students_reports">
