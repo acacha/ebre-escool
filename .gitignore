@@ -22,4 +22,4 @@ application/third_party/skeleton_auth/application/config/auth_ldap.php
 uploads/*
 uploads/inventory_files/*
 uploads/qrcodes/*
-/nbproject/private/
+/nbproject/*
