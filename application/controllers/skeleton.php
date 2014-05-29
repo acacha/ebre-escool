@@ -121,10 +121,10 @@ class skeleton extends skeleton_main {
                 base_url('assets/css/ace-fonts.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace.css'));
+                base_url('assets/css/ace.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace-responsive.css'));
+                base_url('assets/css/ace-responsive.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
                 base_url('assets/css/ace-skins.css'));
