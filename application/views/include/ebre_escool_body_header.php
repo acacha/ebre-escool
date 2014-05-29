@@ -355,7 +355,7 @@
             <span class="btn btn-warning"></span>
 
             <span class="btn btn-danger"></span>
-
+            
         </div><!-- #sidebar-shortcuts (delete previous div, repair sidebar)-->
 
 
