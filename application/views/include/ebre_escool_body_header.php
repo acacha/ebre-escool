@@ -516,21 +516,6 @@
                     </a>
                   </li>
 
-<<<<<<< HEAD
-                <?php if ( isset( $is_teacher ) ): ?>
-                       <?php if ( $is_teacher ) : ?>
-                        <li id="check_attendance">
-                          <a href="<?php echo base_url('/index.php/attendance/check_attendance'); ?>">
-                            <i class="icon-bell"></i>
-                            <span class="menu-text"> <?php echo lang('check_attendance');?> </span>
-                          </a>
-                        </li>  
-                       <?php endif; ?>
-                      <?php endif; ?> 
-=======
-                </ul>                  
-              </li>  
->>>>>>> upstream/master
 
               <!-- STUDENTS REPORTS -->
               <li id="students_reports">
@@ -1002,9 +987,6 @@
   </div>
 
 
-<<<<<<< HEAD
 
-    <!-- END OF body_header. DO NOT CLOSE Body tag. Closed in body footer--> 
-=======
 <!-- END OF body_header. DO NOT CLOSE Body tag. Closed in body footer--> 
->>>>>>> upstream/master
+
