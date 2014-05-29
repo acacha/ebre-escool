@@ -355,8 +355,8 @@
             <span class="btn btn-warning"></span>
 
             <span class="btn btn-danger"></span>
-          </div>
-        </div><!-- #sidebar-shortcuts -->
+            
+        </div><!-- #sidebar-shortcuts (delete previous div, repair sidebar)-->
 
 
 
@@ -515,9 +515,8 @@
                       <?php echo lang('reports_educational_center_reports_grup_mentors');?>
                     </a>
                   </li>
-
-                </ul>                  
-              </li>  
+            </ul>  
+               </li>  
 
               <!-- STUDENTS REPORTS -->
               <li id="students_reports">
@@ -958,4 +957,6 @@
   </div>
 
 
+
 <!-- END OF body_header. DO NOT CLOSE Body tag. Closed in body footer--> 
+

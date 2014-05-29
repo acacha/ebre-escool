@@ -655,6 +655,309 @@ class attendance extends skeleton_main {
 	    	$time_slots
 
 	    	$selected_time_slot_key = */
+	    	public function check_attendance_classroom_group_android_client( $selected_group_id = 0, $teacher_code = "" , $selected_study_module_id = 0, 
+				$lesson_id = 0, $day = 0, $month = 0, $year = 0 ){
+		$this->check_logged_user();	
+		$active_menu = array();
+		$active_menu['menu']='#check_attendance';
+		$header_data = $this->load_header_data($active_menu);
+        $this->_load_html_header($header_data);
+
+		$userid=$this->session->userdata('id');
+		$person_id=$this->session->userdata('person_id');
+		
+		//Check if user is a teacher
+		$user_is_a_teacher = $this->attendance_model->is_user_a_teacher($person_id);
+
+		$data['is_teacher'] = $user_is_a_teacher;
+		
+		/*******************
+		/*      BODY       *
+		/*******************/
+		$this->_load_body_header($data);
+
+
+		if ( !$user_is_a_teacher ) {
+			//TODO: Return not allowed page!
+			return null;
+		}		
+
+		$user_teacher_code = $this->attendance_model->getTeacherCode($person_id);
+		
+		$user_is_admin = $this->ebre_escool->user_is_admin();
+		//TODO: Test. DELETE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	    //$user_is_admin=false;
+
+		if ($teacher_code == null) {
+	    	$teacher_code = $user_teacher_code;
+	    } else {
+	    	if (!$user_is_admin) { 
+	    		$teacher_code = $user_teacher_code; 
+	    	}
+	    }
+
+	    //Teacher info to view
+	    $data['teacher_code']= $teacher_code;
+
+	    $teacher_info = $this->attendance_model->get_teacher_info_from_teacher_code($teacher_code);  
+
+	    $teacher_department_id = 2;
+
+		$teacher_id = $teacher_info['teacher_id'];  
+		$teacher_givenName = $teacher_info['givenName'];
+		$teacher_sn1 = $teacher_info['sn1'];
+		$teacher_sn2 = $teacher_info['sn2'];
+
+		//Teacher info to view
+	    $data['teacher_code']= $teacher_code;   
+	    $data['teacher_id']= $teacher_id;
+	    $data['teacher_givenName']= $teacher_givenName;
+	    $data['teacher_sn1']= $teacher_sn1;
+	    $data['teacher_sn2']= $teacher_sn2;
+
+	    // Obtenir el departament al que pertany un professor (Oscar)
+	    //$teacher_departments = $this->attendance_model->get_teacher_departments($teacher_id);
+	    //$data['department_id'] = $teacher_departments[1];
+
+	    //echo "teacher_id: $teacher_id<br/>";       
+	    //echo "teacher_code: $teacher_code<br/>";   
+
+	    $user_is_teacher=true;
+
+	    //Departaments
+	    $data['departments'] = array();
+	    $department_info = $this->attendance_model->get_teacher_departmentInfo($teacher_id);
+	    $data['selected_department_key'] = $department_info['id'];
+	    $data['selected_department_name'] = $department_info['name'];
+		if ($user_is_admin) {
+	    	//Get all classroom_groups
+	    	$data['departments']= $this->attendance_model->get_all_departments();
+	    } else {
+	    	$data['departments']= $this->attendance_model->get_teacher_departments($teacher_id);
+	    }
+        
+	    #Obtain class_room_groups
+	    $data['classroom_groups']=array();
+
+	    if ($user_is_admin) {
+	    	//Get all classroom_groups
+	    	$data['classroom_groups']= $this->attendance_model->get_all_groupscodenameByDeparment($teacher_department_id);
+	    } else {
+	    	//IF TEACHER
+	    	if($user_is_teacher) {
+	    		$data['classroom_groups']=$this->attendance_model->get_all_groupscodenameByTeacher($teacher_id);
+	    	}
+			//$data['classroom_groups']=array(); //OSCAR
+	    }
+
+	    if ($day == 0 ) {
+	    	//obtain day from current date
+			$day = date("d");
+	    }
+	    if ($month == 0 ) {
+	    	//obtain month from current date
+			$month = date("m");
+	    }
+	    if ($year == 0 ) {
+	    	//obtain year from current date
+			$year = date("y");
+	    }
+
+	    //isodate format: YYYY-MM-DD
+		$iso_date = null;
+		$data['check_attendance_date'] = "";
+
+	    if ( ($day != null) && ($month != null) && ($year != null) ) {
+	    	$data['check_attendance_date'] = $day . "/" . $month . "/" .$year;
+	    	$iso_date = $year . "-" .  sprintf('%02s', $month) . "-" . sprintf('%02s', $day);
+	    } else {
+	    	$data['check_attendance_date'] = date('d/m/Y');	
+	    	$iso_date = $year . "-" .  sprintf('%02s', $month) . "-" . sprintf('%02s', $day);
+	    }
+
+	    
+	    $day_of_week_number = date('N', strtotime($iso_date));
+
+		$days_of_week = array();
+		$timestamp = strtotime('next Monday');
+		for ($i = 1; $i < 8; $i++) {
+ 			$days_of_week[$i] = strftime('%A', $timestamp);
+ 			$timestamp = strtotime('+1 day', $timestamp);
+		}
+
+		$data['days_of_week'] = $days_of_week;
+
+		$data['day_of_week_number'] = $day_of_week_number;
+		$data['day'] = $day;
+		$data['month'] = $month;
+		$data['year'] = $year;
+
+		if ($selected_group_id == 0) {
+			//TODO: Get default group id
+			$selected_group_id = 25; //2ASIX	
+		}	else {
+			//Check if teacher could use this group
+			//TODO
+		}
+
+	    $data['selected_classroom_group_key']=$selected_group_id; //2ASIX
+	    
+	    $data['all_lessons'] =array();
+	    
+	    if ($user_is_admin){
+	    	$all_lessons = $this->attendance_model->getAllLessonsByDay($day_of_week_number,$data['selected_classroom_group_key']);
+	    	$data['all_lessons'] = $all_lessons;	    	
+	    } else {
+	    	$all_lessons = $this->attendance_model->getAllLessonsByTeacherCodeAndDay($teacher_id,$day_of_week_number);
+	    	$data['all_lessons'] = $all_lessons;	    	
+	    }
+
+	    //OSCAR: Time Slots
+		$timeslots = $this->get_time_slots($data['selected_classroom_group_key'],1);	  
+
+		$data['timeslots'] = $timeslots;
+		$data['time_slots_lective'] = $timeslots['time_slots_lective'];
+
+		$all_students_in_group= $this->attendance_model->getAllGroupStudentsInfo($selected_group_id);
+		$selected_group_info = $this->attendance_model->getGroupInfoByGroupId($selected_group_id);
+
+		$selected_group_id = $selected_group_info['id'];
+		$selected_group_name = $selected_group_info['name'];
+		$selected_group_shortname = $selected_group_info['shortname'];
+		$selected_group_code = $selected_group_info['code'];
+
+		$data['selected_group_id'] = $selected_group_id;
+		$data['selected_classroom_group_code'] = $selected_group_code;
+	    $data['selected_classroom_group_shortname'] = $selected_group_code;
+		$data['selected_classroom_group'] = $selected_group_name;
+
+		/*echo "selected_group_name: $selected_group_name<br/>";
+		echo "selected_group_shortname: $selected_group_shortname<br/>";
+		echo "selected_group_code: $selected_group_code<br/>";*/
+
+		if ($selected_study_module_id == 0) {
+			//TODO: Get default group id
+			$selected_study_module_id = 274;	
+		}	else {
+			//Check if teacher could use this group
+			//TODO
+		}
+
+		$data['selected_study_module_key']= $selected_study_module_id;
+
+		$selected_study_module_info = $this->attendance_model->getStudyModuleInfoByModuleId($selected_study_module_id);
+
+		$selected_study_module_name = $selected_study_module_info['name'];
+		$selected_study_module_shortname = $selected_study_module_info['shortname'];
+		$selected_study_module_code = $selected_study_module_info['code'];
+
+
+		/*
+		echo "selected_study_module_name: $selected_study_module_name<br/>";
+		echo "selected_study_module_shortname: $selected_study_module_shortname<br/>";
+		echo "selected_study_module_code: $selected_study_module_code<br/>";*/
+
+		$data['selected_study_module_code'] = $selected_study_module_code;
+	    $data['selected_study_module_shortname'] = $selected_study_module_shortname;
+		$data['selected_study_module'] = $selected_study_module_name;
+
+
+	    $data['study_modules'] = array();
+	    
+	    if ($user_is_admin) {
+	    	//Get all group study modules
+	    	$all_group_study_modules = $this->attendance_model->getAllGroupStudymodules( $selected_group_id);
+	    	$data['study_modules'] = $all_group_study_modules;
+	    } else {
+	    	//Get current teacher study modules
+	    	$current_teacher_study_modules = $this->attendance_model->getAllTeacherStudymodules( $teacher_id );
+			$data['study_modules'] = $current_teacher_study_modules;
+	    }
+
+	    $data['time_slots']=array();
+
+	    $time_slots = $this->attendance_model->getTimeSlotsByClassgroupId($selected_group_id,$day_of_week_number);
+
+	    $selected_time_slot_id = $this->attendance_model->getTimeSlotKeyFromLessonId($lesson_id);
+	    $selected_time_slot_key = $this->getTimeSlotKeyByTimeSlotId($time_slots,$selected_time_slot_id);
+
+		$data['selected_time_slot_key'] = $selected_time_slot_key;		
+		$data['selected_time_slot_id'] = $selected_time_slot_id;
+
+		if (is_array($time_slots)) {
+	    	$data['time_slots'] = $time_slots;
+	    }
+
+	    $group_teachers_array = $this->attendance_model->getAllTeachersFromClassgroupId( $selected_group_id );
+	    $data['group_teachers']= $group_teachers_array;
+
+	    //Tutor is default selected_group_teacher 	    
+	    $tutor_teacher_id = $this->attendance_model->getTutorFromClassgroupId( $selected_group_id );
+
+	    //echo "tutor_teacher_id: $tutor_teacher_id<br/>";
+
+	    if ($tutor_teacher_id != "") {
+	    	if (array_key_exists($tutor_teacher_id,$group_teachers_array)) {
+	    		$selected_group_teacher = $group_teachers_array[$tutor_teacher_id]->sn1 . " " . $group_teachers_array[$tutor_teacher_id]->sn2 . ", " . 	
+	    			$group_teachers_array[$tutor_teacher_id]->givenName . "( Tutor/a )";
+	    	} else {
+	    		$selected_group_teacher = "Error. No s'ha trobat el codi $tutor_teacher_id";
+	    	}
+	    		
+	    } else {
+	    	$selected_group_teacher = "Error. No hi ha tutor del grup";
+	    }
+	    
+	    	
+
+	    $data['selected_group_teacher']= $selected_group_teacher;
+	    
+	    $data['group_teachers_default_teacher_key']= $tutor_teacher_id;
+
+	    
+		//TODO: select current user (sessions user as default teacher)
+	    $data['default_teacher'] = $teacher_code;
+
+	    $data['selected_time_slot'] = $time_slots[$selected_time_slot_key]->range;
+
+	    $data['total_number_of_students'] = count($all_students_in_group);
+
+		$data['classroom_group_students'] = array ();
+		$base_photo_url = "uploads/person_photos";
+		
+		
+		if ( $data['total_number_of_students'] != 0 ) {
+			foreach($all_students_in_group as $student)	{
+
+				$studentObject = new stdClass;
+			
+				$studentObject->person_id = $student->person_id;
+				$studentObject->givenName = $student->givenName;
+				$studentObject->sn1 = $student->sn1;
+				$studentObject->sn2 = $student->sn2;
+				$studentObject->username = $student->username;
+				$studentObject->email = $student->email;
+			
+				//TODO: get incident notes!
+				$studentObject->notes = "nota";
+
+				if ($student->photo_url != "") {
+					$student->photo_url = $base_photo_url."/".$student->photo_url;	
+				}	else {
+					$studentObject->photo_url = '/assets/img/alumnes/foto.png';				
+				}
+				$data['classroom_group_students'][]=$student;
+			}	
+		}
+		
+		$this->load->view('attendance/response_android_check_attendance_cestarlich',$data);
+
+
+
+
+
+
+	    	}
 
 	public function check_attendance_classroom_group( $selected_group_id = 0, $teacher_code = "" , $selected_study_module_id = 0, 
 		$lesson_id = 0, $day = 0, $month = 0, $year = 0 ) {

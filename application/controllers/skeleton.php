@@ -151,8 +151,10 @@ class skeleton extends skeleton_main {
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
                 base_url('assets/js/ace.min.js'));    
-
-
+        $header_data = $this->add_javascript_to_html_header_data(
+                    $header_data,
+                    base_url('assets/js/ebre-escool.js'));          
+        
         $header_data['menu']= $this->active_menu;
         return $header_data;
 }
