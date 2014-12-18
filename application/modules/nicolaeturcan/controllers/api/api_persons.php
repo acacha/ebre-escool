@@ -34,7 +34,7 @@ class Api_Persons extends REST_Controller
         $this->load->model('persons');
     }
     
-    function user_get()
+    function persons_get()
     {
         if(!$this->get('id'))
         {
@@ -43,7 +43,7 @@ class Api_Persons extends REST_Controller
 
         // $user = $this->some_model->getSomething( $this->get('id') );
         
-        $user = $this->person->getSomething( $this->get('id') );    	
+        $user = $this->persons->getAllPersons( $this->get('id') );    	
     	
         if($user)
         {
@@ -56,27 +56,29 @@ class Api_Persons extends REST_Controller
         }
     }
     
-    function user_post()
+    function person_post()
     {
-        //$this->some_model->updateUser( $this->get('id') );
-        $message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
+        //$this->persons->updateUser( $this->get('id') );
+        
+        
+        //$message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
         
         $this->response($message, 200); // 200 being the HTTP response code
     }
     
-    function user_delete()
+    function person_delete()
     {
-    	//$this->some_model->deletesomething( $this->get('id') );
-        $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
+    	$this->persons->deletePerson( $this->get('id') );
+        //$message = array('id' => $this->get('id'), 'message' => 'DELETED!');
         
         $this->response($message, 200); // 200 being the HTTP response code
     }
     
-    function users_get()
+    function person_get()
     {
         //$users = $this->some_model->getSomething( $this->get('limit') );
         
-        $user = $this->person->getOneTeacher( $this->get('id') );
+        $user = $this->persons->getOnePerson( $this->get('id') );
         
         
         /*$users = array(
