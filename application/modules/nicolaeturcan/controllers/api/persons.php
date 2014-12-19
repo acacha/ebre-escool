@@ -21,10 +21,12 @@ class Persons extends REST_Controller
     // you have created the 'limits' table and enabled 'limits'
     // within application/config/rest.php
     $this->methods['person_get']['limit'] = 500; //500 requests per hour per person/key
+    $this->methods['people_get']['limit'] = 50; //50 requests per hour per person/key
     $this->methods['person_post']['limit'] = 100; //100 requests per hour per person/key
     $this->methods['person_delete']['limit'] = 50; //50 requests per hour per person/key
-    //Loading "Persons_model.php" model.    
-    $this->load->model('Persons_model');
+   
+    //Loading "persons_model.php" model.    
+    $this->load->model('persons_model');
 }
 
 
@@ -38,7 +40,7 @@ function person_get()
 
     // $person = $this->some_model->getSomething( $this->get('id') );
 
-    $person = $this->persons_model->getPersons_model( $this->get('id') );    	
+    $person = $this->persons_model->getPerson( $this->get('id') );    	
 
     if($person)
     {
@@ -54,7 +56,7 @@ function person_get()
 //TODO: Pendent de fer el post.    
 function person_post()
 {
-    //$this->persons->updateperson( $this->get('id') );
+    //$this->persons_model->updateperson( $this->get('id') );
 
 
     //$message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
@@ -64,18 +66,18 @@ function person_post()
 
 function person_delete()
 {
-    $this->Persons_model->deletePerson( $this->get('id') );
+    $this->persons_model->deletePerson( $this->get('id') );
     //$message = array('id' => $this->get('id'), 'message' => 'DELETED!');
 
     $this->response($message, 200); // 200 being the HTTP response code
 }
 
-// Getting a Persons_model from db.
-function Persons_model_get()
+// Getting a persons_model from db.
+function people_get()
 {
     //$persons = $this->some_model->getSomething( $this->get('limit') );
 
-    $persons = $this->Persons_model->getPersons_model( $this->get('id') );
+    $persons = $this->persons_model->getPeople( $this->get('id') );
 
     /*$persons = array(
         array('id' => 1, 'name' => 'Some Guy', 'email' => 'example1@example.com'),
