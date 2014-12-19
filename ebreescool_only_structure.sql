@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_modification_user` int(11) DEFAULT NULL,
   `last_login` datetime NOT NULL,
   `active` tinyint(1) unsigned DEFAULT NULL,
+  `mark_as_not_duplicated` tinyint(1) NOT NULL DEFAULT '0',
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
