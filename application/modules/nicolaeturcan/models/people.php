@@ -1,14 +1,4 @@
 <?php
-/**
- * 
- *
- *
- * @package    	Ebre-escool
- * @author     	Criminal
- * @version    	1.0
- * @link		crimiwiki.esy.es
- */
-
 class People extends CI_Model  
 {
 	function __construct()
