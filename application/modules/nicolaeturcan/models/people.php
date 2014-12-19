@@ -8,8 +8,9 @@
  * @version    	1.0
  * @link		crimiwiki.esy.es
  */
-class Persons extends CI_Model  {
-	
+
+class People extends CI_Model  
+{
 	function __construct()
   {
     parent::__construct();
@@ -17,9 +18,9 @@ class Persons extends CI_Model  {
   }
 
   // Getting all the teachers.
-  function getAllPersons() {
+  function getPeople() {
     $data = $this->db->get('person');
-    $teachers = array();
+    $people = array();
     if ($data->num_rows() > 0) {
      return $data;
 
@@ -28,12 +29,13 @@ class Persons extends CI_Model  {
     return FALSE;
   }
 }
-// Getting a teacher by id.
-function getOnePerson($id){
+    
+// Getting a person by id.
+function getPerson($id){
  $this->db->where('person_id',$id);
- $data = $this->db->get('person_givenName');
+ $data = $this->db->get('person');
   
-// Cheching if we have any row.
+// Cheching if we've got any row.
  if ($data->num_rows() > 0){
   return $data;
 }else{
@@ -41,11 +43,11 @@ function getOnePerson($id){
 }
 }
 
-//Deleting a teacher by id.
+//Deleting a person by id.
 function deletePerson($del) {
   if ($del) {
-    $this->db->where('name',$del);
-    $this->db->delete('users');
+    $this->db->where('person_id',$del);
+    $this->db->delete('person');
     return true;
   }else{
     return false;
