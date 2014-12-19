@@ -1,5 +1,13 @@
 <?php
-class People extends CI_Model  
+
+/**
+* @package		CodeIgniter
+* @subpackage	WEB Rest Server
+* @category	    Controller
+* @author		Turcan Nicolae
+*/
+
+class persons_model extends CI_Model
 {
 	function __construct()
   {
