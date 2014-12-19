@@ -7,7 +7,7 @@
 * @author		Turcan Nicolae
 */
 
-class persons_model extends CI_Model
+class Persons_model extends CI_Model
 {
 	function __construct()
   {

@@ -10,7 +10,7 @@
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 require APPPATH.'/libraries/REST_Controller.php';
 
-class persons extends REST_Controller
+class Persons extends REST_Controller
 {
     function __construct()
     {
@@ -20,11 +20,11 @@ class persons extends REST_Controller
     // Configure limits on our controller methods. Ensure
     // you have created the 'limits' table and enabled 'limits'
     // within application/config/rest.php
-    $this->methods['user_get']['limit'] = 500; //500 requests per hour per user/key
-    $this->methods['user_post']['limit'] = 100; //100 requests per hour per user/key
-    $this->methods['user_delete']['limit'] = 50; //50 requests per hour per user/key
-    //Loading "people.php" model.    
-    $this->load->model('people');
+    $this->methods['person_get']['limit'] = 500; //500 requests per hour per person/key
+    $this->methods['person_post']['limit'] = 100; //100 requests per hour per person/key
+    $this->methods['person_delete']['limit'] = 50; //50 requests per hour per person/key
+    //Loading "Persons_model.php" model.    
+    $this->load->model('Persons_model');
 }
 
 
@@ -36,25 +36,25 @@ function person_get()
         $this->response(NULL, 400);
     }
 
-    // $user = $this->some_model->getSomething( $this->get('id') );
+    // $person = $this->some_model->getSomething( $this->get('id') );
 
-    $user = $this->people->getPeople( $this->get('id') );    	
+    $person = $this->persons_model->getPersons_model( $this->get('id') );    	
 
-    if($user)
+    if($person)
     {
-        $this->response($user, 200); // 200 being the HTTP response code
+        $this->response($person, 200); // 200 being the HTTP response code
     }
 
     else
     {
-        $this->response(array('error' => 'User could not be found'), 404);
+        $this->response(array('error' => 'person could not be found'), 404);
     }
 }
 
 //TODO: Pendent de fer el post.    
 function person_post()
 {
-    //$this->persons->updateUser( $this->get('id') );
+    //$this->persons->updateperson( $this->get('id') );
 
 
     //$message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
@@ -64,33 +64,33 @@ function person_post()
 
 function person_delete()
 {
-    $this->people->deletePerson( $this->get('id') );
+    $this->Persons_model->deletePerson( $this->get('id') );
     //$message = array('id' => $this->get('id'), 'message' => 'DELETED!');
 
     $this->response($message, 200); // 200 being the HTTP response code
 }
 
-// Getting a people from db.
-function people_get()
+// Getting a Persons_model from db.
+function Persons_model_get()
 {
-    //$users = $this->some_model->getSomething( $this->get('limit') );
+    //$persons = $this->some_model->getSomething( $this->get('limit') );
 
-    $users = $this->people->getPeople( $this->get('id') );
+    $persons = $this->Persons_model->getPersons_model( $this->get('id') );
 
-    /*$users = array(
+    /*$persons = array(
         array('id' => 1, 'name' => 'Some Guy', 'email' => 'example1@example.com'),
         array('id' => 2, 'name' => 'Person Face', 'email' => 'example2@example.com'),
         3 => array('id' => 3, 'name' => 'Scotty', 'email' => 'example3@example.com', 'fact' => array('hobbies' => array('fartings', 'bikes'))),
         );*/
 
-    if($users)
+    if($persons)
     {
-        $this->response($users, 200); // 200 being the HTTP response code
+        $this->response($persons, 200); // 200 being the HTTP response code
     }
 
     else
     {
-        $this->response(array('error' => 'Couldn\'t find any user!'), 404);
+        $this->response(array('error' => 'Couldn\'t find any person!'), 404);
     }
 }
 
