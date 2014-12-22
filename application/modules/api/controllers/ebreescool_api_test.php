@@ -21,12 +21,14 @@ class ebreescool_api_test extends CI_Controller
         // Load the library
         $this->load->library('REST');
 
+        $this->load->config('rest_client');
+
         // Set config options (only 'server' is required to work)
 
         //http://localhost/ebre-escool/index.php/api/ebreescool/person/id/1
-        $config = array('server'            => 'http://localhost/ebre-escool/index.php/api/ebreescool/',
-                        //'api_key'         => 'Setec_Astronomy'
-                        //'api_name'        => 'X-API-KEY'
+        $config = array('server'          => 'http://localhost/ebre-escool/index.php/api/ebreescool/',
+                        'api_key'         => $this->config->item('api_key'),
+                        'api_name'        => 'X-API-KEY',
                         //'http_user'       => 'username',
                         //'http_pass'       => 'password',
                         //'http_auth'       => 'basic',
