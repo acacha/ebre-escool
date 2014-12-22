@@ -311,7 +311,7 @@ $config['rest_key_name'] = 'X-API-KEY';
 |	'logs'
 |
 */
-$config['rest_logs_table'] = 'logs';
+$config['rest_logs_table'] = 'key_logs';
 
 /*
 |--------------------------------------------------------------------------
@@ -324,7 +324,7 @@ $config['rest_logs_table'] = 'logs';
 |
 |	FALSE
 |
-	CREATE TABLE `logs` (
+	CREATE TABLE `key_logs` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `uri` varchar(255) NOT NULL,
 	  `method` varchar(6) NOT NULL,
@@ -338,7 +338,7 @@ $config['rest_logs_table'] = 'logs';
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_logging'] = FALSE;
+$config['rest_enable_logging'] = TRUE;
 
 
 /*

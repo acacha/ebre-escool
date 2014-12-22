@@ -2,6 +2,7 @@
 application/config/database.php
 application/config/auth_ldap.php
 application/config/googleapps.php
+application/config/hybridauthlib.php
 
 .DS_Store
 
@@ -18,6 +19,7 @@ application/third_party/image-crud/
 application/third_party/skeleton/
 application/third_party/fpdf-codeigniter/
 application/third_party/google-api-php-client/
+application/third_party/hybridauth/
 
 application/third_party/skeleton_auth/application/config/auth_ldap.php
 
