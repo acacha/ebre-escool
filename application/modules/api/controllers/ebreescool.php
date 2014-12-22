@@ -31,6 +31,7 @@ class ebreescool extends REST_Controller
         $this->methods['person_delete']['limit'] = 50; //50 requests per hour per person/key
 
         $this->load->model('ebre_escool_auth_model');
+        $this->load->model('api_model');
 
         $this->load->add_package_path(APPPATH.'third_party/skeleton/application/');
             $params = array('model' => "skeleton_auth_model");
@@ -116,21 +117,6 @@ class ebreescool extends REST_Controller
             $this->response($result, 400);   
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         if (false) {
             log_message('debug', $this->LOGTAG . " username: " . $username . " does not exists!");
             $result->message = "Username does not exists!";
@@ -156,15 +142,17 @@ class ebreescool extends REST_Controller
             $this->response(NULL, 400);
         }
 
-        // $person = $this->some_model->getSomething( $this->get('id') );
-        $persons = array(
+        $person = $this->api_model->getPerson( $this->get('id') );
+        //$person = $this->api_model->getPersonAlt( $this->get('id') );
+        
+        /*$persons = array(
             1 => array('id' => 1, 'name' => 'Some Guy', 'email' => 'example1@example.com', 'fact' => 'Loves swimming'),
             2 => array('id' => 2, 'name' => 'Person Face', 'email' => 'example2@example.com', 'fact' => 'Has a huge face'),
             3 => array('id' => 3, 'name' => 'Scotty', 'email' => 'example3@example.com', 'fact' => 'Is a Scott!', array('hobbies' => array('fartings', 'bikes'))),
         );
         
         $person = @$persons[$this->get('id')];
-        
+        */
         if($person)
         {
             $this->response($person, 200); // 200 being the HTTP response code
