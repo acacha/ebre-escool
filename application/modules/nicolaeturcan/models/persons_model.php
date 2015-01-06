@@ -9,7 +9,7 @@
 
 class Persons_model extends CI_Model
 {
-	function __construct()
+function __construct()
   {
     parent::__construct();
     $this->load->database();
@@ -27,15 +27,15 @@ class Persons_model extends CI_Model
     return FALSE;
   }
 }
-    
+
 // Getting a person by id.
 function getPerson($id){
  $this->db->where('person_id',$id);
  $data = $this->db->get('person');
-  
+ $result = $data->result();
 // Cheching if we've got any row.
- if ($data->num_rows() > 0){
-  return $data;
+    if ( $result->num_rows() > 0){
+        return $result;
 }else{
   return false;
 }
