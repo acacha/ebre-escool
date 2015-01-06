@@ -51,7 +51,7 @@ class skeleton extends skeleton_main {
 			//redirect them to the login page
 			redirect($this->skeleton_auth->login_page, 'refresh');
 		}
-		redirect('dashboard','refresh');
+		redirect('attendance/check_attendance','refresh');
 		
 	}
 

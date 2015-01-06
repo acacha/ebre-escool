@@ -106,7 +106,7 @@ class api_model  extends CI_Model  {
 		 state');
 		
 		$this->db->from('person');
-		$this->db->where('person_id',id);
+		$this->db->where('person_id',$id);
 
 		$query = $this->db->get();
 		//echo $this->db->last_query(). "<br/>";
@@ -122,7 +122,7 @@ class api_model  extends CI_Model  {
 			$person->sn2 = $row->person_sn2;
 			$person->email = $row->person_email;
 			//...
-			
+
 			return $person;
 		}	
 		else
