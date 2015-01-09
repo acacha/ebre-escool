@@ -759,6 +759,121 @@ class managment_model  extends CI_Model  {
 		return true;
 	}
 
+	function get_all_users() {
+		/*
+		SELECT id, person_id, ip_address, username, password, initial_password, 
+		force_change_password_next_login, mainOrganizationaUnitId, salt, secondary_email, 
+		activation_code, forgotten_password_realm, forgotten_password_code, forgotten_password_time, 
+		remember_code, created_on, last_modification_date, last_modification_user, creation_user, 
+		last_login, active, ldap_dn
+		*/
+		$this->db->select('id, person_id, ip_address, username, password, initial_password, 
+			force_change_password_next_login, mainOrganizationaUnitId, salt,  
+			activation_code, forgotten_password_realm, forgotten_password_code, forgotten_password_time, 
+			remember_code, created_on, last_modification_date, last_modification_user, creation_user, 
+			last_login, active, ldap_dn');
+		$this->db->from('users');
+		//TODO: Treure
+		//$this->db->limit(50);
+		
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+
+		$all_persons = array();
+		if ($query->num_rows() > 0){
+			$i=0;
+			foreach($query->result() as $row){				
+				//echo "i: " . $i . " | username: " . $row->username;
+				
+				$all_persons[$i]['id'] = $row->id;
+				$all_persons[$i]['person_id'] = $row->person_id;
+				
+				//$all_persons[$i]['ip_address'] = $row->ip_address;
+				$all_persons[$i]['username'] = $row->username;
+				$all_persons[$i]['password'] = $row->password;
+				$all_persons[$i]['initial_password'] = $row->initial_password;				
+				$all_persons[$i]['force_change_password_next_login'] = $row->force_change_password_next_login;
+				$all_persons[$i]['mainOrganizationaUnitId'] = $row->mainOrganizationaUnitId;
+				$all_persons[$i]['salt'] = $row->salt;
+				$all_persons[$i]['activation_code'] = $row->activation_code;
+				$all_persons[$i]['forgotten_password_realm'] = $row->forgotten_password_realm;
+				$all_persons[$i]['forgotten_password_code'] = $row->forgotten_password_code;
+				$all_persons[$i]['forgotten_password_time'] = $row->forgotten_password_time;
+				$all_persons[$i]['forgotten_password_code'] = $row->forgotten_password_code;
+				$all_persons[$i]['remember_code'] = $row->remember_code;				
+				$all_persons[$i]['created_on'] = $row->created_on;
+				$all_persons[$i]['last_modification_date'] = $row->last_modification_date;
+				$all_persons[$i]['last_modification_user'] = $row->last_modification_user;
+				$all_persons[$i]['creation_user'] = $row->creation_user;
+				$all_persons[$i]['last_login'] = $row->last_login;
+				$all_persons[$i]['active'] = $row->active;
+				$all_persons[$i]['ldap_dn'] = $row->ldap_dn;
+				
+				$i++;
+			}
+		}
+
+		return $all_persons;
+
+	}
+
+	function get_all_persons() {
+		$this->db->select('person_id, person_givenName, person_sn1, person_sn2, person_email, 
+			person_secondary_email, person_terciary_email, person_official_id, 
+			person_official_id_type, person_date_of_birth, person_gender, 
+			person_secondary_official_id, person_secondary_official_id_type, person_homePostalAddress, 
+			person_photo, person_locality_id, person_telephoneNumber, person_mobile, 
+			person_bank_account_id, person_notes, person_entryDate, person_last_update,
+			person_creationUserId, person_lastupdateUserId, person_markedForDeletion, 
+			person_markedForDeletionDate');
+		$this->db->from('person');
+		//TODO: Treure
+		//$this->db->limit(50);
+		
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+
+		$all_persons = array();
+		if ($query->num_rows() > 0){
+			$i=0;
+			foreach($query->result() as $row){				
+				//echo "i: " . $i . " | username: " . $row->username;
+				
+				$all_persons[$i]['person_id'] = $row->person_id;
+				$all_persons[$i]['person_givenName'] = $row->person_givenName;
+				$all_persons[$i]['person_sn1'] = $row->person_sn1;
+				$all_persons[$i]['person_sn2'] = $row->person_sn2;
+				$all_persons[$i]['person_email'] = $row->person_email;
+				$all_persons[$i]['person_secondary_email'] = $row->person_secondary_email;
+				$all_persons[$i]['person_terciary_email'] = $row->person_terciary_email;
+				$all_persons[$i]['person_official_id'] = $row->person_official_id;
+				$all_persons[$i]['person_official_id_type'] = $row->person_official_id_type;
+				$all_persons[$i]['person_date_of_birth'] = $row->person_date_of_birth;
+				$all_persons[$i]['person_gender'] = $row->person_gender;
+				$all_persons[$i]['person_secondary_official_id'] = $row->person_secondary_official_id;
+				$all_persons[$i]['person_secondary_official_id_type'] = $row->person_secondary_official_id_type;
+				$all_persons[$i]['person_homePostalAddress'] = $row->person_homePostalAddress;
+				$all_persons[$i]['person_photo'] = $row->person_photo;
+				$all_persons[$i]['person_locality_id'] = $row->person_locality_id;
+				$all_persons[$i]['person_telephoneNumber'] = $row->person_telephoneNumber;
+				$all_persons[$i]['person_mobile'] = $row->person_mobile;
+				$all_persons[$i]['person_bank_account_id'] = $row->person_bank_account_id;
+				$all_persons[$i]['person_notes'] = $row->person_notes;
+				$all_persons[$i]['person_entryDate'] = $row->person_entryDate;
+				$all_persons[$i]['person_last_update'] = $row->person_last_update;
+				$all_persons[$i]['person_creationUserId'] = $row->person_creationUserId;
+				$all_persons[$i]['person_lastupdateUserId'] = $row->person_lastupdateUserId;
+				$all_persons[$i]['person_markedForDeletion'] = $row->person_markedForDeletion;
+				$all_persons[$i]['person_markedForDeletionDate'] = $row->person_markedForDeletionDate;
+				
+				$i++;
+			}
+		}
+
+		return $all_persons;
+
+	}
+
 	function get_all_ldap_users($academic_period_id = null) {
 
 		//ldap_users
@@ -4846,6 +4961,299 @@ ORDER BY person.person_sn1
 		else
 			return false;
 	}	
+
+	function startsWith($haystack, $needle) {
+	    // search backwards starting from haystack length characters from the end
+	    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;
+	}
+
+	function get_enrollments_by_person_id(){
+		/*
+		SELECT enrollment_id,enrollment_personid FROM enrollment WHERE 1 ORDER BY enrollment_personid
+		*/
+		
+		$this->db->select('enrollment_id,enrollment_periodid,enrollment_personid');
+        $this->db->from('enrollment');
+		$this->db->order_by('enrollment_personid');
+		       
+        $query = $this->db->get();
+		
+		$last_enrollment = null;
+		$enrollments_by_person_id = array();
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row)	{
+				$enrollment = new stdClass();
+
+				$enrollment->id = $row->enrollment_id;
+				$enrollment->periodid = $row->enrollment_periodid;
+				$enrollment->person_id = $row->enrollment_personid;
+
+				if ($last_enrollment != null) {
+					if ($enrollment->person_id == $last_enrollment->person_id) {
+						array_push( $enrollments_by_person_id[$last_enrollment->person_id] , $enrollment);
+					} else {
+						$enrollments = array();
+						array_push( $enrollments , $enrollment);
+						$enrollments_by_person_id[$enrollment->person_id] = $enrollments;
+					}
+				} else {
+					$enrollments = array();
+					array_push( $enrollments , $enrollment);
+					$enrollments_by_person_id[$enrollment->person_id] = $enrollments;
+				}
+
+				$last_enrollment = $enrollment;
+			}
+		}
+		
+		return $enrollments_by_person_id;
+	}
+
+	function get_teachers_by_person_id(){
+		
+		/*
+		SELECT teacher_id,teacher_user_id,teacher_person_id FROM teacher WHERE 1 ORDER BY teacher_person_id
+		*/
+		
+		$this->db->select('teacher_id,teacher_user_id,teacher_person_id');
+        $this->db->from('teacher');
+		$this->db->order_by('teacher_person_id');
+		       
+        $query = $this->db->get();
+		
+		$last_teacher = null;
+		$teachers_by_person_id = array();
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row)	{
+				$teacher = new stdClass();
+
+				$teacher->id = $row->teacher_id;
+				$teacher->user_id = $row->teacher_user_id;
+				$teacher->person_id = $row->teacher_person_id;
+
+				if ($last_teacher != null) {
+					if ($teacher->person_id == $last_teacher->person_id) {
+						array_push( $teachers_by_person_id[$last_teacher->person_id] , $teacher);
+					} else {
+						$teachers = array();
+						array_push( $teachers , $teacher);
+						$teachers_by_person_id[$teacher->person_id] = $teachers;
+					}
+				} else {
+					$teachers = array();
+					array_push( $teachers , $teacher);
+					$teachers_by_person_id[$teacher->person_id] = $teachers;
+				}
+
+				$last_teacher = $teacher;
+			}
+		}
+		
+		return $teachers_by_person_id;
+	}
+	function get_employees_by_person_id(){
+		/*
+		SELECT employees_id,employees_person_id,employees_code FROM employees WHERE 1 ORDER BY employees_person_id
+		*/
+		
+		$this->db->select('employees_id,employees_person_id,employees_code');
+        $this->db->from('employees');
+		$this->db->order_by('employees_person_id');
+		       
+        $query = $this->db->get();
+		
+		$last_employee = null;
+		$employees_by_person_id = array();
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row)	{
+				$employee = new stdClass();
+
+				$employee->id = $row->employees_id;
+				$employee->code = $row->employees_code;
+				$employee->person_id = $row->employees_person_id;
+
+				if ($last_employee != null) {
+					if ($employee->person_id == $last_employee->person_id) {
+						array_push( $employees_by_person_id[$last_employee->person_id] , $employee);
+					} else {
+						$employees = array();
+						array_push( $employees , $employee);
+						$employees_by_person_id[$employee->person_id] = $employees;
+					}
+				} else {
+					$employees = array();
+					array_push( $employees , $employee);
+					$employees_by_person_id[$employee->person_id] = $employees;
+				}
+
+				$last_employee = $employee;
+			}
+		}
+		
+		return $employees_by_person_id;
+	}
+	function get_hidden_student_by_person_id(){
+		/*
+		SELECT hidden_student_id,hidden_student_person_id FROM hidden_student WHERE 1 ORDER BY hidden_student_person_id
+		*/
+		
+		$this->db->select('hidden_student_id,hidden_student_person_id');
+        $this->db->from('hidden_student');
+		$this->db->order_by('hidden_student_person_id');
+		       
+        $query = $this->db->get();
+		
+		$last_hidden_student = null;
+		$hidden_students_by_person_id = array();
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row)	{
+				$hidden_student = new stdClass();
+
+				$hidden_student->id = $row->hidden_student_id;
+				$hidden_student->person_id = $row->hidden_student_person_id;
+
+				if ($last_hidden_student != null) {
+					if ($hidden_student->person_id == $last_hidden_student->person_id) {
+						array_push( $hidden_students_by_person_id[$last_hidden_student->person_id] , $hidden_student);
+					} else {
+						$hidden_students = array();
+						array_push( $hidden_students , $hidden_student);
+						$hidden_students_by_person_id[$hidden_student->person_id] = $hidden_students;
+					}
+				} else {
+					$hidden_students = array();
+					array_push( $hidden_students , $hidden_student);
+					$hidden_students_by_person_id[$hidden_student->person_id] = $hidden_students;
+				}
+
+				$last_hidden_student = $hidden_student;
+			}
+		}
+		
+		return $hidden_students_by_person_id;
+	}
+
+	function get_posible_duplicated_users() {
+
+
+		$enrollments_by_person_id = array();
+		$enrollments_by_person_id = $this->get_enrollments_by_person_id();
+
+		$teachers_by_person_id = array();
+		$teachers_by_person_id = $this->get_teachers_by_person_id();
+
+		$employees_by_person_id = array();
+		$employees_by_person_id = $this->get_employees_by_person_id();
+
+		$hidden_students_by_person_id = array();
+		$hidden_students_by_person_id = $this->get_hidden_student_by_person_id();
+
+		/*
+		SELECT username,person_sn1,person_sn2,person_givenName,person_official_id,person_email,
+		       person_secondary_email,person_terciary_email,person_photo,person_telephoneNumber,person_mobile
+		FROM users 
+		INNER JOIN person ON users.person_id= person.person_id
+		WHERE 1 
+		ORDER BY username
+		*/
+
+        $this->db->select('id,username,person.person_id,person_sn1,person_sn2,person_givenName,person_official_id,person_email,
+		       person_secondary_email,person_terciary_email,person_photo,person_telephoneNumber,person_mobile,
+		       created_on,last_modification_date,last_modification_user,creation_user,last_login,active,mark_as_not_duplicated');
+        $this->db->from('users');
+        $this->db->join('person','users.person_id= person.person_id');
+		$this->db->order_by('username');
+		$this->db->where('mark_as_not_duplicated',0);
+		
+		       
+        $query = $this->db->get();
+		
+		$last_user = null;
+		$posible_duplicated_users = array();
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row)	{
+				$user = new stdClass();
+				$user->id = $row->id;
+				$user->person_id = $row->person_id;			
+				$user->username = $row->username;
+				$user->person_sn1 = $row->person_sn1;
+				$user->person_sn2 = $row->person_sn2;
+				$user->person_givenName = $row->person_givenName;
+				$user->person_official_id = $row->person_official_id;
+				$user->person_email = $row->person_email;
+				$user->person_secondary_email = $row->person_secondary_email;
+				$user->person_terciary_email = $row->person_terciary_email;
+				$user->person_photo = $row->person_photo;
+				$user->person_telephoneNumber = $row->person_telephoneNumber;
+				$user->person_mobile = $row->person_mobile;
+
+				$user->created_on = $row->created_on;
+				$user->last_modification_date = $row->last_modification_date;
+				$user->last_modification_user = $row->last_modification_user;
+				$user->creation_user = $row->creation_user;
+				$user->last_login = $row->last_login;
+				$user->active = $row->active;
+				$user->mark_as_not_duplicated = $row->mark_as_not_duplicated;
+				
+
+				$user->enrollments = "";
+
+				if (is_array($enrollments_by_person_id)){
+					if (array_key_exists($user->person_id, $enrollments_by_person_id)) {
+						foreach ($enrollments_by_person_id[$user->person_id] as $enrollment) {
+							$user->enrollments = $user->enrollments . $enrollment->id . " ( " . $enrollment->periodid . ")" . ", ";
+						}		
+					}
+				}
+
+				$user->teachers = "";
+
+				if (is_array($teachers_by_person_id)){
+					if (array_key_exists($user->person_id, $teachers_by_person_id)) {
+						foreach ($teachers_by_person_id[$user->person_id] as $teacher) {
+							$user->teachers = $user->teachers . $teacher->id . " ( " . $teacher->user_id . ")" . ", ";
+						}		
+					}
+				}
+
+				$user->employees = "";
+
+				if (is_array($employees_by_person_id)){
+					if (array_key_exists($user->person_id, $employees_by_person_id)) {
+						foreach ($employees_by_person_id[$user->person_id] as $employee) {
+							$user->employees = $user->employees . $employee->id . " ( " . $employee->code . ")" . ", ";
+						}		
+					}
+				}
+
+				$user->hidden_students = "";
+
+				if (is_array($hidden_students_by_person_id)){
+					if (array_key_exists($user->person_id, $hidden_students_by_person_id)) {
+						foreach ($hidden_students_by_person_id[$user->person_id] as $hidden_student) {
+							$user->hidden_students = $user->hidden_students . $hidden_student->id . ", ";
+						}		
+					}
+				}
+				
+
+				if ($last_user != null) {
+   					//check if last user is very similar (posible duplicate)
+   					if($this->startsWith($user->username,$last_user->username)) {
+   						$posible_duplicated_user = new stdClass();   						
+   						$posible_duplicated_users[$row->id] = $user;
+   						$posible_duplicated_users[$last_user->id] = $last_user;
+   					}
+   				}
+
+   				$last_user = $user;
+			}
+			return $posible_duplicated_users;
+		}			
+		else
+			return $posible_duplicated_users;
+	}
+
 /*
 	function get_all_teachers_ids_and_names() {
 

@@ -89,6 +89,7 @@ $lang['reports'] = 'Informes';
 $lang['managment'] = 'Gestió';
  $lang['users'] = 'Usuaris';
  $lang['users_ldap'] = 'Usuaris ldap';
+ $lang['users_google_apps'] = 'Usuaris Google Apps';
  $lang['groups'] = 'Grups';
  $lang['massive_change_password']   = 'Canvi massiu de paraules de pas';
  $lang['statistics_checkings']   = 'Estadístiques. Comprovacions';

@@ -688,7 +688,7 @@ $(function() {
                         { "mData": function(data, type, full) {
                                     photos_base_url = "<?php echo base_url('/uploads/person_photos');?>";
                                     student_full_name = data.sn1 + " " + data.sn2 + ", " + data.givenName + " (" + data.person_id + ")";
-                                    return '<a class="image-thumbnail" href="' + photos_base_url + '/' + data.photo_url + '"><img data-rel="tooltip" class="msg-photo" alt="'+ student_full_name +'" title="'+ student_full_name +'" src="' + photos_base_url + '/' + data.photo_url + '" alt="foto alumne" style="width:75px;"></img></a>';
+                                    return '<a class="image-thumbnail" href="' + photos_base_url + '/' + data.photo_url + '"><img data-rel="tooltip" class="msg-photo" alt="'+ student_full_name +'" title="'+ student_full_name +'" src="' + photos_base_url + '/' + data.photo_url + '" style="width:75px;"></img></a>';
                                   }},
                         { "mData": function(data, type, full) {
                                     return data.sn1 + " " + data.sn2 + ", " + data.givenName + " (" + data.person_id + ")";
