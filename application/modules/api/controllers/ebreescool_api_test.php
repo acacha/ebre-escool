@@ -49,6 +49,35 @@ class ebreescool_api_test extends CI_Controller
         
     }
 
+    public function person_post(){
+        // Pull in an array of tweets
+        
+        $givenName = "Sergi";
+        $sn1 = "Tur";
+        $sn2 = "Badenas";
+        
+        // altres camps...
+
+
+        $post_array = array(
+            "givenName" => $givenName, 
+            "sn1" => $sn1, 
+            "sn2" => $sn2
+            //other field...
+            );
+        
+        // Pull in an array of tweets        
+        $result = $this->rest->post('person',$post_array);
+        
+        echo "<br> STATUS CODE: " . $result = 
+            $this->rest->status() . "</br>";
+        
+        $result = $this->rest->debug();
+
+        echo json_encode($result);
+        
+    }
+
     public function test_login(){
 
         $username = "sergitur";

@@ -123,7 +123,7 @@ class api_model  extends CI_Model  {
 			$person->email = $row->person_email;
 			//...
 
-			return $person;
+				
 		}	
 		else
 			return false;
