@@ -3742,6 +3742,7 @@ function get_current_academic_period() {
 		$this->db->join('study_module','study_module.study_module_id = study_submodules.study_submodules_study_module_id');
 		$this->db->join('enrollment','incident.incident_student_id = enrollment.enrollment_personid AND enrollment.enrollment_study_id = course.course_study_id');
 		$this->db->join('classroom_group','classroom_group.classroom_group_course_id = course.course_id');
+		$this->db->join('classroom_group_academic_periods','classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id');
 		
 		$this->db->where('enrollment.enrollment_group_id',$classroom_group_id);
 		$this->db->where('enrollment.enrollment_periodid',$academic_period->shortname);
@@ -3749,6 +3750,7 @@ function get_current_academic_period() {
 
 		$between_str = "BETWEEN '" . $initial_date . "' AND '" . $final_date . "'";
 		$this->db->where('incident_date ' . $between_str);
+		$this->db->where('classroom_group_academic_periods.classroom_group_academic_periods_academic_period_id' , $academic_period_id);
 			
 		$this->db->order_by('incident_date',"DESC");
 		$this->db->order_by('incident_time_slot_id',"DESC");
@@ -4104,13 +4106,14 @@ function get_current_academic_period() {
 		$this->db->join('study_module','study_module.study_module_id = study_submodules.study_submodules_study_module_id');
 		$this->db->join('enrollment','incident.incident_student_id = enrollment.enrollment_personid AND enrollment.enrollment_study_id = course.course_study_id');
 		$this->db->join('classroom_group','classroom_group.classroom_group_course_id = course.course_id');
-		
+		$this->db->join('classroom_group_academic_periods','classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id');
+
 		$this->db->where('enrollment.enrollment_group_id',$classroom_group_id);
 		$this->db->where('enrollment.enrollment_periodid',$academic_period->shortname);
 		$this->db->where('incident.incident_student_id',$student_id);
 		$between_str = "BETWEEN '" . $initial_date . "' AND '" . $final_date . "'";
 		$this->db->where('incident.incident_date ' . $between_str);
-		
+		$this->db->where('classroom_group_academic_periods.classroom_group_academic_periods_academic_period_id' , $academic_period_id);
 			
 		$this->db->order_by('incident_date',"DESC");
 		$this->db->order_by('incident_time_slot_id',"DESC");
