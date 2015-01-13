@@ -3730,9 +3730,10 @@ function get_current_academic_period() {
 		$this->db->select('incident_id, incident_student_id, person_givenName, person_sn1, person_sn2, incident_time_slot_id, 
 			time_slot_start_time, time_slot_end_time, incident_day, incident_date, incident_study_submodule_id, study_submodules_shortname,
 			study_submodules_name, study_submodules_study_module_id, study_module_shortname, study_module_name, study_submodules_courseid,
-			incident_type, incident_type_name, incident_type_shortName, enrollment_id, enrollment_group_id, classroom_group_code, 
-			classroom_group_name , incident_notes, incident_entryDate, incident_last_update, incident_creationUserId, 
+			course.course_shortname, incident_type, incident_type_name, incident_type_shortName, enrollment_id, enrollment_group_id,  
+			incident_notes, incident_entryDate, incident_last_update, incident_creationUserId, 
 			incident_lastupdateUserId');
+		$this->db->distinct();
 		$this->db->from('incident');
 		$this->db->join('person','person.person_id = incident.incident_student_id');
 		$this->db->join('time_slot','time_slot.time_slot_id = incident.incident_time_slot_id');		
@@ -3741,7 +3742,7 @@ function get_current_academic_period() {
 		$this->db->join('course','course.course_id = study_submodules.study_submodules_courseid');
 		$this->db->join('study_module','study_module.study_module_id = study_submodules.study_submodules_study_module_id');
 		$this->db->join('enrollment','incident.incident_student_id = enrollment.enrollment_personid AND enrollment.enrollment_study_id = course.course_study_id');
-		$this->db->join('classroom_group','classroom_group.classroom_group_course_id = course.course_id AND classroom_group.classroom_group_id = enrollment.enrollment_group_id');
+		$this->db->join('classroom_group','classroom_group.classroom_group_course_id = course.course_id');
 		$this->db->join('classroom_group_academic_periods','classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id');
 		
 		$this->db->where('enrollment.enrollment_group_id',$classroom_group_id);
@@ -3785,8 +3786,12 @@ function get_current_academic_period() {
 				$all_incidents_array[$i]['study_submodules_courseid'] = $row->study_submodules_courseid;
 				$all_incidents_array[$i]['enrollment_group_id'] = $row->enrollment_group_id;
 				$all_incidents_array[$i]['enrollment_id'] = $row->enrollment_id;
-				$all_incidents_array[$i]['classroom_group_code'] = $row->classroom_group_code;
-				$all_incidents_array[$i]['classroom_group_name'] = $row->classroom_group_name;
+				
+				//$all_incidents_array[$i]['classroom_group_code'] = $row->classroom_group_code;
+				//$all_incidents_array[$i]['classroom_group_name'] = $row->classroom_group_name;
+				
+				$all_incidents_array[$i]['course_shortname'] = $row->course_shortname;
+
 				$all_incidents_array[$i]['notes'] = $row->incident_notes;
 				$all_incidents_array[$i]['entryDate'] = $row->incident_entryDate;
 				$all_incidents_array[$i]['last_update'] = $row->incident_last_update;
@@ -4095,9 +4100,10 @@ function get_current_academic_period() {
 		$this->db->select('incident_id, incident_student_id, person_givenName, person_sn1, person_sn2, incident_time_slot_id, 
 			time_slot_start_time, time_slot_end_time, incident_day, incident_date, incident_study_submodule_id, study_submodules_shortname,
 			study_submodules_name, study_submodules_study_module_id, study_module_shortname, study_module_name, study_submodules_courseid,
-			incident_type, incident_type_name, incident_type_shortName, enrollment_id, enrollment_group_id, classroom_group_code, 
-			classroom_group_name , incident_notes, incident_entryDate, incident_last_update, incident_creationUserId, 
+			incident_type, incident_type_name, incident_type_shortName, enrollment_id, enrollment_group_id, 
+			incident_notes, incident_entryDate, incident_last_update, incident_creationUserId, 
 			incident_lastupdateUserId');
+		$this->db->distinct();
 		$this->db->from('incident');
 		$this->db->join('person','person.person_id = incident.incident_student_id');
 		$this->db->join('time_slot','time_slot.time_slot_id = incident.incident_time_slot_id');		
@@ -4106,7 +4112,7 @@ function get_current_academic_period() {
 		$this->db->join('course','course.course_id = study_submodules.study_submodules_courseid');
 		$this->db->join('study_module','study_module.study_module_id = study_submodules.study_submodules_study_module_id');
 		$this->db->join('enrollment','incident.incident_student_id = enrollment.enrollment_personid AND enrollment.enrollment_study_id = course.course_study_id');
-		$this->db->join('classroom_group','classroom_group.classroom_group_course_id = course.course_id AND classroom_group.classroom_group_id = enrollment.enrollment_group_id');
+		$this->db->join('classroom_group','classroom_group.classroom_group_course_id = course.course_id');
 		$this->db->join('classroom_group_academic_periods','classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id');
 
 		$this->db->where('enrollment.enrollment_group_id',$classroom_group_id);
