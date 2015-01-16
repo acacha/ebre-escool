@@ -46,6 +46,7 @@ Ebre-escool és una aplicació web que es pot instal·lar en qualsevol servidor 
 
 A més Ebre-escool utilitza les següents llibreries o tecnologies:
 
++ __[CodeIgniter](http://acacha.org/mediawiki/index.php/CodeIgniter)__: Ebre-escool està desenvolupat seguint el [MVC](http://acacha.org/mediawiki/index.php/CodeIgniter) mitjançant el framework de desenvolupament CodeIgniter.
 + __[Ldap](http://acacha.org/mediawiki/index.php/Ldap)__: és opcional. a més de guardar les dades dels usuaris a la base de dades SQL, també es creen i actualitzen els comptes d'usuari en un servidor Ldap. Això és especialment útil per integrar els usuaris en sistemes experts com per exemple servidors de fitxers Windows/Samba, Moodle, Google Apps For Education o qualsevol versió de Google Apps. Ldap és el sistema estàndard que utilitzen les aplicacions per a centralitzar els comptes d'usuari. Multitud d'aplicacions web com Wordpress, PrestaShop, GLPI per indicar algunes tenen suport o es pot afegir el suport mitjançant plugins per a Ldap
 +__Suport [Google Apps](http://acacha.org/mediawiki/index.php/)__: s'automatitza la creació de comptes d'usuari per a Google Apps for education ja sigui utilitzant GADS i Ldap o la pròpia aplicació
 + __[Datatables](http://acacha.org/mediawiki/index.php/Datatables)__: utilitzem aquesta llibreria per a la creació de informes en format taula web amb una presentació i funcionalitats millorades ( ordenar columnes, ordenar files, guardar en format Excel/OpenOffice/CSV, Imprimir)
