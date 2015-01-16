@@ -67,6 +67,13 @@ Ebre-escool utilitza com a aplicació "carcassa" [skeleton](https://github.com/a
 
 http://acacha.org/mediawiki/index.php/Skeleton
 
+Documentació tècnica
+==
+
+Consulteu la wiki d'ebre-escool a acacha.org:
+
+ http://acacha.org/mediawiki/index.php/Ebre-escool
+
 Codi font
 ==
 
@@ -81,3 +88,19 @@ Roadmap. Possibles funcionalitats futures
 * Assistent canvi de perìode acadèmic
 * Pagament de matrícula per TPV
 * Mòdul avaluació
+
+== Contribuidors ==
+
+L'aplicació ha estat creada principalment per Sergi Tur Badenas (http://acacha.org | https://github.com/acacha)
+
+Altres contribuidors codi font
+
+*Oscar Adan: https://github.com/oadan79
+
+També agrair la contribució en la detecció d'errors i en manteniment de dades a les persones encarregades del manteniment informàtic del Institut de l'Ebre:
+
+* Paolo Dàvila: https://github.com/pdavila13
+* Roger Melich: https://github.com/ebrematic
+
+
+I agraïr especialment la col·laboració de l'Institut de l'Ebre com a centre pilot ebre-escool!
