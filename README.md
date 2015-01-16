@@ -105,7 +105,7 @@ L'aplicació ha estat creada principalment per Sergi Tur Badenas (http://acacha.
 
 Altres contribuidors codi font
 
-+__Oscar Adan__: https://github.com/oadan79
++ __Oscar Adan__: https://github.com/oadan79
 
 També agrair la contribució en la detecció d'errors i en manteniment de dades a les persones encarregades del manteniment informàtic del Institut de l'Ebre:
 
