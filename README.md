@@ -19,7 +19,7 @@ Funcionalitats
     + __Dades matrícula__: es poden modificar mitjançant un assistent o wizard o per manteniment de taules
     + __Horaris__: hores no lectives, torns
     + __Departaments, families professionals i altres unitats organitzatives de centre__: assignació de professors i estudis a departaments o families professionals.
-    +__Espais/Aules__: gestió dels espais de centre. Es poden associar a grups de classe i horaris.
+    + __Espais/Aules__: gestió dels espais de centre. Es poden associar a grups de classe i horaris.
 + __Gestió de faltes d'assistència__: suport per passar falta a nivell d'unitat didàctica o unitat formativa, sistema àgil per passar faltes, llistes de classe a mida, etc
 + __Horaris__: El professorat i els alumnes (opcional) poden consultar els horaris en format web. Es poden veure tant els horaris per a cada professor com els horaris de grups de classe.
 + __Inventari de centre__
