@@ -11,15 +11,15 @@ Funcionalitats
   +__Currículum__: permet definir el currículum del centre d'una forma flexible que suporta tots els tipus d'estudis reglats actuals (ESO, Batxillerat, Formació Professional LOGSE, LOE). Es poden gestionar per exemple:
     + __Períodes acadèmics__: l'aplicació suporta dades històriques ja que totes les dades estan associades.
     + __Estudis__: manteniment dels estudis que imparteix el centre
-  + __Unitats organitzatives estudis__: ESO, Batxillerat, Formació professional o altres
-  + __Cicles__: suport per a estudis amb múltiples cicles
-  + __Cursos i grups de classe__: assignació d'alumnes a grups de classe durant la matrícula i a posteriori, gestió d'aules...
-  + __Assignatures/crèdits/mòduls professionals i subdivisions com Unitats Formatives, Unitats didàctiques, etc__.
-  + __Lliçons__: una llicó és una unitat de classe (1 hora de classe normalment). Permet gestionar amb el màxim nivell de detall per exemple els horaris.
-  + __Dades matrícula__: es poden modificar mitjançant un assistent o wizard o per manteniment de taules
-  + __Horaris__: hores no lectives, torns
-  + __Departaments, families professionals i altres unitats organitzatives de centre__.
-  +__Espais/Aules__: gestió dels espais de centre. Es poden associar a grups de classe i horaris.
+    + __Unitats organitzatives estudis__: ESO, Batxillerat, Formació professional o altres
+    + __Cicles__: suport per a estudis amb múltiples cicles
+    + __Cursos i grups de classe__: assignació d'alumnes a grups de classe durant la matrícula i a posteriori, gestió d'aules...
+    + __Assignatures/crèdits/mòduls professionals i subdivisions com Unitats Formatives, Unitats didàctiques, etc__.
+    + __Lliçons__: una llicó és una unitat de classe (1 hora de classe normalment). Permet gestionar amb el màxim nivell de detall per exemple els horaris.
+    + __Dades matrícula__: es poden modificar mitjançant un assistent o wizard o per manteniment de taules
+    + __Horaris__: hores no lectives, torns
+    + __Departaments, families professionals i altres unitats organitzatives de centre__
+    +__Espais/Aules__: gestió dels espais de centre. Es poden associar a grups de classe i horaris.
 + __Gestió de faltes d'assistència__: suport per passar falta a nivell d'unitat didàctica o unitat formativa, sistema àgil per passar faltes, llistes de classe a mida, etc
 + __Horaris__: El professorat i els alumnes (opcional) poden consultar els horaris en format web. Es poden veure tant els horaris per a cada professor com els horaris de grups de classe.
 + __Inventari de centre__
