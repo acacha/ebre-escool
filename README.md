@@ -6,8 +6,8 @@ Ebre-escool és una aplicació web per gestió de centres d'ensenyament. En ús 
 Funcionalitats
 ==
 
-* Dades personals alumnes, professorats, personal laboral...: La gestió dels alumnes es realitza principalment mitjançant la matrícula però es poden fer modificacions de les dades personals de qualsevol persona associada al centre mitjançant una manteniment web fàcils d'utilitzar
-* Manteniment de dades de centre: mitjançant una interficie web àgil i intuitiva es poden gestionar les següents dades del centre:
+* _Dades personals alumnes, professorats, personal laboral..._: La gestió dels alumnes es realitza principalment mitjançant la matrícula però es poden fer modificacions de les dades personals de qualsevol persona associada al centre mitjançant una manteniment web fàcils d'utilitzar
+* _Manteniment de dades de centre_: mitjançant una interficie web àgil i intuitiva es poden gestionar les següents dades del centre:
 **Currículum: permet definir el currículum del centre d'una forma flexible que suporta tots els tipus d'estudis reglats actuals (ESO, Batxillerat, Formació Professional LOGSE, LOE). Es poden gestionar per exemple:
 *** Períodes acadèmics: l'aplicació suporta dades històriques ja que totes les dades estan associades.
 *** Estudis: manteniment dels estudis que imparteix el centre
