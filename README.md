@@ -6,24 +6,24 @@ Ebre-escool és una aplicació web per gestió de centres d'ensenyament. En ús 
 Funcionalitats
 ==
 
-* _Dades personals alumnes, professorats, personal laboral..._: La gestió dels alumnes es realitza principalment mitjançant la matrícula però es poden fer modificacions de les dades personals de qualsevol persona associada al centre mitjançant una manteniment web fàcils d'utilitzar
-* _Manteniment de dades de centre_: mitjançant una interficie web àgil i intuitiva es poden gestionar les següents dades del centre:
-**Currículum: permet definir el currículum del centre d'una forma flexible que suporta tots els tipus d'estudis reglats actuals (ESO, Batxillerat, Formació Professional LOGSE, LOE). Es poden gestionar per exemple:
-*** Períodes acadèmics: l'aplicació suporta dades històriques ja que totes les dades estan associades.
-*** Estudis: manteniment dels estudis que imparteix el centre
-*** Unitats organitzatives estudis: ESO, Batxillerat, Formació professional o altres
-*** Cicles: suport per a estudis amb múltiples cicles
-*** Cursos i grups de classe
-*** Assignatures/crèdits/mòduls professionals i subdivisions com Unitats Formatives, Unitats didàctiques, etc.
-*** Lliçons: una llicó és una unitat de classe (1 hora de classe normalment). Permet gestionar amb el màxim nivell de detall per exemple els horaris.
-*** Dades matrícula: es poden modificar mitjançant un assistent o wizard o per manteniment de taules
-*** Horaris: hores no lectives, torns
-* Horaris: El professorat i els alumnes (opcional) poden consultar els horaris en format web. Es poden veure tant els horaris per a cada professor com els horaris de grups de classe.
-* Departaments, families professionals i altres unitats organitzatives de centre.
-*Espais/Aules: gestió dels espais de centre. Es poden associar a grups de classe i horaris.
-*Inventari de centre
-* Integració amb xarxes socials com Facebook, Twitter o Google+
-* Panell de control: permet veure un resum de dades resum del centre com número d'alumnes, alumnes per cicles, estudis, grups de classe, etc
++ __Gestió deDades personals alumnes, professorats, personal laboral...__: La gestió dels alumnes es realitza principalment mitjançant la matrícula però es poden fer modificacions de les dades personals de qualsevol persona associada al centre mitjançant una manteniment web fàcils d'utilitzar
++ __Manteniment de dades de centre__: mitjançant una interficie web àgil i intuitiva es poden gestionar les següents dades del centre:
+++Currículum: permet definir el currículum del centre d'una forma flexible que suporta tots els tipus d'estudis reglats actuals (ESO, Batxillerat, Formació Professional LOGSE, LOE). Es poden gestionar per exemple:
++++ Períodes acadèmics: l'aplicació suporta dades històriques ja que totes les dades estan associades.
++++ Estudis: manteniment dels estudis que imparteix el centre
++++ Unitats organitzatives estudis: ESO, Batxillerat, Formació professional o altres
++++ Cicles: suport per a estudis amb múltiples cicles
++++ Cursos i grups de classe
++++ Assignatures/crèdits/mòduls professionals i subdivisions com Unitats Formatives, Unitats didàctiques, etc.
++++ Lliçons: una llicó és una unitat de classe (1 hora de classe normalment). Permet gestionar amb el màxim nivell de detall per exemple els horaris.
++++ Dades matrícula: es poden modificar mitjançant un assistent o wizard o per manteniment de taules
++++ Horaris: hores no lectives, torns
+++ Horaris: El professorat i els alumnes (opcional) poden consultar els horaris en format web. Es poden veure tant els horaris per a cada professor com els horaris de grups de classe.
+++ Departaments, families professionals i altres unitats organitzatives de centre.
+++Espais/Aules: gestió dels espais de centre. Es poden associar a grups de classe i horaris.
++ Inventari de centre
++ Integració amb xarxes socials com Facebook, Twitter o Google+
++ Panell de control: permet veure un resum de dades resum del centre com número d'alumnes, alumnes per cicles, estudis, grups de classe, etc
 
 Qui utilitza ebre-escool?
 ==
