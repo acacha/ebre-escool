@@ -42,7 +42,7 @@ Actualment ebre-escool s'està utilitzant a [l'Institut de l'Ebre](https://www.i
 Requeriments
 ==
 
-Ebre-escool és una aplicació web que es pot instal·lar en qualsevol servidor web, ja sigui un servidor propi del centre o en servidors externs contractats. Ebre-escool és una aplicació LAMP, és a dir que està dissenyada per executar-se a un servidor Linux (L), amb el servidor d'aplicacions web Apache (A), que està programada en PHP (i altres llenguatges de suport com Javascript) i que guarda les dades a un servidor MySQL. Tot  i que no s'ha provat podria ser possible instal·lar ebre-escool en altres entorns com Windows, altres gestors de bases de dades, etc.
+Ebre-escool és una aplicació web que es pot instal·lar en qualsevol servidor web, ja sigui un servidor propi del centre o en servidors externs contractats. Ebre-escool és una aplicació __[LAMP](http://acacha.org/mediawiki/index.php/LAMP)__, és a dir que està dissenyada per executar-se a un servidor __[Linux](http://acacha.org/mediawiki/index.php/Linux)__ (L), amb el servidor d'aplicacions web __[Apache](http://acacha.org/mediawiki/index.php/Apache)__ (A), que està programada en __[PHP](http://acacha.org/mediawiki/index.php/PHP)__ (i altres llenguatges de suport com __[Javascript](http://acacha.org/mediawiki/index.php/Javascript)__) i que guarda les dades a un servidor __[MySQL](http://acacha.org/mediawiki/index.php/MySQL)__. Tot  i que no s'ha provat podria ser possible instal·lar ebre-escool en altres entorns com Windows, altres gestors de bases de dades, etc.
 
 A més Ebre-escool utilitza les següents llibreries o tecnologies:
 
