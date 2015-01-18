@@ -1735,12 +1735,14 @@ class attendance extends skeleton_main {
                 }			
 			}
 			
-			foreach ($all_students_in_group as $student_key => $student) {
-				if ($number_of_enrolled_study_submodules[$student->enrollment_id] == 0 ) {
-					$student->errorType = "L'alumne no té cap UF/UD matrículada";
-					$students_with_errors[$student_key]= $student;
-				}
-			}
+            if (is_array($all_students_in_group)) {
+    			foreach ($all_students_in_group as $student_key => $student) {
+    				if ($number_of_enrolled_study_submodules[$student->enrollment_id] == 0 ) {
+    					$student->errorType = "L'alumne no té cap UF/UD matrículada";
+    					$students_with_errors[$student_key]= $student;
+    				}
+    			}
+            }
 
 			$data['students_with_errors'] = $students_with_errors;
 			$data['students_with_errors_num'] = count($students_with_errors);
