@@ -1702,6 +1702,16 @@ class attendance extends skeleton_main {
 		*/
 
 		$number_of_enrolled_study_submodules = array ();
+
+        $all_merged_students = array();
+        if ( is_array ( $all_students_in_group ) && is_array ( $official_students_in_group )) {
+            $all_merged_students = array_merge ($all_students_in_group,$official_students_in_group);
+        } else if (is_array ($official_students_in_group)) {
+            $all_merged_students = $official_students_in_group;
+        } else if (is_array ($all_students_in_group)) {
+            $all_merged_students = $official_students_in_group;
+        }
+
 		$number_of_enrolled_study_submodules = $this->attendance_model->get_number_of_enrolled_study_submodules( array_merge ($all_students_in_group,$official_students_in_group));
 
 		//print_r($number_of_enrolled_study_submodules);
