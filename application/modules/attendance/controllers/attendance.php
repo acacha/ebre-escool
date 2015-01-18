@@ -1712,7 +1712,7 @@ class attendance extends skeleton_main {
             $all_merged_students = $official_students_in_group;
         }
 
-		$number_of_enrolled_study_submodules = $this->attendance_model->get_number_of_enrolled_study_submodules( array_merge ($all_students_in_group,$official_students_in_group));
+		$number_of_enrolled_study_submodules = $this->attendance_model->get_number_of_enrolled_study_submodules( $all_merged_students);
 
 		//print_r($number_of_enrolled_study_submodules);
 		$data['number_of_enrolled_study_submodules'] = $number_of_enrolled_study_submodules;
