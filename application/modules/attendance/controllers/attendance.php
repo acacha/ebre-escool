@@ -1709,7 +1709,7 @@ class attendance extends skeleton_main {
         } else if (is_array ($official_students_in_group)) {
             $all_merged_students = $official_students_in_group;
         } else if (is_array ($all_students_in_group)) {
-            $all_merged_students = $official_students_in_group;
+            $all_merged_students = $all_students_in_group;
         }
 
 		$number_of_enrolled_study_submodules = $this->attendance_model->get_number_of_enrolled_study_submodules( $all_merged_students);
