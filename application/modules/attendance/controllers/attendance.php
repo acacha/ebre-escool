@@ -1723,14 +1723,16 @@ class attendance extends skeleton_main {
 		if (count($all_students_in_group) > 0) {
 			$students_with_errors = array();
 			foreach ($official_students_in_group as $official_student_key => $official_student) {
-				if ( ! array_key_exists($official_student_key, $all_students_in_group) ) {
-					if ($number_of_enrolled_study_submodules[$official_student->enrollment_id] == 0 ) { 
-						$official_student->errorType = "L'alumne no té cap UF/UD matrículada";
-					} else {
-						$official_student->errorType = "Matrícula incoherent. Alumne matrículat al grup però sense CAP Unitat Formativa DEL GRUP matrículada";	
-					}
-					$students_with_errors[$official_student_key]= $official_student;
-				} 			
+                if (is_array($all_students_in_group)) {
+                    if ( ! array_key_exists($official_student_key, $all_students_in_group) ) {
+                        if ($number_of_enrolled_study_submodules[$official_student->enrollment_id] == 0 ) { 
+                            $official_student->errorType = "L'alumne no té cap UF/UD matrículada";
+                        } else {
+                            $official_student->errorType = "Matrícula incoherent. Alumne matrículat al grup però sense CAP Unitat Formativa DEL GRUP matrículada";  
+                        }
+                        $students_with_errors[$official_student_key]= $official_student;
+                    }    
+                }			
 			}
 			
 			foreach ($all_students_in_group as $student_key => $student) {
