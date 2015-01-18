@@ -44,6 +44,10 @@ class ebreescool extends REST_Controller
         $this->person_get();
     }
 
+    /*
+    For better security password have to be hasehd no original password!
+    Tried passwords are logged!
+    */
     function login_post()
     {
         
@@ -54,6 +58,7 @@ class ebreescool extends REST_Controller
         
         $username = $this->post('username');
         $password = $this->post('password');
+        
         $realm = $this->post('realm');
 
         log_message('debug', $this->LOGTAG . "Username: " . $username);
@@ -76,8 +81,8 @@ class ebreescool extends REST_Controller
         }
 
         if ($password == "" || !$result->password) {
-            log_message('debug', $this->LOGTAG . "Incorrect username value");
-            $result->message = "Incorrect username value!";
+            log_message('debug', $this->LOGTAG . "Incorrect password value");
+            $result->message = "Incorrect password value!";
             $this->response($result, 400);
         }
 
@@ -93,7 +98,7 @@ class ebreescool extends REST_Controller
         $this->skeleton_auth->skeleton_auth_model->setRealm($realm);
         //$remember = (bool) $this->input->post('remember');
                 
-        if ($this->skeleton_auth->login($username, $password, false))
+        if ($this->skeleton_auth->login($username, $password, false, true))
         {
             //login is successful
             log_message('debug', $this->LOGTAG . "Login successful");

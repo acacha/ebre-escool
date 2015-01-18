@@ -58,7 +58,6 @@ class ebreescool_api_test extends CI_Controller
         
         // altres camps...
 
-
         $post_array = array(
             "givenName" => $givenName, 
             "sn1" => $sn1, 
@@ -81,8 +80,8 @@ class ebreescool_api_test extends CI_Controller
     public function test_login(){
 
         $username = "sergitur";
-        $password = "PUT_YOUR_PASSWORD_HERE";
-        $realm = "ldap";
+        $password = md5("PUT YOUR PASSWORD HERE");
+        $realm = "mysql";
 
         $post_array = array("username" => $username, "password" => $password, "realm" => $realm);
         

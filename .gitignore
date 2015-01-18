@@ -29,3 +29,5 @@ uploads/inventory_files/*
 uploads/qrcodes/*
 
 migration/
+tools/sync_explotation_to_development_config.php
+
