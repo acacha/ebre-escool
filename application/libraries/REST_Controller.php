@@ -1524,6 +1524,8 @@ abstract class REST_Controller extends CI_Controller
         $this->rest->db->select();
         $this->rest->db->where('key', $this->rest->key);
         $this->rest->db->where('controller', $controller);
+
+        log_message('debug', "###########***************** Controller: " . $controller);
         
         $query = $this->rest->db->get(config_item('rest_access_table'));
 

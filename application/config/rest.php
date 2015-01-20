@@ -351,7 +351,7 @@ $config['rest_enable_logging'] = TRUE;
 |	'access'
 |
 */
-$config['rest_access_table'] = 'access';
+$config['rest_access_table'] = 'key_access';
 
 /*
 |--------------------------------------------------------------------------
@@ -374,7 +374,7 @@ CREATE TABLE `access` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_access'] = FALSE;
+$config['rest_enable_access'] = TRUE;
 
 
 /*

@@ -45,100 +45,17 @@ class ebreescool extends REST_Controller
     }
 
     /*
+    !!IMPORTANT!!
+    DEPRECATED. SEE CONTROLLER ebreescool_login.php
     For better security password have to be hasehd no original password!
     Tried passwords are logged!
     */
-    function login_post()
+    /*function login_post()
     {
         
-        log_message('debug', $this->LOGTAG . "login_post called");
-
-        $result = new stdClass();
-        $result->message = "LOGIN POST";
         
-        $username = $this->post('username');
-        $password = $this->post('password');
-        
-        $realm = $this->post('realm');
+    }*/
 
-        log_message('debug', $this->LOGTAG . "Username: " . $username);
-        log_message('debug', $this->LOGTAG . "Realm: " . $realm);
-
-        if(false)
-            {
-                $this->response(NULL, 400);
-            }
-
-        $result->username= $username;
-        $result->password= $password;
-        $result->realm= $realm;
-
-        //VALIDATION
-        if ($username == "" || !$result->username) {
-            log_message('debug', $this->LOGTAG . "Incorrect username value");
-            $result->message = "Incorrect username value";
-            $this->response($result, 400);
-        }
-
-        if ($password == "" || !$result->password) {
-            log_message('debug', $this->LOGTAG . "Incorrect password value");
-            $result->message = "Incorrect password value!";
-            $this->response($result, 400);
-        }
-
-        if ($realm == "" || !$result->realm || !$this->validate_realm($realm) ) {
-            log_message('debug', $this->LOGTAG . "No valid realm specified");
-            $result->message = "No valid realm specified!";
-            $this->response($result, 400);
-        }
-
-        //Check if username exists
-        // TODO
-
-        $this->skeleton_auth->skeleton_auth_model->setRealm($realm);
-        //$remember = (bool) $this->input->post('remember');
-                
-        if ($this->skeleton_auth->login($username, $password, false, true))
-        {
-            //login is successful
-            log_message('debug', $this->LOGTAG . "Login successful");
-            $result->message = "Login successful!";
-
-            $sessiondata = $this->ebre_escool_auth_model->getSessionData($username); 
-            $result->sessiondata = $sessiondata;
-
-            $api_user_profile = new stdClass();
-            $api_user_profile->username = $username;
-            $api_user_profile->prova = "TEST";
-            $api_user_profile->another = "TEST 1";
-            $result->api_user_profile = $api_user_profile;
-            $this->response($result, 200);   
-        }
-        else
-        {
-            //if the login was un-successful
-            log_message('debug', $this->LOGTAG . "Login not successful");
-            $result->message = "Login not successful!";
-            $this->response($result, 400);   
-        }
-
-        if (false) {
-            log_message('debug', $this->LOGTAG . " username: " . $username . " does not exists!");
-            $result->message = "Username does not exists!";
-            $this->response($result, 404);
-        }
-
-        log_message('debug', $this->LOGTAG . " username: " . $username . " logged ok!");
-        $this->response($result, 200); // 200 being the HTTP response code
-    }
-
-    function validate_realm($realm){
-
-        if ( (strcasecmp ( $realm , "ldap" ) == 0) || (strcasecmp ( $realm , "mysql" ) == 0) ) {
-            return true;
-        }
-        return false;
-    }
     
     function person_get()
     {
