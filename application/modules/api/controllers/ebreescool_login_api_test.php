@@ -11,7 +11,7 @@
 */
 
 
-class ebreescool_login_api_test extends CI_Controller
+class api_test extends CI_Controller
 {
     function __construct()
     {
