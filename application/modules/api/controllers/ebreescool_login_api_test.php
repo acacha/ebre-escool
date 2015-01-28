@@ -11,7 +11,7 @@
 */
 
 
-class api_test extends CI_Controller
+class ebreescool_login_api_test extends CI_Controller
 {
     function __construct()
     {
@@ -46,7 +46,7 @@ class api_test extends CI_Controller
         log_message('debug', "Test login executed!");
 
         $username = "sergitur";
-        $password = md5("YOUR_PASSWORD_HERE");
+        $password = md5("ykmn542yxhst");
         $realm = "mysql";
 
         $post_array = array("username" => $username, "password" => $password, "realm" => $realm);

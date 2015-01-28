@@ -364,7 +364,7 @@ $config['rest_access_table'] = 'key_access';
 |
 |	FALSE
 |
-CREATE TABLE `access` (
+CREATE TABLE `key_access` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(40) NOT NULL DEFAULT '',
   `controller` varchar(50) NOT NULL DEFAULT '',
