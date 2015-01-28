@@ -105,6 +105,17 @@ class ebre_escool_auth_model  extends CI_Model  {
       else
         return false;
     }
+
+    public function getApiUserProfile($username) {
+        $api_user_profile = new stdClass();
+        $api_user_profile->username = $username;
+        $api_user_profile->prova = "TEST";
+        $api_user_profile->another = "TEST 1";
+        //TODO: Provides auth token for api access
+        $api_user_profile->auth_token = "e613029163a79156e45ecbc37ff97f78";
+
+        return $api_user_profile;
+    }
   
     public function getSessionData($username) {
 

@@ -30,11 +30,30 @@ $salida = shell_exec($scp_command);
 
 #Making first local backup
 
-$mysqldump_cmd_local = "/usr/bin/mysqldump -u " . $db['default']['username'] . " -p'" . $db['default']['password'] . " " . $db['default']['database'] . "' > ~/" . $db['default']['database'] . "_" . $current_date . ".sql";
-$mysqldump_cmd_without_passwd_local = "/usr/bin/mysqldump -u " . $db['default']['username'] . " -pPASSWORD_HIDDEN" . " " . $db['default']['database'] . " > ~/" . $db['default']['database'] . "_" . $current_date . ".sql";
+$mysqldump_cmd_local = "/usr/bin/mysqldump -u " . $db['default']['username'] . " -p'" . $db['default']['password'] . "' " . $db['default']['database'] . " > ~/" . $db['default']['database'] . "_" . $current_date . ".sql";
+$mysqldump_cmd_without_passwd_local = "/usr/bin/mysqldump -u" . $db['default']['username'] . " -p'PASSWORD_HIDDEN" . "' " . $db['default']['database'] . " > ~/" . $db['default']['database'] . "_" . $current_date . ".sql";
 echo "Making local database backup...\n";
 echo "Executing " . $mysqldump_cmd_without_passwd_local . "\n";
 $salida = shell_exec($mysqldump_cmd_local);
+
+# FIRST CREATE NEW DATABASE WITH CLONE OF CURRENT LOCAL DATABASE
+#Create local database void
+#mysql -p --execute="CREATE DATABASE ebre_escool;"
+$creating_local_database_cmd = '/usr/bin/mysql -u' . $db['default']['admin_local_mysqluser']  . ' -p\'' . $db['default']['password_admin_local'] .'\' --execute="CREATE DATABASE ' . $db['default']['database'] . "_" . $current_date . ';"';
+$creating_local_database_cmd_without_passwd = '/usr/bin/mysql -u' . $db['default']['admin_local_mysqluser']  . ' -p\'PASSWORD_HERE\' --execute="CREATE DATABASE ' . $db['default']['database'] . "_" . $current_date . ';"';
+
+echo "Creating local database clone of current...\n";
+echo "Executing " . $creating_local_database_cmd_without_passwd . "\n";
+$salida = shell_exec($creating_local_database_cmd);
+
+#Restoring clone local database
+#mysql -pPASSWORD ebre_escool < /tmp/ebre_escool_13_01_2015.sql;"
+$restoring_local_database_cmd = '/usr/bin/mysql  -u' . $db['default']['admin_local_mysqluser']  . ' -p\'' . $db['default']['password_admin_local'] .'\' ' . $db['default']['database'] . "_" . $current_date . " < ~/" . $database_name . '_' . $current_date . ".sql";
+$restoring_local_database_cmd_without_passwd  = '/usr/bin/mysql  -u' . $db['default']['admin_local_mysqluser']  . '  -p\'PASSWORD_HERE\' ' . $db['default']['database'] . "_" . $current_date . " < ~/" . $database_name . '_' . $current_date . ".sql";
+
+echo "Restoring local clone database...\n";
+echo "Executing " . $restoring_local_database_cmd_without_passwd . "\n";
+$salida = shell_exec($restoring_local_database_cmd);
 
 #Remove local database
 #mysql -p --execute="DROP DATABASE ebre_escool;"
@@ -45,7 +64,7 @@ echo "Executing " . $removing_local_database_cmd_without_passwd . "\n";
 $salida = shell_exec($removing_local_database_cmd);
 
 #Create local database void
-#mysql -p --execute="CREATE DATABASE ebre_escool;"
+#mysql -p --execute="CREATE DATABASE ebre_escool_currentdate;"
 $creating_local_database_cmd = '/usr/bin/mysql -u' . $db['default']['username']  . ' -p\'' . $db['default']['password'] .'\' --execute="CREATE DATABASE ' . $db['default']['database'] . ';"';
 $creating_local_database_cmd_without_passwd = '/usr/bin/mysql -u' . $db['default']['username']  . ' -p\'PASSWORD_HERE\' --execute="CREATE DATABASE ' . $db['default']['database'] . ';"';
 

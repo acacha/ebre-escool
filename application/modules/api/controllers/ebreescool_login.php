@@ -97,14 +97,9 @@ class ebreescool_login extends REST_Controller
             $sessiondata = $this->ebre_escool_auth_model->getSessionData($username); 
             $result->sessiondata = $sessiondata;
 
-            $api_user_profile = new stdClass();
-            $api_user_profile->username = $username;
-            $api_user_profile->prova = "TEST";
-            $api_user_profile->another = "TEST 1";
-
-            //TODO: Provides auth token for api access
-
+            $api_user_profile = $this->ebre_escool_auth_model->getApiUserProfile($username);
             $result->api_user_profile = $api_user_profile;
+            
             log_message('debug', $this->LOGTAG . " username: " . $username . " logged ok!");
             $this->response($result, 200);   
         } else {
