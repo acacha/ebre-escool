@@ -31,7 +31,6 @@ class ebre_escool_auth extends Auth {
 
     //VOID: implement it on child classes
     public function on_exit_login_hook($username="") {
-
         //TODO: define default session data?
         $default_sessiondata = array(
                    'username'  => 'sergitur',
@@ -46,11 +45,17 @@ class ebre_escool_auth extends Auth {
         }
         
         //Set session data:
+        //echo "<br/>Session data:<br/>";
         //var_export($sessiondata);
-        $this->session->set_userdata($sessiondata);
+        //echo "<br/><br/>";
+        if (is_array($sessiondata)) {
+            $this->session->set_userdata($sessiondata);    
+        } else {
+            $this->session->set_userdata(array());
+        }
+        
         //Check if user have to change password
         $force_change_password = $this->ebre_escool_auth_model->is_set_force_change_password($username); 
-
         if ($force_change_password) {
             $sessiondata_change_password = array(
                    'logged_in' => false,
@@ -60,7 +65,6 @@ class ebre_escool_auth extends Auth {
             redirect("/managment/change_password", 'refresh');
         }
 
-        
         return null;
     }
 

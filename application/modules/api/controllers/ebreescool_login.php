@@ -40,7 +40,7 @@ class ebreescool_login extends REST_Controller
     }
 
     /*
-    For better security password have to be hasehd no original password!
+    For better security password have to be hashed. PLEASE NOT USE original passwords!
     BE CAREFUL! Passwords are logged to codeigniter log files at application/logs folder!
 
     AND ESPECIFIC API_KEY IS USED ONLY AUTHORIZED FOR LOGIN. Configure your database!

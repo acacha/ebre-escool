@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   'ldap_dn' varchar(10000) NOT NULL,
+  `key_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
