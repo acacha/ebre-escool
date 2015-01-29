@@ -45,6 +45,8 @@
 | the active record class
 */
 
+$config['mysql_masterpassword'] ="PUT_YOUR_PASSWORD_HERE";
+
 $active_group = 'default';
 $active_record = TRUE;
 
