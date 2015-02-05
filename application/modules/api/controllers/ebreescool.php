@@ -128,9 +128,66 @@ class ebreescool extends REST_Controller
         var_dump($this->request->body);
     }
 
+    private get_current_lesson(){
+        $timestamp = time();
+        log_message('debug', 'Timestamp: ' . $timestamp)
+        $day = date("N",$timestamp);
+        log_message('debug', 'Day of week: ')
+
+    }
+
 
     public function send_put()
     {
         var_dump($this->put('foo'));
+    }
+
+    //Navegador d'horari/lliçons
+
+    //IMPORTANT: Data actual la proporciona el servidor no li passa la app al servidor!
+
+    //Partim de data i hora actual i professor --> Obtenir Lliço més propera
+    //
+
+    //mètode next_lesson()
+    //-> PROBLEMA: Petició cada vegada que es passa? Lent? Fer una CAche?
+
+    //mètode previous_lesson
+    //->
+
+    //Partim del professor obtenir les lliçons setmanals a la taula lessons. 
+
+    /*
+    
+    BUCLE TOTES LES LLIÇONS {
+        //INFO LLIÇO:
+    }
+    */
+
+    /*
+    * NOTES: On obtenir la informació
+    * Control accés: Només poden utilitzar els usuaris que són professors
+    * teacher_code: informació del perfil (SharedPreference
+    * Utilitzar Pager: Navegar endavant endarrera per lliçons pertoquen al professor
+    *  Per defecte mostrar la lliço que toca en aquell moment i sinó la més propera que sigui passada
+    *  NO TOCARIA però mostrar lliçons futures. Recorrer l'horari de professor
+    *
+    * day/month/year/time_slot -> dia i hora
+    */
+    function check_attendance_get() {
+        //GET PARAMETERS
+        //$selected_group_id
+        //$teacher_code
+        //$selected_study_module_id
+        //$lesson_id
+        //$day 
+        //$month
+        //$year
+        //$selected_time_slot_id
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+
     }
 }

@@ -29,7 +29,24 @@ class HAuth extends CI_Controller {
 
 					$data['user_profile'] = $user_profile;
 
-					$this->load->view('hauth/done',$data);
+					switch ($i) {
+					    case "Google":
+					        echo "Google!!!!!!!!!!!!!!!";
+					        break;
+					    case "Facebook":
+					    	$this->load->view('hauth/done',$data);
+					        break;
+					    case "Twitter":
+					        $this->load->view('hauth/done',$data);
+					        break;
+					    default:
+					    	$this->load->view('hauth/done',$data);
+					    	break;    
+					}
+
+					
+
+					
 				}
 				else // Cannot authenticate user
 				{
