@@ -65,7 +65,7 @@ class ebre_escool_auth extends Auth {
                     switch ($provider) {
                         case "Google":
                             //GET EMAIL--> GET EBRE-ESCOOL USER!
-                            $email = $data['user_profile']['email'];
+                            $email = $data['user_profile']->email;
                             $identity = $this->skeleton_auth->check_if_identity_is_email_mysql($email);
 
                             //LOGIN CORRECT --> POSTLOGIN ACTIONS
