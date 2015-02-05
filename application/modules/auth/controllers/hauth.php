@@ -31,6 +31,8 @@ class HAuth extends CI_Controller {
 
 					switch ($provider) {
 					    case "Google":
+					    	//GET EMAIL--> GET EBRE-ESCOOL USER!
+					    	//LOGIN CORRECT --> POSTLOGIN ACTIONS
 					        $this->load->view('hauth/done',$data);
 					        break;
 					    case "Facebook":
