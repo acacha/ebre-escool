@@ -29,7 +29,7 @@ class HAuth extends CI_Controller {
 
 					$data['user_profile'] = $user_profile;
 
-					switch ($i) {
+					switch ($provider) {
 					    case "Google":
 					        echo "Google!!!!!!!!!!!!!!!";
 					        break;
