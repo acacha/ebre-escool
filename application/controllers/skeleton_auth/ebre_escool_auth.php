@@ -70,7 +70,7 @@ class ebre_escool_auth extends Auth {
 
                             //LOGIN CORRECT --> POSTLOGIN ACTIONS
                             //$this->load->view('hauth/done',$data);
-                            on_exit_login_hook($identity);
+                            $this->on_exit_login_hook($identity);
                             redirect($this->after_succesful_login_page, 'refresh');
                             break;
                         case "Facebook":
