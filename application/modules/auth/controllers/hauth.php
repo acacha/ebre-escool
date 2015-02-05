@@ -31,7 +31,7 @@ class HAuth extends CI_Controller {
 
 					switch ($provider) {
 					    case "Google":
-					        echo "Google!!!!!!!!!!!!!!!";
+					        $this->load->view('hauth/done',$data);
 					        break;
 					    case "Facebook":
 					    	$this->load->view('hauth/done',$data);
