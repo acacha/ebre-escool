@@ -248,7 +248,7 @@ class ebre_escool_auth_model  extends CI_Model  {
 
       $this->db->select('google_plus_id');
       $this->db->from('google_plus');
-      $this->db->where('google_plus_identifier',$google_plus_profile_identifier);
+      $this->db->where('google_plus_identifier',"$google_plus_profile_identifier");
 
       $query = $this->db->get();
 
