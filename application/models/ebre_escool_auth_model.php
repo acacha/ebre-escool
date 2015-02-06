@@ -93,16 +93,16 @@ class ebre_escool_auth_model  extends CI_Model  {
 
       if ($person_id!=null) {
         $result = $this->save_google_plus_profile($user_profile);
-        if ($result!=null) {
-          // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
-          insert_update_person_google_plus($person_id,$result);
-        } else {
+        if ($result == null) {
           //ERROR
-          log_message('debug', 'Error saving Google plus profile: $user_profile');
+          log_message('debug', 'Error saving Google plus profile:' . $user_profile);
           return null;
+        } else {
+          // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
+          insert_update_person_google_plus($person_id,$result);          
         }
       } else {
-        log_message('debug', 'Not person found for username $username');
+        log_message('debug', 'Not person found for username' . $username);
         return null;
       }
 
@@ -137,7 +137,7 @@ class ebre_escool_auth_model  extends CI_Model  {
 
       if($result) {
         //UPDATE
-        log_message('debug', 'Already existing register for person_id: $person_id AND google_plus_id: $google_plus_id. Skipping!');
+        log_message('debug', 'Already existing register for person_id: ' . $person_id . ' AND google_plus_id: ' . $google_plus_id . '. Skipping!');
       } else {
         //INSERT
         log_message('debug', 'Inserting new record to table person_google_plus!');
@@ -145,11 +145,11 @@ class ebre_escool_auth_model  extends CI_Model  {
         if ($this->db->affected_rows() == 1) {
           //INSERTED OK
           $inserted_id = $this->db->insert_id();
-          log_message('debug', 'Inserted ok with id $inserted_id');          
+          log_message('debug', 'Inserted ok with id ' .$inserted_id);          
           return $inserted_id;  
         } else {
           //ERROR INSERTING
-          log_message('debug', 'ERROR inserting record to table person_google_plus. Affected rows: $this->db->affected_rows()'); 
+          log_message('debug', 'ERROR inserting record to table person_google_plus. Affected rows:' . $this->db->affected_rows()); 
           return null; 
         }  
       }
@@ -168,6 +168,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       $this->db->where('person_google_plus_gplus_id',$google_plus_id);
 
       $query = $this->db->get();
+      //log_message('debug',$this->db->last_query());
 
       if ($query->num_rows() == 1){
         $row = $query->row(); 
@@ -212,16 +213,16 @@ class ebre_escool_auth_model  extends CI_Model  {
         );    
       if ($google_plus_profile_database_id != false) {
         //UPDATE
-        log_message('debug', 'Updating Google_plus_profile with id $google_plus_profile_database_id to database!');
+        log_message('debug', 'Updating Google_plus_profile with id' . $google_plus_profile_database_id . ' to database!');
         $this->db->where('google_plus_id', $google_plus_profile_database_id);
         $this->db->update('google_plus', $data); 
         if ($this->db->affected_rows() == 1) {
           //UPDATE OK
-          log_message('debug', 'Google_plus_profile updated ok with id $inserted_id');          
+          log_message('debug', 'Google_plus_profile updated ok with id ' . $inserted_id);          
           return $google_plus_profile_database_id;  
         } else {
           //ERROR UPDATING
-          log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: $this->db->affected_rows()'); 
+          log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
           return null; 
         }  
       } else {
@@ -231,11 +232,11 @@ class ebre_escool_auth_model  extends CI_Model  {
         if ($this->db->affected_rows() == 1) {
           //INSERTED OK
           $inserted_id = $this->db->insert_id();
-          log_message('debug', 'Google_plus_profile inserted ok with id $inserted_id');          
+          log_message('debug', 'Google_plus_profile inserted ok with id ' . $inserted_id);          
           return $inserted_id;  
         } else {
           //ERROR INSERTING
-          log_message('debug', 'ERROR inserting Google_plus_profile. Affected rows: $this->db->affected_rows()'); 
+          log_message('debug', 'ERROR inserting Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
           return null; 
         }      
         
@@ -251,14 +252,14 @@ class ebre_escool_auth_model  extends CI_Model  {
       $this->db->where('google_plus_identifier',"$google_plus_profile_identifier");
 
       $query = $this->db->get();
-      log_message('debug','$this->db->last_query()');
+      //log_message('debug',$this->db->last_query());
       if ($query->num_rows() == 1){
         $row = $query->row(); 
-        log_message('debug', 'Google_plus_profile with identifier $google_plus_profile_identifier already exists!');
+        log_message('debug', 'Google_plus_profile with identifier ' . $google_plus_profile_identifier. ' already exists!');
         return $row->google_plus_id;
       } 
       else {
-        log_message('debug', 'Google_plus_profile with identifier $google_plus_profile_identifier not exists on database!');
+        log_message('debug', 'Google_plus_profile with identifier ' .  $google_plus_profile_identifier . ' not exists on database!');
         return false;
       }
         
