@@ -60,17 +60,20 @@ class ebre_escool_auth extends Auth {
 
                     log_message('info', 'controllers.HAuth.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
 
+                    //Only valid for debug
                     $data['user_profile'] = $user_profile;
 
                     switch ($provider) {
                         case "Google":
                             //GET EMAIL--> GET EBRE-ESCOOL USER!
-                            $email = $data['user_profile']->email;
-                            $identity = $this->skeleton_auth->check_if_identity_is_email_mysql($email);
-
                             //LOGIN CORRECT --> POSTLOGIN ACTIONS
-                            //$this->load->view('hauth/done',$data);
+                            $email = $user_profile->email;
+                            $identity = $this->skeleton_auth->check_if_identity_is_email_mysql($email);
+                            
+                            @$this->ebre_escool_auth_model->save_google_plus_profile_with_username($user_profile,$identity);
+                            
                             $this->on_exit_login_hook($identity);
+                            //FOR DEBUG uncomment this line comment next one: $this->load->view('hauth/done',$data);
                             redirect($this->after_succesful_login_page, 'refresh');
                             break;
                         case "Facebook":
