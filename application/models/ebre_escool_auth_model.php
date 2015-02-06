@@ -207,6 +207,7 @@ class ebre_escool_auth_model  extends CI_Model  {
            'google_plus_city' => $user_profile->city == null ? "": $user_profile->city,
            'google_plus_zip' => $user_profile->zip,
            'google_plus_creationUserId' => 2,
+           'google_plus_last_update' => now(),
            'google_plus_lastupdateUserId' => 2,
            'google_plus_markedForDeletion' => 'n',
            'google_plus_markedForDeletionDate' => '',
