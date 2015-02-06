@@ -168,7 +168,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       $this->db->where('person_google_plus_gplus_id',$google_plus_id);
 
       $query = $this->db->get();
-      //log_message('debug',$this->db->last_query());
+      log_message('debug',$this->db->last_query());
 
       if ($query->num_rows() == 1){
         $row = $query->row(); 
@@ -229,9 +229,9 @@ class ebre_escool_auth_model  extends CI_Model  {
         //INSERT
         log_message('debug', 'Inserting Google_plus_profile to database!');        
         $this->db->insert('google_plus', $data); 
+        $inserted_id = $this->db->insert_id();
         if ($this->db->affected_rows() == 1) {
-          //INSERTED OK
-          $inserted_id = $this->db->insert_id();
+          //INSERTED OK          
           log_message('debug', 'Google_plus_profile inserted ok with id ' . $inserted_id);          
           return $inserted_id;  
         } else {
