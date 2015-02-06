@@ -223,6 +223,7 @@ class ebre_escool_auth_model  extends CI_Model  {
           log_message('debug', 'Google_plus_profile updated ok with id ' . $inserted_id);          
           return $google_plus_profile_database_id;  
         } else {
+          //BE CAREFUL! 'google_plus_last_update' => now() IS NECESSARY BECAUSE IF NO FIELDS ARE UPDATED RETURNS 0 affected_rows!
           //ERROR UPDATING
           log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
           return null; 
