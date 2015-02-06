@@ -243,7 +243,7 @@ class ebre_escool_auth_model  extends CI_Model  {
     }
 
     function check_if_google_plus_profile_exists($google_plus_profile_identifier) {
-      log_message('debug', 'Checking if google_plus_profile with identifier $google_plus_profile_identifier already exists...');
+      log_message('debug', 'Checking if google_plus_profile with identifier ' . $google_plus_profile_identifier . ' already exists...');
       //SELECT `google_plus_id` FROM `google_plus` WHERE `google_plus_identifier`="identifier_here"
 
       $this->db->select('google_plus_id');
@@ -251,7 +251,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       $this->db->where('google_plus_identifier',"$google_plus_profile_identifier");
 
       $query = $this->db->get();
-
+      log_message('debug','$this->db->last_query()');
       if ($query->num_rows() == 1){
         $row = $query->row(); 
         log_message('debug', 'Google_plus_profile with identifier $google_plus_profile_identifier already exists!');

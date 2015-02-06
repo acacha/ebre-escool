@@ -7922,3 +7922,52 @@ CREATE TABLE IF NOT EXISTS `key_logs` (
   `authorized` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--
+-- Table structure for table `google_plus`
+--
+
+CREATE TABLE IF NOT EXISTS `google_plus` (
+  `google_plus_id` int(11) NOT NULL,
+  `google_plus_identifier` varchar(50) NOT NULL,
+  `google_plus_webSiteURL` varchar(1000) NOT NULL,
+  `google_plus_profileURL` varchar(1000) NOT NULL,
+  `google_plus_photoURL` varchar(1000) NOT NULL,
+  `google_plus_displayName` varchar(500) NOT NULL,
+  `google_plus_description` varchar(2000) NOT NULL,
+  `google_plus_firstName` varchar(250) NOT NULL,
+  `google_plus_lastName` varchar(250) NOT NULL,
+  `google_plus_gender` varchar(20) NOT NULL,
+  `google_plus_language` varchar(50) NOT NULL,
+  `google_plus_age` varchar(10) NOT NULL,
+  `google_plus_birthDay` int(11) NOT NULL,
+  `google_plus_birthMonth` int(11) NOT NULL,
+  `google_plus_birthYear` int(11) NOT NULL,
+  `google_plus_email` varchar(500) NOT NULL,
+  `google_plus_emailVerified` varchar(20) NOT NULL,
+  `google_plus_phone` varchar(50) NOT NULL,
+  `google_plus_address` varchar(500) NOT NULL,
+  `google_plus_country` varchar(250) NOT NULL,
+  `google_plus_region` varchar(250) NOT NULL,
+  `google_plus_city` varchar(250) NOT NULL,
+  `google_plus_zip` varchar(50) NOT NULL,
+  `google_plus_entryDate` datetime NOT NULL,
+  `google_plus_last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `google_plus_creationUserId` int(11) NOT NULL,
+  `google_plus_lastupdateUserId` int(11) NOT NULL,
+  `google_plus_markedForDeletion` enum('n','y') NOT NULL,
+  `google_plus_markedForDeletionDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `person_google_plus`
+--
+
+CREATE TABLE IF NOT EXISTS `person_google_plus` (
+  `person_google_plus_id` int(11) NOT NULL,
+  `person_google_plus_person_id` int(11) NOT NULL,
+  `person_google_plus_gplus_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
