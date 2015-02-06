@@ -200,7 +200,7 @@ class ebre_escool_auth_model  extends CI_Model  {
            'google_plus_email' => $user_profile->email,
            'google_plus_emailVerified' => $user_profile->emailVerified,
            'google_plus_phone' => $user_profile->phone,
-           'google_plus_address' => $user_profile->address,
+           'google_plus_address' => $user_profile->address == null ? "": $user_profile->address ,
            'google_plus_country' => $user_profile->country,
            'google_plus_region' => $user_profile->region,
            'google_plus_city' => $user_profile->city,
