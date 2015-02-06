@@ -95,7 +95,7 @@ class ebre_escool_auth_model  extends CI_Model  {
         $result = $this->save_google_plus_profile($user_profile);
         if ($result == null) {
           //ERROR
-          log_message('debug', 'Error saving Google plus profile:' . $user_profile);
+          log_message('debug', 'Error saving Google plus profile: ' . print_r($user_profile, TRUE));
           return null;
         } else {
           // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
@@ -207,7 +207,6 @@ class ebre_escool_auth_model  extends CI_Model  {
            'google_plus_city' => $user_profile->city == null ? "": $user_profile->city,
            'google_plus_zip' => $user_profile->zip,
            'google_plus_creationUserId' => 2,
-           'google_plus_last_update' => now(),
            'google_plus_lastupdateUserId' => 2,
            'google_plus_markedForDeletion' => 'n',
            'google_plus_markedForDeletionDate' => '',
@@ -223,10 +222,16 @@ class ebre_escool_auth_model  extends CI_Model  {
           log_message('debug', 'Google_plus_profile updated ok with id');          
           return $google_plus_profile_database_id;  
         } else {
-          //BE CAREFUL! 'google_plus_last_update' => now() IS NECESSARY BECAUSE IF NO FIELDS ARE UPDATED RETURNS 0 affected_rows!
-          //ERROR UPDATING
-          log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
-          return null; 
+          if ($this->db->affected_rows() == 0) {            
+            //NOTHING UPDATED -> CONTINUE (we use all data, maybe is zero because no changes applied)!
+            log_message('debug', 'ERROR? updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
+            return $google_plus_profile_database_id;
+          return $google_plus_profile_database_id; 
+          } else{
+            log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
+            return null;   
+          }
+          
         }  
       } else {
         //INSERT
