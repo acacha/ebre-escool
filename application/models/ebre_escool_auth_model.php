@@ -133,7 +133,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       log_message('debug', 'Executing insert_update_person_google_plus!');
       log_message('debug', 'person_id: ' . $person_id);
       log_message('debug', 'google_plus_id: ' . $google_plus_id);
-      $result = check_person_google_plus($person_id,$google_plus_id);
+      $result = $this->check_person_google_plus($person_id,$google_plus_id);
       log_message('debug', 'Result: ' . $result);
       $data = array(
            'person_google_plus_person_id' => $person_id ,
