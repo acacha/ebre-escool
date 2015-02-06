@@ -7929,7 +7929,7 @@ CREATE TABLE IF NOT EXISTS `key_logs` (
 --
 
 CREATE TABLE IF NOT EXISTS `google_plus` (
-  `google_plus_id` int(11) NOT NULL,
+  `google_plus_id` int(11) NOT NULL AUTO_INCREMENT,
   `google_plus_identifier` varchar(50) NOT NULL,
   `google_plus_webSiteURL` varchar(1000) NOT NULL,
   `google_plus_profileURL` varchar(1000) NOT NULL,
@@ -7957,17 +7957,21 @@ CREATE TABLE IF NOT EXISTS `google_plus` (
   `google_plus_creationUserId` int(11) NOT NULL,
   `google_plus_lastupdateUserId` int(11) NOT NULL,
   `google_plus_markedForDeletion` enum('n','y') NOT NULL,
-  `google_plus_markedForDeletionDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `google_plus_markedForDeletionDate` datetime NOT NULL,
+  PRIMARY KEY (`google_plus_id`),
+  UNIQUE KEY `google_plus_identifier` (`google_plus_identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
+- --------------------------------------------------------
 
 --
 -- Table structure for table `person_google_plus`
 --
 
 CREATE TABLE IF NOT EXISTS `person_google_plus` (
-  `person_google_plus_id` int(11) NOT NULL,
+  `person_google_plus_id` int(11) NOT NULL AUTO_INCREMENT,
   `person_google_plus_person_id` int(11) NOT NULL,
-  `person_google_plus_gplus_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `person_google_plus_gplus_id` int(11) NOT NULL,
+  PRIMARY KEY (`person_google_plus_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
