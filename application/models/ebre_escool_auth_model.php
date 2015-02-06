@@ -93,8 +93,10 @@ class ebre_escool_auth_model  extends CI_Model  {
 
       if ($person_id!=null) {
         $result = $this->save_google_plus_profile($user_profile);
+        log_message('debug', 'Result: ' . $result);
         if ($result == null) {
           //ERROR
+          log_message('debug', 'XIVATO1!');
           log_message('debug', 'Error saving Google plus profile: ' . print_r($user_profile, TRUE));
           return null;
         } else {
