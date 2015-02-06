@@ -96,12 +96,10 @@ class ebre_escool_auth_model  extends CI_Model  {
         log_message('debug', 'Result: ' . $result);
         if ($result == null) {
           //ERROR
-          log_message('debug', 'XIVATO1!');
           log_message('debug', 'Error saving Google plus profile: ' . print_r($user_profile, TRUE));
           return null;
         } else {
           // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
-          log_message('debug', 'XIVATO2!');
           $this->insert_update_person_google_plus($person_id,$result);          
         }
       } else {
@@ -173,7 +171,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       $this->db->where('person_google_plus_gplus_id',$google_plus_id);
 
       $query = $this->db->get();
-      log_message('debug',$this->db->last_query());
+      //log_message('debug',$this->db->last_query());
 
       if ($query->num_rows() == 1){
         $row = $query->row(); 
@@ -221,7 +219,7 @@ class ebre_escool_auth_model  extends CI_Model  {
         log_message('debug', 'Updating Google_plus_profile with id ' . $google_plus_profile_database_id);
         $this->db->where('google_plus_id', $google_plus_profile_database_id);
         $this->db->update('google_plus', $data); 
-        log_message('debug',$this->db->last_query());
+        //log_message('debug',$this->db->last_query());
         if ($this->db->affected_rows() == 1) {
           //UPDATE OK
           log_message('debug', 'Google_plus_profile updated ok with id');          
