@@ -146,7 +146,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       } else {
         //INSERT
         log_message('debug', 'Inserting new record to table person_google_plus!');
-        $this->db->inser('person_google_plus', $data); 
+        $this->db->insert('person_google_plus', $data); 
         if ($this->db->affected_rows() == 1) {
           //INSERTED OK
           $inserted_id = $this->db->insert_id();
