@@ -126,7 +126,7 @@ class ebre_escool_auth extends Auth {
             }
 
             log_message('error', 'controllers.HAuth.login: '.$error);
-            show_error('Error authenticating user.');
+            show_error('Error authenticating user. ' .$error);
         }
     }
 	
