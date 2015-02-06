@@ -101,6 +101,7 @@ class ebre_escool_auth_model  extends CI_Model  {
           return null;
         } else {
           // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
+          log_message('debug', 'XIVATO2!');
           insert_update_person_google_plus($person_id,$result);          
         }
       } else {
@@ -129,9 +130,11 @@ class ebre_escool_auth_model  extends CI_Model  {
     }
 
     function insert_update_person_google_plus($person_id,$google_plus_id) {
-
+      log_message('debug', 'Executing insert_update_person_google_plus!');
+      log_message('debug', 'person_id: ' . $person_id);
+      log_message('debug', 'google_plus_id: ' . $google_plus_id);
       $result = check_person_google_plus($person_id,$google_plus_id);
-
+      log_message('debug', 'Result: ' . $result);
       $data = array(
            'person_google_plus_person_id' => $person_id ,
            'person_google_plus_gplus_id' => $google_plus_id,
