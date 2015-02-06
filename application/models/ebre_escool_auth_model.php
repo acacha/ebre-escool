@@ -102,7 +102,7 @@ class ebre_escool_auth_model  extends CI_Model  {
         } else {
           // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
           log_message('debug', 'XIVATO2!');
-          insert_update_person_google_plus($person_id,$result);          
+          $this->insert_update_person_google_plus($person_id,$result);          
         }
       } else {
         log_message('debug', 'Not person found for username' . $username);
