@@ -214,8 +214,9 @@ class ebre_escool_auth_model  extends CI_Model  {
       if ($google_plus_profile_database_id != false) {
         //UPDATE
         log_message('debug', 'Updating Google_plus_profile with id ' . $google_plus_profile_database_id);
-        $this->db->where('google_plus_id', "$google_plus_profile_database_id");
+        $this->db->where('google_plus_id', $google_plus_profile_database_id);
         $this->db->update('google_plus', $data); 
+        log_message('debug',$this->db->last_query());
         if ($this->db->affected_rows() == 1) {
           //UPDATE OK
           log_message('debug', 'Google_plus_profile updated ok with id ' . $inserted_id);          
