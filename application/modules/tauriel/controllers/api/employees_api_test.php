@@ -37,11 +37,11 @@ class ebreescool_api_test extends CI_Controller{
 
 	public function index(){
 	// Pull in an array of tweets
-		$person = $this->rest->get('employee/id/1');
-		echo json_encode($person);
+		$employee = $this->rest->get('employee/id/1');
+		echo json_encode($employee);
 	}
 
-	public function person_post(){
+	public function employee_post(){
 	// Pull in an array of tweets
 		$givenName = "Paolo";
 		$sn1 = "Davila";
@@ -57,9 +57,11 @@ class ebreescool_api_test extends CI_Controller{
 
 			// Pull in an array of tweets
 		$result = $this->rest->post('employee',$post_array);
-		echo "<br> STATUS CODE: " . $result =
-		$this->rest->status() . "</br>";
+
+		echo "<br> STATUS CODE: " . $result = $this->rest->status() . "</br>";
+		
 		$result = $this->rest->debug();
+		
 		echo json_encode($result);
 	}
 

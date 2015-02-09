@@ -33,38 +33,42 @@ class employees extends REST_Controller {
 
         //Loading "employees_model.php" model.
         $this->load->model('employees_model');
-    }
+    }    
 
     public function index_get(){
-        $this->persons_get();
+        $this->employees_get();
     }
 
     function employee_get(){
 
         if(!$this->get('id')){
-            $this->response(NULL, 400);
+            $message = array('id'=>'','message'=>'YOU MUST SEND AND ID');
+            $this->response($message, 400);
         }
 
-        $this->load->model('api_employees');
+        //$this->load->model('employees');
 
-        $employee = $this->api_employees->employees_model->getEmployee( $this->get('id') );
+        //$employee = $this->api_employees->employees_model->getEmployee( $this->get('id') );
+        $employee = $this->employees_model->getEmployee( $this->get('id') );
 
         if($employee){
             $this->response($employee, 200); // 200 being the HTTP response code
         } else {
-            $this->response(array('error' => 'employee could not be found'), 404);
+            $this->response(array('id' => $this->get('id'),'message' => 'employee not exists!'), 404);
+            //$this->response(array('error' => 'employee could not be found'), 404);
         }
     }
 
     function employees_get(){
 
-        $this->load->model('api_employees');
-        $employee = $this->api_employees->employees_get();
+        //$this->load->model('api_employees');
+        //$employees = $this->api_employees->employees_get();
+        $employees_model = $this->employees_model->getEmployees();
     
-        if($employee){
-            $this->response($employee, 200); // 200 being the HTTP response code
+        if($employees_model){
+            $this->response($employees_model, 200); // 200 being the HTTP response code
         } else {
-            $this->response(array('error' => 'employee could not be found'), 404);
+            $this->response(array(array('id' => $this->get('id'),'message' => 'Couldn\'t find any employees!'), 404);
         }
     }
     
@@ -73,9 +77,9 @@ class employees extends REST_Controller {
         if (isset($_POST)){
             //GET DATA FROM POST
             $id = $this->input->get_post('id');
-            $data = array('employee_code'=>$this->input->get_post('employee_code'));
+            $data = array('employees_code'=>$this->input->get_post('employees_code'));
             //CALL TO MODEL
-            $response = $this->api_employees->employee_update($id,$data);
+            $response = $this->employees_model->updateEmployee($id,$data);
         }
 
         if($response){
@@ -95,7 +99,7 @@ class employees extends REST_Controller {
             $this->response($message, 400);
         }
 
-        $response = $this->api_employees->employees_delete( $this->get('id') );
+        $response = $this->employees_model->deleteEmployee( $this->get('id') );
         
         if($response){
             $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
@@ -106,7 +110,7 @@ class employees extends REST_Controller {
         }
     }
 
-    function employee_put(){
+    /*function employee_put(){
         $data = array(
         'employee_id'=>$this->put('employee_id'),
         'employee_code'=>$this->put('employee_code'),
@@ -127,7 +131,7 @@ class employees extends REST_Controller {
             $message = array('id' => $insertResponse['id'], 'message' => 'ERROR INSERTING');
             $this->response($message, 422); // 422 being the HTTP response code
         }
-    }
+    }*/
 
     public function send_post() {
         var_dump($this->request->body);
