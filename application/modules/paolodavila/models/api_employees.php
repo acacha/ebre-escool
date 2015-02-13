@@ -8,40 +8,14 @@
 * @link http://www.acacha.com/index.php/ebre-escool
 */
 
-class employees extends CI_Model {
+class api_employees extends CI_Model {
     function __construct(){
         parent::__construct();
             $this->load->database();
             //$this->load->library('ebre_escool');
     }
 
-    function getEmployees($employees_id) {
-
-        $this->db->select('employees_id,employees_person_id,employees_code,employees_type_id');
-        $this->db->from('employees');
-        //$this->db->where('employees_id',$employees_id);
-        $query = $this->db->get();
-
-        $employees = array();
-        
-        if ($query->num_rows() > 0){
-            foreach ($query->$result as $row) {
-                # code...
-                $employees = new stdClass();
-                $employees->id = $row->employees_id;
-                $employees->person_id = $row->employees_person_id;
-                $employees->code = $row->employees_code;
-                $employees->type_id = $row->employees_type_id;
-            
-                array_push($employees, $employee);
-            }
-            
-            return $employees;
-        } else
-            return false;
-    }
-
-    function getEmployee() {
+    function getEmployee($id) {
 
         /*
         SELECT *
@@ -60,18 +34,44 @@ class employees extends CI_Model {
         if ($query->num_rows() == 1){
             $row = $query->row();
 
-            $employees = new stdClass();
-            $employees->id = $row->employees_id;
-            $employees->person_id = $row->employees_person_id;
-            $employees->code = $row->employees_code;
-            $employees->type_id = $row->employees_type_id;
+            $employee = new stdClass();
+            $employee->id = $row->employees_id;
+            $employee->person_id = $row->employees_person_id;
+            $employee->code = $row->employees_code;
+            $employee->type_id = $row->employees_type_id;
 
+            return $employee;
+        } else
+            return false;
+    }
+
+    function getEmployees($id) {
+
+        $this->db->select('employees_id,employees_person_id,employees_code,employees_type_id');
+        $this->db->from('employees');
+        //$this->db->where('employees_id',$id);
+        $query = $this->db->get();
+
+        $employees = array();
+        
+        if ($query->num_rows() > 0){
+            foreach ($query->$result as $row) {
+                # code...
+                $employee = new stdClass();
+                $employee->id = $row->employees_id;
+                $employee->person_id = $row->employees_person_id;
+                $employee->code = $row->employees_code;
+                $employee->type_id = $row->employees_type_id;
+            
+                array_push($employees, $employee);
+            }
+            
             return $employees;
         } else
             return false;
     }
 
-    function deleteEmployee($id) {
+    function deleteEmployees($id) {
         if ($id) {
             $this->db->where('employees_id',$id);
             $what = $this->db->delete('employees');
@@ -86,7 +86,7 @@ class employees extends CI_Model {
         }
     }
 
-    function updateEmployee($id,$data){
+    function updateEmployees($id,$data){
         
         if ($id && $data){
             $this->db->where('employees_id',$id);
@@ -101,14 +101,16 @@ class employees extends CI_Model {
         }
     }
 
-    /*function employees_insert($data){
+    function insertEmployees($data){
         
         if ($data){
             
             $this->db->insert('employees',$data);
             $row = $this->db->affected_rows();
             $id = $this->db->insert_id();
+
             $result=array();
+
             $result['id'] = $id;
             //Check if it have gone right and return response
             
@@ -122,7 +124,5 @@ class employees extends CI_Model {
 
             return $result;
         }
-    }*/
+    }
 }
-
-?>
