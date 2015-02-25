@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/acacha/ebre-escool/badge.svg)](https://coveralls.io/r/acacha/ebre-escool)
+
 Ebre-escool
 ==
 
