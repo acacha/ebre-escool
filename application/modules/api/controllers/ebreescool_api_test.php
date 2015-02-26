@@ -49,20 +49,42 @@ class ebreescool_api_test extends CI_Controller
         
     }
 
-    public function test_login(){
+    public function person_post(){
+        // Pull in an array of tweets
+        
+        $givenName = "Sergi";
+        $sn1 = "Tur";
+        $sn2 = "Badenas";
+        
+        // altres camps...
 
-        $username = "sergitur";
-        $password = "PUT_YOUR_PASSWORD_HERE";
-        $realm = "ldap";
-
-        $post_array = array("username" => $username, "password" => $password, "realm" => $realm);
+        $post_array = array(
+            "givenName" => $givenName, 
+            "sn1" => $sn1, 
+            "sn2" => $sn2
+            //other field...
+            );
         
         // Pull in an array of tweets        
-        $result = $this->rest->post('login',$post_array);
-        echo "<br> STATUS CODE: " . $result = $this->rest->status() . "</br>";
+        $result = $this->rest->post('person',$post_array);
+        
+        echo "<br> STATUS CODE: " . $result = 
+            $this->rest->status() . "</br>";
+        
         $result = $this->rest->debug();
 
         echo json_encode($result);
+        
+    }
+
+    /*
+    !!IMPORTANT!!
+    DEPRECATED. LOGIN API MOVED TO A SPECIFIC CONTROLLER. See ebreescool_login.php AND ebreescool_login_api_test.php
+    */
+    public function test_login(){
+
+        echo "DEPRECATED! Use <a href=\"http://" . $_SERVER['SERVER_NAME'] . "/ebre-escool/index.php/api/ebreescool_login_api_test/test_login\">http://" . $_SERVER['SERVER_NAME'] . "/ebre-escool/index.php/api/ebreescool_login_api_test/test_login</a> instead";
+        
         
     }
     

@@ -29,7 +29,26 @@ class HAuth extends CI_Controller {
 
 					$data['user_profile'] = $user_profile;
 
-					$this->load->view('hauth/done',$data);
+					switch ($provider) {
+					    case "Google":
+					    	//GET EMAIL--> GET EBRE-ESCOOL USER!
+					    	//LOGIN CORRECT --> POSTLOGIN ACTIONS
+					        $this->load->view('hauth/done',$data);
+					        break;
+					    case "Facebook":
+					    	$this->load->view('hauth/done',$data);
+					        break;
+					    case "Twitter":
+					        $this->load->view('hauth/done',$data);
+					        break;
+					    default:
+					    	$this->load->view('hauth/done',$data);
+					    	break;    
+					}
+
+					
+
+					
 				}
 				else // Cannot authenticate user
 				{

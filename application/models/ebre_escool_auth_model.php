@@ -86,6 +86,195 @@ class ebre_escool_auth_model  extends CI_Model  {
       return false;
     }
 
+    function save_google_plus_profile_with_username($user_profile,$username) {
+      log_message('debug', 'Executing save_google_plus_profile_with_username...');
+      
+      $person_id = $this->getPersonIdFromUsername($username);
+
+      if ($person_id!=null) {
+        $result = $this->save_google_plus_profile($user_profile);
+        log_message('debug', 'Result: ' . $result);
+        if ($result == null) {
+          //ERROR
+          log_message('debug', 'Error saving Google plus profile: ' . print_r($user_profile, TRUE));
+          return null;
+        } else {
+          // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
+          $this->insert_update_person_google_plus($person_id,$result);          
+        }
+      } else {
+        log_message('debug', 'Not person found for username' . $username);
+        return null;
+      }
+
+    }
+
+    function getPersonIdFromUsername($username){
+      /*
+      SELECT `person_id` FROM `users` WHERE `username`="USERNAME_HERE"
+      */
+      $this->db->select('person_id');
+      $this->db->from('users');
+      $this->db->where('username',$username);
+
+      $query = $this->db->get();
+
+      if ($query->num_rows() == 1){
+        $row = $query->row(); 
+        return $row->person_id;
+      } 
+      else
+        return null;
+    }
+
+    function insert_update_person_google_plus($person_id,$google_plus_id) {
+      log_message('debug', 'Executing insert_update_person_google_plus!');
+      log_message('debug', 'person_id: ' . $person_id);
+      log_message('debug', 'google_plus_id: ' . $google_plus_id);
+      $result = $this->check_person_google_plus($person_id,$google_plus_id);
+      log_message('debug', 'Result: ' . $result);
+      $data = array(
+           'person_google_plus_person_id' => $person_id ,
+           'person_google_plus_gplus_id' => $google_plus_id,
+        );    
+
+      if($result) {
+        //UPDATE
+        log_message('debug', 'Already existing register for person_id: ' . $person_id . ' AND google_plus_id: ' . $google_plus_id . '. Skipping!');
+      } else {
+        //INSERT
+        log_message('debug', 'Inserting new record to table person_google_plus!');
+        $this->db->insert('person_google_plus', $data); 
+        if ($this->db->affected_rows() == 1) {
+          //INSERTED OK
+          $inserted_id = $this->db->insert_id();
+          log_message('debug', 'Inserted ok with id ' .$inserted_id);          
+          return $inserted_id;  
+        } else {
+          //ERROR INSERTING
+          log_message('debug', 'ERROR inserting record to table person_google_plus. Affected rows:' . $this->db->affected_rows()); 
+          return null; 
+        }  
+      }
+
+    }
+
+    function check_person_google_plus($person_id,$google_plus_id) {
+
+      /*
+      SELECT `person_google_plus_id` FROM `person_google_plus` WHERE `person_google_plus_person_id`=PERSON_ID 
+      AND `person_google_plus_gplus_id`=GOOGLE_PLUS_ID
+      */
+      $this->db->select('person_google_plus_id');
+      $this->db->from('person_google_plus');
+      $this->db->where('person_google_plus_person_id',$person_id);
+      $this->db->where('person_google_plus_gplus_id',$google_plus_id);
+
+      $query = $this->db->get();
+      //log_message('debug',$this->db->last_query());
+
+      if ($query->num_rows() == 1){
+        $row = $query->row(); 
+        return $row->person_google_plus_id;
+      } 
+      else
+        return false;
+    }    
+
+    function save_google_plus_profile($user_profile) {
+      log_message('debug', 'Executing save_google_plus_profile...');
+      
+      $google_plus_profile_database_id = 
+          $this->check_if_google_plus_profile_exists($user_profile->identifier);
+      $data = array(
+           'google_plus_identifier' => $user_profile->identifier,
+           'google_plus_webSiteURL' => $user_profile->webSiteURL ,
+           'google_plus_profileURL' => $user_profile->profileURL,
+           'google_plus_photoURL' => $user_profile->photoURL,
+           'google_plus_displayName' => $user_profile->displayName,
+           'google_plus_description' => $user_profile->description,
+           'google_plus_firstName' => $user_profile->firstName,
+           'google_plus_lastName' => $user_profile->lastName,
+           'google_plus_gender' => $user_profile->gender,
+           'google_plus_language' => $user_profile->language,
+           'google_plus_age' => $user_profile->age,
+           'google_plus_birthDay' => $user_profile->birthDay,
+           'google_plus_birthMonth' => $user_profile->birthMonth,
+           'google_plus_birthYear' => $user_profile->birthYear,
+           'google_plus_email' => $user_profile->email,
+           'google_plus_emailVerified' => $user_profile->emailVerified,
+           'google_plus_phone' => $user_profile->phone,
+           'google_plus_address' => $user_profile->address == null ? "": $user_profile->address,
+           'google_plus_country' => $user_profile->country,
+           'google_plus_region' => $user_profile->region,
+           'google_plus_city' => $user_profile->city == null ? "": $user_profile->city,
+           'google_plus_zip' => $user_profile->zip,
+           'google_plus_creationUserId' => 2,
+           'google_plus_lastupdateUserId' => 2,
+           'google_plus_markedForDeletion' => 'n',
+           'google_plus_markedForDeletionDate' => '',
+        );    
+      if ($google_plus_profile_database_id != false) {
+        //UPDATE
+        log_message('debug', 'Updating Google_plus_profile with id ' . $google_plus_profile_database_id);
+        $this->db->where('google_plus_id', $google_plus_profile_database_id);
+        $this->db->update('google_plus', $data); 
+        //log_message('debug',$this->db->last_query());
+        if ($this->db->affected_rows() == 1) {
+          //UPDATE OK
+          log_message('debug', 'Google_plus_profile updated ok with id');          
+          return $google_plus_profile_database_id;  
+        } else {
+          if ($this->db->affected_rows() == 0) {            
+            //NOTHING UPDATED -> CONTINUE (we use all data, maybe is zero because no changes applied)!
+            log_message('debug', 'ERROR? updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
+            return $google_plus_profile_database_id;
+          } else{
+            log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
+            return null;   
+          }
+          
+        }  
+      } else {
+        //INSERT
+        log_message('debug', 'Inserting Google_plus_profile to database!');        
+        $this->db->insert('google_plus', $data); 
+        $inserted_id = $this->db->insert_id();
+        if ($this->db->affected_rows() == 1) {
+          //INSERTED OK          
+          log_message('debug', 'Google_plus_profile inserted ok with id ' . $inserted_id);          
+          return $inserted_id;  
+        } else {
+          //ERROR INSERTING
+          log_message('debug', 'ERROR inserting Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
+          return null; 
+        }      
+        
+      }
+    }
+
+    function check_if_google_plus_profile_exists($google_plus_profile_identifier) {
+      log_message('debug', 'Checking if google_plus_profile with identifier ' . $google_plus_profile_identifier . ' already exists...');
+      //SELECT `google_plus_id` FROM `google_plus` WHERE `google_plus_identifier`="identifier_here"
+
+      $this->db->select('google_plus_id');
+      $this->db->from('google_plus');
+      $this->db->where('google_plus_identifier',"$google_plus_profile_identifier");
+
+      $query = $this->db->get();
+      //log_message('debug',$this->db->last_query());
+      if ($query->num_rows() == 1){
+        $row = $query->row(); 
+        log_message('debug', 'Google_plus_profile with identifier ' . $google_plus_profile_identifier. ' already exists!');
+        return $row->google_plus_id;
+      } 
+      else {
+        log_message('debug', 'Google_plus_profile with identifier ' .  $google_plus_profile_identifier . ' not exists on database!');
+        return false;
+      }
+        
+    }
+
     function get_current_academic_period_id() {
 
       /*
@@ -94,7 +283,6 @@ class ebre_escool_auth_model  extends CI_Model  {
       $this->db->select('academic_periods_id,academic_periods_shortname, academic_periods_name,academic_periods_alt_name,academic_periods_current');
       $this->db->from('academic_periods');
       $this->db->where('academic_periods_current',1);
-      $this->db->limit(1);
 
       $query = $this->db->get();
 
@@ -104,6 +292,17 @@ class ebre_escool_auth_model  extends CI_Model  {
       } 
       else
         return false;
+    }
+
+    public function getApiUserProfile($username) {
+        $api_user_profile = new stdClass();
+        $api_user_profile->username = $username;
+        $api_user_profile->prova = "TEST";
+        $api_user_profile->another = "TEST 1";
+        //TODO: Provides auth token for api access
+        $api_user_profile->auth_token = "e613029163a79156e45ecbc37ff97f78";
+
+        return $api_user_profile;
     }
   
     public function getSessionData($username) {
@@ -152,7 +351,7 @@ class ebre_escool_auth_model  extends CI_Model  {
         $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');  
         $this->db->join('department', 'teacher_academic_periods_department_id = department.department_id','left');
       }
-      
+
 		  $this->db->where('users.username',$username);
       if ( $is_user_a_teacher ) {
           $this->db->where('teacher_academic_periods_academic_period_id', $academic_period_id );

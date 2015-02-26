@@ -1,0 +1,62 @@
+<?php
+
+/*
+| -------------------------------------------------------------------
+| REMOTE SSH ACCESS
+| -------------------------------------------------------------------
+| This file will contain the settings needed to access to your remote server.
+|
+| TIP: Active $use_ssh_keys and avoid using user and password data
+*/
+
+$use_ssh_keys= true;
+
+#NOT SUPPORTED YET :-(
+$ssh_user= "john";
+$ssh_password="Doe";
+$ssh_hostname = '192.168.50.80';
+
+/*
+| -------------------------------------------------------------------
+| REMOTE (EXPLOTATION) DATABASE CONNECTIVITY SETTINGS
+| -------------------------------------------------------------------
+| This file will contain the settings needed to access your remote database.
+|
+*/
+
+$database_username = 'ebre_escool';
+$database_password = 'PASSWORD_HERE';
+$database_name = 'ebre_escool';
+
+/*
+| -------------------------------------------------------------------
+| LOCAL (DEVELOPMENT) DATABASE CONNECTIVITY SETTINGS
+| -------------------------------------------------------------------
+| This file will contain the settings needed to access your remote database.
+|
+*/
+
+$db['default']['username'] = 'ebre_escool';
+$db['default']['password'] = 'PASSWORD_HERE';
+$db['default']['database'] = 'ebre_escool';
+
+/*
+$ sudo cat /etc/mysql/debian.cnf 
+# Automatically generated for Debian scripts. DO NOT TOUCH!
+[client]
+host     = localhost
+user     = debian-sys-maint
+password = PASSWORD_HERE
+socket   = /var/run/mysqld/mysqld.sock
+[mysql_upgrade]
+host     = localhost
+user     = debian-sys-maint
+password = PASSWORD_HER
+socket   = /var/run/mysqld/mysqld.sock
+basedir  = /usr
+*/
+
+$db['default']['admin_local_mysqluser'] = 'debian-sys-maint';
+$db['default']['password_admin_local'] = 'PASSWORD_HERE';
+
+?>

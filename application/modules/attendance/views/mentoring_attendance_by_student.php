@@ -304,7 +304,7 @@
            <th><?php echo lang('attendance_reports_student_incidents_incident_type')?></th>
            <th><?php echo lang('attendance_reports_student_incidents_study_submodule')?></th>
            <th><?php echo lang('attendance_reports_student_incidents_study_module')?></th>
-           <th><?php echo lang('attendance_reports_student_incidents_classroom_group')?></th>
+           <th><?php echo lang('attendance_reports_student_incidents_course')?></th>
            <th><?php echo lang('attendance_reports_student_incidents_entryDate')?></th>
            <th><?php echo lang('attendance_reports_student_incidents_last_update')?></th>
            <th><?php echo lang('attendance_reports_student_incidents_creationUserId')?></th>
@@ -1040,8 +1040,8 @@ $('#selected_classroom_group').on("change", function(e) {
                                     return '<a href="' + url + '" title="' + data.study_module_name + '">' + data.study_module_shortname + ' (' + data.study_module_id + ')</a>';
                                   }},  
                         { "mData": function(data, type, full) {
-                                    url = "<?php echo base_url('/index.php/curriculum/classroom_group/read/')?>/" +  data.enrollment_group_id;
-                                    return '<a href="' + url + '" title="' + data.classroom_group_name + '">' + data.classroom_group_code + ' (' + data.enrollment_group_id + ')</a>';
+                                    url = "<?php echo base_url('/index.php/curriculum/course/read/')?>/" +  data.study_submodules_courseid;
+                                    return '<a href="' + url + '" title="' + data.course_shortname + '">' + data.course_shortname + ' (' + data.study_submodules_courseid + ')</a>';
                                   }}, 
                         { "mData": function(data, type, full) {
                                     return data.entryDate;

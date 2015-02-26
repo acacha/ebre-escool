@@ -44,96 +44,18 @@ class ebreescool extends REST_Controller
         $this->person_get();
     }
 
-    function login_post()
+    /*
+    !!IMPORTANT!!
+    DEPRECATED. SEE CONTROLLER ebreescool_login.php
+    For better security password have to be hasehd no original password!
+    Tried passwords are logged!
+    */
+    /*function login_post()
     {
         
-        log_message('debug', $this->LOGTAG . "login_post called");
-
-        $result = new stdClass();
-        $result->message = "LOGIN POST";
         
-        $username = $this->post('username');
-        $password = $this->post('password');
-        $realm = $this->post('realm');
+    }*/
 
-        log_message('debug', $this->LOGTAG . "Username: " . $username);
-        log_message('debug', $this->LOGTAG . "Realm: " . $realm);
-
-        if(false)
-            {
-                $this->response(NULL, 400);
-            }
-
-        $result->username= $username;
-        $result->password= $password;
-        $result->realm= $realm;
-
-        //VALIDATION
-        if ($username == "" || !$result->username) {
-            log_message('debug', $this->LOGTAG . "Incorrect username value");
-            $result->message = "Incorrect username value";
-            $this->response($result, 400);
-        }
-
-        if ($password == "" || !$result->password) {
-            log_message('debug', $this->LOGTAG . "Incorrect username value");
-            $result->message = "Incorrect username value!";
-            $this->response($result, 400);
-        }
-
-        if ($realm == "" || !$result->realm || !$this->validate_realm($realm) ) {
-            log_message('debug', $this->LOGTAG . "No valid realm specified");
-            $result->message = "No valid realm specified!";
-            $this->response($result, 400);
-        }
-
-        //Check if username exists
-        // TODO
-
-        $this->skeleton_auth->skeleton_auth_model->setRealm($realm);
-        //$remember = (bool) $this->input->post('remember');
-                
-        if ($this->skeleton_auth->login($username, $password, false))
-        {
-            //login is successful
-            log_message('debug', $this->LOGTAG . "Login successful");
-            $result->message = "Login successful!";
-
-            $sessiondata = $this->ebre_escool_auth_model->getSessionData($username); 
-            $result->sessiondata = $sessiondata;
-
-            $api_user_profile = new stdClass();
-            $api_user_profile->username = $username;
-            $api_user_profile->prova = "TEST";
-            $api_user_profile->another = "TEST 1";
-            $result->api_user_profile = $api_user_profile;
-            $this->response($result, 200);   
-        }
-        else
-        {
-            //if the login was un-successful
-            log_message('debug', $this->LOGTAG . "Login not successful");
-            $result->message = "Login not successful!";
-            $this->response($result, 400);   
-        }
-
-        if (false) {
-            log_message('debug', $this->LOGTAG . " username: " . $username . " does not exists!");
-            $result->message = "Username does not exists!";
-            $this->response($result, 404);
-        }
-
-        log_message('debug', $this->LOGTAG . " username: " . $username . " logged ok!");
-        $this->response($result, 200); // 200 being the HTTP response code
-    }
-
-    function validate_realm($realm){
-
-        if ( (strcasecmp ( $realm , "ldap" ) == 0) || (strcasecmp ( $realm , "mysql" ) == 0) ) {
-            return true;
-        }
-        return false;
-    }
     
     function person_get()
     {
@@ -206,9 +128,66 @@ class ebreescool extends REST_Controller
         var_dump($this->request->body);
     }
 
+    private get_current_lesson(){
+        $timestamp = time();
+        log_message('debug', 'Timestamp: ' . $timestamp)
+        $day = date("N",$timestamp);
+        log_message('debug', 'Day of week: ')
+
+    }
+
 
     public function send_put()
     {
         var_dump($this->put('foo'));
+    }
+
+    //Navegador d'horari/lliçons
+
+    //IMPORTANT: Data actual la proporciona el servidor no li passa la app al servidor!
+
+    //Partim de data i hora actual i professor --> Obtenir Lliço més propera
+    //
+
+    //mètode next_lesson()
+    //-> PROBLEMA: Petició cada vegada que es passa? Lent? Fer una CAche?
+
+    //mètode previous_lesson
+    //->
+
+    //Partim del professor obtenir les lliçons setmanals a la taula lessons. 
+
+    /*
+    
+    BUCLE TOTES LES LLIÇONS {
+        //INFO LLIÇO:
+    }
+    */
+
+    /*
+    * NOTES: On obtenir la informació
+    * Control accés: Només poden utilitzar els usuaris que són professors
+    * teacher_code: informació del perfil (SharedPreference
+    * Utilitzar Pager: Navegar endavant endarrera per lliçons pertoquen al professor
+    *  Per defecte mostrar la lliço que toca en aquell moment i sinó la més propera que sigui passada
+    *  NO TOCARIA però mostrar lliçons futures. Recorrer l'horari de professor
+    *
+    * day/month/year/time_slot -> dia i hora
+    */
+    function check_attendance_get() {
+        //GET PARAMETERS
+        //$selected_group_id
+        //$teacher_code
+        //$selected_study_module_id
+        //$lesson_id
+        //$day 
+        //$month
+        //$year
+        //$selected_time_slot_id
+        if(!$this->get('id'))
+        {
+            $this->response(NULL, 400);
+        }
+
     }
 }
