@@ -206,7 +206,7 @@
           
           <div class="span4">
           <i class="icon-group"></i> <b>Unitat organitzativa</b>:
-              <!--Solved error missage: ERROR. PENDENT DEFINIR DEFAULT for users_is_inventory-->
+              <!--Solved error missage: ERROR. PENDENT DEFINIR DEFAULT for users_is_inventory in ebre-escool-->
           <?php if(($data['user_is_admin'] || $data['user_is_inventory'])): ?>
             <select id="organizational_units" style="width: 250px">
              <option></option>
