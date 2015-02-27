@@ -46,6 +46,7 @@ class ebre_escool  {
         return false;
     }
 
+    //new funcion for inventory users in ebre-escool
     public function user_is_inventory(){
         $current_user_id = $this->ci->session->userdata('id');
         $current_username = $this->ci->session->userdata('username');

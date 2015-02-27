@@ -6,6 +6,8 @@ application/config/hybridauthlib.php
 application/config/rest_client.php
 
 .DS_Store
+.idea/misc.xml
+.idea/workspace.xml
 
 application/cache/*
 !application/cache/index.html

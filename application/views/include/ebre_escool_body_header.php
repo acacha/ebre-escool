@@ -931,6 +931,7 @@
           <!-- INFORMES END --> 
           
           <!-- INVENTARI -->
+            <!--user: is_inventory-->
           <?php if ($this->session->userdata('is_admin') || ($this->session->userdata('is_inventory'))): ?>
           <li id="inventory">
             <a href="<?=base_url()?>index.php/inventory/inventory">

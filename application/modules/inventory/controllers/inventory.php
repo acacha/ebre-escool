@@ -291,12 +291,13 @@ public function inventory_object($organizational_unit="")	{
 	//TODO
 	$user_is_admin = $this->ebre_escool->user_is_admin();
 
-    $user_is_inventory = $this->ebre_escool->user_is_inventory();
+    $user_is_inventory = $this->ebre_escool->user_is_inventory();           // new users for inventory
 
 	$data['user_is_admin'] = $user_is_admin;
 
-    $data['user_is_inventory'] = $user_is_inventory;
+    $data['user_is_inventory'] = $user_is_inventory;                        // new users for inventory
 
+    // add new variable users_is_inventory in the condition
 	if (($user_is_admin) || ($user_is_inventory)) {
 		$all_organizational_units = $this->inventory_model->getAllorganizationalUnits();
 		$organizational_units = $all_organizational_units;
@@ -306,6 +307,7 @@ public function inventory_object($organizational_unit="")	{
 	
 	$data['organizational_units'] = $organizational_units;
 
+    // add new variable users_is_inventory in the condition
 	if (($organizational_unit != "" && $user_is_admin) || ($organizational_unit != "" && $user_is_inventory)) {
 		$data['selected_organizational_unit'] = $selected_organizational_unit;
 		$data['selected_organizational_unit_key'] = $organizational_unit;
@@ -325,6 +327,7 @@ public function inventory_object($organizational_unit="")	{
 
 	$data['providers'] = array();
 
+    // add new variable users_is_inventory in the condition and user_id_admin
 	if (($user_is_admin) || ($user_is_inventory)) {
 		$providers = $this->inventory_model->getAllProviders();
 	} else {
