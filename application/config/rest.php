@@ -374,7 +374,7 @@ CREATE TABLE `key_access` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
 */
-$config['rest_enable_access'] = TRUE;
+$config['rest_enable_access'] = FALSE;
 
 
 /*

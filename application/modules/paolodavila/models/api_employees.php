@@ -15,7 +15,7 @@ class api_employees extends CI_Model {
             //$this->load->library('ebre_escool');
     }
 
-    function getEmployee($id) {
+    function getEmployee($employees_id) {
 
         /*
         SELECT *
@@ -27,7 +27,7 @@ class api_employees extends CI_Model {
         
         $this->db->select('employees_id,employees_person_id,employees_code,employees_type_id');
         $this->db->from('employees');
-        $this->db->where('employees_id',$id);
+        $this->db->where('employees_id',$employees_id);
 
         $query = $this->db->get();
         
@@ -35,6 +35,7 @@ class api_employees extends CI_Model {
             $row = $query->row();
 
             $employee = new stdClass();
+
             $employee->id = $row->employees_id;
             $employee->person_id = $row->employees_person_id;
             $employee->code = $row->employees_code;
@@ -45,9 +46,10 @@ class api_employees extends CI_Model {
             return false;
     }
 
-    function getEmployees($id) {
+    function getEmployees() {
 
-        $this->db->select('employees_id,employees_person_id,employees_code,employees_type_id');
+        //$this->db->select('employees_id,employees_person_id,employees_code,employees_type_id');
+        $this->db->select('*');
         $this->db->from('employees');
         //$this->db->where('employees_id',$id);
         $query = $this->db->get();
@@ -58,6 +60,7 @@ class api_employees extends CI_Model {
             foreach ($query->$result as $row) {
                 # code...
                 $employee = new stdClass();
+                
                 $employee->id = $row->employees_id;
                 $employee->person_id = $row->employees_person_id;
                 $employee->code = $row->employees_code;

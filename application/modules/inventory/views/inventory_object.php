@@ -206,7 +206,7 @@
           
           <div class="span4">
           <i class="icon-group"></i> <b>Unitat organitzativa</b>: 
-          <?php if($data['user_is_admin']): ?>
+          <?php if(($data['user_is_admin'] || $data['user_is_inventory'])): ?>
             <select id="organizational_units" style="width: 250px">
              <option></option>
              <?php if( $data['selected_organizational_unit_key'] == "All" ): ?>

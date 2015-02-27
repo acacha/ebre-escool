@@ -16,7 +16,7 @@
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 require APPPATH.'/libraries/REST_Controller.php';
 
-class employee extends REST_Controller {
+class Employee extends REST_Controller {
 
     //public $LOGTAG = "EBRE_ESCOOL API: ";
 
@@ -36,18 +36,20 @@ class employee extends REST_Controller {
         $this->load->model('api_employees');
     }    
 
+    
     public function index_get(){
         $this->employee_get();
     }
+    
 
     function employee_get(){
 
         if(!$this->get('id')){
             //$message = array('id'=>'','message'=>'YOU MUST SEND AND ID');
-            $this->response($message, 400);
+            $this->response(NULL, 400);
         }
 
-        //$this->load->model('employees');
+        $this->load->model('api_employees');
 
         //$employee = $this->api_employees->employees_model->getEmployee( $this->get('id') );
         $employee = $this->api_employees->getEmployee( $this->get('id') );
@@ -60,19 +62,6 @@ class employee extends REST_Controller {
         }
     }
 
-    function employees_get(){
-
-        //$this->load->model('api_employees');
-        //$employees = $this->api_employees->employees_get();
-        $employee = $this->api_employees->getEmployees();
-    
-        if($employee){
-            $this->response($employee, 200); // 200 being the HTTP response code
-        } else {
-            $this->response(array(array('id' => $this->get('id'),'message' => 'Couldn\'t find any employees!'), 404);
-        }
-    }
-    
     function employee_post(){
 
         if (isset($_POST)){
@@ -93,7 +82,27 @@ class employee extends REST_Controller {
         //$message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
     }
 
-     function employee_delete(){
+    function employee_put(){
+
+        $data = array(
+        'employees_id'=>$this->put('employees_id'),
+        'employees_person_id'=>$this->put('employees_person_id'),
+        'employees_code'=>$this->put('employees_code'),
+        'employees_type'=>$this->put('employees_type_id'));
+        
+        $insertResponse = $this->api_employees->insertEmployees($data);
+        //echo $insertResponse['response']." ".$insertResponse['id'];
+        
+        if($insertResponse['response']){
+            $message = array('id' => $insertResponse['id'],'message' => 'NEW EMPLOYEE INSERTED');
+            $this->response($message,200);//200 being the HTTP response code
+        } else{
+            $message = array('id' => $insertResponse['id'], 'message' => 'ERROR INSERTING');
+            $this->response($message, 422); // 422 being the HTTP response code
+        }
+    }
+
+    function employee_delete(){
         
         if(!$this->get('id')){
             $message = array('id'=>'','message'=>'YOU MUST SEND AN ID');
@@ -111,23 +120,16 @@ class employee extends REST_Controller {
         }
     }
 
-    function employee_put(){
+    function employees_get(){
 
-        $data = array(
-        'employees_id'=>$this->put('employees_id'),
-        'employees_person_id'=>$this->put('employees_person_id'),
-        'employees_code'=>$this->put('employees_code'),
-        'employees_type'=>$this->put('employees_type_id'));
-        
-        $insertResponse = $this->api_employees->insertEmployees($data);
-        //echo $insertResponse['response']." ".$insertResponse['id'];
-        
-        if($insertResponse['response']){
-            $message = array('id' => $insertResponse['id'],'message' => 'NEW CLASSROOM GROUP INSERTED');
-            $this->response($message,200);//200 being the HTTP response code
-        } else{
-            $message = array('id' => $insertResponse['id'], 'message' => 'ERROR INSERTING');
-            $this->response($message, 422); // 422 being the HTTP response code
+        //$this->load->model('api_employees');
+        //$employees = $this->api_employees->employees_get();
+        $employee = $this->api_employees->getEmployees();
+    
+        if($employee){
+            $this->response($employee, 200); // 200 being the HTTP response code
+        } else {
+            $this->response(array('error' => 'Couldn\'t find any employees!'), 404);
         }
     }
 

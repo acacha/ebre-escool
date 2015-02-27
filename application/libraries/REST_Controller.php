@@ -381,15 +381,9 @@ abstract class REST_Controller extends CI_Controller
             $this->response(array(config_item('rest_status_field_name') => false, config_item('rest_message_field_name') => 'This API key does not have access to the requested controller.'), 401);
         }
 
-        // Sure it exists, but can they do anything with it?
-<<<<<<< HEAD
-        if ( ! method_exists($this, $controller_method)) {
-            $this->response(array(config_item('rest_status_field_name') => false, config_item('rest_message_field_name') => 'Unknown method.'), 404);
-=======
-        
+        // Sure it exists, but can they do anything with it?        
         if ( ! method_exists($this, $controller_method)) {
             $this->response(array(config_item('rest_status_field_name') => false, config_item('rest_message_field_name') => 'Unknown method ' . $controller_method . '.'), 404);
->>>>>>> upstream/master
         }
 
         // Doing key related stuff? Can only do it if they have a key right?
