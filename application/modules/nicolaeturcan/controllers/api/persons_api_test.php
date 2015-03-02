@@ -22,7 +22,7 @@ class ebreescool_api_test extends CI_Controller
         // Load the library
         $this->load->library('REST');
 
-        $this->load->config('rest_client');
+        $this->load->config('rest_client');Pe
         
         // Set config options (only 'server' is required to work)
 
