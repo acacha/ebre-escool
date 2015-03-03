@@ -50,6 +50,10 @@ class ebre_escool  {
     public function user_is_inventory(){
         $current_user_id = $this->ci->session->userdata('id');
         $current_username = $this->ci->session->userdata('username');
+
+        if ($current_username == "jpons" || $current_username == "ijorda" || $current_username == "amoreso" || $current_username == "avalls")
+            return true;
+        return false;
     }
     
 }
