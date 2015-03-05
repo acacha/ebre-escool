@@ -789,36 +789,35 @@
                   <?php echo "Matrícula";?>
                   <b class="arrow icon-angle-down"></b>
                 </a>
-
+                
                 <ul class="submenu">
 
                   <li id="enrollment_reports_by_academic_period">
-                    <!--<a href="http://domini/ebre-escool/index.php/managment/users_in_group">-->
                     <a href="<?php echo base_url('/index.php/managment/enrollment_reports_by_academic_period'); ?>">
                       Matrícula per períodes acadèmics
                     </a>
                   </li>
 
                   <li id="enrollment_reports_by_studies">
-                    <!--<a href="http://domini/ebre-escool/index.php/managment/users_in_group">-->
                     <a href="<?php echo base_url('/index.php/managment/enrollment_reports_by_studies'); ?>">
                       Matrícula per estudis
                     </a>
                   </li>
 
                   <li id="enrollment_reports_all_enrolled_persons_by_academic_period">
-                    <!--<a href="http://domini/ebre-escool/index.php/managment/users_in_group">-->
                     <a href="<?php echo base_url('/index.php/managment/enrollment_reports_all_enrolled_persons_by_academic_period'); ?>">
                       Tots els matriculats per període acadèmic 
                     </a>
                   </li>
 
-                </ul>                  
+                </ul> 
+                            
               </li> 
 
               <!-- ATTENDANCE REPORTS -->
               <li id="attendance_reports">
-                <a href="#" class="dropdown-toggle">
+                <a href="#" class="dropdown-backdrop">
+                <!--<a href="#" class="dropdown-toggle">-->
                   <i class="icon-double-angle-right"></i>
 
                   <?php echo "Assistència";?>
@@ -837,6 +836,7 @@
                   <?php endif?>
 
                   <!-- Assistència informes del centre -->
+                  
                   <li id="reports_educational_center">
                     <a href="#" class="dropdown-toggle">
                       <?php echo lang('attendance'). ".<br/>" . lang('reports_educational_center_reports');?>
@@ -863,10 +863,12 @@
                       </li>
                     </ul>
                   </li>
+                  
 
 
 
                 <!-- Assistència informes de grup -->
+              
               <li id="report_group">
                 <a href="#" class="dropdown-toggle">
                   <?php echo lang('attendance'). ".<br/> " . lang('reports_group_reports');?>
@@ -890,24 +892,16 @@
                 </ul>
                 
               </li>
-
-
-
-
-
-
+              
 
                 </ul>                  
               </li> 
 
-              
-
-              
-
-
               <!-- Inventari. Informes -->
+              
               <li id="inventory_reports">
-                <a href="#" class="dropdown-toggle">
+                <!--<a href="#" class="dropdown-toggle">-->
+                <a href="#" class="dropdown-backdrop">
                   <i class="icon-double-angle-right"></i>
 
                   <?php echo lang('inventory_reports'); ?>
@@ -923,6 +917,7 @@
 
                 </ul>
               </li>
+              
 
             </ul>
           </li>
@@ -931,7 +926,8 @@
           <!-- INFORMES END --> 
           
           <!-- INVENTARI -->
-          <?php if ($this->session->userdata('is_admin')): ?>
+          <!--user: is_inventory-->
+          <?php if ($this->session->userdata('is_admin') || ($this->session->userdata('is_inventory'))): ?>
           <li id="inventory">
             <a href="<?=base_url()?>index.php/inventory/inventory">
               <i class="icon-check"></i>
