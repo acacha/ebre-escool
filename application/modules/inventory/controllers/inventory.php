@@ -327,7 +327,7 @@ public function inventory_object($organizational_unit="")	{
 
 	$data['providers'] = array();
 
-    // add new variable users_is_inventory in the condition and user_id_admin for ebre-escool
+    // add new variable users_is_inventory in the condition and user_id_admin
 	if (($user_is_admin) || ($user_is_inventory)) {
 		$providers = $this->inventory_model->getAllProviders();
 	} else {
