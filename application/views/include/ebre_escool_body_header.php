@@ -816,8 +816,8 @@
 
               <!-- ATTENDANCE REPORTS -->
               <li id="attendance_reports">
-                <a href="#" class="dropdown-toggle">
-                <!--<a href="#" class="dropdown-backdrop">-->
+                <a href="#" class="dropdown-backdrop">
+                <!--<a href="#" class="dropdown-toggle">-->
                   <i class="icon-double-angle-right"></i>
 
                   <?php echo "Assistència";?>
@@ -900,8 +900,8 @@
               <!-- Inventari. Informes -->
               
               <li id="inventory_reports">
-                <!--<a href="#" class="dropdown-backdrop">-->
-                <a href="#" class="dropdown-toggle">
+                  <a href="#" class="dropdown-backdrop">
+                <!--<a href="#" class="dropdown-toggle">-->
                   <i class="icon-double-angle-right"></i>
 
                   <?php echo lang('inventory_reports'); ?>
