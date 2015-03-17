@@ -34,7 +34,7 @@ class ebre_escool  {
         $current_user_id = $this->ci->session->userdata('id');
         $current_username = $this->ci->session->userdata('username');
 
-        if ($current_username == "jcaldero" || $current_username == "sergi" || $current_username == "sergitur" || $current_username == "pdavila" || $current_username == "rmelich" || $current_username == "jrodriguez" || $current_username == "jordivega1" || $current_username == "admin") {
+        if ($current_username == "jcaldero" || $current_username == "sergi" || $current_username == "sergitur" || $current_username == "pdavila" || $current_username == "rmelich" || $current_username == "jrodriguez" || $current_username == "vaznar" || $current_username == "admin") {
             return true;
         }
 
@@ -45,6 +45,18 @@ class ebre_escool  {
 
         return false;
     }
-    
+
+    //new function for inventory users in ebre-escool
+    public function user_is_inventory(){
+        $current_user_id = $this->ci->session->userdata('id');
+        $current_username = $this->ci->session->userdata('username');
+
+        if ($current_username == "jpons" || $current_username == "ijorda" || $current_username == "amoreso" || $current_username == "avalls"){
+
+            return true;
+        }
+
+        return false;
+    }
     
 }
