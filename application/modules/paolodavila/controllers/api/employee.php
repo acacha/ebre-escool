@@ -33,12 +33,12 @@ class Employee extends REST_Controller {
         $this->methods['employee_put']['limit'] = 10; //10 requests per hour per user/key
 
         //Loading "employees_model.php" model.
-        $this->load->model('api_employees');
+        $this->load->model('employees_model');
     }    
 
     
     public function index_get(){
-        $this->employee_get();
+        $this->employees_get();
     }
     
 
@@ -49,16 +49,29 @@ class Employee extends REST_Controller {
             $this->response(NULL, 400);
         }
 
-        $this->load->model('api_employees');
+        //$this->load->model('Employee_model');
 
         //$employee = $this->api_employees->employees_model->getEmployee( $this->get('id') );
-        $employee = $this->api_employees->getEmployee( $this->get('id') );
+        $employee = $this->employees_model->getEmployee( $this->get('id') );
 
         if($employee){
             $this->response($employee, 200); // 200 being the HTTP response code
         } else {
-            //$this->response(array('id' => $this->get('id'),'message' => 'employee not exists!'), 404);
+            //$this->response(array('id' => $this->get('id'),'message' => 'employee NOT EXISTS!'), 404);
             $this->response(array('error' => 'employee could not be found'), 404);
+        }
+    }
+
+    function employees_get(){
+
+        //$this->load->model('Employees_model');
+        //$employees = $this->api_employees->employees_get();
+        $employee = $this->employees_model->getEmployees();
+    
+        if($employee){
+            $this->response($employee, 200); // 200 being the HTTP response code
+        } else {
+            $this->response(array('error' => 'Couldn\'t find any employees!'), 404);
         }
     }
 
@@ -68,8 +81,9 @@ class Employee extends REST_Controller {
             //GET DATA FROM POST
             $id = $this->input->get_post('id');
             $data = array('employees_id'=>$this->input->get_post('employees_id'));
+
             //CALL TO MODEL
-            $response = $this->api_employees->updateEmployees($id,$data);
+            $response = $this->employees_model->updateEmployees($id,$data);
         }
 
         if($response){
@@ -83,14 +97,19 @@ class Employee extends REST_Controller {
     }
 
     function employee_put(){
-
+        
         $data = array(
         'employees_id'=>$this->put('employees_id'),
         'employees_person_id'=>$this->put('employees_person_id'),
         'employees_code'=>$this->put('employees_code'),
-        'employees_type'=>$this->put('employees_type_id'));
-        
-        $insertResponse = $this->api_employees->insertEmployees($data);
+        'employees_type'=>$this->put('employees_type_id'),
+        'employees_entryDate'=>$this->put('employees_entryDate'),
+        'employees_last_update'=>$this->put('employees_last_update'),
+        'employees_creationUserId'=>$this->put('employees_creationUserId'),
+        'employees_markedForDeletion'=>$this->put('employees_markedForDeletion'),
+        'employees_markedForDeletionDate'=>$this->put('employees_markedForDeletionDate'));
+
+        $insertResponse = $this->employees_model->insertEmployees($data);
         //echo $insertResponse['response']." ".$insertResponse['id'];
         
         if($insertResponse['response']){
@@ -103,7 +122,7 @@ class Employee extends REST_Controller {
     }
 
     function employee_delete(){
-        
+
         if(!$this->get('id')){
             $message = array('id'=>'','message'=>'YOU MUST SEND AN ID');
             $this->response($message, 400);
@@ -120,18 +139,6 @@ class Employee extends REST_Controller {
         }
     }
 
-    function employees_get(){
-
-        //$this->load->model('api_employees');
-        //$employees = $this->api_employees->employees_get();
-        $employee = $this->api_employees->getEmployees();
-    
-        if($employee){
-            $this->response($employee, 200); // 200 being the HTTP response code
-        } else {
-            $this->response(array('error' => 'Couldn\'t find any employees!'), 404);
-        }
-    }
 
     public function send_post() {
         var_dump($this->request->body);

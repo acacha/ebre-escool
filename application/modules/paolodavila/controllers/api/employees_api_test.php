@@ -11,7 +11,7 @@
 * @editedBy Turcan Nicolae
 */
 
-class ebreescool_api_test extends CI_Controller{
+class employees_api_test extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		
@@ -21,7 +21,7 @@ class ebreescool_api_test extends CI_Controller{
 
 		// Set config options (only 'server' is required to work)
 		//http://localhost/ebre-escool/index.php/tauriel/api/employees/employee/id/1
-		$config = array('server' => 'http://localhost/ebre-escool/index.php/paolodavila/api/employees/',
+		$config = array('server' => 'http://localhost/ebre-escool/index.php/api/ebreescool',
 			'api_key' => $this->config->item('api_key'),
 			'api_name' => 'X-API-KEY',
 			//'http_user' => 'username',
