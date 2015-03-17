@@ -900,8 +900,8 @@
               <!-- Inventari. Informes -->
               
               <li id="inventory_reports">
+                  <a href="#" class="dropdown-backdrop">
                 <!--<a href="#" class="dropdown-toggle">-->
-                <a href="#" class="dropdown-backdrop">
                   <i class="icon-double-angle-right"></i>
 
                   <?php echo lang('inventory_reports'); ?>

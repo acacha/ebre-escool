@@ -414,6 +414,7 @@ class ebre_escool_auth_model  extends CI_Model  {
                    'photo'  => $row->person_photo,
                    'logged_in' => TRUE,
                    'is_admin' => $this->ebre_escool->user_is_admin(),
+                   'is_inventory' => $this->ebre_escool->user_is_inventory(),
                    'is_teacher' => $this->is_user_a_teacher($row->person_id),
                    'is_student' => $this->is_user_a_student($row->person_id),
                    'teacher_code' => $teacher_academic_periods_code,
