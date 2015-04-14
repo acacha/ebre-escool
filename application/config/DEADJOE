@@ -1,0 +1,22 @@
+
+*** These modified files were found in JOE when it aborted on Tue Mar 17 00:42:52 2015
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+LogFormat
+upload_max_filesize
+max_post_size
+max_post_size
+
+*** File '(Unnamed)'
+.git/COMMIT_EDITMSG
+.git/COMMIT_EDITMSG
+database.php
+/etc/apache2/conf.d/insebre.conf
+/etc/apache2/conf.d/insebre.conf
+insebre.conf
+config/database.php
+config/auth_ldap.php
+config.php
+third_party/skeleton/application/config/skeleton_auth.php
+database.php
