@@ -187,7 +187,7 @@ class inventory_Model  extends CI_Model  {
 			inventory_object_name,inventory_object_shortName,inventory_object_description,inventory_object_location,location_shortName,inventory_object_materialId,material_shortName,inventory_object_brandId,brand_shortName,
 			inventory_object_modelId,model_shortName,inventory_object_moneySourceId,moneySource_shortName,inventory_object_providerId,provider_shortName,
 			inventory_object_quantityInStock,inventory_object_price,inventory_object_preservationState,inventory_object_file_url,inventory_object_entryDate,inventory_object_manualEntryDate,
-			inventory_object_markedForDeletion,inventory_object_markedForDeletionDate,inventory_object_last_update,inventory_object_manualLast_update,
+			inventory_object_markedForDeletion,inventory_object_markedForDeletionDate,inventory_object_last_update,inventory_object_manualLast_update,inventory_object_manualYearManufacture,
 			inventory_object_creationUserId,inventory_object_lastupdateUserId');
  		$this->db->from('inventory_object');
  		$this->db->join('externalIDType', 'externalIDType.externalIDType_id = inventory_object.inventory_object_externalIDType','left');
