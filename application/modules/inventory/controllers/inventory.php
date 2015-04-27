@@ -128,7 +128,8 @@ public function inventory_object($organizational_unit="")	{
     $this->grocery_crud->display_as($this->current_table.'_brandId',lang('brandId'));
     $this->grocery_crud->display_as($this->current_table.'_modelId',lang('modelId'));
     $this->grocery_crud->display_as($this->current_table.'_name',lang('name'));
-    $this->grocery_crud->display_as($this->current_table.'_description',lang('description'));    
+    $this->grocery_crud->display_as($this->current_table.'_description',lang('description'));
+    $this->grocery_crud->display_as($this->current_table.'_manualYearManufacture',lang('manualYearManufacture'));
     $this->grocery_crud->display_as($this->current_table.'_manualEntryDate',lang('manualEntryDate'));   
     $this->grocery_crud->display_as($this->current_table.'_parent',lang('inventory_object_parent'));
     $this->grocery_crud->display_as($this->current_table.'_manualLast_update',lang('manual_last_update'));      
@@ -1001,6 +1002,7 @@ function renderitzar($table_name,$header_data = null, $data=array())
 
 function set_common_columns_name($table_name){
     $this->grocery_crud->display_as($table_name.'_entryDate',lang('entryDate'));
+    $this->grocery_crud->display_as($table_name.'_manualYearManufacture',lang('manualYearManufacture'));
     $this->grocery_crud->display_as($table_name.'_last_update',lang('last_update'));
     $this->grocery_crud->display_as($table_name.'_creationUserId',lang('creationUserId'));                  
     $this->grocery_crud->display_as($table_name.'_lastupdateUserId',lang('lastupdateUserId'));   
