@@ -34,6 +34,7 @@ $lang['Login']   = 'Entrar';
 $lang['name']       		= 'Nom';
 $lang['shortName']        	= 'Nom curt';           
 $lang['description']            = 'Descripció';
+$lang['manualYearManufacture']  = 'Data de fabricació (manual)';
 $lang['entryDate']              = "Data d'entrada (automàtica)";
 $lang['manualEntryDate']        = "Data d'entrada (manual)";
 $lang['last_update']            = 'Última actualització (automàtica)';
