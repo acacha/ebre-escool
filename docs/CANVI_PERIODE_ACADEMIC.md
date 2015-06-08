@@ -1,5 +1,6 @@
 
-== Llista de tasques per a canviar el període acàdemic ==
+Llista de tasques per a canviar el període acàdemic
+==
 
 Fitxer application/config/ebre-escool.conf
 
