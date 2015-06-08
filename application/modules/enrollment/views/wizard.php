@@ -315,9 +315,9 @@ STEP 0 - STUDENT DATA
                                       <div class="span8">
                                         <label class="control-label" for="student_locality"><?php echo lang('wizzard_locality_name');?>&nbsp;</label>
                                         <select id="person_locality_id" name="person_locality_id" class="select2 span4" data-placeholder="Escriu la població" style="width:300px">
-                                          <? foreach($localities as $locality): ?>
+                                          <?php foreach($localities as $locality): ?>
                                           <option id="locality_postal_code_<?php echo $locality['locality_postal_code'];;?>" value="<?php echo $locality['locality_id']; ?>" <?php if ( $this->config->item('default_locality_id') == $locality['locality_id'] ) { echo "selected=\"selected\""; } ;?> ><?php echo $locality['locality_name']; ?></option>
-                                          <? endforeach; ?>
+                                          <?php endforeach; ?>
                                         </select>
 
                                       </div>                            
