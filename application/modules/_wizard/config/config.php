@@ -16,7 +16,7 @@ $config['academic_periods'] = array(
 	3 => "2015-16"
 	);
 
-$config['current_period'] = "2014-15";
+$config['current_period'] = "2015-16";
 
 
 ?>
