@@ -15,7 +15,7 @@ $config['academic_periods'] = array(
     2 => "2012-13",
 	3 => "2013-14",
 	4 => "2014-15",
-    4 => "2015-16",
+    5 => "2015-16",
 	);
 
 //NOTE: In database the is a field in academicperiods table that marks current academic period

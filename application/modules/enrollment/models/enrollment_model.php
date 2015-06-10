@@ -39,9 +39,10 @@ class enrollment_model  extends CI_Model  {
         if ($basedn=="")     {
             $basedn= $this->active_users_basedn;      
         }
-        
-        //echo "base dn : " . $basedn . "\echo";
-        //echo "Filter : " . $filter . "\n";
+
+        echo "active_users_basedn : " . $this->active_users_basedn . "\echo";
+        echo "base dn : " . $basedn . "\echo";
+        echo "Filter : " . $filter . "\n";
         if ($this->_bind()) {
             $sr = ldap_search($this->ldapconn, $basedn, $filter);
             $entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1029,8 +1030,11 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->from('studies');
 		$this->db->join('studies_law','studies.studies_studies_law_id = studies_law.studies_law_id');
 		$this->db->join('studies_organizational_unit','studies.studies_studies_organizational_unit_id = studies_organizational_unit.studies_organizational_unit_id');
+        $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
+        $this->db->where('studies_academic_periods_academic_period_id',6);
 
-		$this->db->order_by('studies_id', $orderby);
+		//$this->db->order_by('studies_id', $orderby);
+        $this->db->order_by('studies_shortname', $orderby);
 		       
         $query = $this->db->get();
 		$this->db->last_query();

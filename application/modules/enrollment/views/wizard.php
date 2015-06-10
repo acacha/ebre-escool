@@ -36,6 +36,7 @@
       <div class="widget-box">
         <div class="widget-header widget-header-blue widget-header-flat">
           <h4 class="lighter"><?php echo lang('new_enrollment');?></h4> <i class="icon-double-angle-right"></i>
+              2015-16 <i class="icon-double-angle-right"></i>
 
               <span name="step0_title" id="enrollment_breadcump_step1_student" class="step1_student green">
                 <small>
@@ -413,9 +414,9 @@ STEP 1 - ACADEMIC PERIOD AND STUDENT
                         <!-- Academic Period -->
                         <label class="control-label" for="academic_period"><?php echo lang('academinc_period'); ?>:&nbsp;&nbsp;</label>
                         <select id="academic_period" name="academic_period" class="select2" >
-                          <? foreach($this->config->item('academic_periods') as $key => $periode): ?>
+                          <?php foreach($this->config->item('academic_periods') as $key => $periode): ?>
                           <option value="<?php echo $key; ?>" <?php if($periode == $this->config->item('current_period')){ ?> selected <?php } ?> ><?php echo $periode; ?></option>
-                          <? endforeach; ?>
+                          <?php endforeach; ?>
                         </select>
                         <br />
                         <br />
@@ -423,11 +424,11 @@ STEP 1 - ACADEMIC PERIOD AND STUDENT
                         <label class="control-label" for="student"><?php echo lang('student'); ?>:&nbsp;&nbsp;</label>
                         <select id="student" name="student" class="select2" data-placeholder="Selecciona un estudiant..." style="width:500px;">
                           <option value=""></option>
-                          <? foreach($enrollment_students as $enrollment_student): ?>
+                          <?php foreach($enrollment_students as $enrollment_student): ?>
                            <option value="<?php echo $enrollment_student['student_person_id'];?>">
                             <?php echo $enrollment_student['person_official_id'] . ". " . $enrollment_student['student_fullName'] . " (". $enrollment_student['student_person_id'].")"; ?>
                            </option>
-                          <? endforeach; ?>
+                          <?php endforeach; ?>
                         </select>
                            <?php echo lang("enrollment_total_students");?>: <?php echo count($enrollment_students);?>
                         <div class="space-2"></div>
@@ -479,9 +480,9 @@ STEP 2 - ALL STUDIES
                       <form class="form-horizontal" id="enrollment_study-form" method="get">
                         <label class="control-label" for="enrollment_study">Estudi:&nbsp;&nbsp;</label>
                         <select id="enrollment_study" name="enrollment_study" class="select2" data-placeholder="<?php echo lang('enrollment_select_study_title') ;?>" style="width:700px">
-                          <? foreach($enrollment_studies as $enrollment_study): ?>
+                          <?php foreach($enrollment_studies as $enrollment_study): ?>
                           <option value="<?php echo $enrollment_study['studies_id']; ?>" <?php if ( $this->config->item('default_study_id') == $enrollment_study['studies_id'] ) { echo "selected=\"selected\""; } ;?> ><?php echo $enrollment_study['studies_shortname'] . ". " . $enrollment_study['studies_name'] . " ( " . $enrollment_study['studies_law_shortname'] . " - " . $enrollment_study['studies_organizational_unit_shortname'] . " )  (" .  $enrollment_study['studies_id'] . ")";?></option>
-                          <? endforeach; ?>
+                          <?php endforeach; ?>
                         </select>
                         <div class="space-2"></div>
                       </form>
