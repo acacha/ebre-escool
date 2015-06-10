@@ -1112,9 +1112,15 @@ function update_user_ldap_dn($username, $ldap_dn) {
             */
 
             $this->db->select('course_studies_course_id,course_shortname,course_name');
+            $this->db->distinct();
             $this->db->from('course_studies');
             $this->db->join('course','course_studies.course_studies_course_id =course.course_id');
+            $this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
+            $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = course_studies.course_studies_study_id');
             $this->db->where('course_studies_study_id',$study);
+            $this->db->where('courses_academic_periods_academic_period_id',6);
+            $this->db->where('studies_academic_periods_academic_period_id',6);
+
             
             $query = $this->db->get();
             //echo $this->db->last_query();
@@ -1132,9 +1138,16 @@ function update_user_ldap_dn($username, $ldap_dn) {
                 }
         } else {
             $this->db->select('course_id, course_shortname, course_name');
+            $this->db->distinct();
             $this->db->from('course');
             $this->db->join('studies','course_study_id=studies_id');
+            $this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
+            $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
             $this->db->where('studies_id',$study);
+            $this->db->where('courses_academic_periods_academic_period_id',6);
+            $this->db->where('studies_academic_periods_academic_period_id',6);
+
+
             
             $query = $this->db->get();
             //echo $this->db->last_query();
