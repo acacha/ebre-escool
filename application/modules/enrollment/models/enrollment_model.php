@@ -1181,12 +1181,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->from('classroom_group');
 		$this->db->join('course','classroom_group_course_id=course_id');
 		$this->db->join('studies','course_study_id=studies_id');
+        $this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id=classroom_group.classroom_group_id');
 		$this->db->where('studies_id',$study);
 		$this->db->where('course_id',$course_id);
+        $this->db->where('classroom_group_academic_periods_academic_period_id',6);
 		$this->db->order_by('classroom_group_id', $orderby);
 		
         $query = $this->db->get();
-		//echo $this->db->last_query();
+		echo $this->db->last_query();
 
 		if ($query->num_rows() > 0) {
 
