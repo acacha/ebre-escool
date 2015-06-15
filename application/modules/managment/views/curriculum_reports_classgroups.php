@@ -221,7 +221,8 @@
  </tfoot> 
  <tbody>
   <!-- Iteration that shows classroom_groups-->
-  <?php foreach ($all_classgroups as $classroom_group_key => $classroom_group) : ?>
+  <?php //var_dump($all_classgroups);
+  foreach ($all_classgroups as $classroom_group_key => $classroom_group) : ?>
    <tr align="center" class="{cycle values='tr0,tr1'}">   
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/classroom_group/edit/' . $classroom_group->id ) ;?>">

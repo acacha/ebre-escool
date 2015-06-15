@@ -215,20 +215,29 @@
      </td>
 
      <td>
-        <?php 
-          echo $study_module->courses[0]->studies_shortname . ". " . $study_module->courses[0]->studies_name . " - " . $study_module->courses[0]->studies_law_name . " -" . $study_module->courses[0]->studies_law_shortname;  
+        <?php
+          $num_courses = count($study_module->courses);
+          if ($num_courses > 0) {
+              echo $study_module->courses[0]->studies_shortname . ". " . $study_module->courses[0]->studies_name . " - " . $study_module->courses[0]->studies_law_name . " -" . $study_module->courses[0]->studies_law_shortname;
+          } else {
+              echo "";
+          }
         ?>
         
      </td>
      
      <td>
-          <?php 
+          <?php
 
-          $num_courses = count($study_module->courses);
+          if ($num_courses > 0) {
+              echo "<a href=\"" . base_url('/index.php/curriculum/studies/read/' . $study_module->courses[0]->study_id ) . "\">" .
+                  $study_module->courses[0]->studies_shortname . ". " . $study_module->courses[0]->studies_name . " - " . $study_module->courses[0]->studies_law_name . " -" . $study_module->courses[0]->studies_law_shortname . "</a>" .
+                  " ( <a href=\" " . base_url('/index.php/curriculum/studies/edit/' . $study_module->courses[0]->study_id ) . "\">" . $study_module->courses[0]->study_id . "</a> )";
+          } else {
+              echo "";
+          }
           
-            echo "<a href=\"" . base_url('/index.php/curriculum/studies/read/' . $study_module->courses[0]->study_id ) . "\">" . 
-            $study_module->courses[0]->studies_shortname . ". " . $study_module->courses[0]->studies_name . " - " . $study_module->courses[0]->studies_law_name . " -" . $study_module->courses[0]->studies_law_shortname . "</a>" .
-            " ( <a href=\" " . base_url('/index.php/curriculum/studies/edit/' . $study_module->courses[0]->study_id ) . "\">" . $study_module->courses[0]->study_id . "</a> )";          
+
 
           ?>
      </td>

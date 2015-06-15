@@ -4563,7 +4563,7 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies','studies.studies_id = course.course_study_id', 'left');
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
 		$this->db->join('teacher','teacher.teacher_id = classroom_group_academic_periods.classroom_group_academic_periods_mentorId', 'left');
-		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
+		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id','left');
 		$this->db->join('person','person.person_id = teacher.teacher_person_id', 'left');
 		$this->db->join('shift','shift.shift_id = classroom_group_academic_periods.classroom_group_academic_periods_shift', 'left');
 		$this->db->join('location','location.location_id = classroom_group_academic_periods.classroom_group_academic_periods_location', 'left');
