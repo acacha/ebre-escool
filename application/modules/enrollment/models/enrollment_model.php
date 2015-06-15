@@ -1188,7 +1188,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->order_by('classroom_group_id', $orderby);
 		
         $query = $this->db->get();
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 
 		if ($query->num_rows() > 0) {
 
