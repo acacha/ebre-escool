@@ -468,7 +468,7 @@
 <script type="text/javascript">
 
 //DEFAULT PERIOD
-var periode = "2014-15";
+var periode = "2015-16";
 var enrollment_id = "";
 $('#period_title').html(periode);
 

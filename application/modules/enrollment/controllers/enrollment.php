@@ -124,7 +124,7 @@ class enrollment extends skeleton_main {
         $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
         if ($only_current_academic_period) {
-            $this->grocery_crud->where($this->current_table.'_periodid','2014-15');
+            $this->grocery_crud->where($this->current_table.'_periodid','2015-16');
         }
 
         $this->grocery_crud->columns($this->current_table.'_id',$this->current_table.'_periodid',$this->current_table.'_personid',
@@ -2127,7 +2127,7 @@ $sn1 = $enrollment_data->person_sn1;
 $sn2 = $enrollment_data->person_sn2;
 
 //TODO
-$academic_period= "2014-15";
+$academic_period= "2015-16";
 
 
 /*

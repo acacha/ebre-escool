@@ -29,7 +29,7 @@ class dashboard_model  extends CI_Model  {
         
         $this->db->from('enrollment');
         //TODO: get current period from config
-        $this->db->where('enrollment_periodid',"2014-15");
+        $this->db->where('enrollment_periodid',"2015-16");
         $query = $this->db->get();
 
         $enrollment_statistics['total_number_of_current_period_enrolled_persons'] = $query->num_rows();
@@ -42,7 +42,7 @@ class dashboard_model  extends CI_Model  {
         
         $this->db->from('enrollment');
         //TODO: get current period from config
-        $this->db->where('enrollment_periodid',"2014-15");
+        $this->db->where('enrollment_periodid',"2015-16");
         $this->db->join('enrollment_submodules', 'enrollment_submodules.enrollment_submodules_enrollment_id = enrollment.enrollment_id');
         $query = $this->db->get();
 

@@ -3023,7 +3023,7 @@ class managment_model  extends CI_Model  {
 		$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');	
 		$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');	
 		$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');	
-		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);	
+		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);
 		$this->db->group_by('course_study_id');
 		$query = $this->db->get();
 
@@ -3083,7 +3083,7 @@ class managment_model  extends CI_Model  {
 		$this->db->from('enrollment');
 		$this->db->join('studies','studies.studies_id = enrollment.enrollment_study_id');
 		$this->db->group_by('enrollment_study_id,studies_shortname,studies_name');
-		$this->db->where('enrollment_periodid','2014-15');
+		$this->db->where('enrollment_periodid','2015-16');
 		$query = $this->db->get();
 
 		$enrollment_by_study = array();
@@ -3195,6 +3195,8 @@ class managment_model  extends CI_Model  {
 		$this->db->select('course_study_id,count(classroom_group_id) as total');
 		$this->db->from('classroom_group');
 		$this->db->join('course','classroom_group.classroom_group_course_id = course.course_id', 'left');
+        $this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id');
+        $this->db->where('classroom_group_academic_periods_academic_period_id',6);
 		$this->db->group_by('course_study_id');
 		$query = $this->db->get();
         //echo $this->db->last_query();
@@ -3242,8 +3244,12 @@ class managment_model  extends CI_Model  {
 		//courses
 		$this->db->select('course_study_id,count(course_id) as total');
 		$this->db->from('course');
+        $this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
+        $this->db->where('courses_academic_periods.courses_academic_periods_academic_period_id',6);
 		$this->db->group_by('course_study_id');
 		$query = $this->db->get();
+
+        //echo $this->db->last_query();
 
 		$courses_by_study = array();
 		if ($query->num_rows() > 0)	{
@@ -3398,6 +3404,8 @@ class managment_model  extends CI_Model  {
 		$this->db->from('studies');
 		$this->db->join('studies_organizational_unit','studies.studies_studies_organizational_unit_id = studies_organizational_unit.studies_organizational_unit_id', 'left');
 		$this->db->join('studies_law','studies.studies_studies_law_id = studies_law.studies_law_id', 'left');
+        $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
+        $this->db->where('studies_academic_periods_academic_period_id',6);
 		
 		$this->db->order_by('studies_shortname', $orderby);
 		
@@ -4555,7 +4563,7 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies','studies.studies_id = course.course_study_id', 'left');
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
 		$this->db->join('teacher','teacher.teacher_id = classroom_group_academic_periods.classroom_group_academic_periods_mentorId', 'left');
-		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
+		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id','left');
 		$this->db->join('person','person.person_id = teacher.teacher_person_id', 'left');
 		$this->db->join('shift','shift.shift_id = classroom_group_academic_periods.classroom_group_academic_periods_shift', 'left');
 		$this->db->join('location','location.location_id = classroom_group_academic_periods.classroom_group_academic_periods_location', 'left');
