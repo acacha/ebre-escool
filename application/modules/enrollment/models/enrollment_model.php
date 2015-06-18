@@ -198,7 +198,34 @@ function get_ldap_passwords($username) {
     return $ldap_passwords;
 }
 
-function addLdapUser($user_data,$ldap_passwords=false) {
+function remove_diacritics_underscore($data){
+    // normalize data (remove accent marks) using PHP's *intl* extension
+    $data = normalizer_normalize($data);
+    // replace everything NOT in the sets you specified with an underscore
+    $data = preg_replace("#[^A-Za-z1-9]#","_", $data);
+
+    return $data;
+}
+
+function Unaccent($string)
+    {
+        if (strpos($string = htmlentities($string, ENT_QUOTES, 'UTF-8'), '&') !== false)
+        {
+            $string = html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|tilde|uml);~i', '$1', $string), ENT_QUOTES, 'UTF-8');
+        }
+
+        return $string;
+    }
+
+function remove_diacritics_not_working($data){
+    // normalize data (remove accent marks) using PHP's *intl* extension
+    $data = normalizer_normalize($data);
+
+    return $data;
+}
+
+
+    function addLdapUser($user_data,$ldap_passwords=false) {
         $CI =& get_instance();
 
         $CI->load->config('samba');
@@ -218,20 +245,20 @@ function addLdapUser($user_data,$ldap_passwords=false) {
             $user_data_array["objectClass"][1]="person";
             $user_data_array["objectClass"][0]="top";
             
-            $user_data_array["cn"]=$user_data->cn;
+            $user_data_array["cn"]= $user_data->cn;
             
             if ($user_data->sn != "") {
-                $user_data_array["sn"]=$user_data->sn;
+                $user_data_array["sn"]= $user_data->sn;
             }
             if ($user_data->person_sn1 != "") {
-                $user_data_array["sn1"]=$user_data->person_sn1;
+                $user_data_array["sn1"]= $user_data->person_sn1;
             }
 
             if ($user_data->person_sn2 != "") {
-                $user_data_array["sn2"]=$user_data->person_sn2;
+                $user_data_array["sn2"]= $user_data->person_sn2;
             }
             if ($user_data->person_givenName != "") {
-                $user_data_array["givenName"]=$user_data->person_givenName;
+                $user_data_array["givenName"]= $user_data->person_givenName;
             }
 
             $user_data_array["uid"]=$user_data->username;
@@ -363,7 +390,7 @@ function addLdapUser($user_data,$ldap_passwords=false) {
                 //$user_data->dn
             }
             //echo "user_data->dn: " . $user_data->dn;
-            if (ldap_add($this->ldapconn, $user_data->dn,$user_data_array) === false){
+            if (ldap_add($this->ldapconn, $this->Unaccent($user_data->dn),$user_data_array) === false){
                 $error = ldap_error($this->ldapconn);
                 $errno = ldap_errno($this->ldapconn);
                 show_error("Ldap error adding user: " . $errno . " - " . $error);
