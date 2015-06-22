@@ -1337,7 +1337,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
         if(!$study_id){
 			//TODO set default study by config file
 			$study_id=1;
-		}	
+		}
+
+        $current_academic_period_id = $this->get_current_academic_period_id();
 
         //Check if study is multiple
         $is_study_multiple = $this->is_study_multiple($study_id);        
@@ -1349,7 +1351,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
             $this->db->join('study_module','study_submodules_study_module_id=study_module_id');
             $this->db->join('course','course.course_id = study_submodules.study_submodules_courseid');
             $this->db->join('studies','studies.studies_id = course.course_study_id');
+            $this->db->join('study_submodules_academic_periods','study_submodules_id=study_submodules_academic_periods_study_submodules_id');
             $this->db->where('studies.studies_id',$study_id);
+            $this->db->where('study_submodules_academic_periods_academic_period_id',$current_academic_period_id);
+
             if ( $order_field != "") {
                 if ( $order_field == "order") {
                     $this->db->order_by('study_module_order', $orderby);
@@ -1395,7 +1400,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
             $this->db->join('study_module','study_submodules_study_module_id=study_module_id');
             $this->db->join('course_studies','course_studies.course_studies_course_id = study_submodules.study_submodules_courseid');
             $this->db->join('studies','studies.studies_id = course_studies.course_studies_study_id');
+            $this->db->join('study_submodules_academic_periods','study_submodules_id=study_submodules_academic_periods_study_submodules_id');
             $this->db->where('studies.studies_id',$study_id);
+            $this->db->where('study_submodules_academic_periods_academic_period_id',$current_academic_period_id);
 
             if ( $order_field != "") {
                 if ( $order_field == "order") {
@@ -1436,13 +1443,17 @@ function update_user_ldap_dn($username, $ldap_dn) {
 			//TODO set default study by config file
 			$study_modules[]=282;	//	"M1"
 			$study_modules[]=268;	//	"M2"
-		}	
+		}
+
+        $current_academic_period_id = $this->get_current_academic_period_id();
 
         $this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_module_shortname,
         				   study_module_order,study_submodules_study_module_id');
 		$this->db->from('study_submodules');
 		$this->db->join('study_module','study_submodules_study_module_id=study_module_id');
+        $this->db->join('study_submodules_academic_periods','study_submodules_id=study_submodules_academic_periods_study_submodules_id');
 		$this->db->where_in('study_submodules_study_module_id',$study_modules);
+        $this->db->where('study_submodules_academic_periods_academic_period_id',$current_academic_period_id);
         if ($course_id != false) {
             $this->db->where('study_submodules_courseid',$course_id);
         }
