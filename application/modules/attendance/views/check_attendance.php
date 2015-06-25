@@ -25,6 +25,20 @@
  </h1>
 </div>
 
+    <div class="alert alert-block alert-error" style="display:yes;">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <i class="icon-ok red"></i>
+
+
+        <strong class="red">
+            IMPORTANT :
+        </strong>
+        No passeu faltes fins que no rebeu un correu conforme ja està activada la funcionalitat. Estem treballant per posar en marxa aquesta funcionalitat.
+    </div>
+
   <?php if (count($all_time_slots_reduced) == 0) : ?>
 
       <div class="alert alert-block alert-warning">
@@ -43,43 +57,104 @@
   <?php endif; ?> 
 
 
-<div class="alert alert-block alert-error" style="display:none;">
-                <button type="button" class="close" data-dismiss="alert">
-                  <i class="icon-remove"></i>
-                </button>
 
-                <i class="icon-ok red"></i>
-
-                
-                <strong class="red">
-                  IMPORTANT : 
-                </strong>
-                No passeu faltes fins que no rebeu un correu conforme ja està activada la funcionalitat. Estem treballant per posar en marxa aquesta funcionalitat.
-              </div>
 
 <!-- DEBUG-->
 <?php //echo "default_teacher: " . $default_teacher . "<br/>";?>
 
 <div class="row-fluid">
-          <div class="span4"></div>
-<div class="span4">
 
-  <select id="teacher" style="width: 400px">
-  		   <option></option>
-   <?php foreach( (array) $teachers as $teacher_id => $teacher_name): ?>
-		   <?php if( $teacher_id == $default_teacher): ?>
-            <option value="<?php echo $teacher_id; ?>" selected="selected"><?php echo $teacher_name; ?></option>
-           <?php else: ?> 
-            <option value="<?php echo $teacher_id; ?>" ><?php echo $teacher_name; ?></option>
-           <?php endif; ?> 
-   <?php endforeach; ?>	
-  </select> 
+    <div class="span3"></div>
+
+    <div class="span6">
+
+        <div class="widget-box">
+            <div class="widget-header">
+                <h5>Filtres</h5>
+
+                <div class="widget-toolbar">
+
+
+                    <a href="#" data-action="collapse">
+                        <i class="icon-chevron-up"></i>
+                    </a>
+
+                    <a href="#" data-action="close">
+                        <i class="icon-remove"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row-fluid">
+
+                        <div class="span4">Període acadèmic: </div>
+
+                        <div class="span4">
+
+                            <select id="academic_period_picker">
+                                <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
+                                    <?php if ( $selected_academic_period_id) : ?>
+                                        <?php if ( $academic_period_key == $selected_academic_period_id) : ?>
+                                            <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                        <?php else: ?>
+                                            <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <?php if ( $academic_period_value->current == 1) : ?>
+                                            <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                        <?php else: ?>
+                                            <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </div>
+
+                        <div class="span4"></div>
+                    </div>
+
+                    <div class="row-fluid">
+
+                        <div class="span4">Professor: </div>
+
+                        <div class="span4">
+
+                            <select id="teacher" style="width: 400px">
+                                <option></option>
+                                <?php foreach( (array) $teachers as $teacher_id => $teacher_name): ?>
+                                    <?php if( $teacher_id == $default_teacher): ?>
+                                        <option value="<?php echo $teacher_id; ?>" selected="selected"><?php echo $teacher_name; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?php echo $teacher_id; ?>" ><?php echo $teacher_name; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+
+                         </div>
+
+                        <div class="span4"><a id="link_to_teacher_timetable" href="<?php echo base_url('/index.php/timetables/allteacherstimetables');?>" style="text-decoration:none;color: inherit;"><i class="icon-calendar"></i> Horari</a></div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <div class="span3"></div>
 
 </div>
-  <div class="span4"><a id="link_to_teacher_timetable" href="<?php echo base_url('/index.php/timetables/allteacherstimetables');?>" style="text-decoration:none;color: inherit;"><i class="icon-calendar"></i> Horari</a></div>
-</div>
 
-<div style="height: 10px;"></div>
+    <div style="height: 10px;"></div>
 
 <center>
   <div class="input-append date">
@@ -300,11 +375,14 @@ $(function() {
     formated_selectedDate = day + "/" + converted_month + "/" + year;
     //alert (formated_selectedDate);
 
+      //academic_period_picker
+      academic_period_id = $("#academic_period_picker").val();
+
     var pathArray = window.location.pathname.split( '/' );
     var secondLevelLocation = pathArray[1];
     var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/attendance/check_attendance";
     //alert(baseURL + "/" + teacher_code);
-    window.location.href = baseURL + "/" + teacher_code + "/" + formated_selectedDate;
+    window.location.href = baseURL + "/" + teacher_code + "/" + formated_selectedDate + "/" + academic_period_id;
 
   }); 
 
@@ -328,6 +406,9 @@ $(function() {
         year=selected_date.getFullYear();
         formated_selectedDate = day + "/" + converted_month + "/" + year;
 
+          //academic_period_picker
+          academic_period_id = $("#academic_period_picker").val();
+
         /*
         alert ( "Day: " + day);
         alert ( "Month: " + converted_month );
@@ -338,7 +419,33 @@ $(function() {
         var secondLevelLocation = pathArray[1];
         var  baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/attendance/check_attendance";
         //alert(baseURL + "/" + selectedValue);
-        window.location.href = baseURL + "/" + teacher_code + "/" + formated_selectedDate;
+        window.location.href = baseURL + "/" + teacher_code + "/" + formated_selectedDate + "/" + academic_period_id;
+    });
+
+    $( "#academic_period_picker" ).change(function() {
+
+        teacher_code = $("#teacher").select2("val");
+        selected_date = $('.input-append.date').datepicker('getDate');
+        day=selected_date.getDate();
+        month = parseInt(selected_date.getMonth());
+        converted_month = month +1 ;
+        year=selected_date.getFullYear();
+        formated_selectedDate = day + "/" + converted_month + "/" + year;
+
+        //academic_period_picker
+        academic_period_id = $("#academic_period_picker").val();
+
+        /*
+         alert ( "Day: " + day);
+         alert ( "Month: " + converted_month );
+         alert ( "Year: " + year);
+         */
+
+        var pathArray = window.location.pathname.split( '/' );
+        var secondLevelLocation = pathArray[1];
+        var  baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/attendance/check_attendance";
+        //alert(baseURL + "/" + selectedValue);
+        window.location.href = baseURL + "/" + teacher_code + "/" + formated_selectedDate + "/" + academic_period_id;
     });
 
 

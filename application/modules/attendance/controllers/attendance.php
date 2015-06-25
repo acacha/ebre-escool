@@ -1264,8 +1264,6 @@ class attendance extends skeleton_main {
         $data['academic_periods'] = $academic_periods;
         $data['selected_academic_period_id'] = $academic_period_id;
 
-        
-
         $students_array = $this->attendance_model->get_students($academic_period_id);
         $data['students'] = $students_array;
 
@@ -1810,9 +1808,13 @@ class attendance extends skeleton_main {
 
 
 	public function check_attendance(
-		$teacher_code = null, $day = null, $month = null, $year = null ,$url_group_code = null) {
+		$teacher_code = null, $day = null, $month = null, $year = null ,$academic_period_id = null) {
  
  		$this->check_logged_user();
+
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->attendance_model->get_current_academic_period_id();
+        }
 
 		$active_menu = array();
 		$active_menu['menu']='#check_attendance';
@@ -1825,6 +1827,8 @@ class attendance extends skeleton_main {
 		/***************************/
 
 		$data=array();
+
+        $data['selected_academic_period_id'] = $academic_period_id;
 
 		$userid=$this->session->userdata('id');
 		$person_id=$this->session->userdata('person_id');
@@ -1865,12 +1869,12 @@ class attendance extends skeleton_main {
         
 		if ($user_is_admin) {
 			//Load teachers from Model
-			$teachers_array = $this->attendance_model->get_all_teachers_ids_and_names();
+			$teachers_array = $this->attendance_model->get_all_teachers_ids_and_names("ASC",false,$academic_period_id);
 
 			$data['teachers'] = $teachers_array;
 		} else {
 			//Show Only one teacher
-			$teachers_array = $this->attendance_model->get_teacher_ids_and_names($teacher_id);
+			$teachers_array = $this->attendance_model->get_teacher_ids_and_names($teacher_id,$academic_period_id);
 			$data['teachers'] = $teachers_array;
 		}
 
@@ -1909,7 +1913,7 @@ class attendance extends skeleton_main {
 
 		//Obtain Time Slots
 		$all_lessons_by_teacherid_and_day = null;
-		$all_lessons_by_teacherid_and_day = $this->attendance_model->get_all_lessons_by_teacherid_and_day($teacher_id,$day_of_week_number);
+		$all_lessons_by_teacherid_and_day = $this->attendance_model->get_all_lessons_by_teacherid_and_day($teacher_id,$day_of_week_number,"asc",$academic_period_id);
     	$time_slots_array = $this->attendance_model->get_all_time_slots_with_all_lessons_by_teacherid_and_day($all_lessons_by_teacherid_and_day);
     	
     	//echo "Number of lessons: " . count($all_lessons_by_teacherid_and_day) . "<br/>";
@@ -2102,6 +2106,11 @@ class attendance extends skeleton_main {
             $data['selected_group']=$default_group_code;
         }
 		/* fi llista alumnes grup */
+
+
+        $academic_periods = $this->attendance_model->get_all_academic_periods();
+        $data['academic_periods'] = $academic_periods;
+
 		$this->load->view('attendance/check_attendance',$data);
 		 
 		/*******************

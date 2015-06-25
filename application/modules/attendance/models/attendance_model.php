@@ -2229,11 +2229,13 @@ function get_current_academic_period() {
 			return false;
 	}
 
-	function get_all_teachers_ids_and_names($orderby="ASC", $id_is_teacher_id = false) {
+	function get_all_teachers_ids_and_names($orderby="ASC", $id_is_teacher_id = false, $academic_period_id = null) {
 
-		$get_current_academic_period_id = $this->get_current_academic_period_id();
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
 
-		/*
+    	/*
 		SELECT teacher_academic_periods_code, person_sn1, person_sn2, person_givenName, person_id, person_official_id
 		FROM teacher_academic_periods
 		INNER JOIN teacher ON teacher.teacher_id = teacher_academic_periods.teacher_academic_periods_teacher_id
@@ -2245,6 +2247,7 @@ function get_current_academic_period() {
 		$this->db->from('teacher_academic_periods');        
 		$this->db->join('teacher', 'teacher.teacher_id = teacher_academic_periods.teacher_academic_periods_teacher_id');
 		$this->db->join('person', 'person.person_id = teacher.teacher_person_id');
+        $this->db->where('teacher_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->order_by('teacher_academic_periods_code', $orderby);
 
         $query = $this->db->get();
@@ -2580,9 +2583,12 @@ function get_current_academic_period() {
 			return false;
 	}
 
-	function get_all_lessons_by_teacherid_and_day ($teacher_id, $day,$orderby = "asc") {
-		
-		$current_academic_period_id = $this->get_current_academic_period_id();
+	function get_all_lessons_by_teacherid_and_day ($teacher_id, $day, $orderby = "asc",$academic_period_id = null) {
+
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
+
 
 		/*
 		SELECT time_slot_order, time_slot_id, lesson_id, lesson_code, classroom_group_id, classroom_group_code, classroom_group_shortName, 
@@ -2606,7 +2612,7 @@ function get_current_academic_period() {
 		$this->db->order_by('time_slot_order', $orderby);
 		$this->db->where('lesson_day', $day);
 		$this->db->where('lesson_teacher_id', $teacher_id);
-		$this->db->where('lesson_academic_period_id', $current_academic_period_id);
+		$this->db->where('lesson_academic_period_id', $academic_period_id);
 
 
 		$query = $this->db->get();
