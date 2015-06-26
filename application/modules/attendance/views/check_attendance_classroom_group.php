@@ -31,6 +31,8 @@
   Grup classe
   <small>
    <i class="icon-double-angle-right"></i>
+      <?php echo $academic_period_name ;?>
+   <i class="icon-double-angle-right"></i>
     <?php echo "( " . $selected_classroom_group_code . " ) " . $selected_classroom_group . " ( Id: " . $selected_classroom_group_key . " )";?>
   </small>
  </h1>

@@ -72,9 +72,13 @@ class attendance_model  extends CI_Model  {
 		return false;
 	}
 
-	function get_teacher_code_by_personid($person_id) {
+	function get_teacher_code_by_personid($person_id,$current_academic_period = null) {
 
-		$get_current_academic_period = $this->get_current_academic_period_id();
+		if ($current_academic_period == null) {
+            $current_academic_period = $this->get_current_academic_period_id();
+        }
+
+
 		/*
 		SELECT teacher_academic_periods_code
 		FROM teacher_academic_periods 
@@ -87,7 +91,7 @@ class attendance_model  extends CI_Model  {
 		$this->db->from('teacher_academic_periods');
 		$this->db->join('teacher','teacher.teacher_id =  teacher_academic_periods.teacher_academic_periods_teacher_id');
 		$this->db->join('person','person.person_id = teacher.teacher_person_id');
-		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$get_current_academic_period);
+		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$current_academic_period);
 		$this->db->where('person.person_id',$person_id);
 
 		$query = $this->db->get();
@@ -1074,12 +1078,19 @@ class attendance_model  extends CI_Model  {
 
 	}
 
-	function getGroupInfoByGroupId($group_id) {
+	function getGroupInfoByGroupId($group_id,$academic_period_id = null) {
+
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
+
 		$this->db->select('classroom_group_id,classroom_group_name,classroom_group_shortName,classroom_group_code');
 		$this->db->from('classroom_group');
+        $this->db->join('classroom_group_academic_periods',' classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id');
 		
 		$this->db->where('classroom_group.classroom_group_id',$group_id);
-		
+        $this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period_id);
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() > 0) {
@@ -1091,9 +1102,11 @@ class attendance_model  extends CI_Model  {
 		}
 	}
 
-	function getStudyModuleInfoByModuleId($study_module_id) {
+	function getStudyModuleInfoByModuleId($study_module_id,$academic_period_id=null) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
 
 		/*
 		SELECT study_module_academic_periods_study_module_id, study_module_academic_periods_external_code, study_module.study_module_shortname, 
@@ -1107,7 +1120,7 @@ class attendance_model  extends CI_Model  {
 		$this->db->from('study_module');
 		$this->db->join('study_module_academic_periods','study_module_academic_periods_study_module_id = study_module_id');
 		$this->db->where('study_module_academic_periods.study_module_academic_periods_study_module_id',$study_module_id);
-		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period_id);		
+		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$academic_period_id);
 		
 		$query = $this->db->get();
 		//echo "query:" . $this->db->last_query();
@@ -1750,9 +1763,11 @@ function get_current_academic_period() {
 		return false;
 	}
 
-	function get_teacher_departmentInfo($teacherId,$orderby="asc") {
+	function get_teacher_departmentInfo($teacherId,$orderby="asc",$academic_period_id=null) {
 
-		$academic_period_id = $this->get_current_academic_period_id();
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
 
 		/*
 		SELECT department_id, department_shortName, department_name 
@@ -1800,9 +1815,11 @@ function get_current_academic_period() {
 	}
 	
 
-	function get_teacher_departments($teacherId,$orderby="asc") {
+	function get_teacher_departments($teacherId,$orderby="asc",$academic_period_id=null) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
 
 		/*
 		SELECT department_id,department_shortName,department_name
@@ -1814,7 +1831,7 @@ function get_current_academic_period() {
 		$this->db->from('teacher_academic_periods');
    		$this->db->join('department', 'department.department_id =  teacher_academic_periods.teacher_academic_periods_teacher_id');
 		$this->db->where('teacher_academic_periods_teacher_id', $teacherId);			
-		$this->db->where('teacher_academic_periods_academic_period_id', $current_academic_period_id);			
+		$this->db->where('teacher_academic_periods_academic_period_id', $academic_period_id);
 		$this->db->order_by('department_shortName', $orderby);
 		       
         $query = $this->db->get();
@@ -1876,10 +1893,17 @@ function get_current_academic_period() {
 			return false;
 	}
 
-	function get_all_groupscodenameByTeacher($teacherId,$orderby="asc") {
+	function get_all_groupscodenameByTeacher($teacherId,$orderby="asc", $academic_period_id = null) {
+
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
+
 		$this->db->from('classroom_group');
         $this->db->select('classroom_group_id,classroom_group_code');
         $this->db->join('lesson', 'classroom_group.classroom_group_id = lesson.lesson_classroom_group_id');
+        $this->db->join('classroom_group_academic_periods', 'classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id');
+        $this->db->where('classroom_group_academic_periods_academic_period_id', $academic_period_id);
         $this->db->distinct();
 		$this->db->order_by('classroom_group_code', $orderby);
 
@@ -1900,7 +1924,11 @@ function get_current_academic_period() {
 			return false;
 	}	
 
-	function get_all_groupscodenameByDeparment($departmentId,$orderby="asc") {
+	function get_all_groupscodenameByDeparment($departmentId,$orderby="asc", $academic_period_id = null) {
+
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
 		/*
 		SELECT DISTINCT classroom_group_code,studies_shortname,department_name,department.department_id
 		FROM classroom_group 
@@ -1915,8 +1943,9 @@ function get_current_academic_period() {
 		WHERE department.department_id = 2
 		*/
 		$this->db->select('classroom_group_id,classroom_group_code, studies_shortname, department_name, department.department_id');
-		$this->db->from('classroom_group');        
+		$this->db->from('classroom_group');
 
+        $this->db->join('classroom_group_academic_periods', 'classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id');
 		$this->db->join('course', 'classroom_group.classroom_group_course_id = course.course_id');
 		$this->db->join('studies', 'course.course_study_id = studies.studies_id');
 		$this->db->join('study_department', 'studies.studies_id = study_department.study_id');
@@ -1924,6 +1953,7 @@ function get_current_academic_period() {
         
 
 		$this->db->where('department.department_id', $departmentId);
+        $this->db->where('classroom_group_academic_periods_academic_period_id', $academic_period_id);
 		$this->db->order_by('classroom_group_code', $orderby);
 		       
 		$this->db->distinct();       
@@ -1963,9 +1993,12 @@ function get_current_academic_period() {
 			return false;
 	}	
 
-	function get_teacher_id_by_personid($person_id) {
+	function get_teacher_id_by_personid($person_id,$academic_period_id) {
 
-		$get_current_academic_period = $this->get_current_academic_period_id();
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
+
 		/*
 		SELECT teacher_academic_periods_code
 		FROM teacher_academic_periods 
@@ -1978,7 +2011,7 @@ function get_current_academic_period() {
 		$this->db->from('teacher_academic_periods');
 		$this->db->join('teacher','teacher.teacher_id =  teacher_academic_periods.teacher_academic_periods_teacher_id');
 		$this->db->join('person','person.person_id = teacher.teacher_person_id');
-		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$get_current_academic_period);
+		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->where('person.person_id',$person_id);
 
 		$query = $this->db->get();
@@ -2505,9 +2538,11 @@ function get_current_academic_period() {
 		}
 	}
 
-	function get_teacher_info_from_teacher_code($teacher_code) {
-		
-		$current_academic_period_id = $this->get_current_academic_period_id();
+	function get_teacher_info_from_teacher_code($teacher_code,$academic_period_id = null) {
+
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
 
 		/*
 		SELECT teacher_id, teacher_person_id, teacher_academic_periods_code , person_givenName, person_sn1, person_sn2
@@ -2523,7 +2558,7 @@ function get_current_academic_period() {
 		$this->db->join('person', 'person.person_id = teacher.teacher_person_id');
 		
 		$this->db->where('teacher_academic_periods.teacher_academic_periods_code',$teacher_code);
-		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$current_academic_period_id);
+		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$academic_period_id);
 
 
 		$query = $this->db->get();
@@ -2801,10 +2836,12 @@ function get_current_academic_period() {
 
 
 
-	//OSCAR: Obtenir les lliçons d'un dia
-	function getAllLessonsByDay($day,$classroom_group_id,$orderby = "asc") {
+	// Obtenir les lliçons d'un dia
+	function getAllLessonsByDay($day,$classroom_group_id,$orderby = "asc",$academic_period_id=null) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
 
 		/*
 		SELECT lesson_id,lesson_code,classroom_group_code,classroom_group_shortName,classroom_group_name
@@ -2825,7 +2862,7 @@ function get_current_academic_period() {
 		
 		$this->db->where($where);
 
-		$this->db->where('lesson_academic_period_id', $current_academic_period_id);
+		$this->db->where('lesson_academic_period_id', $academic_period_id);
 
 		$query = $this->db->get();
 		//echo $this->db->last_query();
@@ -3085,9 +3122,12 @@ function get_current_academic_period() {
 			return "";
 	} 
 
-	function getAllGroupStudymodules ( $class_group_id, $orderby = "ASC" ) {
+	function getAllGroupStudymodules ( $class_group_id, $orderby = "ASC",$academic_period_id=null ) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+        if ($academic_period_id==null) {
+            $academic_period_id = $this->get_current_academic_period_id();
+        }
+
 
 		/*
 		SELECT DISTINCT lesson_study_module_id, study_module_id, study_module_academic_periods.study_module_academic_periods_external_code, 
@@ -3105,8 +3145,8 @@ function get_current_academic_period() {
 		$this->db->join('study_module_academic_periods','study_module_academic_periods_study_module_id = study_module_id');
 
 		$this->db->where("lesson.lesson_classroom_group_id", $class_group_id);
-		$this->db->where('lesson_academic_period_id', $current_academic_period_id);
-		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period_id);	
+		$this->db->where('lesson_academic_period_id', $academic_period_id);
+		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->order_by('study_module_shortname', $orderby);
 		
 
