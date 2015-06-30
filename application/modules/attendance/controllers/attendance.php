@@ -1395,10 +1395,15 @@ class attendance extends skeleton_main {
     }
 
 	public function check_attendance_classroom_group( $selected_group_id = 0, $teacher_code = null , $selected_study_module_id = 0, 
-		$lesson_id = 0, $day = 0, $month = 0, $year = 0, $selected_time_slot_id = 0 ) {
+		$lesson_id = 0, $day = 0, $month = 0, $year = 0, $selected_time_slot_id = 0, $academic_period_id = null ) {
 
-		$this->check_logged_user();	
-		$active_menu = array();
+		$this->check_logged_user();
+
+        if ($academic_period_id == null) {
+            $academic_period_id = $this->attendance_model->get_current_academic_period_id();
+        }
+
+        $active_menu = array();
 		$active_menu['menu']='#check_attendance';
 		$header_data = $this->load_header_data_11($active_menu);
         $this->_load_html_header($header_data);
@@ -1408,6 +1413,9 @@ class attendance extends skeleton_main {
 		
 		//Check if user is a teacher
 		$user_is_a_teacher = $this->attendance_model->is_user_a_teacher($person_id);
+
+        $data['academic_period_id'] = $academic_period_id;
+        $data['academic_period_name'] = $this->attendance_model->get_academic_period_name_by_period_id($academic_period_id);
 
 		$data['is_teacher'] = $user_is_a_teacher;
 		
@@ -1424,7 +1432,7 @@ class attendance extends skeleton_main {
 			return false;
 		}		
 
-		$user_teacher_code = $this->attendance_model->get_teacher_code_by_personid($person_id);
+		$user_teacher_code = $this->attendance_model->get_teacher_code_by_personid($person_id,$academic_period_id);
 
 		if ($teacher_code == null) {
 	    	$teacher_code = $user_teacher_code;
@@ -1437,7 +1445,7 @@ class attendance extends skeleton_main {
 	    //Teacher info to view
 	    $data['teacher_code']= $teacher_code;
 
-	    $teacher_info = $this->attendance_model->get_teacher_info_from_teacher_code($teacher_code);  
+	    $teacher_info = $this->attendance_model->get_teacher_info_from_teacher_code($teacher_code,$academic_period_id);
 
 	    $teacher_department_id = 2;
 
@@ -1458,14 +1466,14 @@ class attendance extends skeleton_main {
 
 	    //Departaments
 	    $data['departments'] = array();
-	    $department_info = $this->attendance_model->get_teacher_departmentInfo($teacher_id);
+	    $department_info = $this->attendance_model->get_teacher_departmentInfo($teacher_id,$academic_period_id);
 	    $data['selected_department_key'] = $department_info['id'];
 	    $data['selected_department_name'] = $department_info['name'];
 		if ($user_is_admin) {
 	    	//Get all classroom_groups
 	    	$data['departments']= $this->attendance_model->get_all_departments();
 	    } else {
-	    	$data['departments']= $this->attendance_model->get_teacher_departments($teacher_id);
+	    	$data['departments']= $this->attendance_model->get_teacher_departments($teacher_id,$academic_period_id);
 	    }
         
 	    //Obtain class_room_groups
@@ -1473,11 +1481,11 @@ class attendance extends skeleton_main {
 
 	    if ($user_is_admin) {
 	    	//Get all classroom_groups
-	    	$data['classroom_groups']= $this->attendance_model->get_all_groupscodenameByDeparment($teacher_department_id);
+	    	$data['classroom_groups']= $this->attendance_model->get_all_groupscodenameByDeparment($teacher_department_id,$academic_period_id);
 	    } else {
 	    	//IF TEACHER
 	    	if($user_is_a_teacher) {
-	    		$data['classroom_groups']=$this->attendance_model->get_all_groupscodenameByTeacher($teacher_id);
+	    		$data['classroom_groups']=$this->attendance_model->get_all_groupscodenameByTeacher($teacher_id,$academic_period_id);
 	    	}
 	    }
 
@@ -1543,25 +1551,25 @@ class attendance extends skeleton_main {
 	    
 	    $data['all_lessons'] =array();
 
-	    $all_lessons = $this->attendance_model->getAllLessonsByDay($day_of_week_number,$data['selected_classroom_group_key']);
+	    $all_lessons = $this->attendance_model->getAllLessonsByDay($day_of_week_number,$data['selected_classroom_group_key'],"asc",$academic_period_id);
 	    $data['all_lessons'] = $all_lessons;
 
 
 	    //OBTAIN ABSOLUTELY ALL STUDENTS:
-	    $all_students_in_group = $this->attendance_model->getAllGroupStudentsInfoIncludedStudySubmodules($selected_group_id,$teacher_id,$day_of_week_number);
+	    $all_students_in_group = $this->attendance_model->getAllGroupStudentsInfoIncludedStudySubmodules($selected_group_id,$teacher_id,$day_of_week_number, $academic_period_id);
 
 	    //echo "<br/>all_students_in_group count: " . count($all_students_in_group);
 	    //GET ARRAYS OF STUDENTS BY FILTER --> ALLOW FILTER STUDENTS LIST
 
 	    // OFFICIAL GROUP STUDENTS: STUDENTS ENROLLED TO GROUP:
-	    $official_students_in_group = $this->attendance_model->getAllGroupStudentsInfo($selected_group_id);
+	    $official_students_in_group = $this->attendance_model->getAllGroupStudentsInfo($selected_group_id,$academic_period_id);
 	    
 	    //$official_students_in_group = $this->attendance_model->getAllGroupStudentsIds($selected_group_id);
 	    
 	    $data['official_students_in_group'] = $official_students_in_group;
 	    $data['official_students_in_group_num'] = count($official_students_in_group);
 
-	    $selected_group_info = $this->attendance_model->getGroupInfoByGroupId($selected_group_id);
+	    $selected_group_info = $this->attendance_model->getGroupInfoByGroupId($selected_group_id,$academic_period_id);
 
 		$selected_group_id = $selected_group_info['id'];
 		$selected_group_name = $selected_group_info['name'];
@@ -1590,7 +1598,7 @@ class attendance extends skeleton_main {
 		$data['selected_study_module_key']= $selected_study_module_id;
 
         //echo "selected_study_module_id: " . $selected_study_module_id;
-		$selected_study_module_info = $this->attendance_model->getStudyModuleInfoByModuleId($selected_study_module_id);
+		$selected_study_module_info = $this->attendance_model->getStudyModuleInfoByModuleId($selected_study_module_id,$academic_period_id);
 
         //echo "selected_study_module_info: ";
         //print_r($selected_study_module_info);
@@ -1620,14 +1628,18 @@ class attendance extends skeleton_main {
 
 	    $data['study_modules'] = array();
 	    
-	    $all_group_study_modules = $this->attendance_model->getAllGroupStudymodules( $selected_group_id);
+	    $all_group_study_modules = $this->attendance_model->getAllGroupStudymodules( $selected_group_id, "ASC" , $academic_period_id);
 	    $data['study_modules'] = $all_group_study_modules;
 
 	    $data['time_slots'] = array();
 
 	    $time_slots = $this->attendance_model->getTimeSlotsByClassgroupId($selected_group_id,$day_of_week_number);
 
+        //var_dump($time_slots);
+
 	    $data['selected_lesson_id'] = $lesson_id;
+
+        //var_dump($selected_time_slot_id);
 	    
 	    if ($selected_time_slot_id == 0) {
 	    	if ($lesson_id != 0) {
@@ -1635,20 +1647,26 @@ class attendance extends skeleton_main {
 		    }	
 	    }
 
-	    if (array_key_exists($selected_time_slot_id, $time_slots)) {
-	    	$data['selected_time_slot_id'] = $selected_time_slot_id;
-	    	$data['selected_time_slot'] = $time_slots[$selected_time_slot_id]->range;
-	    } else {
-	    	if ($lesson_id != 0) {
-	    		$selected_time_slot_id = $this->attendance_model->getTimeSlotKeyFromLessonId($lesson_id);
-		    	$data['selected_time_slot_id'] = $selected_time_slot_id;
-		    	$data['selected_time_slot'] = $time_slots[$selected_time_slot_id]->range;	
-	    	} else {
-	    		$data['selected_time_slot_id'] = null;
-		    	$data['selected_time_slot'] = null;	
-	    	}
-	    	
-	    }
+        //var_dump($selected_time_slot_id);
+
+        $data['selected_time_slot']= "";
+        $data['selected_time_slot_id']= 0;
+        if ($selected_time_slot_id != 0) {
+            if (array_key_exists($selected_time_slot_id, $time_slots)) {
+                $data['selected_time_slot_id'] = $selected_time_slot_id;
+                $data['selected_time_slot'] = $time_slots[$selected_time_slot_id]->range;
+            } else {
+                if ($lesson_id != 0) {
+                    $selected_time_slot_id = $this->attendance_model->getTimeSlotKeyFromLessonId($lesson_id);
+                    $data['selected_time_slot_id'] = $selected_time_slot_id;
+                    $data['selected_time_slot'] = $time_slots[$selected_time_slot_id]->range;
+                } else {
+                    $data['selected_time_slot_id'] = null;
+                    $data['selected_time_slot'] = null;
+                }
+
+            }
+        }
 
 		if (is_array($time_slots)) {
 	    	$data['time_slots'] = $time_slots;
@@ -1662,18 +1680,21 @@ class attendance extends skeleton_main {
 
 	    //echo "tutor_teacher_id: $tutor_teacher_id<br/>";
 
-	    if ($tutor_teacher_id != "") {
-	    	if (array_key_exists($tutor_teacher_id,$group_teachers_array)) {
-	    		$selected_group_teacher = $group_teachers_array[$tutor_teacher_id]->sn1 . " " . $group_teachers_array[$tutor_teacher_id]->sn2 . ", " . 	
-	    			$group_teachers_array[$tutor_teacher_id]->givenName . "( Tutor/a )";
-	    	} else {
-	    		$selected_group_teacher = "Error. No s'ha trobat el codi $tutor_teacher_id";
-	    	}
-	    		
-	    } else {
-	    	$selected_group_teacher = "Error. No hi ha tutor del grup";
-	    }
-	    
+	    if (is_array($group_teachers_array)) {
+            if ($tutor_teacher_id != "") {
+                if (array_key_exists($tutor_teacher_id, $group_teachers_array)) {
+                    $selected_group_teacher = $group_teachers_array[$tutor_teacher_id]->sn1 . " " . $group_teachers_array[$tutor_teacher_id]->sn2 . ", " .
+                        $group_teachers_array[$tutor_teacher_id]->givenName . "( Tutor/a )";
+                } else {
+                    $selected_group_teacher = "Error. No s'ha trobat el codi $tutor_teacher_id";
+                }
+
+            } else {
+                $selected_group_teacher = "Error. No hi ha tutor del grup";
+            }
+        } else {
+            $selected_group_teacher = "No s'ha trobat cap professor assignat al group";
+        }
 
 	    $data['selected_group_teacher']= $selected_group_teacher;
 	    
@@ -1910,6 +1931,8 @@ class attendance extends skeleton_main {
 		$data['day'] = $day;
 		$data['month'] = $month;
 		$data['year'] = $year;
+
+        $data['academic_period_id'] = $academic_period_id;
 
 		//Obtain Time Slots
 		$all_lessons_by_teacherid_and_day = null;

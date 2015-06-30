@@ -64,11 +64,11 @@
 
 <div class="row-fluid">
 
-    <div class="span3"></div>
+    <div class="span2"></div>
 
-    <div class="span6">
+    <div class="span8">
 
-        <div class="widget-box">
+        <div class="widget-box collapsed">
             <div class="widget-header">
                 <h5>Filtres</h5>
 
@@ -145,12 +145,9 @@
         </div>
 
 
-
-
-
     </div>
 
-    <div class="span3"></div>
+    <div class="span2"></div>
 
 </div>
 
@@ -228,7 +225,8 @@
      </td>
      <td>
         <?php
-        $url_part = $time_slot->group_id . "/" . $teacher_code . "/" . $time_slot->study_module_id . "/" . $time_slot->lesson_id . "/" . $day . "/" . $month . "/" . $year;
+        $url_part = $time_slot->group_id . "/" . $teacher_code . "/" . $time_slot->study_module_id
+            . "/" . $time_slot->lesson_id . "/" . $day . "/" . $month . "/" . $year . "/0/" . $academic_period_id;
         ?>
         <a href="<?php echo base_url('/index.php/attendance/check_attendance_classroom_group') . "/" . $url_part;?>" class="btn btn-primary">
           <i class="icon-bell icon-white"></i> Passar llista
@@ -307,10 +305,11 @@
 		<?php endif; ?>
 
 	 </td>
-	 <td>
+	 <td>AAA
     <?php if ($time_slot->time_slot_lective == 1 && ($time_slot->group_code != "")): ?>
         <?php
-        $url_part = $time_slot->group_id . "/" . $teacher_code . "/" . $time_slot->study_module_id . "/" . $time_slot->lesson_id . "/" . $day . "/" . $month . "/" . $year;
+        $url_part = $time_slot->group_id . "/" . $teacher_code . "/" . $time_slot->study_module_id
+            . "/" . $time_slot->lesson_id . "/" . $day . "/" . $month . "/" . $year . "/0/" . $academic_period_id;
         ?>
     <a href="<?php echo base_url('/index.php/attendance/check_attendance_classroom_group') . "/" . $url_part;?>" class="btn btn-primary">
   			<i class="icon-bell icon-white"></i> Passar llista
