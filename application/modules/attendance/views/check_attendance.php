@@ -64,11 +64,11 @@
 
 <div class="row-fluid">
 
-    <div class="span3"></div>
+    <div class="span2"></div>
 
-    <div class="span6">
+    <div class="span8">
 
-        <div class="widget-box">
+        <div class="widget-box collapsed">
             <div class="widget-header">
                 <h5>Filtres</h5>
 
@@ -145,12 +145,9 @@
         </div>
 
 
-
-
-
     </div>
 
-    <div class="span3"></div>
+    <div class="span2"></div>
 
 </div>
 

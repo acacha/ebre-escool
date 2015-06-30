@@ -29,24 +29,93 @@
                         </h1>
         </div><!-- /.page-header -->
 
+        <div class="row-fluid">
+            <div class="span3"></div>
+            <div class="span6">
+                <div class="widget-box collapsed">
+                    <div class="widget-header">
+                        <h5>Filtres</h5>
+
+                        <div class="widget-toolbar">
+
+
+                            <a href="#" data-action="collapse">
+                                <i class="icon-chevron-up"></i>
+                            </a>
+
+                            <a href="#" data-action="close">
+                                <i class="icon-remove"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                    <div class="widget-main">
+
+                        <div class="row-fluid">
+
+                            <div class="span4">Període acadèmic: </div>
+
+                            <div class="span4">
+
+                                <select id="academic_period_picker">
+                                    <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
+                                        <?php if ( $selected_academic_period_id) : ?>
+                                            <?php if ( $academic_period_key == $selected_academic_period_id) : ?>
+                                                <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php else: ?>
+                                                <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <?php if ( $academic_period_value->current == 1) : ?>
+                                                <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php else: ?>
+                                                <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+
+                            </div>
+
+                            <div class="span4"></div>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="span3"></div>
+
+        </div>
+
+        <div style="height: 5px;"></div>
+
+        <div class="row-fluid">
+            <div class="span3"></div>
+            <div class="span6">
+                <?php echo lang('show_full_timetable'); ?>
+                <input id="show_compact_timetable" <?php if ($compact != "no") { echo "checked"; }?> type="checkbox" class="switch-small"
+                       data-label-icon="icon-eye-open"
+                       data-on-label="<i class='icon-ok'></i>"
+                       data-off-label="<i class='icon-remove'></i>"
+                       data-off="danger">
+                <?php echo lang('show_legend'); ?>
+                <input id="hide_show_legend" type="checkbox" class="switch-small"
+                       data-label-icon="icon-eye-open"
+                       data-on-label="<i class='icon-ok'></i>"
+                       data-off-label="<i class='icon-remove'></i>"
+                       data-off="danger">
+            </div>
+            <div class="span3"></div>
+
+        </div>
+
         
         <div class="row-fluid">
             <div class="span12">
 
-        <center>
-            <?php echo lang('show_full_timetable'); ?>
-            <input id="show_compact_timetable" <?php if ($compact) { echo "checked"; }?> type="checkbox" class="switch-small" 
-            data-label-icon="icon-eye-open" 
-            data-on-label="<i class='icon-ok'></i>" 
-            data-off-label="<i class='icon-remove'></i>"
-            data-off="danger">
-            <?php echo lang('show_legend'); ?> 
-            <input id="hide_show_legend" type="checkbox" class="switch-small" 
-            data-label-icon="icon-eye-open" 
-            data-on-label="<i class='icon-ok'></i>" 
-            data-off-label="<i class='icon-remove'></i>"
-            data-off="danger">
-        </center>
+
+
         <div style="height: 10px;"></div>
 
         <div id="study_modules_legend" style="display: none;">
@@ -70,7 +139,7 @@
                     <?php foreach ($all_teacher_study_modules as $study_module) : ?>
                         <tr align="center" class="{cycle values='tr0,tr1'}">
                             <td class="group">
-                                <a href="classroom_group_info/<?php echo $group_by_study_modules[$study_module->study_module_id];?>"><?php echo $study_module->classroom_group_code;?></a>
+                                <a href="classroom_group_info/<?php if (array_key_exists($study_module->study_module_id,$group_by_study_modules)) { echo $group_by_study_modules[$study_module->study_module_id]; } else { echo ""; };?>"><?php echo $study_module->classroom_group_code;?></a>
                             </td>
                             <td class="<?php echo $study_modules_colours[$study_module->study_module_id];?>">
                                 <a href="study_module_info/<?php echo $study_module->study_module_shortname;?>"><?php echo $study_module->study_module_shortname;?></a>
@@ -100,12 +169,17 @@
                 <?php $day_index = 0; $iii=0;?>
                 <?php foreach ($days as $day) : ?>
                     
-                    
+                    <?php if(array_key_exists($day->day_number , $lessonsfortimetablebyteacherid)) : ?>
+
                     <?php foreach ( $lessonsfortimetablebyteacherid[$day->day_number] as $day_lessons) : ?>
                         <?php foreach ( $day_lessons as $day_lesson) : ?>
                             <?php 
                             if ($day_lesson->time_slot_lective) {
-                                $bootstrap_button_colour = $study_modules_colours[$day_lesson->study_module_id];
+                                if (array_key_exists($day_lesson->study_module_id,$study_modules_colours)) {
+                                    $bootstrap_button_colour = $study_modules_colours[$day_lesson->study_module_id];
+                                } else {
+                                    $bootstrap_button_colour = "";
+                                }
                             } else {
                                 $bootstrap_button_colour = "btn-inverse";
                             }
@@ -149,8 +223,10 @@
 
 
 
-                    <?php endforeach; ?> 
-                    
+                    <?php endforeach; ?>
+
+                    <?php endif; ?>
+
                     <?php $day_index++;?> 
 
                 <?php endforeach; ?>
@@ -372,6 +448,7 @@
         </div>
 
         </div>
+            </div>
         </div>
 
     </div>
@@ -413,13 +490,40 @@ $(function() {
 
         selectedValue = "";
         //console.log($element);
-        //console.log(value);
+        console.log(value);
         if (value) {
-            selectedValue = "compact";
+            selectedValue = "yes";
+        } else {
+            selectedValue = "no";
         }
         //console.log("selectedValue:" + selectedValue);
         //alert(baseURL + "/" + selectedValue);
         window.location.href = baseURL + "/" + selectedValue;
+    });
+
+    $( "#academic_period_picker" ).change(function() {
+
+        //academic_period_picker
+        academic_period_id = $("#academic_period_picker").val();
+        console.log("academic_period_id: " + academic_period_id);
+        value = $("#show_compact_timetable").bootstrapSwitch('state');;
+
+        var pathArray = window.location.pathname.split( '/' );
+        var secondLevelLocation = pathArray[1];
+        var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/timetables/mytimetables";
+
+
+        selectedValue = "";
+        //console.log($element);
+        console.log("value: " + value);
+        if (value) {
+            selectedValue = "yes";
+        } else {
+            selectedValue = "no";
+        }
+        //console.log("selectedValue:" + selectedValue);
+        //alert(baseURL + "/" + selectedValue);
+        window.location.href = baseURL + "/" + selectedValue + "/" + academic_period_id;
     });
 
     //***************************
