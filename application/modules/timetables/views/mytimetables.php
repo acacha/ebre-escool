@@ -25,6 +25,25 @@
                             <small>
                                 <i class="icon-double-angle-right"></i>
                                 <?php echo $teacher_full_name . " ( ". lang("mytimetables_teacher_timetable_code") . " " .  $teacher_code . " )";?>
+                                <i class="icon-double-angle-right"></i>
+
+                                <?php
+                                $default_academic_period_found = false;
+                                if (array_key_exists($selected_academic_period_id,$academic_periods)) {
+                                    echo $academic_periods[$selected_academic_period_id]->name;
+                                    $default_academic_period_found = true;
+                                } else {
+                                    foreach ($academic_periods as $academic_period_key => $academic_period_value) {
+                                        if ( $academic_period_value->current == 1) {
+                                            echo $academic_period_value->name;
+                                            $default_academic_period_found = true;
+                                        }
+                                    }
+                                }
+                                if (! $default_academic_period_found) {
+                                    echo "Default academic period not found and academic period not specified";
+                                }
+                                ?>
                             </small>
                         </h1>
         </div><!-- /.page-header -->
@@ -506,7 +525,7 @@ $(function() {
         //academic_period_picker
         academic_period_id = $("#academic_period_picker").val();
         console.log("academic_period_id: " + academic_period_id);
-        value = $("#show_compact_timetable").bootstrapSwitch('state');;
+        value = $("#show_compact_timetable").bootstrapSwitch('state');
 
         var pathArray = window.location.pathname.split( '/' );
         var secondLevelLocation = pathArray[1];

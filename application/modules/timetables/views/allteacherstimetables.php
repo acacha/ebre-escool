@@ -28,9 +28,87 @@
                 <small>
                     <i class="icon-double-angle-right"></i>
                     <span id="teacher_title_name"></span>
+                    <i class="icon-double-angle-right"></i>
+
+                    <?php
+                    $default_academic_period_found = false;
+                    if (array_key_exists($selected_academic_period_id,$academic_periods)) {
+                        echo $academic_periods[$selected_academic_period_id]->name;
+                        $default_academic_period_found = true;
+                    } else {
+                        foreach ($academic_periods as $academic_period_key => $academic_period_value) {
+                            if ( $academic_period_value->current == 1) {
+                                echo $academic_period_value->name;
+                                $default_academic_period_found = true;
+                            }
+                        }
+                    }
+                    if (! $default_academic_period_found) {
+                        echo "Default academic period not found and academic period not specified";
+                    }
+                    ?>
                 </small>
             </h1>
         </div><!-- /.page-header -->
+
+        <div class="row-fluid">
+            <div class="span3"></div>
+            <div class="span6">
+                <div class="widget-box collapsed">
+                    <div class="widget-header">
+                        <h5>Filtres</h5>
+
+                        <div class="widget-toolbar">
+
+
+                            <a href="#" data-action="collapse">
+                                <i class="icon-chevron-up"></i>
+                            </a>
+
+                            <a href="#" data-action="close">
+                                <i class="icon-remove"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+
+                            <div class="row-fluid">
+
+                                <div class="span4">Període acadèmic: </div>
+
+                                <div class="span4">
+
+                                    <select id="academic_period_picker">
+                                        <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
+                                            <?php if ( $selected_academic_period_id) : ?>
+                                                <?php if ( $academic_period_key == $selected_academic_period_id) : ?>
+                                                    <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php else: ?>
+                                                    <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php endif; ?>
+                                            <?php else: ?>
+                                                <?php if ( $academic_period_value->current == 1) : ?>
+                                                    <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php else: ?>
+                                                    <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+
+                                </div>
+
+                                <div class="span4"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span3"></div>
+
+        </div>
 
         <div class="row-fluid">
             <div class="span12">
@@ -116,57 +194,61 @@
         
         <?php $day_index = 0; $iii=0;?>
         <?php foreach ($days as $day) : ?>
-        
-        <?php foreach ( $lessonsfortimetablebyteacherid[$day->day_number] as $day_lessons) : ?>
-        <?php foreach ( $day_lessons as $day_lesson) : ?>
-        <?php 
-        if ($day_lesson->time_slot_lective) {
-            $bootstrap_button_colour = $study_modules_colours[$day_lesson->study_module_id];
-        } else {
-            $bootstrap_button_colour = "btn-inverse";
-        }
 
-        $time_slot_current_position = $day_lesson->time_slot_order - $first_time_slot_order;
-        
-        ?> 
-
-        <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>" 
-            data-start="<?php echo $time_slot_current_position;?>" 
-            data-duration="<?php echo $day_lesson->duration;?>" style="margin-top:5px;">
+        <?php if (array_key_exists($day->day_number, $lessonsfortimetablebyteacherid)) : ?>
 
 
-            <?php if ($day_lesson->time_slot_lective): ?>
+
+            <?php foreach ( $lessonsfortimetablebyteacherid[$day->day_number] as $day_lessons) : ?>
+                <?php foreach ( $day_lessons as $day_lesson) : ?>
                 <?php
-                    $count_i=0;
-                    foreach ($day_lesson->groups as $group_key => $group) {
-                       echo "<a href=\"" . base_url('/index.php/curriculum/classroom_group/read/' . $group->group_id ) ."\">" . $group->group_code . "</a>";
-                       if ($count_i < (count($day_lesson->groups)-1)) {
-                            echo ", ";
-                       }       
-                       $count_i++; 
-                    }
-                ?>  
-                <a href="<?php echo base_url('/index.php/curriculum/study_module/read') ."/". $day_lesson->study_module_id;?>"><?php echo $day_lesson->study_module_shortname;?></a><br/>
-                
-                <?php
-                    $count_i=0;
-                    foreach ($day_lesson->locations as $location_key => $location) {
-                       echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a> ";
-                       $count_i++; 
-                    }
+                if ($day_lesson->time_slot_lective) {
+                    $bootstrap_button_colour = $study_modules_colours[$day_lesson->study_module_id];
+                } else {
+                    $bootstrap_button_colour = "btn-inverse";
+                }
+
+                $time_slot_current_position = $day_lesson->time_slot_order - $first_time_slot_order;
+
                 ?>
-                
-                <?php echo @$day_lesson->study_module_id;?>
-            <?php else:?>
-                <?php echo $day_lesson->study_module_shortname;?>
-            <?php endif;?>
-            
-         
-        </li>
-        <?php $iii++;?>  
-    <?php endforeach; ?>
 
-<?php endforeach; ?> 
+                <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>"
+                    data-start="<?php echo $time_slot_current_position;?>"
+                    data-duration="<?php echo $day_lesson->duration;?>" style="margin-top:5px;">
+
+
+                    <?php if ($day_lesson->time_slot_lective): ?>
+                        <?php
+                            $count_i=0;
+                            foreach ($day_lesson->groups as $group_key => $group) {
+                               echo "<a href=\"" . base_url('/index.php/curriculum/classroom_group/read/' . $group->group_id ) ."\">" . $group->group_code . "</a>";
+                               if ($count_i < (count($day_lesson->groups)-1)) {
+                                    echo ", ";
+                               }
+                               $count_i++;
+                            }
+                        ?>
+                        <a href="<?php echo base_url('/index.php/curriculum/study_module/read') ."/". $day_lesson->study_module_id;?>"><?php echo $day_lesson->study_module_shortname;?></a><br/>
+
+                        <?php
+                            $count_i=0;
+                            foreach ($day_lesson->locations as $location_key => $location) {
+                               echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a> ";
+                               $count_i++;
+                            }
+                        ?>
+
+                        <?php echo @$day_lesson->study_module_id;?>
+                    <?php else:?>
+                        <?php echo $day_lesson->study_module_shortname;?>
+                    <?php endif;?>
+
+
+                </li>
+                <?php $iii++;?>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php endif;?>
 
 <?php $day_index++;?> 
 
@@ -423,7 +505,8 @@ $(function() {
         var secondLevelLocation = pathArray[1];
         var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/timetables/allteacherstimetables";
         //alert(baseURL + "/" + selectedValue);
-        window.location.href = baseURL + "/" + selectedValue;
+        academic_period_id = $("#academic_period_picker").val();
+        window.location.href = baseURL + "/" + selectedValue + "/" + academic_period_id;
 
     });
 
@@ -454,6 +537,9 @@ $(function() {
         
         var pathArray = window.location.pathname.split( '/' );
         var secondLevelLocation = pathArray[1];
+
+        academic_period_id = $("#academic_period_picker").val();
+
         var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/timetables/allteacherstimetables";
 
         selectedValue = "";
@@ -462,9 +548,24 @@ $(function() {
             selectedValue = "compact";
         }
         //alert(baseURL + "/" + selectedValue);
-        window.location.href = baseURL + "/" + selectedValue;
+        window.location.href = baseURL + "/" + selectedValue + "/" + academic_period_id;
     });
 
+    $( "#academic_period_picker" ).change(function() {
+
+        //academic_period_picker
+        academic_period_id = $("#academic_period_picker").val();
+        console.log("academic_period_id: " + academic_period_id);
+        value = $("#show_compact_timetable").bootstrapSwitch('state');;
+
+        var pathArray = window.location.pathname.split( '/' );
+        var secondLevelLocation = pathArray[1];
+        var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/timetables/allteacherstimetables";
+
+        var selectedTeacher = $("#teacher").select2("val");
+
+        window.location.href = baseURL + "/" + selectedTeacher + "/" + academic_period_id;
+    });
 
     $('#study_modules_legend_table').dataTable( {
         "oLanguage": {

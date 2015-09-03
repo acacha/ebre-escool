@@ -35,7 +35,7 @@ class timetables_model  extends CI_Model  {
 		return false;
 	}
 
-	function get_all_groups_byteacherid($teacher_id, $orderby = "asc",$academic_period_id=null) {
+	function get_all_groups_byteacherid($teacher_id, $orderby = "asc", $academic_period_id=null) {
 
         if ($academic_period_id==null) {
             $academic_period_id = $this->get_current_academic_period_id();
@@ -1209,9 +1209,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 	}	
 	
 
-	function get_all_teachers_ids_and_names($orderby="asc") {
+	function get_all_teachers_ids_and_names($orderby="asc",$academic_period_id=null) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+		if ($academic_period_id == null) {
+			$academic_period_id = $this->get_current_academic_period_id();
+		}
 
 		/*
 		SELECT `teacher_academic_periods_code`, `person_sn1`, `person_sn2`, `person_givenName`, `person_id`, `person_official_id` 
@@ -1230,10 +1232,10 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->join('teacher_academic_periods', 'teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
 		$this->db->join('person', 'person.person_id = teacher.teacher_person_id');
 
-		$this->db->where('teacher_academic_periods_academic_period_id', $current_academic_period_id);		
+		$this->db->where('teacher_academic_periods_academic_period_id', $academic_period_id);
         
         $query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		
 		if ($query->num_rows() > 0) {

@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-//$config['base_url']	= 'http://localhost/ebre-escool';
+//$config['base_url']	= 'http://www.iesebre.com/ebre-escool';
 $config['base_url'] = 'http://'.$_SERVER['SERVER_NAME'].'/ebre-escool';  
 
 /*
@@ -246,14 +246,14 @@ $config['encryption_key'] = 'IUMJ4JXjEh7k6PRz75g0KCkUThH3330y';
 |
 */
 $config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 7200;
+$config['sess_expiration']		= 32400;
 $config['sess_expire_on_close']	= FALSE;
-$config['sess_encrypt_cookie']	= FALSE;
+$config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= TRUE;
 $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update']	= 300;
+$config['sess_time_to_update']	= 32400;
 
 /*
 |--------------------------------------------------------------------------
