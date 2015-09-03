@@ -318,11 +318,15 @@ class timetables extends skeleton_main {
             $this->_load_body_footer();
     }
 
-    public function allgroupstimetables($classroom_group_id = null) {
+    public function allgroupstimetables($classroom_group_id = null, $academic_period_id = null) {
         
             $active_menu = array();
             $active_menu['menu']='#timetables';
             $active_menu['submenu1']='#allgroupstimetables';
+
+            if ($academic_period_id == null) {
+                $academic_period_id = $this->timetables_model->get_current_academic_period_id();
+            }
 
 
             $this->check_logged_user();
@@ -332,7 +336,7 @@ class timetables extends skeleton_main {
             $this->_load_body_header();
 
             //Load classroom_groups from Model
-            $classroom_groups_array = $this->timetables_model->get_all_classroom_groups_ids_and_names();
+            $classroom_groups_array = $this->timetables_model->get_all_classroom_groups_ids_and_names($academic_period_id);
             $data['classroom_groups'] = $classroom_groups_array;
 
             //TODO: Get default group id by User Session? or by config file?
@@ -352,23 +356,26 @@ class timetables extends skeleton_main {
             $data['days']=$days;
 
             /* Lessons For Timetable By Group Id */
-            $temp = $this->timetables_model->get_all_lessonsfortimetablebygroupid($classroom_group_id);
-            $lessonsfortimetablebygroupid = $this->add_breaks($temp,$data['first_time_slot_order'],$data['last_time_slot_order']);
+            $temp = $this->timetables_model->get_all_lessonsfortimetablebygroupid($classroom_group_id,$academic_period_id);
+            $lessonsfortimetablebygroupid = array();
+            if ($temp!=false) {
+                $lessonsfortimetablebygroupid = $this->add_breaks($temp,$data['first_time_slot_order'],$data['last_time_slot_order']);
+            }
             $data['lessonsfortimetablebygroupid']= $lessonsfortimetablebygroupid;
             
             /* All Group Study Modules  */
-            $all_group_study_modules = $this->timetables_model->get_all_group_study_modules($classroom_group_id)->result();
+            $all_group_study_modules = $this->timetables_model->get_all_group_study_modules($classroom_group_id,$academic_period_id)->result();
             $data['all_group_study_modules']= $all_group_study_modules;
 
             /* Get Week hours */
             
             foreach($all_group_study_modules as $module){
-                $num_hours = $this->timetables_model->get_real_module_hours_per_week($module->study_module_id,$classroom_group_id);
+                $num_hours = $this->timetables_model->get_real_module_hours_per_week($module->study_module_id,$classroom_group_id,null,$academic_period_id);
                 $hours[] = $num_hours;
             }
 
             $total_week_hours = 0;
-            $total_week_hours = $this->timetables_model->get_real_total_hours_by_group_id($classroom_group_id);
+            $total_week_hours = $this->timetables_model->get_real_total_hours_by_group_id($classroom_group_id, $academic_period_id);
 
             $data['total_week_hours'] = $total_week_hours;
             $data['all_teacher_study_modules_hours_per_week'] = $hours;
@@ -379,14 +386,18 @@ class timetables extends skeleton_main {
             $data['study_modules_colours']= $study_modules_colours;
             $data['study_modules_alternate_colours']= $study_modules_alternate_colours;
 
-            $data['group_mentor'] = $this->timetables_model->get_mentor($classroom_group_id);
+            $data['group_mentor'] = $this->timetables_model->get_mentor($classroom_group_id,$academic_period_id);
 
 
             $all_group_teachers = array();
             
-            $all_group_teachers = $this->timetables_model->get_teachers_list($classroom_group_id);
+            $all_group_teachers = $this->timetables_model->get_teachers_list($classroom_group_id,$academic_period_id);
 
             $data['all_group_teachers'] = $all_group_teachers;
+
+            $academic_periods = $this->timetables_model->get_all_academic_periods();
+            $data['academic_periods'] = $academic_periods;
+            $data['selected_academic_period_id'] = $academic_period_id;
 
             $this->load->view('timetables/allgroupstimetables',$data);
             
