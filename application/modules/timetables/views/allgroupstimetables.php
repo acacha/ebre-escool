@@ -30,6 +30,65 @@
         </div><!-- /.page-header -->
 
         <div class="row-fluid">
+            <div class="span3"></div>
+            <div class="span6">
+                <div class="widget-box collapsed">
+                    <div class="widget-header">
+                        <h5>Filtres</h5>
+
+                        <div class="widget-toolbar">
+
+
+                            <a href="#" data-action="collapse">
+                                <i class="icon-chevron-up"></i>
+                            </a>
+
+                            <a href="#" data-action="close">
+                                <i class="icon-remove"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+
+                            <div class="row-fluid">
+
+                                <div class="span4">Període acadèmic: </div>
+
+                                <div class="span4">
+
+                                    <select id="academic_period_picker">
+                                        <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
+                                            <?php if ( $selected_academic_period_id) : ?>
+                                                <?php if ( $academic_period_key == $selected_academic_period_id) : ?>
+                                                    <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php else: ?>
+                                                    <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php endif; ?>
+                                            <?php else: ?>
+                                                <?php if ( $academic_period_value->current == 1) : ?>
+                                                    <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php else: ?>
+                                                    <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+
+                                </div>
+
+                                <div class="span4"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span3"></div>
+
+        </div>
+
+        <div class="row-fluid">
             <div class="span4"></div>
             <div class="span4">
                 <select id="cl_groups" style="width: 600px; left:-100px;">
@@ -80,7 +139,9 @@
             <tr>
                 <td><strong>Tutor/a:</strong></td>
                 <td>
-                    <?php echo $group_mentor->sn1 . " " . $group_mentor->sn2 . ", " . $group_mentor->givenName . " ( " . $group_mentor->code  . ")" ;?>
+                    <?php if($group_mentor != false ): ?>
+                        <?php echo $group_mentor->sn1 . " " . $group_mentor->sn2 . ", " . $group_mentor->givenName . " ( " . $group_mentor->code  . ")" ;?>
+                    <?php endif;?>
                 </td>    
             </tr>
 
@@ -150,21 +211,22 @@
                         </tr>
                     </thead>
                     <tbody><?php $i=0; ?>
-                        <?php foreach ($all_group_teachers as $teacher) : ?>
-                        <tr align="center" class="{cycle values='tr0,tr1'}">
-                            <!--<td>TODO</td>-->
-                            <td>
-                                <?php echo $teacher->code;?>
-                            </td>
-                            <td>
-                                <?php echo $teacher->sn1 . " " . $teacher->sn2 . ", " . $teacher->givenName;?>
-                            </td>
-                            <td>
-                                <?php echo $teacher->study_modules;?>
-                            </td>  
-                        </tr>
-                        <?php endforeach; ?>
-
+                        <?php if (is_array($all_group_teachers)) : ?>
+                            <?php foreach ($all_group_teachers as $teacher) : ?>
+                            <tr align="center" class="{cycle values='tr0,tr1'}">
+                                <!--<td>TODO</td>-->
+                                <td>
+                                    <?php echo $teacher->code;?>
+                                </td>
+                                <td>
+                                    <?php echo $teacher->sn1 . " " . $teacher->sn2 . ", " . $teacher->givenName;?>
+                                </td>
+                                <td>
+                                    <?php echo $teacher->study_modules;?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif;?>
                     </tbody>
                 </table>
             </center>
@@ -226,6 +288,8 @@ EOT;
 
                 <?php $day_index = 0;?>
                 <?php foreach ($days as $day) : ?>
+
+                <?php if (array_key_exists($day->day_number, $lessonsfortimetablebygroupid)) : ?>
 
                     <?php foreach ( $lessonsfortimetablebygroupid[$day->day_number] as $day_lessons) : ?>
                         <?php foreach ( $day_lessons as $day_lesson) : ?>
@@ -289,7 +353,8 @@ EOT;
                             </li>
                         <?php endforeach; ?>
 
-                    <?php endforeach; ?> 
+                    <?php endforeach; ?>
+                <?php endif;?>
 
                     <?php $day_index++;?> 
 
@@ -351,9 +416,26 @@ $('#cl_groups').on("change", function(e) {
     var pathArray = window.location.pathname.split( '/' );
     var secondLevelLocation = pathArray[1];
     var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/timetables/allgroupstimetables";
-//alert(baseURL + "/" + selectedValue);
-window.location.href = baseURL + "/" + selectedValue;
+    //alert(baseURL + "/" + selectedValue);
+    academic_period_id = $("#academic_period_picker").val();
+    window.location.href = baseURL + "/" + selectedValue + "/" + academic_period_id;;
 
+});
+
+$( "#academic_period_picker" ).change(function() {
+
+    //academic_period_picker
+    academic_period_id = $("#academic_period_picker").val();
+    console.log("academic_period_id: " + academic_period_id);
+    value = $("#show_compact_timetable").bootstrapSwitch('state');;
+
+    var pathArray = window.location.pathname.split( '/' );
+    var secondLevelLocation = pathArray[1];
+    var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/timetables/allgroupstimetables";
+
+    var selectedGroup = $("#cl_groups").select2("val");
+
+    window.location.href = baseURL + "/" + selectedGroup + "/" + academic_period_id;
 });
 
 $('#hide_show_legend').bootstrapSwitch({});

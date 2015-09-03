@@ -159,9 +159,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 	}
 
-	function get_teachers_list($classroom_group_id) {
+	function get_teachers_list($classroom_group_id, $academic_period_id = null) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+		if ($academic_period_id == null) {
+			$academic_period_id = $this->get_current_academic_period_id();
+		}
 
 		$teachers_study_modules_list = $this->get_teachers_study_modules_list($classroom_group_id);
 
@@ -182,8 +184,8 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         $this->db->join('person','person.person_id = teacher.teacher_person_id');
 
 		$this->db->where('lesson_classroom_group_id',$classroom_group_id);
-		$this->db->where('teacher_academic_periods_academic_period_id',$current_academic_period_id);
-		$this->db->where('lesson_academic_period_id',$current_academic_period_id);
+		$this->db->where('teacher_academic_periods_academic_period_id',$academic_period_id);
+		$this->db->where('lesson_academic_period_id',$academic_period_id);
         
         $query = $this->db->get();	
      	//echo $this->db->last_query();
@@ -230,9 +232,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 	}
 	
 
-	function get_mentor( $classroom_group_id ) {
+	function get_mentor( $classroom_group_id, $academic_period_id=null) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+		if ($academic_period_id==null) {
+			$academic_period_id = $this->get_current_academic_period_id();
+		}
 
 		/*
 		SELECT `classroom_group_academic_periods_mentorId`,person_sn1,person_sn2,person_givenName, `teacher_academic_periods_code`
@@ -252,7 +256,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         $this->db->join('person','person.person_id = teacher.teacher_person_id');
 
 		$this->db->where('classroom_group_academic_periods_classroom_group_id',$classroom_group_id);
-		$this->db->where('classroom_group_academic_periods_academic_period_id',$current_academic_period_id);
+		$this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->limit(1);
         
         $query = $this->db->get();
@@ -275,7 +279,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 
 	//
-	function get_all_group_study_modules($classroom_group_id) {
+	function get_all_group_study_modules($classroom_group_id, $academic_period_id = null) {
 		
 		/*
 		SELECT DISTINCT `study_module_id`, `study_module_shortname`, `study_module_name`, `study_module_hoursPerWeek` 
@@ -288,7 +292,10 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		ORDER BY `study_module_shortname` asc 
 		*/
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+		if ($academic_period_id==null) {
+			$academic_period_id = $this->get_current_academic_period_id();
+		}
+
 
 
         $this->db->select('study_module_id,study_module_shortname,study_module_name,study_module_hoursPerWeek');
@@ -299,7 +306,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->join('course','course.course_id = study_module_ap_courses.study_module_ap_courses_course_id');
 		$this->db->join('classroom_group','course.course_id = classroom_group.classroom_group_course_id');
 		$this->db->where('classroom_group_id',$classroom_group_id);
-		$this->db->where('study_module_academic_periods_academic_period_id',$current_academic_period_id);		
+		$this->db->where('study_module_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->order_by('study_module_shortname', "asc");
         
         $query = $this->db->get();
@@ -785,9 +792,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 
 
-	function get_all_classroom_groups_ids_and_names($orderby= "asc") {
+	function get_all_classroom_groups_ids_and_names($orderby= "asc",$academic_period_id=null) {
 
-		$current_academic_period_id = $this->get_current_academic_period_id();
+		if ($academic_period_id == null) {
+			$academic_period_id = $this->get_current_academic_period_id();
+		}
 
 		/*
 		SELECT `classroom_group_id`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name` 
@@ -798,7 +807,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->from('classroom_group');
         $this->db->select('classroom_group_id,classroom_group_code,classroom_group_shortName,classroom_group_name');
         $this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id');
-        $this->db->where('classroom_group_academic_periods_academic_period_id',$current_academic_period_id);
+        $this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period_id);
         $this->db->where('classroom_group_type',1);
         
 
