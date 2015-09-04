@@ -383,6 +383,7 @@
         <ul class="tt-events">
             <?php $day_index = 0; $iii=0;?>
             <?php foreach ($days as $day) : ?>
+            <?php if (array_key_exists($day->day_number,$lessonsfortimetablebygroupid[$teacher_group['classroom_group_id']])) : ?>
             <?php foreach ( $lessonsfortimetablebygroupid[$teacher_group['classroom_group_id']][$day->day_number] as $day_lessons) : ?>
             <?php foreach ( $day_lessons as $day_lesson) : ?>
             <?php 
@@ -440,7 +441,8 @@
             </li>
             <?php $iii++;?>  
         <?php endforeach; ?>
-    <?php endforeach; ?> 
+    <?php endforeach; ?>
+            <?php endif;?>
     <?php $day_index++;?> 
 <?php endforeach; ?>
 
