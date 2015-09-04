@@ -91,6 +91,9 @@ $(function() {
 				</div>
 				<div class="form-group">
 					<tr>
+						<td colspan="2" style="text-align:center;"><input type="checkbox" name="all_students" value="all_students" checked> Tots els estudiants (UFs soltes)</input></td>
+					</tr>
+					<tr>
 						<td colspan="2" style="text-align:center;"><input type="submit" value="Veure l'informe" class="btn btn-primary"/></td>
 					</tr>
 			</table>
