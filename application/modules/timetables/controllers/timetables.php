@@ -723,7 +723,10 @@ class timetables extends skeleton_main {
 
             ksort ($day_lessons);
 
-            $lessons[$day_number]->lesson_by_day = $day_lessons;
+            if ($lessons[$day_number] != null) {
+                $lessons[$day_number]->lesson_by_day = $day_lessons;
+            }
+
         }
         
         return $lessons;
