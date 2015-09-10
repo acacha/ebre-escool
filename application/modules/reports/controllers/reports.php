@@ -605,6 +605,10 @@ class reports extends skeleton_main {
 		
 		$this->load->model('reports_model');
 
+        if ($academic_period_id==null) {
+            $academic_period_id = $this->reports_model->get_current_academic_period()->id;
+        }
+
         $all_teachers = $this->reports_model->get_all_teachers($academic_period_id);
 
         if ($academic_period_id != null ) {
@@ -612,8 +616,6 @@ class reports extends skeleton_main {
         } else {
         	$academic_period = $this->reports_model->get_current_academic_period();
         }
-
-        
 
         $all_conserges = $this->reports_model->get_all_conserges();
         $all_secretaria = $this->reports_model->get_all_secretaria();

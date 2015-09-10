@@ -43,7 +43,16 @@ class reports_model  extends CI_Model  {
 
 		if ($query->num_rows() == 1){
 			$row = $query->row(); 
-			return $row;
+
+			$academic_period = new stdClass;
+
+			$academic_period->id = $row->academic_periods_id;
+			$academic_period->shortname = $row->academic_periods_shortname;
+			$academic_period->name = $row->academic_periods_name;
+			$academic_period->alt_name = $row->academic_periods_alt_name;
+			$academic_period->current = $row->academic_periods_current;
+
+			return $academic_period;
 		}	
 		else
 			return false;
