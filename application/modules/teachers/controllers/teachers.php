@@ -257,7 +257,6 @@ class teachers extends skeleton_main {
 
         $data['table_title'] = "Llista de professors";
 
-        $selected_academic_period_id = false;       
         $current_academic_period_id = null;
 
         if ($academic_period_id == null) {
@@ -270,8 +269,6 @@ class teachers extends skeleton_main {
             }
             
             $academic_period_id=$current_academic_period_id ;   
-        } else {
-            $selected_academic_period_id = $academic_period_id;
         }
 
         $academic_periods = $this->teachers_model->get_all_academic_periods();
@@ -281,7 +278,7 @@ class teachers extends skeleton_main {
         $data['all_teachers'] = $all_teachers;
 
         $data['academic_periods'] = $academic_periods;
-        $data['selected_academic_period_id'] = $selected_academic_period_id;
+        $data['selected_academic_period_id'] = $academic_period_id;
 
         $this->load->view('report_teachers_list.php',$data);     
 
