@@ -17,10 +17,10 @@
 
 <div class="page-header position-relative">
                 <h1>
-                    <?php echo lang("curriculum");?>
+                    <?php echo "Professors";?>
                     <small>
                         <i class="icon-double-angle-right"></i>
-                        Departaments
+                        Llista de professors
                     </small>
                 </h1>
 </div><!-- /.page-header -->
@@ -52,7 +52,7 @@
                   var selectedValue = $("#select_teacher_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
-                  var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/teachers/tutors_report";
+                  var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/teachers/report_teachers_list";
                   //alert(baseURL + "/" + selectedValue);
                   window.location.href = baseURL + "/" + selectedValue;
 
