@@ -76,6 +76,36 @@ class teachers_model  extends CI_Model  {
 		return false;
 	}
 
+	function get_academic_period_by_id($academic_period_id) {
+
+		/*
+		SELECT academic_periods_id,academic_periods_shortname, academic_periods_name,academic_periods_alt_name,academic_periods_current FROM academic_periods WHERE academic_periods_current=1
+		*/
+		$this->db->select('academic_periods_id,academic_periods_shortname, academic_periods_name,academic_periods_alt_name,academic_periods_current');
+		$this->db->from('academic_periods');
+		$this->db->where('academic_periods_id',$academic_period_id);
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() == 1){
+			$row = $query->row();
+
+			$academic_period = new stdClass;
+
+			$academic_period->id = $row->academic_periods_id;
+			$academic_period->shortname = $row->academic_periods_shortname;
+			$academic_period->name = $row->academic_periods_name;
+			$academic_period->alt_name = $row->academic_periods_alt_name;
+			$academic_period->current = $row->academic_periods_current;
+
+			return $academic_period;
+
+		}
+		else
+			return false;
+	}
+
 
 	/*
     * OBSOLET
