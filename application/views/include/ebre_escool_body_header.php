@@ -634,6 +634,12 @@
                     </a>
                   </li>
 
+                  <li id="teachers_sheet_report">
+                    <a href="<?php echo base_url('/index.php/teachers/teacher_sheet_selector'); ?>">
+                      <?php echo "Llençol de professors altres anys";?>
+                    </a>
+                  </li>
+
                   <?php if ($this->session->userdata('is_admin')): ?>
                     <li id="report_teachers_list">
                       <a href="<?php echo base_url('/index.php/teachers/report_teachers_list'); ?>">

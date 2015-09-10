@@ -287,6 +287,38 @@ class teachers extends skeleton_main {
 
     }
 
+    public function teacher_sheet_selector() {
+        if (!$this->skeleton_auth->logged_in())
+        {
+            //redirect them to the login page
+            redirect($this->skeleton_auth->login_page, 'refresh');
+        }
+
+        $active_menu = array();
+        $active_menu['menu']='#reports';
+        $active_menu['submenu1']='#teachers_reports';
+        $active_menu['submenu2']='#teachers_sheet_report';
+
+        $header_data = $this->load_header_data($active_menu);
+
+        $data = array();
+
+        $this->load->model('teachers_model');
+
+        $header_data = $this->_load_html_header($header_data);
+
+        $this->_load_body_header();
+
+        $academic_periods = $this->teachers_model->get_all_academic_periods();
+
+        $data['academic_periods'] = $academic_periods;
+
+        $this->load->view('report_teachers_sheet_selector.php',$data);
+
+        $this->_load_body_footer();
+
+    }
+
 
     public function teacher_sheet($academic_period_id=null) {
 
@@ -303,6 +335,10 @@ class teachers extends skeleton_main {
         $active_menu['submenu2']='#teachers_sheet_report';
         
         $this->load->model('teachers_model');
+
+        if ($academic_period_id==null) {
+            $academic_period_id = $this->teachers_model->get_current_academic_period()->id;
+        }
 
         $all_teachers = $this->teachers_model->get_all_teachers($academic_period_id);
 
@@ -322,41 +358,44 @@ class teachers extends skeleton_main {
 
         $contador = 0;
         $professor = array();
-      
-        foreach($all_teachers as $teacher) {
 
-            $professor[$contador]['code']=$teacher->teacher_code;
-            $professor[$contador]['teacher_charge_short']=$teacher->teacher_charge_short;
-            $professor[$contador]['teacher_charge_full']=$teacher->teacher_charge_full;
-            $professor[$contador]['name']=$teacher->givenName;
-            $professor[$contador]['sn1']=$teacher->sn1;
-            $professor[$contador]['sn2']=$teacher->sn2;
-            $professor[$contador]['teacher_charge_sheet_line1']=$teacher->teacher_charge_sheet_line1;
-            $professor[$contador]['teacher_charge_sheet_line2']=$teacher->teacher_charge_sheet_line2;
-            $professor[$contador]['teacher_charge_sheet_line3']=$teacher->teacher_charge_sheet_line3;
-            $professor[$contador]['teacher_charge_sheet_line4']=$teacher->teacher_charge_sheet_line4;
+        if (is_array($all_teachers)) {
+            foreach($all_teachers as $teacher) {
 
-            $photo_url = trim($teacher->photo_url);
+                $professor[$contador]['code']=$teacher->teacher_code;
+                $professor[$contador]['teacher_charge_short']=$teacher->teacher_charge_short;
+                $professor[$contador]['teacher_charge_full']=$teacher->teacher_charge_full;
+                $professor[$contador]['name']=$teacher->givenName;
+                $professor[$contador]['sn1']=$teacher->sn1;
+                $professor[$contador]['sn2']=$teacher->sn2;
+                $professor[$contador]['teacher_charge_sheet_line1']=$teacher->teacher_charge_sheet_line1;
+                $professor[$contador]['teacher_charge_sheet_line2']=$teacher->teacher_charge_sheet_line2;
+                $professor[$contador]['teacher_charge_sheet_line3']=$teacher->teacher_charge_sheet_line3;
+                $professor[$contador]['teacher_charge_sheet_line4']=$teacher->teacher_charge_sheet_line4;
 
-            if ($photo_url != "") {
+                $photo_url = trim($teacher->photo_url);
 
-                if( file_exists(getcwd().'/uploads/person_photos/'. $photo_url)) {
-                
-                    $professor[$contador]['photo']=base_url('uploads/person_photos')."/".$teacher->photo_url;
+                if ($photo_url != "") {
+
+                    if( file_exists(getcwd().'/uploads/person_photos/'. $photo_url)) {
+
+                        $professor[$contador]['photo']=base_url('uploads/person_photos')."/".$teacher->photo_url;
+                    } else {
+                        $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
+                    }
                 } else {
                     $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
                 }
-            } else {
-                $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
+
+                $professor[$contador]['carrec_line1']=$professor[$contador]['teacher_charge_sheet_line1'];
+                $professor[$contador]['carrec_line2']=$professor[$contador]['teacher_charge_sheet_line2'];
+                $professor[$contador]['carrec_line3']=$professor[$contador]['teacher_charge_sheet_line3'];
+                $professor[$contador]['carrec_line4']=$professor[$contador]['teacher_charge_sheet_line4'];
+
+                $contador++;
             }
-
-            $professor[$contador]['carrec_line1']=$professor[$contador]['teacher_charge_sheet_line1'];
-            $professor[$contador]['carrec_line2']=$professor[$contador]['teacher_charge_sheet_line2'];
-            $professor[$contador]['carrec_line3']=$professor[$contador]['teacher_charge_sheet_line3'];
-            $professor[$contador]['carrec_line4']=$professor[$contador]['teacher_charge_sheet_line4'];
-
-            $contador++;
         }
+
 
         $count = count($professor);
      
