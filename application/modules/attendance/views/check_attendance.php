@@ -224,6 +224,8 @@
 
      </td>
      <td>
+
+
         <?php
         $url_part = $time_slot->group_id . "/" . $teacher_code . "/" . $time_slot->study_module_id
             . "/" . $time_slot->lesson_id . "/" . $day . "/" . $month . "/" . $year . "/0/" . $academic_period_id;
@@ -249,7 +251,7 @@
   <tr>
      <th><?php echo lang("time_slot");?></th>
      <th><?php echo lang("ClassroomGroup");?></th>
-     <th>TODO Mòdul Profesional</th>
+     <th>Mòdul Profesional</th>
      <th><?php echo lang("attendances_actions");?></th>
   </tr>
  </thead>
@@ -305,7 +307,7 @@
 		<?php endif; ?>
 
 	 </td>
-	 <td>AAA
+	 <td>
     <?php if ($time_slot->time_slot_lective == 1 && ($time_slot->group_code != "")): ?>
         <?php
         $url_part = $time_slot->group_id . "/" . $teacher_code . "/" . $time_slot->study_module_id
