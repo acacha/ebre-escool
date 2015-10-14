@@ -1928,9 +1928,21 @@ class attendance extends skeleton_main {
 
 		$data['teacher_code'] = $teacher_code;
 		$data['teacher_full_name'] = $teacher_full_name;
-		$data['day'] = $day;
-		$data['month'] = $month;
-		$data['year'] = $year;
+        if ( ($day != null) ) {
+            $data['day'] = $day;
+        } else {
+            $data['day'] = date('d');
+        }
+        if ( ($month != null) ) {
+            $data['month'] = $month;
+        } else {
+            $data['month'] = date('m');
+        }
+        if ( ($year != null) ) {
+            $data['year'] = $year;
+        } else {
+            $data['year'] = date('Y');
+        }
 
         $data['academic_period_id'] = $academic_period_id;
 
