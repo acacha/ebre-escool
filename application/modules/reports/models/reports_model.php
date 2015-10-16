@@ -836,12 +836,21 @@ class reports_model  extends CI_Model  {
     		$academic_period_id = $this->get_current_academic_period_id();
     	}
 
+        /*
+        SELECT `teacher_id` , `teacher_academic_periods_code` , `teacher_academic_periods_charge_short` , `teacher_academic_periods_charge_full` , `person_givenName` , `person_sn1` , `person_sn2` , `person_photo` , `teacher_academic_periods_charge_sheet_line1` , `teacher_academic_periods_charge_sheet_line2` , `teacher_academic_periods_charge_sheet_line3` , `teacher_academic_periods_charge_sheet_line4`
+        FROM (`teacher`)
+        JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `teacher`.`teacher_id`
+        JOIN `person` ON `teacher_person_id` = `person_id`
+        WHERE `teacher_academic_periods_academic_period_id` = '6'
+        ORDER BY CAST( teacher_academic_periods_code AS UNSIGNED ) ASC
+        */
+
 		$this->db->select('teacher_id, teacher_academic_periods_code,teacher_academic_periods_charge_short, teacher_academic_periods_charge_full, person_givenName, person_sn1, person_sn2, person_photo,teacher_academic_periods_charge_sheet_line1,
 						teacher_academic_periods_charge_sheet_line2,teacher_academic_periods_charge_sheet_line3,teacher_academic_periods_charge_sheet_line4');
 		$this->db->from('teacher');
 		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
 		$this->db->join('person','teacher_person_id = person_id');
-		$this->db->order_by("teacher_academic_periods_code", "asc"); 
+		$this->db->order_by("CAST('teacher_academic_periods_code' AS UNSIGNED)", "asc");
 		$this->db->where("teacher_academic_periods_academic_period_id", $academic_period_id);
 		$query = $this->db->get();
 
