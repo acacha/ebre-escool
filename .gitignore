@@ -33,3 +33,10 @@ tools/sync_explotation_to_development_config.php
 
 
 /vendor/
+
+
+.idea/ebre-escool.iml
+.idea/encodings.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
