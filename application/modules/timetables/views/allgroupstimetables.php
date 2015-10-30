@@ -255,7 +255,7 @@ EOT;
 
                                     <?php
                                         foreach ($day_lesson->study_modules as $study_module_key => $study_module) {
-                                           echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a>  ";     
+                                           echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a>";
                                         }
                                     ?>                                    
 
@@ -263,13 +263,13 @@ EOT;
 
                                     <?php
                                         foreach ($day_lesson->teachers as $teacher_key => $teacher) {
-                                           echo "<a href=\"" . base_url('/index.php/teachers/index/read/' . $teacher->id ) ."\">" . $teacher->code . "</a> ";
+                                           echo "<a href=\"" . base_url('/index.php/teachers/teachers/index/read/' . $teacher->id ) ."\">" . $teacher->code . "</a>";
                                         }
                                     ?><br/>
                                     
                                     <?php
                                         foreach ($day_lesson->locations as $location_key => $location) {
-                                           echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a> ";
+                                           echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a>";
                                         }
                                     ?>
                                     
