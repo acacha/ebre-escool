@@ -1152,6 +1152,9 @@ class attendance extends skeleton_main {
     	$user_is_a_teacher = $this->attendance_model->is_user_a_teacher($person_id);
 		$data['is_teacher'] = $user_is_a_teacher;
 
+        $user_teacher_id = null;
+        $user_teacher_code = null;
+
 		if ($user_is_a_teacher) {
 			$user_teacher_code = $this->attendance_model->get_teacher_code_by_personid($person_id);        
         	$user_teacher_id = $this->attendance_model->get_teacher_id_by_personid($person_id);
