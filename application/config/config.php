@@ -15,7 +15,7 @@
 |
 */
 //$config['base_url']	= 'http://www.iesebre.com/ebre-escool';
-$config['base_url'] = 'http://'.$_SERVER['SERVER_NAME'].'/ebre-escool-down';  
+$config['base_url'] = 'http://'.$_SERVER['SERVER_NAME'].'/ebre-escool';  
 
 /*
 |--------------------------------------------------------------------------

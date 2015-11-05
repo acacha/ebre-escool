@@ -1,4 +1,4 @@
-﻿<div class="main-content">
+<div class="main-content">
     
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
@@ -419,7 +419,8 @@
                     <?php
                         $count_i=0;
                         foreach ($day_lesson->teachers as $teacher_key => $teacher) {
-                           echo "<a href=\"" . base_url('/index.php/curriculum/classroom_group/read/' . $teacher->id ) ."\">" . $teacher->code . "</a>";
+                           //echo "<a href=\"" . base_url('/index.php/curriculum/classroom_group/read/' . $teacher->id ) ."\">" . $teacher->code . "</a>";
+                           echo "<a href=\"" . base_url('/index.php/curriculum/classroom_group/read' . $teacher->id ) ."\">" . $teacher->code . "</a>";
                            if ($count_i < (count($day_lesson->teachers)-1)) {
                                 echo ", ";
                            }       
