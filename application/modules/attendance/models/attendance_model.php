@@ -1993,7 +1993,7 @@ function get_current_academic_period() {
 			return false;
 	}	
 
-	function get_teacher_id_by_personid($person_id,$academic_period_id) {
+	function get_teacher_id_by_personid($person_id, $academic_period_id=null) {
 
         if ($academic_period_id == null) {
             $academic_period_id = $this->get_current_academic_period_id();
@@ -2012,7 +2012,7 @@ function get_current_academic_period() {
 		$this->db->join('teacher','teacher.teacher_id =  teacher_academic_periods.teacher_academic_periods_teacher_id');
 		$this->db->join('person','person.person_id = teacher.teacher_person_id');
 		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$academic_period_id);
-		$this->db->where('person.person_id',$person_id);
+		$this->db->where('person.person_id', $person_id);
 
 		$query = $this->db->get();
 		//echo $this->db->last_query()."<br/>";
