@@ -40,8 +40,8 @@ class enrollment_model  extends CI_Model  {
             $basedn= $this->active_users_basedn;      
         }
 
-        echo "active_users_basedn : " . $this->active_users_basedn . "\echo";
-        echo "base dn : " . $basedn . "\echo";
+        echo "active_users_basedn : " . $this->active_users_basedn . "\n";
+        echo "base dn : " . $basedn . "\n";
         echo "Filter : " . $filter . "\n";
         if ($this->_bind()) {
             $sr = ldap_search($this->ldapconn, $basedn, $filter);
