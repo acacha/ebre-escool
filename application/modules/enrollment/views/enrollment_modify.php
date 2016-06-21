@@ -450,7 +450,7 @@
 
 
 //DEFAULT PERIOD
-var periode = "2015-16";
+var periode = "2016-17";
 var enrollment_id = "";
 $('#period_title').html(periode);
 

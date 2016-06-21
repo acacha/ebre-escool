@@ -3901,7 +3901,7 @@ function get_current_academic_period() {
 		$this->db->join('classroom_group','classroom_group.classroom_group_id = enrollment.enrollment_group_id');
 		
 		//$this->db->where('enrollment.enrollment_group_id',$classroom_group_id);
-		$this->db->where('enrollment.enrollment_periodid',"2015-16");
+		$this->db->where('enrollment.enrollment_periodid',"2016-17");
 			
 		$this->db->order_by('incident_date',"DESC");
 		

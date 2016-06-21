@@ -1,0 +1,1 @@
+Api doesn't have views. views are done on rest clients

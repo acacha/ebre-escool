@@ -1,0 +1,1 @@
+﻿<h3><?php echo urldecode($id_group); ?></h3>
