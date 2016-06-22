@@ -928,10 +928,10 @@
 
 <?php /* DEBUG
 foreach ($editable_study_submodules_ids as $value) {
-	echo $value . " | " ;
+ echo $value . " | " ;
 }*/
-?>
-
+?> 
+        
 <table class="table table-striped table-bordered table-hover table-condensed" id="study_submodules_table">
  <thead style="background-color: #d9edf7;">
   <tr>
