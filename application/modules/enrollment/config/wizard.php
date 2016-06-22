@@ -16,10 +16,11 @@ $config['academic_periods'] = array(
 	3 => "2013-14",
 	4 => "2014-15",
     5 => "2015-16",
+    6 => "2016-17"
 	);
 
 //NOTE: In database the is a field in academicperiods table that marks current academic period
-$config['current_period'] = "2015-16";
+$config['current_period'] = "2016-17";
 
 $config['force_new_password_on_every_new_enrollment'] = true;
 
