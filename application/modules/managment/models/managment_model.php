@@ -3083,7 +3083,7 @@ class managment_model  extends CI_Model  {
 		$this->db->from('enrollment');
 		$this->db->join('studies','studies.studies_id = enrollment.enrollment_study_id');
 		$this->db->group_by('enrollment_study_id,studies_shortname,studies_name');
-		$this->db->where('enrollment_periodid','2015-16');
+		$this->db->where('enrollment_periodid','2016-17');
 		$query = $this->db->get();
 
 		$enrollment_by_study = array();
