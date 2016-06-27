@@ -84,12 +84,86 @@
                         }
             }
              
-        });  
+        });
+
+          $( "#academic_period_picker" ).change(function() {
+              //academic_period_picker
+              academic_period_id = $("#academic_period_picker").val();
+              console.log("academic_period_id: " + academic_period_id);
+//              value = $("#show_compact_timetable").bootstrapSwitch('state');
+
+              var pathArray = window.location.pathname.split( '/' );
+              var secondLevelLocation = pathArray[1];
+              var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/managment/curriculum_reports_departments";
+
+              window.location.href = baseURL + "/" + academic_period_id;
+          });
 
 });
+
+
 </script>
 
 <div class="container">
+
+    <div class="row-fluid">
+        <div class="span3"></div>
+        <div class="span6">
+            <div class="widget-box collapsed">
+                <div class="widget-header">
+                    <h5>Filtres</h5>
+
+                    <div class="widget-toolbar">
+
+
+                        <a href="#" data-action="collapse">
+                            <i class="icon-chevron-up"></i>
+                        </a>
+
+                        <a href="#" data-action="close">
+                            <i class="icon-remove"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main">
+
+                        <div class="row-fluid">
+
+                            <div class="span4">Període acadèmic: </div>
+
+                            <div class="span4">
+
+                                <select id="academic_period_picker">
+                                    <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
+                                        <?php if ( $selected_academic_period_id) : ?>
+                                            <?php if ( $academic_period_key == $selected_academic_period_id) : ?>
+                                                <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php else: ?>
+                                                <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <?php if ( $academic_period_value->current == 1) : ?>
+                                                <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php else: ?>
+                                                <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+
+                            </div>
+
+                            <div class="span4"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span3"></div>
+
+    </div>
 
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_groups">
  <thead style="background-color: #d9edf7;">

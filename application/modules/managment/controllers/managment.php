@@ -2432,7 +2432,7 @@ class managment extends skeleton_main {
 		
 	}
 
-	public function curriculum_reports_departments() {
+	public function curriculum_reports_departments($academic_period_id = null) {
 
 		if (!$this->skeleton_auth->logged_in())
 		{
@@ -2478,9 +2478,17 @@ class managment extends skeleton_main {
 
 		$data = array();
 
+		if ($academic_period_id == null) {
+			$academic_period_id = $this->managment_model->get_current_academic_period_id();
+		}
+
+		$data['selected_academic_period_id'] = $academic_period_id;
+		$academic_periods = $this->managment_model->get_all_academic_periods();
+		$data['academic_periods'] = $academic_periods;
+
 		$data['departments_table_title'] = "Departaments";
 
-		$all_departments = $this->managment_model->get_all_departments_report_info();
+		$all_departments = $this->managment_model->get_all_departments_report_info($academic_period_id);
 
 		$studies_by_department = $this->managment_model->get_studies_by_department(false);
 		$teachers_by_department = $this->managment_model->get_teachers_by_department(false);
