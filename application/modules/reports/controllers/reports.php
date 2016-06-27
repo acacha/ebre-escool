@@ -691,6 +691,7 @@ foreach($all_secretaria as $secretaria){
 		$professor = array();
 		$conserge = array();
 		$secretaria = array();
+        $teacher = null;
 
 		/* CONSERGES */
 		//echo "CONSERGES:<br/>";
@@ -801,66 +802,70 @@ echo $cons->photo_url;
 		/* PROFESSORS */
 		// Guardo les dades dels professors en un array
 		//echo "TEACHERS:<br/<";
-		foreach($all_teachers as $teacher) {
-			//echo "$teacher->givenName $teacher->sn1 $teacher->sn2 FOTO: $teacher->photo_url | teacher code: $teacher->teacher_code<br/>";
-			
-			$professor[$contador]['code']=$teacher->teacher_code;
-			$professor[$contador]['teacher_charge_short']=$teacher->teacher_charge_short;
-			$professor[$contador]['teacher_charge_full']=$teacher->teacher_charge_full;
-			$professor[$contador]['name']=$teacher->givenName;
-			$professor[$contador]['sn1']=$teacher->sn1;
-			$professor[$contador]['sn2']=$teacher->sn2;
-			$professor[$contador]['teacher_charge_sheet_line1']=$teacher->teacher_charge_sheet_line1;
-			$professor[$contador]['teacher_charge_sheet_line2']=$teacher->teacher_charge_sheet_line2;
-			$professor[$contador]['teacher_charge_sheet_line3']=$teacher->teacher_charge_sheet_line3;
-			$professor[$contador]['teacher_charge_sheet_line4']=$teacher->teacher_charge_sheet_line4;
+        if (is_array($all_teachers) or ($all_teachers instanceof Traversable)) {
+            foreach($all_teachers as $teacher) {
+                //echo "$teacher->givenName $teacher->sn1 $teacher->sn2 FOTO: $teacher->photo_url | teacher code: $teacher->teacher_code<br/>";
 
-			$photo_url = trim($teacher->photo_url);
+                $professor[$contador]['code']=$teacher->teacher_code;
+                $professor[$contador]['teacher_charge_short']=$teacher->teacher_charge_short;
+                $professor[$contador]['teacher_charge_full']=$teacher->teacher_charge_full;
+                $professor[$contador]['name']=$teacher->givenName;
+                $professor[$contador]['sn1']=$teacher->sn1;
+                $professor[$contador]['sn2']=$teacher->sn2;
+                $professor[$contador]['teacher_charge_sheet_line1']=$teacher->teacher_charge_sheet_line1;
+                $professor[$contador]['teacher_charge_sheet_line2']=$teacher->teacher_charge_sheet_line2;
+                $professor[$contador]['teacher_charge_sheet_line3']=$teacher->teacher_charge_sheet_line3;
+                $professor[$contador]['teacher_charge_sheet_line4']=$teacher->teacher_charge_sheet_line4;
 
-			if ($photo_url != "") {
-				if( file_exists(getcwd().'/uploads/person_photos/'.$photo_url )) {
-			
-					$professor[$contador]['photo']=base_url('uploads/person_photos')."/".$teacher->photo_url;
-				} else {
-					$professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
-				}
-			} else {
-				$professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
-			}
-			
+                $photo_url = trim($teacher->photo_url);
 
-			$professor[$contador]['carrec_line1']=$professor[$contador]['teacher_charge_sheet_line1'];
-			$professor[$contador]['carrec_line2']=$professor[$contador]['teacher_charge_sheet_line2'];
-			$professor[$contador]['carrec_line3']=$professor[$contador]['teacher_charge_sheet_line3'];
-			$professor[$contador]['carrec_line4']=$professor[$contador]['teacher_charge_sheet_line4'];
-			
-/*
-			$tipus = substr($professor[$contador]['photo'],0,10);
+                if ($photo_url != "") {
+                    if( file_exists(getcwd().'/uploads/person_photos/'.$photo_url )) {
 
-			if(strlen($tipus)==8){
-				$extensio = "cap";
-			} else {
-				$isJPG  = strpos($tipus, 'JFIF');
-				if($isJPG){
-					$extensio = ".jpg";
-				} else {
-					$isPNG = strpos($tipus, 'PNG');
-					if($isPNG){
-					$extensio = ".png";
-					}
-				}
-			}
+                        $professor[$contador]['photo']=base_url('uploads/person_photos')."/".$teacher->photo_url;
+                    } else {
+                        $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
+                    }
+                } else {
+                    $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
+                }
 
-			$jpeg_filename="/tmp/".$professor[$contador]['code'].$extensio;
-			$jpeg_file[$contador]="/tmp/".$professor[$contador]['code'].$extensio;
 
-			$outjpeg = fopen($jpeg_filename, "wb");
-			fwrite($outjpeg, $professor[$contador]['photo']);
-			fclose ($outjpeg);
-			$jpeg_data_size = filesize( $jpeg_filename );
-*/
-			$contador++;
-		}
+                $professor[$contador]['carrec_line1']=$professor[$contador]['teacher_charge_sheet_line1'];
+                $professor[$contador]['carrec_line2']=$professor[$contador]['teacher_charge_sheet_line2'];
+                $professor[$contador]['carrec_line3']=$professor[$contador]['teacher_charge_sheet_line3'];
+                $professor[$contador]['carrec_line4']=$professor[$contador]['teacher_charge_sheet_line4'];
+
+                /*
+                            $tipus = substr($professor[$contador]['photo'],0,10);
+
+                            if(strlen($tipus)==8){
+                                $extensio = "cap";
+                            } else {
+                                $isJPG  = strpos($tipus, 'JFIF');
+                                if($isJPG){
+                                    $extensio = ".jpg";
+                                } else {
+                                    $isPNG = strpos($tipus, 'PNG');
+                                    if($isPNG){
+                                    $extensio = ".png";
+                                    }
+                                }
+                            }
+
+                            $jpeg_filename="/tmp/".$professor[$contador]['code'].$extensio;
+                            $jpeg_file[$contador]="/tmp/".$professor[$contador]['code'].$extensio;
+
+                            $outjpeg = fopen($jpeg_filename, "wb");
+                            fwrite($outjpeg, $professor[$contador]['photo']);
+                            fclose ($outjpeg);
+                            $jpeg_data_size = filesize( $jpeg_filename );
+                */
+                $contador++;
+            }
+        }
+
+
 
 		$count = count($professor);
 
@@ -879,7 +884,13 @@ echo $cons->photo_url;
 		//Logo
 		//$pdf->Image(base_url().APPPATH.'third_party/skeleton/assets/img/logo_iesebre_2010_11.jpg',$x+2,5,40,15);
 		$pdf->Image(base_url('uploads/person_photos'). "/logo_iesebre_2010_11.jpg",$x+2,5,40,15);
-		$professor[$contador]['photo']=base_url('uploads/person_photos')."/".$teacher->photo_url;
+
+        $photo_url = "";
+        if (!is_null($teacher)) {
+            $photo_url = $teacher->photo_url;;
+        }
+
+        $professor[$contador]['photo']=base_url('uploads/person_photos')."/". $photo_url;
 
 		//Defineixo el tipus de lletra, si és negreta (B), si és cursiva (L), si és normal en blanc
 		$pdf->SetFont('Arial','B',15);
