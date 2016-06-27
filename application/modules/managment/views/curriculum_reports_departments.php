@@ -117,7 +117,8 @@
   <?php $this->session->set_flashdata('teachers_by_department', $teachers_by_department);?>
 
   <!-- Iteration that shows departments-->
-  <?php foreach ($all_departments as $department_key => $department) : ?>
+  <?php if (is_array($all_departments) or ($all_departments instanceof Traversable)): ?>
+   <?php foreach ($all_departments as $department_key => $department) : ?>
    <tr align="center" class="{cycle values='tr0,tr1'}">   
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/departments/read/' . $department->id ) ;?>">
@@ -166,6 +167,7 @@
      </td>
    </tr>
   <?php endforeach; ?>
+  <?php endif;?>
  </tbody>
 </table> 
 
