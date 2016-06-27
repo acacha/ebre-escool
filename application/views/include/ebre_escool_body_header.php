@@ -615,6 +615,14 @@
                 </a>
               </li>
 
+              <!-- GENERAL SHEET BY ACADEMIC PERIOD -->
+              <li id="general_sheet_report_by_ap">
+                <a href="<?php echo base_url('/index.php/reports/general_sheet_by_ap'); ?>">
+                  <i class="icon-double-angle-right"></i>
+                  <?php echo "Llençol general del centre per període acadèmic";?>
+                </a>
+              </li>
+
               <!-- TEACHERS REPORTS -->
               <li id="teachers_reports">
                 <a href="#" class="dropdown-toggle">

@@ -591,6 +591,60 @@ class reports extends skeleton_main {
 
 		$this->_load_body_footer();		
 	}
+
+    function general_sheet_by_ap($academic_period_id = null) {
+
+        $data = array();
+
+        if (!$this->skeleton_auth->logged_in())
+        {
+            //redirect them to the login page
+            redirect($this->skeleton_auth->login_page, 'refresh');
+        }
+
+        $active_menu = array();
+        $active_menu['menu']='#reports';
+        $active_menu['submenu1']='#general_sheet_report_by_ap';
+
+        $this->check_logged_user();
+
+        //check if user is teacher or admin. IF not doesn't allow to show this view!
+        if (! (($this->session->userdata('is_admin') || ($this->session->userdata('is_teacher'))) ) ) {
+            redirect($this->skeleton_auth->login_page, 'refresh');
+        }
+
+        $header_data = $this->load_header_data($active_menu);
+
+        $this->_load_html_header($header_data);
+
+        $this->_load_body_header();
+
+        $this->load->model('reports_model');
+
+        $selected_academic_period_id = false;
+        $current_academic_period_id = null;
+
+        if ($academic_period_id == null) {
+            $database_current_academic_period =  $this->reports_model->get_current_academic_period();
+
+            if ($database_current_academic_period->id) {
+                $current_academic_period_id = $database_current_academic_period->id;
+            } else {
+                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
+            }
+
+            $academic_period_id=$current_academic_period_id ;
+        } else {
+            $selected_academic_period_id = $academic_period_id;
+        }
+
+        $academic_periods = $this->reports_model->get_all_academic_periods();
+
+        $data['academic_periods'] = $academic_periods;
+        $this->load->view('general_sheet_by_ap',$data);
+
+        $this->_load_body_footer();
+    }
 	
 	/*
 	 * Include teachers sheet and other info like employees
