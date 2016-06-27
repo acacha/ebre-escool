@@ -1053,12 +1053,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	/* Studies */
 	public function get_enrollment_studies($orderby="asc") {
 
+        $academic_period = 7;
+
         $this->db->select('studies_id,studies_shortname,studies_name,studies_studies_law_id,studies_law_shortname,studies_organizational_unit_shortname');
 		$this->db->from('studies');
 		$this->db->join('studies_law','studies.studies_studies_law_id = studies_law.studies_law_id');
 		$this->db->join('studies_organizational_unit','studies.studies_studies_organizational_unit_id = studies_organizational_unit.studies_organizational_unit_id');
         $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
-        $this->db->where('studies_academic_periods_academic_period_id',6);
+        $this->db->where('studies_academic_periods_academic_period_id',$academic_period);
 
 		//$this->db->order_by('studies_id', $orderby);
         $this->db->order_by('studies_shortname', $orderby);
@@ -1112,6 +1114,8 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	/* Cursos */
 	public function get_enrollment_courses($study=false,$orderby="asc") {
 
+        $academic_period = 7;
+
 		if(!$study){
 			$study=2;	//	"ASIX-DAM"
 		}
@@ -1145,8 +1149,8 @@ function update_user_ldap_dn($username, $ldap_dn) {
             $this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
             $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = course_studies.course_studies_study_id');
             $this->db->where('course_studies_study_id',$study);
-            $this->db->where('courses_academic_periods_academic_period_id',6);
-            $this->db->where('studies_academic_periods_academic_period_id',6);
+            $this->db->where('courses_academic_periods_academic_period_id',$academic_period);
+            $this->db->where('studies_academic_periods_academic_period_id',$academic_period);
 
             
             $query = $this->db->get();
@@ -1171,8 +1175,8 @@ function update_user_ldap_dn($username, $ldap_dn) {
             $this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
             $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
             $this->db->where('studies_id',$study);
-            $this->db->where('courses_academic_periods_academic_period_id',6);
-            $this->db->where('studies_academic_periods_academic_period_id',6);
+            $this->db->where('courses_academic_periods_academic_period_id',$academic_period);
+            $this->db->where('studies_academic_periods_academic_period_id',$academic_period);
 
 
             
@@ -1200,6 +1204,8 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	/* Grups de classe */
 	public function get_enrollment_classroom_groups($study=false,$course_id=false,$orderby="asc") {
 
+        $academic_period = 7;
+
 		if(!$study){
 			$study=2;	//	"ASIX-DAM"
 		}
@@ -1211,7 +1217,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id=classroom_group.classroom_group_id');
 		$this->db->where('studies_id',$study);
 		$this->db->where('course_id',$course_id);
-        $this->db->where('classroom_group_academic_periods_academic_period_id',6);
+        $this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period);
 		$this->db->order_by('classroom_group_id', $orderby);
 		
         $query = $this->db->get();
