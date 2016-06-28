@@ -3381,7 +3381,7 @@ class managment_model  extends CI_Model  {
 	}
 
 	
-	function get_all_studies_report_info($orderby = "DESC") {
+	function get_all_studies_report_info($academic_period_id = null,$orderby = "DESC") {
 		/*
 		SELECT studies_id,studies_shortname,studies_name,studies_studies_organizational_unit_id, study_department.department_id, department_shortname
 		FROM studies
@@ -3395,7 +3395,9 @@ class managment_model  extends CI_Model  {
 		LEFT JOIN studies_organizational_unit ON studies.studies_studies_organizational_unit_id = studies_organizational_unit.studies_organizational_unit_id
 		WHERE 1
 		*/
-		$academic_period = 7;
+		if ($academic_period_id == null) {
+			$academic_period_id = $this->managment_model->get_current_academic_period_id();
+		}
 
 		$courses_by_study = $this->get_courses_by_study();
 		$classroomgroups_by_study = $this->get_classroomgroups_by_study();
@@ -3410,7 +3412,7 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies_organizational_unit','studies.studies_studies_organizational_unit_id = studies_organizational_unit.studies_organizational_unit_id', 'left');
 		$this->db->join('studies_law','studies.studies_studies_law_id = studies_law.studies_law_id', 'left');
         $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
-        $this->db->where('studies_academic_periods_academic_period_id',$academic_period);
+        $this->db->where('studies_academic_periods_academic_period_id',$academic_period_id);
 		
 		$this->db->order_by('studies_shortname', $orderby);
 		
