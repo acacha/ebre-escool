@@ -1916,7 +1916,11 @@ class managment extends skeleton_main {
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");					
+			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");
+
+		$header_data= $this->add_javascript_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js'));
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
