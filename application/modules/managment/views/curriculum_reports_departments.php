@@ -36,6 +36,10 @@
 
               $('#all_groups').dataTable( {
                       "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                      "sDom": 'TRC<"clear">lfrtip',
+                      "oColVis": {
+                          "buttonText": "Mostrar / amagar columnes"
+                      },
                               "oTableTools": {
                   "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
