@@ -3191,12 +3191,14 @@ class managment_model  extends CI_Model  {
 		GROUP BY course_study_id
 		 */
 
+		$academic_period = 7;
+
 		//courses
 		$this->db->select('course_study_id,count(classroom_group_id) as total');
 		$this->db->from('classroom_group');
 		$this->db->join('course','classroom_group.classroom_group_course_id = course.course_id', 'left');
         $this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id');
-        $this->db->where('classroom_group_academic_periods_academic_period_id',6);
+        $this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period);
 		$this->db->group_by('course_study_id');
 		$query = $this->db->get();
         //echo $this->db->last_query();
@@ -3241,11 +3243,13 @@ class managment_model  extends CI_Model  {
 		GROUP BY course_study_id
 		 */
 
+		$academic_period = 7;
+
 		//courses
 		$this->db->select('course_study_id,count(course_id) as total');
 		$this->db->from('course');
         $this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
-        $this->db->where('courses_academic_periods.courses_academic_periods_academic_period_id',6);
+        $this->db->where('courses_academic_periods.courses_academic_periods_academic_period_id',$academic_period);
 		$this->db->group_by('course_study_id');
 		$query = $this->db->get();
 
@@ -3391,6 +3395,7 @@ class managment_model  extends CI_Model  {
 		LEFT JOIN studies_organizational_unit ON studies.studies_studies_organizational_unit_id = studies_organizational_unit.studies_organizational_unit_id
 		WHERE 1
 		*/
+		$academic_period = 7;
 
 		$courses_by_study = $this->get_courses_by_study();
 		$classroomgroups_by_study = $this->get_classroomgroups_by_study();
@@ -3405,7 +3410,7 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies_organizational_unit','studies.studies_studies_organizational_unit_id = studies_organizational_unit.studies_organizational_unit_id', 'left');
 		$this->db->join('studies_law','studies.studies_studies_law_id = studies_law.studies_law_id', 'left');
         $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
-        $this->db->where('studies_academic_periods_academic_period_id',6);
+        $this->db->where('studies_academic_periods_academic_period_id',$academic_period);
 		
 		$this->db->order_by('studies_shortname', $orderby);
 		
