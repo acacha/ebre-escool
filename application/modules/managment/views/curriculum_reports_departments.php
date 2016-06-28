@@ -170,7 +170,7 @@
   <tr>
     <td colspan="9" style="text-align: center;"> <h4>
       <a href="<?php echo base_url('/index.php/curriculum/departments') ;?>">
-        <?php echo $departments_table_title?>
+        <?php echo $departments_table_title . " ( " . $academic_periods[$selected_academic_period_id]->name . " )"?>
       </a>
       </h4></td>
   </tr>
