@@ -59,6 +59,10 @@
 
           var all_groups_table = $('#all_groups').DataTable( {
                   "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                              "sDom": 'TRC<"clear">lfrtip',
+                              "oColVis": {
+                                  "buttonText": "Mostrar / amagar columnes"
+                              },
                               "oTableTools": {
                   "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -221,71 +225,75 @@
  </tfoot> 
  <tbody>
   <!-- Iteration that shows classroom_groups-->
-  <?php //var_dump($all_classgroups);
-  foreach ($all_classgroups as $classroom_group_key => $classroom_group) : ?>
-   <tr align="center" class="{cycle values='tr0,tr1'}">   
-     <td>
-      <a href="<?php echo base_url('/index.php/curriculum/classroom_group/edit/' . $classroom_group->id ) ;?>">
-          <?php echo $classroom_group->id;?>
-      </a> 
-     </td>
-     <td>
-          <?php echo $classroom_group->code;?>
-     </td>
-     <td>
-      <a href="<?php echo base_url('/index.php/curriculum/classroom_group/read/' . $classroom_group->id ) ;?>">
-          <?php echo $classroom_group->name;?>
-      </a> 
-     </td>
+   <?php if (is_array($all_classgroups) or ($all_classgroups instanceof Traversable)): ?>
+    <?php //var_dump($all_classgroups);
+      foreach ($all_classgroups as $classroom_group_key => $classroom_group) : ?>
+       <tr align="center" class="{cycle values='tr0,tr1'}">
+         <td>
+          <a href="<?php echo base_url('/index.php/curriculum/classroom_group/edit/' . $classroom_group->id ) ;?>">
+              <?php echo $classroom_group->id;?>
+          </a>
+         </td>
+         <td>
+              <?php echo $classroom_group->code;?>
+         </td>
+         <td>
+          <a href="<?php echo base_url('/index.php/curriculum/classroom_group/read/' . $classroom_group->id ) ;?>">
+              <?php echo $classroom_group->name;?>
+          </a>
+         </td>
 
-        <?php $mentor_fullname =  $classroom_group->mentor_givenname . " " . $classroom_group->mentor_sn1 . " " . $classroom_group->mentor_sn2; ?>
-     <td>
-      ( <a href="<?php echo base_url('/index.php/teachers/teachers/index/edit/' . $classroom_group->mentor_id ) ;?>">
-          <?php echo $classroom_group->mentor_code ;?>
-      </a> ) <a href="<?php echo base_url('/index.php/persons/persons/index/read/' . $classroom_group->mentor_person_id ) ;?>">
-          <?php echo $mentor_fullname;?>
-      ( person id: <a href="<?php echo base_url('/index.php/persons/index/edit/' . $classroom_group->mentor_id ) ;?>">
-          <?php echo $classroom_group->mentor_person_id ;?>
-      </a> )    
-      </a>
-     </td>
-     <td>
-      <a href="<?php echo base_url('/index.php/curriculum/course/edit/' . $classroom_group->course_id ) ;?>">
-          <?php echo "( " . $classroom_group->course_id . " ) " ;?><a href="<?php echo base_url('/index.php/curriculum/course/read/' . $classroom_group->course_id ) ;?>"><?php echo $classroom_group->course_shortname . ". " . $classroom_group->course_name ;?></a>
-      </a>
-     </td>
+            <?php $mentor_fullname =  $classroom_group->mentor_givenname . " " . $classroom_group->mentor_sn1 . " " . $classroom_group->mentor_sn2; ?>
+         <td>
+          ( <a href="<?php echo base_url('/index.php/teachers/teachers/index/edit/' . $classroom_group->mentor_id ) ;?>">
+              <?php echo $classroom_group->mentor_code ;?>
+          </a> ) <a href="<?php echo base_url('/index.php/persons/persons/index/read/' . $classroom_group->mentor_person_id ) ;?>">
+              <?php echo $mentor_fullname;?>
+          ( person id: <a href="<?php echo base_url('/index.php/persons/index/edit/' . $classroom_group->mentor_id ) ;?>">
+              <?php echo $classroom_group->mentor_person_id ;?>
+          </a> )
+          </a>
+         </td>
+         <td>
+          <a href="<?php echo base_url('/index.php/curriculum/course/edit/' . $classroom_group->course_id ) ;?>">
+              <?php echo "( " . $classroom_group->course_id . " ) " ;?><a href="<?php echo base_url('/index.php/curriculum/course/read/' . $classroom_group->course_id ) ;?>"><?php echo $classroom_group->course_shortname . ". " . $classroom_group->course_name ;?></a>
+          </a>
+         </td>
 
-     <td><?php echo $classroom_group->study_shortname;?></td> 
+         <td><?php echo $classroom_group->study_shortname;?></td>
 
-     <td>
-      (<a href="<?php echo base_url('/index.php/curriculum/studies/edit/' . $classroom_group->study_id ) ;?>"><?php echo $classroom_group->study_id;?></a>)
-      <a href="<?php echo base_url('/index.php/curriculum/studies/read/' . $classroom_group->study_id ) ;?>">
-          <?php echo $classroom_group->study_shortname . ". " . $classroom_group->study_name . " - " . $classroom_group->study_law_shortname . " - " . $classroom_group->study_law_name;?>
-      </a>
-     </td>   
+         <td>
+          (<a href="<?php echo base_url('/index.php/curriculum/studies/edit/' . $classroom_group->study_id ) ;?>"><?php echo $classroom_group->study_id;?></a>)
+          <a href="<?php echo base_url('/index.php/curriculum/studies/read/' . $classroom_group->study_id ) ;?>">
+              <?php echo $classroom_group->study_shortname . ". " . $classroom_group->study_name . " - " . $classroom_group->study_law_shortname . " - " . $classroom_group->study_law_name;?>
+          </a>
+         </td>
 
-     <td>
-          <?php echo $classroom_group->shift_name;?>
-     </td>  
+         <td>
+              <?php echo $classroom_group->shift_name;?>
+         </td>
 
-     <td>
-      <a href="<?php echo base_url('/index.php/location/location/index/read/' . $classroom_group->location_id ) ;?>">
-          <?php echo $classroom_group->location_shortname;?>
-      </a>
-     </td>
+         <td>
+          <a href="<?php echo base_url('/index.php/location/location/index/read/' . $classroom_group->location_id ) ;?>">
+              <?php echo $classroom_group->location_shortname;?>
+          </a>
+         </td>
 
-     <td>TODO</td>
-     <td>
-      TODO      
-     </td>
-     <td>
-      TODO
-     </td>
-     <td>
-      <?php echo $classroom_group->description;?>
-     </td>
-   </tr>
-  <?php endforeach; ?>
+         <td>TODO</td>
+         <td>
+          TODO
+         </td>
+         <td>
+          TODO
+         </td>
+         <td>
+          <?php echo $classroom_group->description;?>
+         </td>
+       </tr>
+      <?php endforeach; ?>
+   <?php endif;?>
+
+
  </tbody>
 </table> 
 
