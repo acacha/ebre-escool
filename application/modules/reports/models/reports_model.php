@@ -755,7 +755,7 @@ class reports_model  extends CI_Model  {
 		$this->db->order_by('person_givenName', $orderby);
 		
 		$query = $this->db->get();
-		//echo $this->db->last_query()."<br/>";
+//		echo $this->db->last_query()."<br/>";
 
 
 		if ($query->num_rows() > 0){
