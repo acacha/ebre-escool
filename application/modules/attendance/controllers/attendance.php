@@ -2170,7 +2170,7 @@ class attendance extends skeleton_main {
                    7 => "btn-chocolate",
                    8 => "btn-crimson",
                    9 => "btn-default",
-                   0 => "btn-darkslategray"
+                   10 => "btn-darkslategray"
                    );
         $index=1;
         if ( is_array ( $items )) {
