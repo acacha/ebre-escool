@@ -1106,7 +1106,7 @@ echo $cons->photo_url;
             $academic_period_id = $this->reports_model->get_current_academic_period()->id;
         }
 
-        $all_teachers = $this->reports_model->get_all_teachers($academic_period_id);
+        $all_teachers = $this->reports_model->get_all_teachers_dep($academic_period_id);
 
         if ($academic_period_id != null ) {
             $academic_period = $this->reports_model->get_academic_period_by_id($academic_period_id);

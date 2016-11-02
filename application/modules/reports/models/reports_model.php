@@ -896,6 +896,64 @@ class reports_model  extends CI_Model  {
 		return false;
 	}
 
+	function get_all_teachers_dep($academic_period_id=null) {
+
+    	if ($academic_period_id == null) {
+    		$academic_period_id = $this->get_current_academic_period_id();
+    	}
+    	
+  		/*
+		SELECT `teacher_id` , `teacher_academic_periods_code` , `teacher_academic_periods_charge_short` , `teacher_academic_periods_charge_full` , `person_givenName` , `person_sn1` , `person_sn2` , `person_photo` , `teacher_academic_periods_charge_sheet_line1` , `teacher_academic_periods_charge_sheet_line2` , `teacher_academic_periods_charge_sheet_line3` , `teacher_academic_periods_charge_sheet_line4`
+    	FROM (`teacher`)
+    	JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `teacher`.`teacher_id`
+    	JOIN `person` ON `teacher_person_id` = `person_id`
+    	WHERE `teacher_academic_periods_academic_period_id` = '6'
+    	ORDER BY CAST( teacher_academic_periods_code AS UNSIGNED ) ASC
+    	*/
+
+		$this->db->select('teacher_id, teacher_academic_periods_code,teacher_academic_periods_charge_short, teacher_academic_periods_charge_full, person_givenName, person_sn1, person_sn2, person_photo,teacher_academic_periods_charge_sheet_line1,
+						teacher_academic_periods_charge_sheet_line2,teacher_academic_periods_charge_sheet_line3,teacher_academic_periods_charge_sheet_line4');
+		$this->db->from('teacher');
+		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
+		$this->db->join('person','teacher_person_id = person_id');
+		$this->db->order_by('teacher_academic_periods_department_id', "asc");				
+		$this->db->where("teacher_academic_periods_academic_period_id", $academic_period_id);
+		$query = $this->db->get();
+
+		//echo $this->db->last_query()."<br/>";
+		
+		if ($query->num_rows() > 0) {
+		
+		//$teacher = new stdClass();
+
+		foreach ($query->result_array() as $row)	{
+
+				$teacher = new stdClass();
+				
+				$teacher->teacher_id = $row['teacher_id'];
+				$teacher->teacher_code = $row['teacher_academic_periods_code'];
+				//$teacher->teacher_department_id = $row['teacher_academic_periods_department_id'];
+				$teacher->teacher_charge_short = $row['teacher_academic_periods_charge_short'];
+				$teacher->teacher_charge_full = $row['teacher_academic_periods_charge_full'];		
+				$teacher->teacher_charge_sheet_line1 = $row['teacher_academic_periods_charge_sheet_line1'];
+				$teacher->teacher_charge_sheet_line2 = $row['teacher_academic_periods_charge_sheet_line2'];
+				$teacher->teacher_charge_sheet_line3 = $row['teacher_academic_periods_charge_sheet_line3'];
+				$teacher->teacher_charge_sheet_line4 = $row['teacher_academic_periods_charge_sheet_line4'];
+										
+				$teacher->givenName = $row['person_givenName'];
+				$teacher->sn1 = $row['person_sn1'];
+				$teacher->sn2 = $row['person_sn2'];
+				$teacher->photo_url = $row['person_photo'];
+				
+				$all_teachers[] = $teacher;
+
+			}
+			return $all_teachers;
+			//print_r($all_teachers);
+		}			
+		return false;
+	}
+
     function get_all_conserges() {
 
 		$this->db->select('employees_id, person_givenName, person_sn1, person_sn2, person_photo');
