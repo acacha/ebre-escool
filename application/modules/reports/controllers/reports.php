@@ -1231,7 +1231,7 @@ echo $cons->photo_url;
         //$pdf->AddPage("P","A3");
         //Es la posicio exacta on comença a escriure
         $x=7;//10
-        $y=15;//24
+        $y=13;//24
 
         //Logo
         //$pdf->Image(base_url().APPPATH.'third_party/skeleton/assets/img/logo_iesebre_2010_11.jpg',$x+2,5,40,15);
@@ -1291,15 +1291,15 @@ echo $cons->photo_url;
 
         //Imprimeixo sempre els conserges i secretàries en una posició fixa el primer cop
         //TODO: Obtenir les dades de les carpetes personal de Gosa:
-                
+
         //Posició inicial conserges:
 
             $initial_x_personal=166;
-            $initial_y_personal=222;
+            $initial_y_personal=255;
 
             $width_personal_foto=10;
                     
-            $pdf->SetFont('Arial','B',8);
+            $pdf->SetFont('Arial','B',6);
             $pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));                
             $pdf->SetFont('Arial','',4);    
             
@@ -1317,7 +1317,7 @@ echo $cons->photo_url;
                 }       
             }   
 
-            $pdf->SetFont('Arial','B',8);   
+            $pdf->SetFont('Arial','B',6);   
             $pdf->Text($initial_x_personal+3,$initial_y_personal+22,utf8_decode("SECRETÀRIES"));    
             $pdf->SetFont('Arial','',4); 
 
