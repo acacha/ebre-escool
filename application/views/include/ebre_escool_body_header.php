@@ -618,7 +618,14 @@
               <li id="general_sheet_report_dep">
                 <a href="<?php echo base_url('/index.php/reports/general_sheet_dep'); ?>">
                   <i class="icon-double-angle-right"></i>
-                  <?php echo "Llençol general per departaments";?>
+                  <?php echo "Llençol general per departaments 1";?>
+                </a>
+              </li>
+
+              <li id="general_sheet_report_dep">
+                <a href="<?php echo base_url('/index.php/reports/general_sheet_dep_2'); ?>">
+                  <i class="icon-double-angle-right"></i>
+                  <?php echo "Llençol general per departaments 2";?>
                 </a>
               </li>
 
