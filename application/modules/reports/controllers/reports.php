@@ -1296,7 +1296,8 @@ echo $cons->photo_url;
         //Posició inicial conserges:
 
             $initial_x_personal=166;
-            $initial_y_personal=255;
+            $initial_y_personal=224;
+            $initial_y_personal_=229;
 
             $width_personal_foto=10;
                     
@@ -1374,7 +1375,7 @@ echo $cons->photo_url;
             $y2=$y_start+$i+$row*$yy*3+$yy*2;
 
             //màxim de files per pàgina 
-            if($row>17){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
+            if($row>18){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
                 //incremento la columna
                 $col++;
                 //reinicio les files i el marge
@@ -1611,55 +1612,6 @@ echo $cons->photo_url;
         $i=0;
         $page_one=true;
 
-        //Imprimeixo sempre els conserges i secretàries en una posició fixa el primer cop
-        //TODO: Obtenir les dades de les carpetes personal de Gosa:
-
-        
-        //Posició inicial conserges:
-
-            $initial_x_personal=166;
-            $initial_y_personal=224;
-            $initial_y_personal_=229;
-
-            $width_personal_foto=10;
-            
-            $pdf->SetFont('Arial','B',8);
-            $pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));                
-            $pdf->SetFont('Arial','',4);    
-            
-            $x_personal=$initial_x_personal;
-            $y_personal=$initial_y_personal;
-            for($cont=0;$cont<count($conserge);$cont++){
-
-                $pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-                $pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));                
-                $pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));   
-                $x_personal=$x_personal+14;
-                if(($cont+1)%3==0){
-                    $x_personal=$initial_x_personal;
-                    $y_personal=$initial_y_personal+40;         
-                }       
-            }   
-
-            $pdf->SetFont('Arial','B',8);   
-            $pdf->Text($initial_x_personal+3,$initial_y_personal_+22,utf8_decode("SECRETÀRIES"));    
-            $pdf->SetFont('Arial','',4); 
-
-            $x_personal=$initial_x_personal;
-            $y_personal=$initial_y_personal_+24;
-            for($cont=0;$cont<count($secretaria);$cont++){
-
-                $pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-                $pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));                
-                $pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));   
-                $x_personal=$x_personal+14;
-                if(($cont+1)%3==0){
-                    $x_personal=$initial_x_personal;
-                    $y_personal=$initial_y_personal_+42;         
-                }
-            }
-
-
         function cmpTeachers($a, $b)    {
             return strnatcmp($a->code, $b->code);
         }
@@ -1697,7 +1649,7 @@ echo $cons->photo_url;
             $y2=$y_start+$i+$row*$yy*3+$yy*2;
 
             //màxim de files per pàgina 
-            if($row>18){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
+            if($row>17){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
                 //incremento la columna
                 $col++;
                 //reinicio les files i el marge
@@ -1730,6 +1682,58 @@ echo $cons->photo_url;
                 $pdf->AddPage();
             }
         }
+
+        //Imprimeixo sempre els conserges i secretàries en una posició fixa el primer cop
+        //TODO: Obtenir les dades de les carpetes personal de Gosa:
+        
+        $page_one=false;
+        $pdf->AddPage();
+
+        //Posició inicial conserges:
+
+            $initial_x_personal=10;
+            $initial_y_personal=24;
+
+            $width_personal_foto=10;
+            
+            $pdf->SetFont('Arial','B',8);
+            $pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));                
+            $pdf->SetFont('Arial','',4);    
+            
+            $x_personal=$initial_x_personal;
+            $y_personal=$initial_y_personal;
+            for($cont=0;$cont<count($conserge);$cont++){
+
+                $pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
+                $pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));                
+                $pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));   
+                $x_personal=$x_personal+14;
+                if(($cont+1)%3==0){
+                    $x_personal=$initial_x_personal;
+                    $y_personal=$initial_y_personal+40;         
+                }       
+            }
+            $initial_x_personal_=70;
+            $initial_y_personal_=0;
+
+            $pdf->SetFont('Arial','B',8);   
+            $pdf->Text($initial_x_personal_+3,$initial_y_personal_+22,utf8_decode("SECRETÀRIES"));    
+            $pdf->SetFont('Arial','',4); 
+
+            $x_personal=$initial_x_personal_;
+            $y_personal=$initial_y_personal_+24;
+            for($cont=0;$cont<count($secretaria);$cont++){
+
+                $pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
+                $pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));                
+                $pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));   
+                $x_personal=$x_personal+14;
+                if(($cont+1)%4==0){
+                    $x_personal=$initial_x_personal_;
+                    $y_personal=$initial_y_personal_+42;         
+                }
+            }
+
         }
 
         //enviem tot al pdf
