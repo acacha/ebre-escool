@@ -614,6 +614,20 @@
                   <?php echo "Llençol general del centre";?>
                 </a>
               </li>
+          
+              <li id="general_sheet_report_dep">
+                <a href="<?php echo base_url('/index.php/reports/general_sheet_dep'); ?>">
+                  <i class="icon-double-angle-right"></i>
+                  <?php echo "Llençol general per departaments 1";?>
+                </a>
+              </li>
+
+              <li id="general_sheet_report_dep">
+                <a href="<?php echo base_url('/index.php/reports/general_sheet_dep_2'); ?>">
+                  <i class="icon-double-angle-right"></i>
+                  <?php echo "Llençol general per departaments 2";?>
+                </a>
+              </li>
 
               <!-- GENERAL SHEET BY ACADEMIC PERIOD -->
               <li id="general_sheet_report_by_ap">
