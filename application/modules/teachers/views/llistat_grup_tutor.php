@@ -20,7 +20,7 @@
                     <?php echo lang("curriculum");?>
                     <small>
                         <i class="icon-double-angle-right"></i>
-                        Departaments
+                        Tutors grups de classe
                     </small>
                 </h1>
 </div><!-- /.page-header -->
@@ -153,13 +153,14 @@
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_groups">
  <thead style="background-color: #d9edf7;">
   <tr>
-    <td colspan="3" style="text-align: center;"> <h4>
+    <td colspan="4" style="text-align: center;"> <h4>
       <a href="<?php echo base_url('/index.php/curriculum/classroom_groups') ;?>">
         <?php echo $classgroup_table_title?>
       </a>
       </h4></td>
   </tr>
-  <tr>      
+  <tr>
+     <th><?php echo lang('classroom_group_id')?></th>
   	 <th><?php echo lang('classroom_group_code')?></th>
      <th><?php echo lang('classroom_group_name')?></th>
      <th><?php echo lang('classroom_group_mentor')?></th>
@@ -169,7 +170,10 @@
   <!-- Iteration that shows classroom_groups-->
   <?php if (is_array($all_classgroups)):?>
   <?php foreach ($all_classgroups as $classroom_group_key => $classroom_group) : ?>
-   <tr align="center" class="{cycle values='tr0,tr1'}">   
+   <tr align="center" class="{cycle values='tr0,tr1'}">
+       <td>
+           <?php echo $classroom_group->id;?>
+       </td>
      <td>
           <?php echo $classroom_group->code;?>
      </td>
@@ -183,7 +187,8 @@
      <td>
       ( <a href="<?php echo base_url('/index.php/teachers/teachers/index/edit/' . $classroom_group->mentor_id ) ;?>">
           <?php echo $classroom_group->mentor_code ;?>
-      </a> ) <a href="<?php echo base_url('/index.php/persons/persons/index/read/' . $classroom_group->mentor_person_id ) ;?>">
+
+      </a> - <?php echo $classroom_group->teacher_id ;?> ) <a href="<?php echo base_url('/index.php/persons/persons/index/read/' . $classroom_group->mentor_person_id ) ;?>">
           <?php echo $mentor_fullname;?>
       ( person id: <a href="<?php echo base_url('/index.php/persons/index/edit/' . $classroom_group->mentor_id ) ;?>">
           <?php echo $classroom_group->mentor_person_id ;?>

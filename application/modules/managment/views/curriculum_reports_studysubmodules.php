@@ -49,6 +49,10 @@
 
               var all_study_submodules_table = $('#all_study_submodules').DataTable( {
                       "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                      "sDom": 'TRC<"clear">lfrtip',
+                      "oColVis": {
+                          "buttonText": "Mostrar / amagar columnes"
+                      },
                               "oTableTools": {
                   "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -103,10 +107,10 @@
         $("#select_all_study_submodules_study_code_filter").on( 'change', function () {
             var val = $(this).val();
 
-            all_study_submodules_table.column(3).search( val ? '^'+$(this).val()+'$' : val, true, false ).draw();
+            all_study_submodules_table.column(5).search( val ? '^'+$(this).val()+'$' : val, true, false ).draw();
         } );
 
-        all_study_submodules_table.column(3).data().unique().sort().each( function ( d, j ) {
+        all_study_submodules_table.column(5).data().unique().sort().each( function ( d, j ) {
                 $("#select_all_study_submodules_study_code_filter").append( '<option value="'+d+'">'+d+'</option>' )
         } );
         
@@ -114,10 +118,10 @@
         $("#select_all_study_submodules_course_code_filter").on( 'change', function () {
             var val = $(this).val();
 
-            all_study_submodules_table.column(5).search( val ? '^'+$(this).val()+'$' : val, true, false ).draw();
+            all_study_submodules_table.column(7).search( val ? '^'+$(this).val()+'$' : val, true, false ).draw();
         } );
 
-        all_study_submodules_table.column(5).data().unique().sort().each( function ( d, j ) {
+        all_study_submodules_table.column(7).data().unique().sort().each( function ( d, j ) {
                 $("#select_all_study_submodules_course_code_filter").append( '<option value="'+d+'">'+d+'</option>' )
         } );
  
@@ -165,7 +169,7 @@
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_study_submodules">
  <thead style="background-color: #d9edf7;">
   <tr>
-    <td colspan="11" style="text-align: center;"> <h4>
+    <td colspan="13" style="text-align: center;"> <h4>
       <a href="<?php echo base_url('/index.php/curriculum/study_submodules') ;?>">
         <?php echo $study_submodules_table_title?>
       </a>
@@ -173,6 +177,8 @@
   </tr>
   <tr> 
      <th><?php echo lang('study_submodule_id')?></th>
+     <th><?php echo lang('study_module_shortname')?></th>
+     <th><?php echo lang('study_module_name')?></th>
      <th><?php echo lang('study_submodule_shortname')?></th>
      <th><?php echo lang('study_submodule_name')?></th>
      <th><?php echo lang('study_submodule_study_code')?></th>
@@ -197,6 +203,18 @@
           <?php echo $study_submodule->id;?>
       </a> 
      </td>
+
+       <td>
+           <a href="<?php echo base_url('/index.php/curriculum/study_submodule/edit/' . $study_submodule->id ) ;?>">
+               <?php echo $study_submodule->module_shortname . " " . $study_submodule->module_id  ;?>
+           </a>
+       </td>
+
+       <td>
+           <a href="<?php echo base_url('/index.php/curriculum/study_submodule/edit/' . $study_submodule->id ) ;?>">
+               <?php echo $study_submodule->module_name;?>
+           </a>
+       </td>
 
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_submodule/read/' . $study_submodule->id ) ;?>">

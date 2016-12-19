@@ -327,7 +327,7 @@ class teachers_model  extends CI_Model  {
 		$this->db->order_by('studies_name', $orderby);
 		
 		$query = $this->db->get();
-		//echo $this->db->last_query()."<br/>";
+//		echo $this->db->last_query()."<br/>";
 
 
 		if ($query->num_rows() > 0){

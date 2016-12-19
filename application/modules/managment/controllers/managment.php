@@ -1916,7 +1916,11 @@ class managment extends skeleton_main {
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");					
+			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");
+
+		$header_data= $this->add_javascript_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js'));
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
@@ -2002,7 +2006,11 @@ class managment extends skeleton_main {
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");					
+			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");
+
+		$header_data= $this->add_javascript_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js'));
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
@@ -2175,7 +2183,11 @@ class managment extends skeleton_main {
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");					
+			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");
+
+		$header_data= $this->add_javascript_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js'));
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
@@ -2223,7 +2235,7 @@ class managment extends skeleton_main {
 		
 	}
 
-	public function curriculum_reports_course() {
+	public function curriculum_reports_course($academic_period_id = null) {
 
 		if (!$this->skeleton_auth->logged_in())
 		{
@@ -2257,7 +2269,11 @@ class managment extends skeleton_main {
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");					
+			"http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");
+
+		$header_data= $this->add_javascript_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js'));
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
@@ -2268,6 +2284,27 @@ class managment extends skeleton_main {
 		$this->_load_body_header();
 
 		$data = array();
+		$selected_academic_period_id = false;
+
+		$current_academic_period_id = null;
+
+		if ($academic_period_id == null) {
+			$database_current_academic_period =  $this->managment_model->get_current_academic_period();
+
+			if ($database_current_academic_period->id) {
+				$current_academic_period_id = $database_current_academic_period->id;
+			} else {
+				$current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
+			}
+
+			$academic_period_id=$current_academic_period_id ;
+		} else {
+			$selected_academic_period_id = $academic_period_id;
+		}
+
+		$academic_periods = $this->managment_model->get_all_academic_periods();
+		$data['academic_periods'] = $academic_periods;
+		$data['selected_academic_period_id'] = $selected_academic_period_id;
 
 		$data['courses_table_title'] = "Cursos";
 
@@ -2374,7 +2411,7 @@ class managment extends skeleton_main {
 		
 	}
 
-	public function curriculum_reports_study() {
+	public function curriculum_reports_study($academic_period_id = null) {
 
 		if (!$this->skeleton_auth->logged_in())
 		{
@@ -2394,7 +2431,8 @@ class managment extends skeleton_main {
 			base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));	
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-			'http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');		
+			'https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css');
+
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
 			base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));	
@@ -2408,17 +2446,29 @@ class managment extends skeleton_main {
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");					
+			"https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js");
+		
+		$header_data= $this->add_javascript_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js'));
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/TableTools.js"));	
+			base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/TableTools.min.js"));
 			
 		$this->_load_html_header($header_data); 
 		
 		$this->_load_body_header();
 
 		$data = array();
+
+		if ($academic_period_id == null) {
+			$academic_period_id = $this->managment_model->get_current_academic_period_id();
+		}
+
+		$data['selected_academic_period_id'] = $academic_period_id;
+		$academic_periods = $this->managment_model->get_all_academic_periods();
+		$data['academic_periods'] = $academic_periods;
 
 		$data['studies_table_title'] = "Estudis";
 
@@ -2432,7 +2482,7 @@ class managment extends skeleton_main {
 		
 	}
 
-	public function curriculum_reports_departments() {
+	public function curriculum_reports_departments($academic_period_id = null) {
 
 		if (!$this->skeleton_auth->logged_in())
 		{
@@ -2449,10 +2499,10 @@ class managment extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-			base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));	
+			base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));
 		$header_data= $this->add_css_to_html_header_data(
-			$header_data,
-			'http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');		
+				$header_data,
+				'https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css');
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
 			base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));	
@@ -2463,10 +2513,14 @@ class managment extends skeleton_main {
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
 			base_url("assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js"));
-			
+
 		$header_data= $this->add_javascript_to_html_header_data(
-			$header_data,
-			"http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");					
+				$header_data,
+				"https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js");
+
+		$header_data= $this->add_javascript_to_html_header_data(
+				$header_data,
+				base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js'));
 			
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
@@ -2478,9 +2532,17 @@ class managment extends skeleton_main {
 
 		$data = array();
 
+		if ($academic_period_id == null) {
+			$academic_period_id = $this->managment_model->get_current_academic_period_id();
+		}
+
+		$data['selected_academic_period_id'] = $academic_period_id;
+		$academic_periods = $this->managment_model->get_all_academic_periods();
+		$data['academic_periods'] = $academic_periods;
+
 		$data['departments_table_title'] = "Departaments";
 
-		$all_departments = $this->managment_model->get_all_departments_report_info();
+		$all_departments = $this->managment_model->get_all_departments_report_info($academic_period_id);
 
 		$studies_by_department = $this->managment_model->get_studies_by_department(false);
 		$teachers_by_department = $this->managment_model->get_teachers_by_department(false);
