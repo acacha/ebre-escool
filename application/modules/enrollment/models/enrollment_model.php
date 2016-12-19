@@ -766,6 +766,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 	public function get_enrollment_study_submodules_by_enrollment_id_and_period($enrollment_id,$period,$orderby="asc") {
 
+        //GET period_id
+        $period_id = $this->get_academic_period_id_by_period($period);
+
 		/*
 		SELECT DISTINCT enrollment_periodid,enrollment_id,study_submodules_id, study_module_shortname, study_module_name , study_submodules_shortname, study_submodules_name, study_submodules_courseid,course.course_shortName,course.course_name, 
 		study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,study_submodules_order
@@ -793,6 +796,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 		$this->db->where('enrollment_periodid',$period);
 		$this->db->where('enrollment_id',$enrollment_id);
+        $this->db->where('study_submodules_academic_periods_academic_period_id',$period_id);
 
 		$this->db->order_by('study_module_order', $orderby);
 		$this->db->order_by('study_submodules_order', $orderby);

@@ -237,6 +237,7 @@
                                         <input class="span12 input-mask-postalcode" type="text" name="postalcode_code" id="postalcode_code" value="" readonly="true"/>
                                       </div>  
                                       <div class="span8">
+
                                         <label class="control-label" for="student_locality"><?php echo lang('wizzard_locality_name');?>&nbsp;
                                         </label>
                                           <select id="person_locality_id" name="person_locality_id" class="select2 span4" data-placeholder="Escriu la població" style="width:300px">

@@ -1031,7 +1031,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
     $study_submodules = array();
 
-    if ( ! ($enrollment_id == false) ) {
+    if ( ! ($enrollment_id == false) && ! ( $period == false )) {
         $study_submodules = $this->enrollment_model->get_enrollment_study_submodules_by_enrollment_id_and_period($enrollment_id,$period );    
     }
     
