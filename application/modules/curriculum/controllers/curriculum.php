@@ -211,11 +211,13 @@ class curriculum extends skeleton_main {
         $this->grocery_crud->display_as($this->current_table.'_organizational_unit_id',lang($this->current_table.'_organizational_unit_id'));
         $this->grocery_crud->display_as($this->current_table.'_head',lang($this->current_table.'_head'));
         $this->grocery_crud->display_as($this->current_table.'_parent_department_id',lang($this->current_table.'_parent_department_id'));
-        $this->grocery_crud->display_as($this->current_table.'_location_id',lang($this->current_table.'_location_id'));        
+        $this->grocery_crud->display_as($this->current_table.'_location_id',lang($this->current_table.'_location_id'));
+        $this->grocery_crud->display_as($this->current_table.'_academic_periods',lang($this->current_table.'_academic_periods'));
 
         //RELACIONS
         $this->grocery_crud->set_relation($this->current_table.'_head','teacher','teacher_id');
         $this->grocery_crud->set_relation($this->current_table.'_organizational_unit_id','organizational_unit','organizational_unit_name');
+        $this->grocery_crud->set_relation_n_n($this->current_table.'_academic_periods', 'department_academic_periods', 'academic_periods', 'department_academic_periods_study_id', 'department_academic_periods_academic_period_id', 'academic_periods_name');
 
          //UPDATE AUTOMATIC FIELDS
         $this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
