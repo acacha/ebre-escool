@@ -26,6 +26,7 @@ $lang['department_organizational_unit_id']   = "Unitat Organitzativa";
 $lang['department_location_id']   = "Espai";
 $lang['department_name']   = "Nom";
 $lang['department_parent_department_id']   = "Departament/Família pare";
+$lang['department_academic_periods'] = "Períodes acadèmics";
 $lang['department_entryDate']   = "Data de creació";
 $lang['department_last_update']   = "Data última modificació";
 $lang['department_creationUserId']   = "Usuari de creació";
