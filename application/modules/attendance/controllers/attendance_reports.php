@@ -8,18 +8,18 @@ class attendance_reports extends skeleton_main {
     public $body_header_lang_file ='ebre_escool_body_header' ;
     public $html_header_view ='include/ebre_escool_html_header' ;
     public $body_footer_view ='include/ebre_escool_body_footer' ;
-	
+
 	function __construct()
     {
         parent::__construct();
-        
+
         $this->load->model('attendance_model');
         $this->load->library('ebre_escool_ldap');
         $this->config->load('managment');
 
-        // Load FPDF        
+        // Load FPDF
         $this->load->add_package_path(APPPATH.'third_party/fpdf-codeigniter/application/');
-        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');        
+        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');
         $this->load->library('pdf',$params); // Load library
 
         /* Set language */
@@ -29,11 +29,11 @@ class attendance_reports extends skeleton_main {
         }
 
         $this->lang->load('ebre_escool_ldap', $current_language);
-        $this->lang->load('attendance',$current_language);        
-        
+        $this->lang->load('attendance',$current_language);
+
         //LANGUAGE HELPER:
         $this->load->helper('language');
-        
+
 	}
 
     function get_all_incidents(){
@@ -44,16 +44,16 @@ class attendance_reports extends skeleton_main {
         }
 
         $all_incidents = array();
-        
+
         $all_incidents = $this->attendance_model->get_all_incidents();
-       
+
         echo '{
            "aaData": ';
 
             print_r(json_encode($all_incidents));
 
         echo '}';
-    
+
     }
 
     function get_student_incidents($academic_period_id = null, $student_id = null, $classroom_group_id = null,$initial_date=null,$final_date=null){
@@ -96,16 +96,16 @@ class attendance_reports extends skeleton_main {
 
         if ($student_id != "") {
             $student_incidents = $this->attendance_model->get_student_incidents($academic_period_id,$student_id,
-                $classroom_group_id,$initial_date,$final_date);    
+                $classroom_group_id,$initial_date,$final_date);
         }
-       
+
         echo '{
            "aaData": ';
 
             print_r(json_encode($student_incidents));
 
         echo '}';
-    
+
     }
 
     function get_student_incidents_by_study_modules($academic_period_id = null, $student_id = null, $classroom_group_id = null,$initial_date=null,$final_date=null){
@@ -148,16 +148,16 @@ class attendance_reports extends skeleton_main {
 
         if ($student_id != "") {
             $student_incidents = $this->attendance_model->get_student_incidents_by_study_modules($academic_period_id,$student_id,
-                $classroom_group_id,$initial_date,$final_date);    
+                $classroom_group_id,$initial_date,$final_date);
         }
-       
+
         echo '{
            "aaData": ';
 
             print_r(json_encode($student_incidents));
 
         echo '}';
-    
+
     }
 
     function get_student_incidents_by_study_submodules($academic_period_id = null, $student_id = null, $classroom_group_id = null,$initial_date=null,$final_date=null){
@@ -200,21 +200,21 @@ class attendance_reports extends skeleton_main {
 
         if ($student_id != "") {
             $student_incidents = $this->attendance_model->get_student_incidents_by_study_submodules($academic_period_id,$student_id,
-                $classroom_group_id,$initial_date,$final_date);    
+                $classroom_group_id,$initial_date,$final_date);
         }
-       
+
         echo '{
            "aaData": ';
 
             print_r(json_encode($student_incidents));
 
         echo '}';
-    
+
     }
 
-    
 
-    function attendance_reports_all_incidents($academic_period_id = null) { 
+
+    function attendance_reports_all_incidents($academic_period_id = null) {
         if (!$this->skeleton_auth->logged_in()) {
             //redirect them to the login page
             redirect($this->skeleton_auth->login_page, 'refresh');
@@ -237,8 +237,8 @@ class attendance_reports extends skeleton_main {
         $data['academic_periods'] = $academic_periods;
         $data['selected_academic_period_id'] = $academic_period_id;
 
-        $this->load->view('attendance_reports/attendance_reports_all_incidents.php',$data);     
-        $this->load_footer(); 
+        $this->load->view('attendance_reports/attendance_reports_all_incidents.php',$data);
+        $this->load_footer();
     }
 
     /* ASSISTÈNCIA - INFORMES DE CENTRE */
@@ -258,7 +258,7 @@ class attendance_reports extends skeleton_main {
 
         // Hores de classe
         /*
-        array( 1 => '8:00-9:00', 2 => '9:00-10:00', 3 => '10:00-11:00', 4 => '11:30-12:30', 
+        array( 1 => '8:00-9:00', 2 => '9:00-10:00', 3 => '10:00-11:00', 4 => '11:30-12:30',
                5 => '12:30-13:30', 6 => '13:30-14:30', 7 => '15:30-16:30', 8 => '16:30-17:30',
                9 => '17:30-18:30', 10 => '19:00-20:00', 11 => '20:00-21:00', 12 => '21:00-22:00');
         */
@@ -268,8 +268,8 @@ class attendance_reports extends skeleton_main {
         $selected_incident_type = array();
         foreach($_POST as $k=>$v){
             if($k!="data" && $k!="hora"){
-                $selected_incident_type[] = $v;    
-            }    
+                $selected_incident_type[] = $v;
+            }
         }
         if(count($selected_incident_type)==0){
             $selected_incident_type='';
@@ -283,7 +283,7 @@ class attendance_reports extends skeleton_main {
                 $falta .= $key." ";
             }
         }
-        
+
         // Guardem la data i hora sel·leccionades, si ho hi ha data i hora selecionades per defecte és la data d'avui i el primer timeslot
         $group = new stdClass;
         if(isset($_POST['data'])){
@@ -292,7 +292,7 @@ class attendance_reports extends skeleton_main {
             $selected_date=date("d-m-Y");
         }
         if(isset($_POST['hora'])){
-            $selected_hour=$_POST['hora'];            
+            $selected_hour=$_POST['hora'];
         } else {
             $selected_hour=1;
         }
@@ -331,8 +331,8 @@ class attendance_reports extends skeleton_main {
             $data['incident'] = false;
         }
 
-        //$this->load_header();  
-        $this->load->view('attendance_reports/all_attendance_incidents_at_day_and_hour_report.php',$data);     
+        //$this->load_header();
+        $this->load->view('attendance_reports/all_attendance_incidents_at_day_and_hour_report.php',$data);
         $this->load_footer();
     }
 
@@ -353,8 +353,8 @@ class attendance_reports extends skeleton_main {
         $selected_incident_type = array();
         foreach($_POST as $k=>$v){
             if($k!="data_inicial" && $k!="data_final"){
-                $selected_incident_type[] = $v;    
-            }    
+                $selected_incident_type[] = $v;
+            }
         }
         if(count($selected_incident_type)==0){
             $selected_incident_type='';
@@ -362,7 +362,7 @@ class attendance_reports extends skeleton_main {
 
         $falta ='';
 
-        $data['time_slots'] = $this->attendance_model->getAllTimeSlots()->result_array();        
+        $data['time_slots'] = $this->attendance_model->getAllTimeSlots()->result_array();
 
         // Mirar als elements del $_POST si hi ha algun tipus de falta sel·leccionat
         foreach ($_POST as $key=>$val){
@@ -370,7 +370,7 @@ class attendance_reports extends skeleton_main {
                 $falta .= $key." ";
             }
         }
-        
+
         // Guardem la data i hora sel·leccionades, si ho hi ha data i hora selecionades per defecte és la data d'avui i el primer timeslot
         $group = new stdClass;
         if(isset($_POST['data_inicial'])){
@@ -379,7 +379,7 @@ class attendance_reports extends skeleton_main {
             $first_selected_date=date("d-m-Y");
         }
         if(isset($_POST['data_final'])){
-            $last_selected_date=$_POST['data_final'];            
+            $last_selected_date=$_POST['data_final'];
         } else {
             $last_selected_date=date("d-m-Y");
         }
@@ -414,8 +414,8 @@ class attendance_reports extends skeleton_main {
             $data['incident'] = false;
         }
 
-        //$this->load_header();  
-        $this->load->view('attendance_reports/all_attendance_incidents_day_range_report.php',$data);     
+        //$this->load_header();
+        $this->load->view('attendance_reports/all_attendance_incidents_day_range_report.php',$data);
         $this->load_footer();
 
 
@@ -447,15 +447,15 @@ class attendance_reports extends skeleton_main {
         $selected_incident_type = array();
         foreach($_POST as $key=>$val){
             if($key!="data_inicial" && $key!="data_final" && $key!='top'){
-                $selected_incident_type[] = $val;    
-            }    
+                $selected_incident_type[] = $val;
+            }
         }
         if(count($selected_incident_type)==0){
             $selected_incident_type='';
         }
 
-        $data['time_slots'] = $this->attendance_model->getAllTimeSlots()->result_array();        
-        
+        $data['time_slots'] = $this->attendance_model->getAllTimeSlots()->result_array();
+
         // Guardem la data i hora sel·leccionades, si ho hi ha data i hora selecionades per defecte és la data d'avui i el primer timeslot
         $group = new stdClass;
         if(isset($_POST['data_inicial'])){
@@ -464,7 +464,7 @@ class attendance_reports extends skeleton_main {
             $first_selected_date=date("d-m-Y");
         }
         if(isset($_POST['data_final'])){
-            $last_selected_date=$_POST['data_final'];            
+            $last_selected_date=$_POST['data_final'];
         } else {
             $last_selected_date=date("d-m-Y");
         }
@@ -499,9 +499,9 @@ class attendance_reports extends skeleton_main {
             $data['incident'] = false;
         }
 
-        //$this->load_header();   
-        $this->load->view('attendance_reports/all_attendance_incidents_ranking_report.php',$data);     
-        $this->load_footer();    
+        //$this->load_header();
+        $this->load->view('attendance_reports/all_attendance_incidents_ranking_report.php',$data);
+        $this->load_footer();
     }
 
     function mailing_list_report() {
@@ -517,7 +517,7 @@ class attendance_reports extends skeleton_main {
         print_r($all_students_mail);
         echo "</pre>";
 */
-        $this->load_header($active_menu);    
+        $this->load_header($active_menu);
 
         $data['title']=lang('reports_educational_center_reports_student_emails');
 
@@ -529,28 +529,28 @@ class attendance_reports extends skeleton_main {
 
         $data['all_students_mail'] = $all_students_mail;
 
-        $this->load->view('attendance_reports/mailing_list_report.php',$data);     
+        $this->load->view('attendance_reports/mailing_list_report.php',$data);
 
-        $this->load_footer();      
-    }  
+        $this->load_footer();
+    }
 
     /* ASSISTÈNCIA - INFORMES DE GRUP */
 
     function class_list_report($academic_period_id=null, $classroom_group_code = null, $with_photo = null ) {
-        
+
         $selected_academic_period_id = false;
         $current_academic_period_id = null;
 
         if ($academic_period_id == null) {
             $database_current_academic_period =  $this->attendance_model->get_current_academic_period();
-            
+
             if ($database_current_academic_period->id) {
                 $current_academic_period_id = $database_current_academic_period->id;
             } else {
-                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');  
+                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
             }
-            
-            $academic_period_id=$current_academic_period_id ;   
+
+            $academic_period_id=$current_academic_period_id ;
         } else {
             $selected_academic_period_id = $academic_period_id;
         }
@@ -567,7 +567,7 @@ class attendance_reports extends skeleton_main {
         $active_menu['submenu2']='#report_class_list';
 
         $data['title']=lang('reports_group_reports_class_list');
-        
+
         $this->load_datatables_data($active_menu);
 
         if (!$this->skeleton_auth->logged_in())
@@ -609,14 +609,14 @@ class attendance_reports extends skeleton_main {
                     $photo = false;
                 }
             } else {
-                $data['selected_group'] = $default_group_id;    
+                $data['selected_group'] = $default_group_id;
             }
-            
+
         }
 /*
         if ($data['selected_group']!="ALL_GROUPS")
             $default_group_dn=$this->ebre_escool_ldap->getGroupDNByGroupCode($data['selected_group']);
-*/        
+*/
         if ($data['selected_group']=="ALL_GROUPS")
             $data['selected_group_names']= array (lang("all_tstudents"),"");
         else
@@ -624,7 +624,7 @@ class attendance_reports extends skeleton_main {
 
         $all_students_in_group = $this->attendance_model->getAllGroupStudentsInfo($data['selected_group'],$academic_period_id);
         $group_name = $this->attendance_model->getGroupCodeByGroupID($data['selected_group']);
-/*  
+/*
         $data['classroom_group_students'] = array ();
         $base_photo_url = "uploads/person_photos";
 
@@ -638,11 +638,11 @@ class attendance_reports extends skeleton_main {
 
         $classroom_group_students = array ();
         $base_photo_url = "uploads/person_photos";
-        
+
         foreach($all_students_in_group as $student) {
 
             $studentObject = new stdClass;
-            
+
             $studentObject->person_id = $student->person_id;
             $studentObject->givenName = $student->givenName;
             $studentObject->sn1 = $student->sn1;
@@ -650,16 +650,16 @@ class attendance_reports extends skeleton_main {
             $studentObject->username = $student->username;
             $studentObject->email = $student->email;
             $studentObject->person_official_id = $student->person_official_id;
-            
+
             //TODO: get incident notes!
             $studentObject->notes = "nota";
 
             if ($student->photo_url != "") {
-                $student->photo_url = $base_photo_url."/".$student->photo_url;  
+                $student->photo_url = $base_photo_url."/".$student->photo_url;
             }   else {
-                $studentObject->photo_url = '/assets/img/alumnes/foto.png';             
+                $studentObject->photo_url = '/assets/img/alumnes/foto.png';
             }
-            
+
 
             $classroom_group_students[]=$student;
         }
@@ -667,7 +667,7 @@ class attendance_reports extends skeleton_main {
         //Total d'alumnes
         $count_alumnes = count($all_students_in_group);
 
-//      $this->load_header();  
+//      $this->load_header();
 
         $show_pdf = false;
         if ($_POST) {
@@ -679,11 +679,11 @@ class attendance_reports extends skeleton_main {
         }
 
         if(!$show_pdf){
-            $this->load->view('attendance_reports/class_list_report.php', $data); 
+            $this->load->view('attendance_reports/class_list_report.php', $data);
 
         } else {
-            //$this->load->view('attendance_reports/class_list_report.php', $data); 
-            //$this->load->view('attendance_reports/class_list_report_pdf.php', $data); 
+            //$this->load->view('attendance_reports/class_list_report.php', $data);
+            //$this->load->view('attendance_reports/class_list_report_pdf.php', $data);
             $number_returned = $count_alumnes;
             //$codi_grup = $group_code;
             $codi_grup = $group_name;
@@ -755,7 +755,7 @@ class attendance_reports extends skeleton_main {
             if($photo){
                 $pdf->Cell(8,8,utf8_decode("Foto"),1,0,'L',$fill);
                 $pdf->Cell(70,8,utf8_decode("Alumne/a"),1,0,'L',$fill);
-                $pdf->Cell(100,8,utf8_decode("Observacions"),1,0,'C',$fill);    
+                $pdf->Cell(100,8,utf8_decode("Observacions"),1,0,'C',$fill);
             } else {
                 $pdf->Cell(70,8,utf8_decode("Alumne/a"),1,0,'L',$fill);
                 $pdf->Cell(110,8,utf8_decode("Observacions"),1,0,'C',$fill);
@@ -772,25 +772,25 @@ class attendance_reports extends skeleton_main {
 
                 $pdf->Cell(10,8,utf8_decode($t+1),1,0,'C',$fill);
                 if($photo){
-                    $pdf->Cell(8,8,$pdf->Image($alumne[$t]['jpegPhoto'],$pdf->GetX()+1,$pdf->GetY(),6),1,0,'C',$fill);  
+                    $pdf->Cell(8,8,$pdf->Image($alumne[$t]['jpegPhoto'],$pdf->GetX()+1,$pdf->GetY(),6),1,0,'C',$fill);
                     //$pdf->Cell(8,8,$pdf->Image(base_url("/assets/img/alumnes")."/".$alumne[$t]['jpegPhoto']/*/tmp/".$alumne[$t]['jpegPhoto']*/,$pdf->GetX()+1,$pdf->GetY(),6),1,0,'C',$fill);
                     $pdf->Cell(70,8,utf8_decode($alumne[$t]['sn1']." ".$alumne[$t]['sn2']. ", " . $alumne[$t]['givenName'] . " - ". $alumne[$t]['person_official_id']),1,0,'L',$fill);
-                    $pdf->Cell(100,8,utf8_decode(""),1,0,'C',$fill);        
-                } else {    
+                    $pdf->Cell(100,8,utf8_decode(""),1,0,'C',$fill);
+                } else {
                     $pdf->Cell(70,8,utf8_decode($alumne[$t]['sn1']." ".$alumne[$t]['sn2']. ", " . $alumne[$t]['givenName'] . " - " . $alumne[$t]['person_official_id'] ),1,0,'L',$fill);
                     $pdf->Cell(110,8,utf8_decode(""),1,0,'C',$fill);
-                }   
+                }
                 //$fill=!$fill;
                 $pdf->Ln();
             }
             //enviem tot al pdf
-            $today = date('Y_m_d');   
+            $today = date('Y_m_d');
             //$pdf->Output();
             $pdf->Output($today."_".$codi_grup.".pdf","I");
 
-        } 
-        
-        $this->load_footer();      
+        }
+
+        $this->load_footer();
     }
 
     public function mentoring_attendance_by_student_pdf_report(
@@ -813,11 +813,11 @@ class attendance_reports extends skeleton_main {
             //SINGLE VALUE
             $student_id_single_value = TRUE;
         } else {
-            //Multiple values. 
+            //Multiple values.
             $student_ids = explode("-", $student_id);
             $student_id_single_value = FALSE;
         }
-        
+
         $data_reports = array();
         if ($student_id_single_value) {
             $data_report = new stdClass();
@@ -838,26 +838,26 @@ class attendance_reports extends skeleton_main {
         $data_report->incidents_r = "50";
         $data_report->incidents_e = "50";
         */
-        
+
         // BEGIN FIXED STRINGS -->
         $initial_date_array = explode("-", $initial_date);
         $final_date_array = explode("-", $final_date);
 
         $initial_date = $initial_date_array[2] . "/". $initial_date_array[1] . "/" . $initial_date_array[0];
         $final_date = $final_date_array[2] . "/". $final_date_array[1] . "/" . $final_date_array[0];
- 
+
         $FOOT_TEXT_LEFT="El tutor/la tutora";
         $FOOT_TEXT_RIGHT="El pare/mare/tutor legal";
 
-        setlocale(LC_TIME, "ca_ES"); 
+        setlocale(LC_TIME, "ca_ES");
         $formatted_time = strftime("%e de %B del %Y", time());
-        
+
         //$FOOT_LOCATION_AND_DATE="Tortosa, 6 de novembre de 2014";
         $FOOT_LOCATION_AND_DATE = "Tortosa, " . $formatted_time;
 
         // <-- BEGIN FIXED STRINGS
 
-        $pdf = new FPDF('P', 'mm', 'A4','font/'); 
+        $pdf = new FPDF('P', 'mm', 'A4','font/');
         foreach ($data_reports as $data_report_key => $data_report) {
 
             $student_full_name =  $data_report->fullname;
@@ -895,7 +895,7 @@ class attendance_reports extends skeleton_main {
                 $incidents_e_hours_text="hora";
             } else {
                 $incidents_e_hours_text="hores";
-            }    
+            }
 
             $TEXT = "L'alumne/a " . $student_full_name . " del grup " . $classroom_group_full_name . " ha realitzat un total de ";
             $TEXT = $TEXT . $num_total_incidents . " " . $hours_text . " d'incidències des del dia " . $initial_date;
@@ -925,7 +925,7 @@ class attendance_reports extends skeleton_main {
             $pdf->ln();
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(160,6,utf8_decode($TITLE_CENTER_TEXT_LINE2),0,0,'C');
-            
+
             $pdf->Line(30, 27, 210-30, 27); // 30mm from each edge
 
             $pdf->ln();
@@ -1011,14 +1011,14 @@ class attendance_reports extends skeleton_main {
 
         if ($academic_period_id == null) {
             $database_current_academic_period =  $this->attendance_model->get_current_academic_period();
-            
+
             if ($database_current_academic_period->id) {
                 $current_academic_period_id = $database_current_academic_period->id;
             } else {
-                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');  
+                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
             }
-            
-            $academic_period_id=$current_academic_period_id ;   
+
+            $academic_period_id=$current_academic_period_id ;
         } else {
             $selected_academic_period_id = $academic_period_id;
         }
@@ -1049,7 +1049,7 @@ class attendance_reports extends skeleton_main {
         $grups = $this->attendance_model->get_all_groups_by_academic_period($academic_period_id);
         //print_r($grups);
         $data['grups'] = $grups;
-        
+
         $default_group_code = $this->config->item('default_group_code');
         $default_group_id = $this->config->item('default_group_id');
         $group_code=$default_group_code;
@@ -1084,18 +1084,18 @@ class attendance_reports extends skeleton_main {
 /*
         if ($data['selected_group']!="ALL_GROUPS")
             $default_group_dn=$this->ebre_escool_ldap->getGroupDNByGroupCode($data['selected_group']);
-*/  
+*/
         //echo $default_group_dn;
         if ($data['selected_group']=="ALL_GROUPS")
             $data['selected_group_names']= array (lang("all_tstudents"),"");
         else
             $data['selected_group_names']= $this->attendance_model->getGroupNamesByGroupCode($data['selected_group']);
-  
+
         //$estudiants_grup = $this->attendance_model->getAllGroupStudentInfo($data['selected_group']);
         //$data['all_students_in_group'] = $estudiants_grup;
         //$data['all_students_in_group']= $this->ebre_escool_ldap->getAllGroupStudentsInfo($default_group_dn);
         //$data['all_students_in_group']= $this->attendance_model->getAllGroupStudentsInfo(11);
-         
+
         $all_students_in_group = $this->attendance_model->getAllGroupStudentsInfo($data['selected_group'],$academic_period_id);
         $group_name = $this->attendance_model->getGroupCodeByGroupID($data['selected_group']);
         //print_r($all_students_in_group);
@@ -1104,25 +1104,25 @@ class attendance_reports extends skeleton_main {
 
         $classroom_group_students = array ();
         $base_photo_url = "uploads/person_photos";
-        
+
         foreach($all_students_in_group as $student) {
 
             $studentObject = new stdClass;
-            
+
             $studentObject->person_id = $student->person_id;
             $studentObject->givenName = $student->givenName;
             $studentObject->sn1 = $student->sn1;
             $studentObject->sn2 = $student->sn2;
             $studentObject->username = $student->username;
             $studentObject->email = $student->email;
-            
+
             //TODO: get incident notes!
             $studentObject->notes = "nota";
 
             if ($student->photo_url != "") {
-                $student->photo_url = $base_photo_url."/".$student->photo_url;  
+                $student->photo_url = $base_photo_url."/".$student->photo_url;
             }   else {
-                $studentObject->photo_url = '/assets/img/alumnes/foto.png';             
+                $studentObject->photo_url = '/assets/img/alumnes/foto.png';
             }
 
             $classroom_group_students[]=$student;
@@ -1137,12 +1137,12 @@ class attendance_reports extends skeleton_main {
         } else {
             if ($classroom_group_id != null) {
                 $show_pdf = true;
-            }    
+            }
         }
 
         //$this->load_header();
         if(!$show_pdf){
-            $this->load->view('attendance_reports/class_sheet_report.php', $data); 
+            $this->load->view('attendance_reports/class_sheet_report.php', $data);
         } else {
 
             /* GENERAR PDF */
@@ -1243,7 +1243,7 @@ class attendance_reports extends skeleton_main {
 
                         $pdf->Cell(28.75,8, utf8_decode($nom_alumne),1,0,'L',$fill);
                         $pc++;
-                    }   
+                    }
                     $pdf->Ln();
 
                 if($z==30){
@@ -1251,7 +1251,7 @@ class attendance_reports extends skeleton_main {
                 }
 
                 }
-                        $pdf->Cell(28.75,38.5,$pdf->Image($alumne[$j]['jpegPhoto'],$pdf->GetX(),$pdf->GetY(),28.75),1,0,'C',$fill);                 
+                        $pdf->Cell(28.75,38.5,$pdf->Image($alumne[$j]['jpegPhoto'],$pdf->GetX(),$pdf->GetY(),28.75),1,0,'C',$fill);
                         $z++;
                 }
 
@@ -1276,12 +1276,12 @@ class attendance_reports extends skeleton_main {
             }
 
             //enviem tot al pdf
-            $today = date('Y_m_d');   
+            $today = date('Y_m_d');
             //$pdf->Output();
             $pdf->Output("Llençol_".$today."_".$codi_grup.".pdf","I");
 
         }
-        $this->load_footer();       
+        $this->load_footer();
     }
 
     function attendace_incidents_classgroup_summary_report() {
@@ -1306,7 +1306,7 @@ class attendance_reports extends skeleton_main {
             //redirect them to the login page
             redirect($this->skeleton_auth->login_page, 'refresh');
         }
-        
+
         $default_group_code = $this->config->item('default_group_code');
         $group_code=$default_group_code;
 
@@ -1323,7 +1323,7 @@ class attendance_reports extends skeleton_main {
         } else {
             $data['selected_group']=$default_group_code;
             $data['ini'] = strtotime(date("d-m-Y"));
-            $data['fi'] = strtotime(date("d-m-Y"));            
+            $data['fi'] = strtotime(date("d-m-Y"));
         }
 /*
         if ($data['selected_group']!="ALL_GROUPS")
@@ -1341,12 +1341,12 @@ class attendance_reports extends skeleton_main {
         $data['count_alumnes'] = count($all_students_in_group);
 
         /* Faltes per alumne */
-        $all_incidents_in_group = $this->attendance_model->getAllIncidentsGroupByDate($data['selected_group'],date("Y-m-d",$data['ini']),date("Y-m-d",$data['fi']));        
+        $all_incidents_in_group = $this->attendance_model->getAllIncidentsGroupByDate($data['selected_group'],date("Y-m-d",$data['ini']),date("Y-m-d",$data['fi']));
         $data['all_incidents_in_group'] = $all_incidents_in_group;
 
-//        $this->load_header(); 
-        $this->load->view('attendance_reports/attendace_incidents_classgroup_summary_report.php',$data);     
-        $this->load_footer();    
+//        $this->load_header();
+        $this->load->view('attendance_reports/attendace_incidents_classgroup_summary_report.php',$data);
+        $this->load_footer();
     }
 
     function attendance_incidents_classroomgroup_month_summary_report() {
@@ -1404,7 +1404,7 @@ class attendance_reports extends skeleton_main {
             //redirect them to the login page
             redirect($this->skeleton_auth->login_page, 'refresh');
         }
-        
+
         $default_group_code = $this->config->item('default_group_code');
         $group_code=$default_group_code;
 
@@ -1427,11 +1427,11 @@ class attendance_reports extends skeleton_main {
             $data['selected_group_names']= array (lang("all_tstudents"),"");
         else
             $data['selected_group_names']= $this->attendance_model->getGroupNamesByGroupCode($data['selected_group']);
-        
+
         //$data['all_students_in_group']= $this->ebre_escool_ldap->getAllGroupStudentsInfo($default_group_dn);
 
         /* Faltes per alumne */
-        $all_incidents_in_group = $this->attendance_model->getAllIncidentsGroupByMonth($data['selected_group'],$data['month'],$data['year']);        
+        $all_incidents_in_group = $this->attendance_model->getAllIncidentsGroupByMonth($data['selected_group'],$data['month'],$data['year']);
         $data['all_incidents_in_group'] = $all_incidents_in_group;
 
         $all_students_in_group = $this->attendance_model->getAllGroupStudentsInfo($data['selected_group']);
@@ -1439,9 +1439,9 @@ class attendance_reports extends skeleton_main {
         $data['count_alumnes'] = count($data['all_students_in_group']);
 
 
-//        $this->load_header(); 
-        $this->load->view('attendance_reports/attendance_incidents_classroomgroup_month_summary_report.php',$data);     
-        $this->load_footer();    
+//        $this->load_header();
+        $this->load->view('attendance_reports/attendance_incidents_classroomgroup_month_summary_report.php',$data);
+        $this->load_footer();
     }
 
     function load_header($active_menu) {
@@ -1454,7 +1454,7 @@ class attendance_reports extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+            "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
                 base_url('assets/css/select2.css'));
@@ -1473,15 +1473,15 @@ class attendance_reports extends skeleton_main {
 /*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));          
+            base_url('assets/css/no_padding_top.css'));
 */
         //JS
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/jquery-1.9.1.js");
+            "https://code.jquery.com/jquery-1.9.1.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/ui/1.10.3/jquery-ui.js");   
+            "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
             base_url('assets/js/select2.min.js'));
@@ -1494,20 +1494,20 @@ class attendance_reports extends skeleton_main {
                 base_url('assets/js/ace-elements.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/js/ace.min.js'));  
+                base_url('assets/js/ace.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
                 base_url('assets/js/ebre-escool.js'));
 
         $header_data['menu']= $active_menu;
 
-        $this->_load_html_header($header_data); 
+        $this->_load_html_header($header_data);
         $this->_load_body_header();
     }
 
     function load_footer() {
 
-        $this->_load_body_footer();    
+        $this->_load_body_footer();
 
     }
 
@@ -1516,13 +1516,13 @@ class attendance_reports extends skeleton_main {
         //CSS
         $header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            'http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');
+            'https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/jquery-ui.css'));  
+            base_url('assets/css/jquery-ui.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));  
+            base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
                 base_url('assets/css/select2.css'));
@@ -1542,24 +1542,24 @@ class attendance_reports extends skeleton_main {
 /*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));          
+            base_url('assets/css/no_padding_top.css'));
 */
         //JS
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");                     
+            "https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
             base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/TableTools.js"));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js")); 
+            base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js"));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url("assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js"));   
+            base_url("assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js"));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/select2.min.js'));        
+            base_url('assets/js/select2.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
             base_url('assets/js/ace-extra.min.js'));
@@ -1571,14 +1571,14 @@ class attendance_reports extends skeleton_main {
                 base_url('assets/js/ace.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/js/ebre-escool.js'));           
+                base_url('assets/js/ebre-escool.js'));
 
         $header_data['menu']= $active_menu;
 
         $this->_load_html_header($header_data);
-        //$this->_load_html_header($header_data); 
-        
-        $this->_load_body_header();     
+        //$this->_load_html_header($header_data);
+
+        $this->_load_body_header();
 
     }
 /*
@@ -1591,10 +1591,10 @@ class attendance_reports extends skeleton_main {
 */
     public function informeGuifi() {
 
-        $this->load_header();   
-        $this->load->view('attendance_reports/informe_guifi.php');     
+        $this->load_header();
+        $this->load->view('attendance_reports/informe_guifi.php');
         $this->load_footer();
 
     }
 
- }   
+ }

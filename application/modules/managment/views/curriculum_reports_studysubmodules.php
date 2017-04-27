@@ -27,17 +27,17 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
 
 
 
       <script>
       $(function(){
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_study_submodules_academic_period_filter").select2();
 
-              $('#select_study_submodules_academic_period_filter').on("change", function(e) {  
+              $('#select_study_submodules_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_study_submodules_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -96,12 +96,12 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-             
-        }); 
+
+        });
 
         $("#select_all_study_submodules_study_code_filter").select2({ width: 'resolve',placeholder: "Seleccioneu un estudi", allowClear: true });
         $("#select_all_study_submodules_study_code_filter").on( 'change', function () {
@@ -113,7 +113,7 @@
         all_study_submodules_table.column(5).data().unique().sort().each( function ( d, j ) {
                 $("#select_all_study_submodules_study_code_filter").append( '<option value="'+d+'">'+d+'</option>' )
         } );
-        
+
         $("#select_all_study_submodules_course_code_filter").select2({ width: 'resolve', placeholder: "Seleccioneu un curs", allowClear: true });
         $("#select_all_study_submodules_course_code_filter").on( 'change', function () {
             var val = $(this).val();
@@ -124,7 +124,7 @@
         all_study_submodules_table.column(7).data().unique().sort().each( function ( d, j ) {
                 $("#select_all_study_submodules_course_code_filter").append( '<option value="'+d+'">'+d+'</option>' )
         } );
- 
+
 
 });
 </script>
@@ -137,8 +137,8 @@
       <td colspan="13" style="text-align: center;"> <h4>Filtres per columnes
         </h4></td>
     </tr>
-    <tr> 
-       <td><?php echo lang('study_submodules_academic_period')?>: 
+    <tr>
+       <td><?php echo lang('study_submodules_academic_period')?>:
           <select id="select_study_submodules_academic_period_filter">
           <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
 
@@ -148,13 +148,13 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
@@ -163,8 +163,8 @@
        <td><?php echo lang('study_submodule_study_code')?>: <select id="select_all_study_submodules_study_code_filter"><option value=""></option></select></td>
        <td><?php echo lang('study_submodule_course_code')?>: <select id="select_all_study_submodules_course_code_filter"><option value=""></option></select></td>
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_study_submodules">
  <thead style="background-color: #d9edf7;">
@@ -175,7 +175,7 @@
       </a>
       </h4></td>
   </tr>
-  <tr> 
+  <tr>
      <th><?php echo lang('study_submodule_id')?></th>
      <th><?php echo lang('study_module_shortname')?></th>
      <th><?php echo lang('study_module_name')?></th>
@@ -191,17 +191,17 @@
      <th><?php echo lang('study_submodule_endDate')?></th>
   </tr>
  </thead>
- <tbody> 
+ <tbody>
 
   <!-- Iteration that shows study_submodules-->
   <?php if (is_array($all_study_submodules) ) : ?>
 
   <?php foreach ($all_study_submodules as $study_submodule_key => $study_submodule) : ?>
-   <tr align="center" class="{cycle values='tr0,tr1'}">   
+   <tr align="center" class="{cycle values='tr0,tr1'}">
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_submodule/edit/' . $study_submodule->id ) ;?>">
           <?php echo $study_submodule->id;?>
-      </a> 
+      </a>
      </td>
 
        <td>
@@ -219,18 +219,18 @@
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_submodule/read/' . $study_submodule->id ) ;?>">
           <?php echo $study_submodule->shortname;?>
-      </a> 
+      </a>
      </td>
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_submodule/read/' . $study_submodule->id ) ;?>">
           <?php echo $study_submodule->name;?>
-      </a> 
+      </a>
      </td>
 
      <td>
           <?php echo $study_submodule->study_shortname . ". " . $study_submodule->study_name;?>
      </td>
-     
+
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/studies/read/' . $study_submodule->study_id ) ;?>">
           <?php echo $study_submodule->study_shortname . ". " . $study_submodule->study_name . " - " . $study_submodule->study_law_name . " -" . $study_submodule->study_law_shortname;?>
@@ -252,13 +252,13 @@
           <?php echo $study_submodule->course_id ;?>
       </a> )
      </td>
-     
-     
+
+
 
      <td>
       <?php echo $study_submodule->study_submodules_totalHours;?>
     </td>
-    
+
     <td>
       <?php echo $study_submodule->study_submodules_order;?>
     </td>
@@ -275,11 +275,11 @@
   <?php endforeach; ?>
   <?php endif; ?>
  </tbody>
-</table> 
+</table>
 
 </div>
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

@@ -27,19 +27,19 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
       <script>
 
       var all_google_apps_users_table;
 
       $(function(){
 
-              
+
               $("#select_class_list_academic_period_filter").select2();
 
               $("#academic_period_text").text( $("#select_class_list_academic_period_filter").select2("data").text);
 
-              $('#select_class_list_academic_period_filter').on("change", function(e) {  
+              $('#select_class_list_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_class_list_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -48,10 +48,10 @@
                   window.location.href = baseURL + "/" + selectedValue;
               });
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_user_ldaps_academic_period_filter").select2();
 
-              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {  
+              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_user_ldaps_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -72,98 +72,98 @@
                       "aoColumns": [
                         { "mData": function(data, type, full) {
                                     return '<label><input class="ace" type="checkbox" name="google-apps-user-checkbox" id="' + data.Id + '"><span class="lbl">&nbsp;</span></label>';
-                                  }},   
+                                  }},
                         { "mData": function(data, type, full) {
                           if (data.thumbnailPhotoUrl != null) {
-                            return '<a class="image-thumbnail" href="' + data.thumbnailPhotoUrl + '"><img data-rel="tooltip" class="msg-photo" alt="'+ data.fullName +'" title="'+ data.fullName +'" src="' + data.thumbnailPhotoUrl + '" alt="foto usuari Google Apps" style="width:75px;"></img></a>';                            
+                            return '<a class="image-thumbnail" href="' + data.thumbnailPhotoUrl + '"><img data-rel="tooltip" class="msg-photo" alt="'+ data.fullName +'" title="'+ data.fullName +'" src="' + data.thumbnailPhotoUrl + '" alt="foto usuari Google Apps" style="width:75px;"></img></a>';
                           } else {
                             return 'Sense foto';
                           }
                         }},
                         { "mData": function(data, type, full) {
-                            return data.primaryEmail;            
-                        }},  
-                        { "mData": function(data, type, full) {
-                            return data.givenName;            
-                        }},    
-                        { "mData": function(data, type, full) {
-                            return data.familyName;                
+                            return data.primaryEmail;
                         }},
                         { "mData": function(data, type, full) {
-                            return data.fullName;                
-                        },"bVisible": false},    
+                            return data.givenName;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.id;            
+                            return data.familyName;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.fullName;
                         },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.etag;            
-                        },"bVisible": false},    
-                        { "mData": function(data, type, full) {
-                            return data.kind;            
-                        },"bVisible": false},    
-                        { "mData": function(data, type, full) {
-                            return data.isAdmin;            
-                        }}, 
-                        { "mData": function(data, type, full) {
-                            return data.isDelegatedAdmin;            
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            return data.lastLoginTime;            
-                        }}, 
-                        { "mData": function(data, type, full) {
-                            return data.creationTime;            
-                        }}, 
-                        { "mData": function(data, type, full) {
-                            return data.deletionTime;            
+                            return data.id;
                         },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.agreedToTerms;            
-                        }},  
+                            return data.etag;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.aliases;            
-                        }},  
+                            return data.kind;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.hashFunction;            
-                        },"bVisible": false},  
+                            return data.isAdmin;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.password;            
-                        },"bVisible": false},  
+                            return data.isDelegatedAdmin;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.lastLoginTime;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.creationTime;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.deletionTime;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.agreedToTerms;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.aliases;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.hashFunction;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.password;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
                           if (data.suspended) {
-                            return "Suspès";            
+                            return "Suspès";
                           } else {
-                            return "Actiu";            
+                            return "Actiu";
                           }
-                            
-                        }},  
+
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.suspensionReason;            
-                        }}, 
+                            return data.suspensionReason;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.changePasswordAtNextLogin;            
-                        }}, 
+                            return data.changePasswordAtNextLogin;
+                        }},
                         { "mData": function(data, type, full) {
                             if (data.addresses !=null) {
                               return data.addresses;
                             } else {
                               return "Sense adreces";
                             }
-                        },"bVisible": false},  
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.ipWhitelisted;            
-                        },"bVisible": false},  
+                            return data.ipWhitelisted;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.customerId;            
-                        },"bVisible": false}, 
+                            return data.customerId;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.orgUnitPath;            
-                        }},   
+                            return data.orgUnitPath;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.isMailboxSetup;            
-                        }},   
+                            return data.isMailboxSetup;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.includeInGlobalAddressList;            
-                        }},   
+                            return data.includeInGlobalAddressList;
+                        }},
                         { "mData": function(data, type, full) {
                           strEmails="";
                           $.each(data.emails, function( index, value ) {
@@ -172,27 +172,27 @@
                                 primary = "primari";
                               }
                               strEmails = strEmails + value.address + " ( tipus: " + value.type + " " + primary + "), ";
-                          });       
-                          return strEmails;  
-                        },"bVisible": false},   
+                          });
+                          return strEmails;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
                           strExternalIds="";
                           if (data.externalIds != null) {
                             $.each(data.externalIds, function( index, value ) {
                                 strExternalIds = strExternalIds + value.value + " ( tipus: " + value.type + "), ";
-                            });         
+                            });
                           }
-                          return strExternalIds;  
-                        }},  
+                          return strExternalIds;
+                        }},
                       ],
                       "columnDefs": [
                                       { "type": "html", "targets": 3 }
                                     ],
-                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],       
-                      "sDom": 'TRC<"clear">lfrtip', 
+                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                      "sDom": 'TRC<"clear">lfrtip',
                       "oColVis": {
                           "buttonText": "Mostrar / amagar columnes"
-                      },                   
+                      },
                       "oTableTools": {
                               "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -240,11 +240,11 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-        }); 
+        });
 
 
 
@@ -252,20 +252,20 @@
 
           $('input:checkbox').map(function () {
             this.checked = true;
-          }).get(); 
-          
+          }).get();
+
         });
 
         $("#unselect_all").click(function() {
 
           $('input:checkbox').map(function () {
             this.checked = false;
-          }).get(); 
-          
+          }).get();
+
         });
 
-     
-    
+
+
 
         //$("#select_all_google_apps_users_main_organizational_unit_filter").select2({ width: 'resolve', placeholder: "Seleccioneu una unitat organitzativa", allowClear: true });
         /*
@@ -289,7 +289,7 @@
       <td style="text-align: center;"> <strong>Període acadèmic:
         </strong>
       </td>
-      <td colspan="4" style="text-align: center;"> 
+      <td colspan="4" style="text-align: center;">
               <select id="select_class_list_academic_period_filter">
                 <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
                   <?php if ( $selected_academic_period_id) : ?>
@@ -298,18 +298,18 @@
                     <?php else: ?>
                         <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                     <?php endif; ?>
-                  <?php else: ?>   
+                  <?php else: ?>
                       <?php if ( $academic_period_value->current == 1) : ?>
                         <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                       <?php else: ?>
                         <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                      <?php endif; ?> 
-                  <?php endif; ?> 
+                      <?php endif; ?>
+                  <?php endif; ?>
                 <?php endforeach; ?>
-                </select>    
+                </select>
       </td>
     </tr>
-    <tr> 
+    <tr>
        <td><?php echo "Unitat organitzativa"?>:</td>
        <td>
         TODO<select id="select_all_google_apps_users_main_organizational_unit_filter"><option value=""></option></select>
@@ -319,16 +319,16 @@
         TODO<select id="select_all_google_apps_users_user_type_filter"><option value=""></option><option value="1">1</option><option value="2">2</option></select>
       </td>
     </tr>
-  </thead>  
+  </thead>
  </table>
 
- <table style="display:none;"  class="table table-striped table-bordered table-hover table-condensed" id="actions"> 
+ <table style="display:none;"  class="table table-striped table-bordered table-hover table-condensed" id="actions">
   <thead style="background-color: #d9edf7;">
     <tr>
       <td colspan="8" style="text-align: center;"> <strong>Accions massives (aplica l'acció sobre tots els usuaris seleccionats)
         </strong></td>
     </tr>
-    <tr> 
+    <tr>
        <td>
         <button class="btn btn-mini btn-info" id="create_multiple_initial_passwords">
           <i class="icon-bolt"></i>
@@ -386,8 +386,8 @@
         </button>
        </td>
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 </div>
 
@@ -396,7 +396,7 @@
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_google_apps_users">
  <thead style="background-color: #d9edf7;">
   <tr>
-     <th>&nbsp;</th> 
+     <th>&nbsp;</th>
      <th>Photo</th>
      <th>primaryEmail</th>
      <th>givenName</th>
@@ -427,10 +427,10 @@
      <th>externalIds</th>
   </tr>
  </thead>
- 
-</table> 
+
+</table>
 
   <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

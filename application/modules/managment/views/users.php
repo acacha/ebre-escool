@@ -28,22 +28,22 @@
 <div class="space-10"></div>
 
 <div style="margin:10px;">
-   		      
+
 
 <div class="container">
 
-<?php //var_export($posible_duplicated_users);?>  
+<?php //var_export($posible_duplicated_users);?>
 
-<?php //echo "is_array: " . is_array($posible_duplicated_users) . "<br/>";?>  
-<?php //echo "count: " . count($posible_duplicated_users) . "<br/>";?>  
-<?php //echo "count result: " . (count($posible_duplicated_users) > 0) . "<br/>";?>  
+<?php //echo "is_array: " . is_array($posible_duplicated_users) . "<br/>";?>
+<?php //echo "count: " . count($posible_duplicated_users) . "<br/>";?>
+<?php //echo "count result: " . (count($posible_duplicated_users) > 0) . "<br/>";?>
 
 
 <?php if (is_array($posible_duplicated_users) && ( count($posible_duplicated_users) > 0)) : ?>
   <div class="table-header" style="text-align:center;background-color:red;"> Possibles usuaris duplicats!</div>
   <table class="table table-striped table-bordered table-hover table-condensed" id="posible_duplicated_users_table">
   <thead style="background-color: #d9edf7;">
-    <tr> 
+    <tr>
        <td>&nbsp;</td>
        <td>Id Usuari</td>
        <td>Id persona</td>
@@ -52,15 +52,15 @@
        <td>Cognom 1</td>
        <td>Cognom 2</td>
        <td>Nom</td>
-       <td>Id oficial</td>     
+       <td>Id oficial</td>
        <td>Matrícules</td>
        <td>Estudiants ocults?</td>
        <td>Data creació</td>
-       <td>email</td>     
-       <td>email 2</td>     
-       <td>email 3</td>     
-       <td>Telèfon</td>     
-       <td>Mòbil</td>    
+       <td>email</td>
+       <td>email 2</td>
+       <td>email 3</td>
+       <td>Telèfon</td>
+       <td>Mòbil</td>
        <td>Data última modificació</td>
        <td>Usuari creació</td>
        <td>Usuari última modificació</td>
@@ -68,8 +68,8 @@
        <td>Actiu</td>
        <td>Professors?</td>
        <td>Empleats?</td>
-       <td>No duplicat?</td>       
-  </thead>  
+       <td>No duplicat?</td>
+  </thead>
   <tbody>
     <?php foreach($posible_duplicated_users as $posible_duplicated_user_key => $posible_duplicated_user):?>
       <tr>
@@ -77,13 +77,13 @@
          <td><?php echo $posible_duplicated_user->id;?></td>
          <td><?php echo $posible_duplicated_user->person_id;?></td>
          <td>
-          <?php 
+          <?php
           $photos_base_url = base_url('/uploads/person_photos');
           $student_full_name = $posible_duplicated_user->person_sn1 . " " . $posible_duplicated_user->person_sn2 . ", " . $posible_duplicated_user->person_givenName;
           $photo_url = $photos_base_url . "/" . $posible_duplicated_user->person_photo;
           ?>
           <a class="image-thumbnail" href="<?php echo $photo_url;?>">
-            <img data-rel="tooltip" class="msg-photo" alt="<?php echo $student_full_name; ?>" 
+            <img data-rel="tooltip" class="msg-photo" alt="<?php echo $student_full_name; ?>"
               title="<?php echo $student_full_name; ?>" src="<?php echo $photo_url; ?>" style="width:75px;"></img>
           </a>
          </td>
@@ -93,7 +93,7 @@
          <td><?php echo $posible_duplicated_user->person_givenName;?></td>
          <td><?php echo $posible_duplicated_user->person_official_id;?></td>
          <td><?php echo $posible_duplicated_user->enrollments;?></td>
-         <td><?php echo $posible_duplicated_user->hidden_students;?></td>   
+         <td><?php echo $posible_duplicated_user->hidden_students;?></td>
          <td><?php echo $posible_duplicated_user->created_on;?></td>
          <td><?php echo $posible_duplicated_user->person_email;?></td>
          <td><?php echo $posible_duplicated_user->person_secondary_email;?></td>
@@ -106,11 +106,11 @@
          <td><?php echo $posible_duplicated_user->last_login;?></td>
          <td><?php echo $posible_duplicated_user->active;?></td>
          <td><?php echo $posible_duplicated_user->teachers;?></td>
-         <td><?php echo $posible_duplicated_user->employees;?></td>    
-         <td><?php echo $posible_duplicated_user->mark_as_not_duplicated;?></td>                         
+         <td><?php echo $posible_duplicated_user->employees;?></td>
+         <td><?php echo $posible_duplicated_user->mark_as_not_duplicated;?></td>
       </tr>
-    <?php endforeach;?>    
-  </tbody>  
+    <?php endforeach;?>
+  </tbody>
  </table>
 <?php endif;?>
 
@@ -120,7 +120,7 @@
       <td colspan="6" style="text-align: center;"> <strong>Filtres per columnes
         </strong></td>
     </tr>
-    <tr> 
+    <tr>
        <td><?php echo "Unitat organitzativa"?>:</td>
        <td>
         TODO<select id="select_all_users_main_organizational_unit_filter"><option value=""></option></select>
@@ -130,16 +130,16 @@
         TODO<select id="select_all_users_user_type_filter"><option value=""></option><option value="1">1</option><option value="2">2</option></select>
       </td>
     </tr>
-  </thead>  
+  </thead>
  </table>
 
- <table style="display:none;"  class="table table-striped table-bordered table-hover table-condensed" id="actions"> 
+ <table style="display:none;"  class="table table-striped table-bordered table-hover table-condensed" id="actions">
   <thead style="background-color: #d9edf7;">
     <tr>
       <td colspan="8" style="text-align: center;"> <strong>Accions massives (aplica l'acció sobre tots els usuaris seleccionats)
         </strong></td>
     </tr>
-    <tr> 
+    <tr>
        <td>
         <button class="btn btn-mini btn-info" id="create_multiple_initial_passwords">
           <i class="icon-bolt"></i>
@@ -197,8 +197,8 @@
         </button>
        </td>
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 </div>
 
@@ -207,7 +207,7 @@
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_users">
  <thead style="background-color: #d9edf7;">
   <tr>
-     <th>&nbsp;</th> 
+     <th>&nbsp;</th>
      <th title="id">Id</th>
      <th title="person_id">Id persona</th>
      <th title="username">Nom usuari</th>
@@ -223,19 +223,19 @@
      <th title="forgotten_password_time">forgotten_password_time</th>
      <th title="remember_code">remember_code</th>
      <th title="created_on">Data creació</th>
-     <th title="last_modification_date">Data última modificació</th>     
+     <th title="last_modification_date">Data última modificació</th>
      <th title="creation_user">Usuari de creacíó</th>
      <th title="last_modification_user">Usuari última modificació</th>
      <th title="active">Actiu?</th>
      <th title="ldap_dn">DN Ldap</th>
   </tr>
  </thead>
- 
-</table> 
+
+</table>
 
   <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>
 
 
@@ -245,10 +245,10 @@
 
       $(function(){
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_user_ldaps_academic_period_filter").select2();
 
-              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {  
+              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_user_ldaps_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -260,14 +260,14 @@
 
               $('#posible_duplicated_users_table').DataTable( {
                       "bDestroy": true,
-                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],       
-                      "sDom": 'TRC<"clear">lfrtip', 
+                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                      "sDom": 'TRC<"clear">lfrtip',
                       "aoColumns": [ null,null,null,null,null,null,null,null,null,null,null,null,{"bVisible": false},null,{"bVisible": false},null,null,
                         {"bVisible": false},{"bVisible": false},{"bVisible": false},{"bVisible": false},{"bVisible": false},{"bVisible": false},{"bVisible": false},{"bVisible": false}
                       ],
                       "oColVis": {
                           "buttonText": "Mostrar / amagar columnes"
-                      },                   
+                      },
                       "oTableTools": {
                               "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -315,11 +315,11 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-        }); 
+        });
 
               var all_users_table = $('#all_users').DataTable( {
                       "bDestroy": true,
@@ -330,84 +330,84 @@
                       "aoColumns": [
                         { "mData": function(data, type, full) {
                           return '<label><input class="ace" type="checkbox" name="google-apps-user-checkbox" id="' + data.id + '"><span class="lbl">&nbsp;</span></label>';
-                        }},   
-                        { "mData": function(data, type, full) {
-                            return data.id;            
-                        }},  
-                        { "mData": function(data, type, full) {
-                            return data.person_id;            
-                        }},  
-                        { "mData": function(data, type, full) {
-                            return data.username;            
-                        }},    
-                        { "mData": function(data, type, full) {
-                            return data.last_login;                
                         }},
                         { "mData": function(data, type, full) {
-                            return data.password;                
-                        }},    
+                            return data.id;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.initial_password;            
+                            return data.person_id;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.username;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.last_login;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.password;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.initial_password;
                         }},
                         { "mData": function(data, type, full) {
                             if (data.salt != null) {
-                              return data.salt;  
+                              return data.salt;
                             } else {
                               return "No utilitza salt";
                             }
-                        },"bVisible": false},    
-                        { "mData": function(data, type, full) {
-                            return data.force_change_password_next_login;            
-                        },"bVisible": false},    
-                        { "mData": function(data, type, full) {
-                            return data.mainOrganizationaUnitId;            
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            if (data.activation_code != null) {
-                              return data.activation_code;  
-                            } else {
-                              return "";
-                            }        
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            return data.forgotten_password_realm;            
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            return data.forgotten_password_code;            
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            return data.forgotten_password_time;            
                         },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.remember_code;            
-                        },"bVisible": false},  
+                            return data.force_change_password_next_login;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.created_on;            
-                        }},  
+                            return data.mainOrganizationaUnitId;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.last_modification_date;            
-                        },"bVisible": false},  
+                            if (data.activation_code != null) {
+                              return data.activation_code;
+                            } else {
+                              return "";
+                            }
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.creation_user;            
-                        },"bVisible": false},  
+                            return data.forgotten_password_realm;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.forgotten_password_code;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.forgotten_password_time;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.remember_code;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.created_on;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.last_modification_date;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.creation_user;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
                             return data.last_modification_user;
-                        },"bVisible": false},  
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.active;            
-                        }}, 
+                            return data.active;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.ldap_dn;            
-                        }}, 
+                            return data.ldap_dn;
+                        }},
                       ],
                       "columnDefs": [
                                       { "type": "html", "targets": 3 }
                                     ],
-                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],       
-                      "sDom": 'TRC<"clear">lfrtip', 
+                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                      "sDom": 'TRC<"clear">lfrtip',
                       "oColVis": {
                           "buttonText": "Mostrar / amagar columnes"
-                      },                   
+                      },
                       "oTableTools": {
                               "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -455,11 +455,11 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-        }); 
+        });
 
 
 
@@ -467,20 +467,20 @@
 
           $('input:checkbox').map(function () {
             this.checked = true;
-          }).get(); 
-          
+          }).get();
+
         });
 
         $("#unselect_all").click(function() {
 
           $('input:checkbox').map(function () {
             this.checked = false;
-          }).get(); 
-          
+          }).get();
+
         });
 
-     
-    
+
+
 
         //$("#select_all_users_main_organizational_unit_filter").select2({ width: 'resolve', placeholder: "Seleccioneu una unitat organitzativa", allowClear: true });
         /*

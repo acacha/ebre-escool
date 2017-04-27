@@ -9,24 +9,24 @@ require_once '/usr/share/php/Crypt/CHAP.php';
  * @package    	Ebre-escool
  * @author     	Sergi Tur <sergiturbadenas@gmail.com>
  * @version    	1.0
- * @link		http://www.acacha.com/index.php/ebre-escool
+ * @link		https://www.acacha.com/index.php/ebre-escool
  */
 class managment_model  extends CI_Model  {
-	
+
 	function __construct()
     {
         parent::__construct();
         $this->load->database();
     }
-    
+
     function get_primary_key($table_name) {
 		$fields = $this->db->field_data($table_name);
-		
+
 		foreach ($fields as $field)	{
 			if ($field->primary_key) {
 					return $field->name;
 			}
-		} 	
+		}
 		return false;
 	}
 
@@ -36,34 +36,34 @@ class managment_model  extends CI_Model  {
 		$numeric = "0123456789";
 		$special = ".-+=_,!@$#*%<>[]{}";
 		$chars = "";
-		 
+
 		if (isset($_POST['length'])){
 		    // if you want a form like above
 		    if (isset($_POST['alpha']) && $_POST['alpha'] == 'on')
 		        $chars .= $alpha;
-		     
+
 		    if (isset($_POST['alpha_upper']) && $_POST['alpha_upper'] == 'on')
 		        $chars .= $alpha_upper;
-		     
+
 		    if (isset($_POST['numeric']) && $_POST['numeric'] == 'on')
 		        $chars .= $numeric;
-		     
+
 		    if (isset($_POST['special']) && $_POST['special'] == 'on')
 		        $chars .= $special;
-		     
+
 		    $length = $_POST['length'];
 		}else{
 		    // default [a-zA-Z0-9]{9}
 		    $chars = $alpha . $alpha_upper . $numeric;
 		    $length = 9;
 		}
-		 
+
 		$len = strlen($chars);
 		$pw = '';
-		 
+
 		for ($i=0;$i<$length;$i++)
 		        $pw .= substr($chars, rand(0, $len-1), 1);
-		 
+
 		// the finished password
 		$pw = str_shuffle($pw);
 
@@ -89,7 +89,7 @@ class managment_model  extends CI_Model  {
 		//GET CURRENT sambaNTPassword AND sambaLMPassword
 
 		$ldap_passwords = $this->managment_model->get_ldap_passwords($user_data->username);
-		
+
 		$ldap_nt_password = $ldap_passwords->sambaNTPassword;
 		$ldap_lm_password = $ldap_passwords->sambaLMPassword;
 
@@ -107,9 +107,9 @@ class managment_model  extends CI_Model  {
 
 				$result = ldap_mod_replace ( $this->ldapconn , $user_dn , $entry );
 				return $result;
-			}	
+			}
         }
-		
+
 
 		return false;
 
@@ -162,15 +162,15 @@ class managment_model  extends CI_Model  {
 				//Not hashed password provided. Skip!
 				return;
 			}
-			
-		} 
+
+		}
 		$md5_password= md5($password);
 
 		$ldap_password = "{MD5}".base64_encode(pack("H*",$md5_password));
 		$cr = new Crypt_CHAP_MSv1();
 		$sambaNTPassword = strtoupper(bin2hex($cr->ntPasswordHash($password)));
-		$sambaLMPassword = strtoupper(bin2hex($cr->lmPasswordHash($password)));	
-		
+		$sambaLMPassword = strtoupper(bin2hex($cr->lmPasswordHash($password)));
+
 		//Get Ldap base DN for active users. It could be different from basedn
 		$active_users_basedn = $this->config->item('active_users_basedn');
 
@@ -205,10 +205,10 @@ class managment_model  extends CI_Model  {
 
 		return false;
 	}
-		
+
 
 	function sync_mysql_password_to_ldap($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
@@ -218,12 +218,12 @@ class managment_model  extends CI_Model  {
 				//var_export($user_data);
 				$this->replace_ldap_password($user_data);
 			}
-		}		
+		}
 		return true;
 	}
 
 	function interchange_windows_passwords($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
@@ -234,12 +234,12 @@ class managment_model  extends CI_Model  {
 				$this->replace_ldap_info_to_interchange_windows_passwords($user_data);
 
 			}
-		}		
+		}
 		return true;
-	}	
+	}
 
 	function avoid_change_of_password_on_windows($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
@@ -250,14 +250,14 @@ class managment_model  extends CI_Model  {
 				$this->replace_ldap_info_to_avoid_change_of_password_on_windows($user_data);
 
 			}
-		}		
+		}
 		return true;
-	}	
+	}
 
 
-	
+
 	function sync_mysql_ldap($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
@@ -267,7 +267,7 @@ class managment_model  extends CI_Model  {
 				$this->syncUserToLdap($user_data);
 
 			}
-		}		
+		}
 		return true;
 	}
 
@@ -317,15 +317,15 @@ class managment_model  extends CI_Model  {
 	function get_lesson($lesson_id) {
 
 		/*
-		SELECT lesson_id, lesson_academic_period_id, lesson_import_id, lesson_code, lesson_codi_assignatura, lesson_classroom_group_id, lesson_codi_grup, 
-		lesson_teacher_id, lesson_codi_professor, lesson_study_module_id, lesson_location_id, codi_espai, lesson_day, lesson_time_slot_id, codi_hora, 
-		lesson_entryDate, lesson_last_update, lesson_creationUserId, lesson_lastupdateUserId, lesson_markedForDeletion, lesson_markedForDeletionDate 
-		FROM lesson 
+		SELECT lesson_id, lesson_academic_period_id, lesson_import_id, lesson_code, lesson_codi_assignatura, lesson_classroom_group_id, lesson_codi_grup,
+		lesson_teacher_id, lesson_codi_professor, lesson_study_module_id, lesson_location_id, codi_espai, lesson_day, lesson_time_slot_id, codi_hora,
+		lesson_entryDate, lesson_last_update, lesson_creationUserId, lesson_lastupdateUserId, lesson_markedForDeletion, lesson_markedForDeletionDate
+		FROM lesson
 		WHERE lesson_id=1
 		*/
 
-		$this->db->select('lesson_id, lesson_academic_period_id, lesson_import_id, lesson_code, lesson_codi_assignatura, lesson_classroom_group_id, lesson_codi_grup, 
-		lesson_teacher_id, lesson_codi_professor, lesson_study_module_id, lesson_location_id, codi_espai, lesson_day, lesson_time_slot_id, codi_hora, 
+		$this->db->select('lesson_id, lesson_academic_period_id, lesson_import_id, lesson_code, lesson_codi_assignatura, lesson_classroom_group_id, lesson_codi_grup,
+		lesson_teacher_id, lesson_codi_professor, lesson_study_module_id, lesson_location_id, codi_espai, lesson_day, lesson_time_slot_id, codi_hora,
 		lesson_entryDate, lesson_last_update, lesson_creationUserId, lesson_lastupdateUserId, lesson_markedForDeletion, lesson_markedForDeletionDate');
 		$this->db->from('lesson');
 		$this->db->where('lesson_id',$lesson_id);
@@ -334,7 +334,7 @@ class managment_model  extends CI_Model  {
 		$query = $this->db->get();
 
 		$lesson = new stdClass();
-		if ($query->num_rows() == 1){ 			
+		if ($query->num_rows() == 1){
 			$row = $query->row();
 			$lesson->id = $row->lesson_id;
 			$lesson->academic_period_id = $row->lesson_academic_period_id;
@@ -364,10 +364,10 @@ class managment_model  extends CI_Model  {
 			return false;
 		}
 
-	}	
+	}
 
 	function get_study_module_id_by_shortname_and_course_id ($study_module_shortname,$course_id) {
-		
+
 		$current_academic_period = $this->get_current_academic_period_id();
 
 		/*
@@ -391,7 +391,7 @@ class managment_model  extends CI_Model  {
 		//echo $this->db->last_query();
 
 
-		if ($query->num_rows() == 1){ 
+		if ($query->num_rows() == 1){
 			return $query->row()->study_module_id;
 		}
 
@@ -415,12 +415,12 @@ class managment_model  extends CI_Model  {
 		//echo $this->db->last_query();
 
 
-		if ($query->num_rows() == 1){ 
+		if ($query->num_rows() == 1){
 			return $query->row()->study_module_id;
 		}
 
 		return false;
-		
+
 	}
 
 	function get_course_id_by_classroom_group_id($classroom_group_id) {
@@ -439,7 +439,7 @@ class managment_model  extends CI_Model  {
 
 		$query = $this->db->get();
 
-		if ($query->num_rows() == 1){ 
+		if ($query->num_rows() == 1){
 			return $query->row()->course_id;
 		}
 		return false;
@@ -447,7 +447,7 @@ class managment_model  extends CI_Model  {
 
 	function update_study_module_id($lesson_id,$study_module_id) {
 		/*Example SQL
-		UPDATE `lesson` 
+		UPDATE `lesson`
 		SET `lesson_study_module_id`= 4
 		WHERE `lesson_id`= 1
 		*/
@@ -461,10 +461,10 @@ class managment_model  extends CI_Model  {
 
 	}
 
-	
+
 
 	function calculate_study_module($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
@@ -483,18 +483,18 @@ class managment_model  extends CI_Model  {
 					$this->update_study_module_id($lesson_id,$study_module_id);
 				}
 			}
-		}		
+		}
 		return true;
 	}
 
 	function create_multiple_study_submodules_logse($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
 				$this->create_study_submodule_logse($value);
 			}
-		}		
+		}
 		return true;
 	}
 
@@ -505,7 +505,7 @@ class managment_model  extends CI_Model  {
 		}
 		/*
 		SELECT `study_module_ap_courses_course_id`
-		FROM `study_module_academic_periods` 
+		FROM `study_module_academic_periods`
 		INNER JOIN study_module_ap_courses ON  study_module_ap_courses.`study_module_ap_courses_study_module_ap_id` = study_module_academic_periods.`study_module_academic_periods_id`
 		WHERE `study_module_academic_periods_study_module_id`= 1 AND `study_module_academic_periods_academic_period_id`=5
 		*/
@@ -525,7 +525,7 @@ class managment_model  extends CI_Model  {
 			return $row->study_module_ap_courses_course_id;
 		}
 
-		return false;	
+		return false;
 	}
 
 	function create_study_submodule_logse ($study_module_id,$academic_period_id=null) {
@@ -534,8 +534,8 @@ class managment_model  extends CI_Model  {
 			$academic_period_id = $this->get_current_academic_period_id();
 		}
 		/*
-		INSERT INTO `study_submodules`(`study_submodules_shortname`, `study_submodules_name`, `study_submodules_study_module_id`, `study_submodules_courseid`, 
-		`study_submodules_order`, `study_submodules_description`, `study_submodules_entryDate`, `study_submodules_creationUserId`, `study_submodules_lastupdateUserId`) 
+		INSERT INTO `study_submodules`(`study_submodules_shortname`, `study_submodules_name`, `study_submodules_study_module_id`, `study_submodules_courseid`,
+		`study_submodules_order`, `study_submodules_description`, `study_submodules_entryDate`, `study_submodules_creationUserId`, `study_submodules_lastupdateUserId`)
 		VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
 		*/
 
@@ -562,9 +562,9 @@ class managment_model  extends CI_Model  {
 
 		if ($this->db->affected_rows() == 1) {
 
-			//INSERT INTO `study_submodules_academic_periods`(`study_submodules_academic_periods_study_submodules_id`, `study_submodules_academic_periods_academic_period_id`, 
-			//`study_submodules_academic_periods_initialDate`, `study_submodules_academic_periods_endDate`, `study_submodules_academic_periods_totalHours`, 
-			//`study_submodules_academic_periods_entryDate`, `study_submodules_academic_periods_creationUserId`, 
+			//INSERT INTO `study_submodules_academic_periods`(`study_submodules_academic_periods_study_submodules_id`, `study_submodules_academic_periods_academic_period_id`,
+			//`study_submodules_academic_periods_initialDate`, `study_submodules_academic_periods_endDate`, `study_submodules_academic_periods_totalHours`,
+			//`study_submodules_academic_periods_entryDate`, `study_submodules_academic_periods_creationUserId`,
 			//`study_submodules_academic_periods_lastupdateUserId`, `study_submodules_academic_periods_markedForDeletion`, `study_submodules_academic_periods_markedForDeletionDate`)
 			// VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12])
 			$data = array(
@@ -594,7 +594,7 @@ class managment_model  extends CI_Model  {
 	}
 
 	function create_multiple_initial_passwords($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
@@ -603,7 +603,7 @@ class managment_model  extends CI_Model  {
 				$this->create_initial_password($value,$new_password,true);
 
 			}
-		}		
+		}
 		return true;
 	}
 
@@ -614,7 +614,7 @@ class managment_model  extends CI_Model  {
 			if ($value != "") {
 				$this->auto_enrollment($value);
 			}
-		}		
+		}
 		return true;
 
 	}
@@ -626,8 +626,8 @@ class managment_model  extends CI_Model  {
 		//GET ENROLLMENT COURSE
 		/*
 		SELECT enrollment_course_id,enrollment_group_id,enrollment_study_id
-		FROM enrollment 
-		WHERE enrollment_id=500 
+		FROM enrollment
+		WHERE enrollment_id=500
 		*/
 
 		$this->db->select('enrollment_course_id,enrollment_group_id,enrollment_study_id');
@@ -657,7 +657,7 @@ class managment_model  extends CI_Model  {
 		// GET STUDY_SUBMODULES FOR COURSE
 		/*
 		SELECT study_submodules_id,study_submodules_study_module_id
-		FROM study_submodules 
+		FROM study_submodules
 		INNER JOIN study_submodules_academic_periods ON study_submodules.study_submodules_id = study_submodules_academic_periods.study_submodules_academic_periods_study_submodules_id
 		WHERE study_submodules_academic_periods_academic_period_id=5 AND study_submodules_courseid= 9
 		*/
@@ -667,21 +667,21 @@ class managment_model  extends CI_Model  {
 		$this->db->join('study_submodules_academic_periods','study_submodules.study_submodules_id = study_submodules_academic_periods.study_submodules_academic_periods_study_submodules_id');
 		$this->db->where('study_submodules_courseid', $enrollment_course_id);
 		$this->db->where('study_submodules_academic_periods_academic_period_id', $current_academic_period_id);
-		
+
 
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() > 0){
-			foreach($query->result() as $row){		
+			foreach($query->result() as $row){
 
 				$study_module_id = $row->study_submodules_study_module_id;
 				$study_submodule_id = $row->study_submodules_id;
 
 				/*
-				INSERT INTO `enrollment_submodules`(`enrollment_submodules_enrollment_id`, `enrollment_submodules_moduleid`, `enrollment_submodules_submoduleid`, 
-				`enrollment_submodules_entryDate`, `enrollment_submodules_last_update`, `enrollment_submodules_creationUserId`, 
-				`enrollment_submodules_lastupdateUserId`, `enrollment_submodules_markedForDeletion`, `enrollment_submodules_markedForDeletionDate`) 
+				INSERT INTO `enrollment_submodules`(`enrollment_submodules_enrollment_id`, `enrollment_submodules_moduleid`, `enrollment_submodules_submoduleid`,
+				`enrollment_submodules_entryDate`, `enrollment_submodules_last_update`, `enrollment_submodules_creationUserId`,
+				`enrollment_submodules_lastupdateUserId`, `enrollment_submodules_markedForDeletion`, `enrollment_submodules_markedForDeletionDate`)
 				VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10])
 				*/
 
@@ -694,7 +694,7 @@ class managment_model  extends CI_Model  {
 				   'enrollment_submodules_lastupdateUserId' => $this->session->userdata("user_id")
 				);
 
-				$this->db->insert('enrollment_submodules', $data); 
+				$this->db->insert('enrollment_submodules', $data);
 			}
 		}
 	}
@@ -715,7 +715,7 @@ class managment_model  extends CI_Model  {
 		    case 3:
 		    	//STUDENT
 		    	$group_to_search_dn="intranet_student";
-		        break;    
+		        break;
 		    default:
 		        break;
 		}
@@ -724,7 +724,7 @@ class managment_model  extends CI_Model  {
 	}
 
 	function assign_multiple_ldap_roles($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
@@ -733,7 +733,7 @@ class managment_model  extends CI_Model  {
 				$user_data = new stdClass();
 				$user_data = $this->get_user_data($value);
 				$group_to_search_dn = $this->get_group_to_search_dn($user_data);
-				
+
 				if ($group_to_search_dn!=null) {
 					//Search group dn
 					$group = $this->get_group($group_to_search_dn);
@@ -746,7 +746,7 @@ class managment_model  extends CI_Model  {
 						$this->_init_ldap();
 						if ($this->_bind()) {
 							$result=false;
-							
+
 							if (!in_array($user_data->username, $group->users)) {
 								$result = $this->add_uid_to_group($group->dn,$user_data->username);
 							}
@@ -755,43 +755,43 @@ class managment_model  extends CI_Model  {
 					}
 				}
 			}
-		}		
+		}
 		return true;
 	}
 
 	function get_all_users() {
 		/*
-		SELECT id, person_id, ip_address, username, password, initial_password, 
-		force_change_password_next_login, mainOrganizationaUnitId, salt, secondary_email, 
-		activation_code, forgotten_password_realm, forgotten_password_code, forgotten_password_time, 
-		remember_code, created_on, last_modification_date, last_modification_user, creation_user, 
+		SELECT id, person_id, ip_address, username, password, initial_password,
+		force_change_password_next_login, mainOrganizationaUnitId, salt, secondary_email,
+		activation_code, forgotten_password_realm, forgotten_password_code, forgotten_password_time,
+		remember_code, created_on, last_modification_date, last_modification_user, creation_user,
 		last_login, active, ldap_dn
 		*/
-		$this->db->select('id, person_id, ip_address, username, password, initial_password, 
-			force_change_password_next_login, mainOrganizationaUnitId, salt,  
-			activation_code, forgotten_password_realm, forgotten_password_code, forgotten_password_time, 
-			remember_code, created_on, last_modification_date, last_modification_user, creation_user, 
+		$this->db->select('id, person_id, ip_address, username, password, initial_password,
+			force_change_password_next_login, mainOrganizationaUnitId, salt,
+			activation_code, forgotten_password_realm, forgotten_password_code, forgotten_password_time,
+			remember_code, created_on, last_modification_date, last_modification_user, creation_user,
 			last_login, active, ldap_dn');
 		$this->db->from('users');
 		//TODO: Treure
 		//$this->db->limit(50);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
 		$all_persons = array();
 		if ($query->num_rows() > 0){
 			$i=0;
-			foreach($query->result() as $row){				
+			foreach($query->result() as $row){
 				//echo "i: " . $i . " | username: " . $row->username;
-				
+
 				$all_persons[$i]['id'] = $row->id;
 				$all_persons[$i]['person_id'] = $row->person_id;
-				
+
 				//$all_persons[$i]['ip_address'] = $row->ip_address;
 				$all_persons[$i]['username'] = $row->username;
 				$all_persons[$i]['password'] = $row->password;
-				$all_persons[$i]['initial_password'] = $row->initial_password;				
+				$all_persons[$i]['initial_password'] = $row->initial_password;
 				$all_persons[$i]['force_change_password_next_login'] = $row->force_change_password_next_login;
 				$all_persons[$i]['mainOrganizationaUnitId'] = $row->mainOrganizationaUnitId;
 				$all_persons[$i]['salt'] = $row->salt;
@@ -800,7 +800,7 @@ class managment_model  extends CI_Model  {
 				$all_persons[$i]['forgotten_password_code'] = $row->forgotten_password_code;
 				$all_persons[$i]['forgotten_password_time'] = $row->forgotten_password_time;
 				$all_persons[$i]['forgotten_password_code'] = $row->forgotten_password_code;
-				$all_persons[$i]['remember_code'] = $row->remember_code;				
+				$all_persons[$i]['remember_code'] = $row->remember_code;
 				$all_persons[$i]['created_on'] = $row->created_on;
 				$all_persons[$i]['last_modification_date'] = $row->last_modification_date;
 				$all_persons[$i]['last_modification_user'] = $row->last_modification_user;
@@ -808,7 +808,7 @@ class managment_model  extends CI_Model  {
 				$all_persons[$i]['last_login'] = $row->last_login;
 				$all_persons[$i]['active'] = $row->active;
 				$all_persons[$i]['ldap_dn'] = $row->ldap_dn;
-				
+
 				$i++;
 			}
 		}
@@ -818,27 +818,27 @@ class managment_model  extends CI_Model  {
 	}
 
 	function get_all_persons() {
-		$this->db->select('person_id, person_givenName, person_sn1, person_sn2, person_email, 
-			person_secondary_email, person_terciary_email, person_official_id, 
-			person_official_id_type, person_date_of_birth, person_gender, 
-			person_secondary_official_id, person_secondary_official_id_type, person_homePostalAddress, 
-			person_photo, person_locality_id, person_telephoneNumber, person_mobile, 
+		$this->db->select('person_id, person_givenName, person_sn1, person_sn2, person_email,
+			person_secondary_email, person_terciary_email, person_official_id,
+			person_official_id_type, person_date_of_birth, person_gender,
+			person_secondary_official_id, person_secondary_official_id_type, person_homePostalAddress,
+			person_photo, person_locality_id, person_telephoneNumber, person_mobile,
 			person_bank_account_id, person_notes, person_entryDate, person_last_update,
-			person_creationUserId, person_lastupdateUserId, person_markedForDeletion, 
+			person_creationUserId, person_lastupdateUserId, person_markedForDeletion,
 			person_markedForDeletionDate');
 		$this->db->from('person');
 		//TODO: Treure
 		//$this->db->limit(50);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
 		$all_persons = array();
 		if ($query->num_rows() > 0){
 			$i=0;
-			foreach($query->result() as $row){				
+			foreach($query->result() as $row){
 				//echo "i: " . $i . " | username: " . $row->username;
-				
+
 				$all_persons[$i]['person_id'] = $row->person_id;
 				$all_persons[$i]['person_givenName'] = $row->person_givenName;
 				$all_persons[$i]['person_sn1'] = $row->person_sn1;
@@ -865,7 +865,7 @@ class managment_model  extends CI_Model  {
 				$all_persons[$i]['person_lastupdateUserId'] = $row->person_lastupdateUserId;
 				$all_persons[$i]['person_markedForDeletion'] = $row->person_markedForDeletion;
 				$all_persons[$i]['person_markedForDeletionDate'] = $row->person_markedForDeletionDate;
-				
+
 				$i++;
 			}
 		}
@@ -879,7 +879,7 @@ class managment_model  extends CI_Model  {
 		//ldap_users
 		/*
 		SELECT id, users.person_id,username, password, mainOrganizationaUnitId,person_givenName,person_sn1,person_sn2,ldap_dn
-		FROM users 
+		FROM users
 		INNER JOIN person ON person.person_id = users.person_id
 		WHERE 1
 		*/
@@ -890,7 +890,7 @@ class managment_model  extends CI_Model  {
 		}
 
 		$this->db->select('id, users.person_id,username, password,initial_password,force_change_password_next_login,last_login, mainOrganizationaUnitId,person_givenName,person_sn1,
-			    person_sn2,ldap_dn,created_on,last_modification_date,creation_user, last_modification_user,enrollment_id,enrollment_periodid,enrollment_entryDate, 
+			    person_sn2,ldap_dn,created_on,last_modification_date,creation_user, last_modification_user,enrollment_id,enrollment_periodid,enrollment_entryDate,
 			    enrollment_last_update,enrollment_creationUserId, enrollment_lastupdateUserId');
 		$this->db->from('users');
 		$this->db->join('person','person.person_id = users.person_id','left');
@@ -900,12 +900,12 @@ class managment_model  extends CI_Model  {
 		//$this->db->where('initial_password',"");
 		//TODO: Treure
 		//$this->db->limit(15);
-		
+
 		$query = $this->db->get();
 
 		//echo $this->db->last_query();
 
-		$teachers_person_ids = $this->get_persons_id_are_teachers_array();	
+		$teachers_person_ids = $this->get_persons_id_are_teachers_array();
 		$employees_person_ids = $this->get_persons_id_are_employees_array();
 		$students_person_ids = $this->get_persons_id_are_students_array();
 
@@ -924,9 +924,9 @@ class managment_model  extends CI_Model  {
 		$all_ldap_users = array();
 		if ($query->num_rows() > 0){
 			$i=0;
-			foreach($query->result() as $row){				
+			foreach($query->result() as $row){
 				//echo "i: " . $i . " | username: " . $row->username;
-				
+
 				$all_ldap_users[$i]['id'] = $row->id;
 				$all_ldap_users[$i]['person_id'] = $row->person_id;
 				$all_ldap_users[$i]['username'] = $row->username;
@@ -958,19 +958,19 @@ class managment_model  extends CI_Model  {
 				}
 				$all_ldap_users[$i]['ldap_LogonTime'] = $ldap_LogonTime;
 
-				
-				
-				
-				
+
+
+
+
 				$all_ldap_users[$i]['initial_password'] = $row->initial_password;
-				$cr = new Crypt_CHAP_MSv1();		
+				$cr = new Crypt_CHAP_MSv1();
 
 				$calculated_sambaNTPassword = strtoupper(bin2hex($cr->ntPasswordHash($row->initial_password)));
 				$calculated_sambaLMPassword = strtoupper(bin2hex($cr->lmPasswordHash($row->initial_password)));
 
 				$all_ldap_users[$i]['calculated_nt_initial_password'] = $calculated_sambaNTPassword;
 				$all_ldap_users[$i]['calculated_lm_initial_password'] = $calculated_sambaLMPassword;
-				
+
 				$ldap_nt_password="";
 				if ( array_key_exists ( $row->username , $all_ldap_users_nt_passwords ) ) {
 					$ldap_nt_password = $all_ldap_users_nt_passwords[$row->username];
@@ -991,7 +991,7 @@ class managment_model  extends CI_Model  {
 
 
 				$all_ldap_users[$i]['force_change_password_next_login'] = $row->force_change_password_next_login;
-				$all_ldap_users[$i]['last_login'] = $row->last_login;				
+				$all_ldap_users[$i]['last_login'] = $row->last_login;
 				$all_ldap_users[$i]['md5_initial_password'] = md5($row->initial_password);
 				$all_ldap_users[$i]['mainOrganizationaUnitId'] = $row->mainOrganizationaUnitId;
 				$all_ldap_users[$i]['person_givenName'] = $row->person_givenName;
@@ -1008,16 +1008,16 @@ class managment_model  extends CI_Model  {
 				$all_ldap_users[$i]['enrollment_last_update'] = $row->enrollment_last_update;
 				$all_ldap_users[$i]['enrollment_creationUserId'] = $row->enrollment_creationUserId;
 				$all_ldap_users[$i]['enrollment_lastupdateUserId'] = $row->enrollment_lastupdateUserId;
-				
+
 				//TOO SLOW
-				//$real_ldap_dn = $this->user_exists($row->username,$active_users_basedn);	
+				//$real_ldap_dn = $this->user_exists($row->username,$active_users_basedn);
 				//FASTER
 				if ( array_key_exists ( $row->username , $all_ldap_users_uid ) ) {
 					$real_ldap_dn = $all_ldap_users_uid[$row->username];
 				} else {
 					$real_ldap_dn = "";
 				}
-				
+
 
 
 				$all_ldap_users[$i]['real_ldap_dn'] = $real_ldap_dn;
@@ -1059,12 +1059,12 @@ class managment_model  extends CI_Model  {
 						} else {
 							$all_ldap_users[$i]['role'] = "";
 						}
-				        break;    
+				        break;
 				    default:
 				        break;
 				}
 				//echo "username: " . $row->username . " | " . "role: " . $all_ldap_users[$i]['role'] . "\n";
-				
+
 				$i++;
 			}
 		}
@@ -1085,7 +1085,7 @@ class managment_model  extends CI_Model  {
 			}
 		}
 
-		return $persons_id_are_teachers;	
+		return $persons_id_are_teachers;
 	}
 
 	function get_persons_id_are_employees_array() {
@@ -1101,7 +1101,7 @@ class managment_model  extends CI_Model  {
 			}
 		}
 
-		return $persons_id_are_employees;	
+		return $persons_id_are_employees;
 	}
 
 
@@ -1124,7 +1124,7 @@ class managment_model  extends CI_Model  {
 			}
 		}
 
-		return $persons_id_are_students;	
+		return $persons_id_are_students;
 	}
 
 	function get_user_type($person_id) {
@@ -1136,7 +1136,7 @@ class managment_model  extends CI_Model  {
 		// 4-> Unknown user type
 
 		//Check if user is teacher
-		//SELECT `teacher_id` FROM `teacher` WHERE `teacher_person_id`=2 
+		//SELECT `teacher_id` FROM `teacher` WHERE `teacher_person_id`=2
 		$this->db->select('teacher_id');
 		$this->db->from('teacher');
 		$this->db->where('teacher_person_id',$person_id);
@@ -1144,7 +1144,7 @@ class managment_model  extends CI_Model  {
 
 		$query = $this->db->get();
 
-		if ($query->num_rows() == 1){ 
+		if ($query->num_rows() == 1){
 			//1 --> Person is teacher
 			return 1;
 		}
@@ -1157,20 +1157,20 @@ class managment_model  extends CI_Model  {
 		$this->db->limit(1);
 
 		$query = $this->db->get();
-		if ($query->num_rows() == 1){ 
+		if ($query->num_rows() == 1){
 			//2 --> Person is employee
 			return 2;
 		}
 
 		//Check if user is student
 		//BE CAREFUL. NOT USE OBSOLET STUDENT TABLE: SELECT student_id FROM `student` WHERE student_person_id=1
-		
+
 		//$this->db->select('student_id');
 		//$this->db->from('student');
 		//$this->db->where('student_person_id',$person_id);
 		//$this->db->limit(1);
 		//SELECT enrollment_id, enrollment_periodid, enrollment_personid
-		//FROM enrollment 
+		//FROM enrollment
 		//INNER JOIN person ON enrollment.enrollment_personid= person.person_id
 		//WHERE enrollment_periodid="2014-15"
 		$current_academic_shortname = $this->get_current_academic_period()->shortname;
@@ -1183,8 +1183,8 @@ class managment_model  extends CI_Model  {
 		$this->db->limit(1);
 
 		$query = $this->db->get();
-		
-		if ($query->num_rows() == 1){ 
+
+		if ($query->num_rows() == 1){
 			//3 --> Person is student
 			return 3;
 		}
@@ -1196,7 +1196,7 @@ class managment_model  extends CI_Model  {
 		// Load the configuration
         $CI =& get_instance();
 
-        $CI->load->config('auth_ldap'); 
+        $CI->load->config('auth_ldap');
 
         // Verify that the LDAP extension has been loaded/built-in
         // No sense continuing if we can't
@@ -1217,10 +1217,10 @@ class managment_model  extends CI_Model  {
         $this->roles = $CI->config->item('roles');
         $this->auditlog = $CI->config->item('auditlog');
         $this->member_attribute = $CI->config->item('member_attribute');
-        
+
     }
 
-    protected function _bind() {        
+    protected function _bind() {
         //Connect
         foreach($this->hosts as $host) {
             $this->ldapconn = ldap_connect($host);
@@ -1230,19 +1230,19 @@ class managment_model  extends CI_Model  {
                 log_message('info', lang('error_connecting_to'). ' ' .$uri);
             }
         }
-        
+
         // At this point, $this->ldapconn should be set.  If not... DOOM!
         if(! $this->ldapconn) {
             log_message('error', lang('could_not_connect_to_ldap'));
             show_error(lang('error_connecting_to_ldap'));
         }
 
-       
+
         // These to ldap_set_options are needed for binding to AD properly
         // They should also work with any modern LDAP service.
         ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
         ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-        
+
         // Find the DN of the user we are binding as
         // If proxy_user and proxy_pass are set, use those, else bind anonymously
         if($this->proxy_user) {
@@ -1255,13 +1255,13 @@ class managment_model  extends CI_Model  {
             log_message('error', lang('unable_anonymous'));
             show_error(lang('unable_bind'));
             return false;
-        }   
+        }
         return true;
-	}			
+	}
 
 	public function user_exists($uid,$basedn) {
 		$this->_init_ldap();
-		$filter = '(uid='.$uid.')';				
+		$filter = '(uid='.$uid.')';
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1284,8 +1284,8 @@ class managment_model  extends CI_Model  {
 
 	public function get_all_ldap_pwdLastSet($basedn) {
 		$this->_init_ldap();
-		$filter = '(uid=*)';	
-		$all_ldap_pwdLastSet=array();			
+		$filter = '(uid=*)';
+		$all_ldap_pwdLastSet=array();
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1308,15 +1308,15 @@ class managment_model  extends CI_Model  {
 			ldap_close($this->ldapconn);
 			return $all_ldap_pwdLastSet;
 			}
-		
+
 		}
-		return false;	
+		return false;
 	}
 
 	public function get_all_ldap_LogonTime($basedn) {
 		$this->_init_ldap();
-		$filter = '(uid=*)';	
-		$all_ldap_logonTime=array();			
+		$filter = '(uid=*)';
+		$all_ldap_logonTime=array();
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1339,15 +1339,15 @@ class managment_model  extends CI_Model  {
 			ldap_close($this->ldapconn);
 			return $all_ldap_logonTime;
 			}
-		
+
 		}
-		return false;	
+		return false;
 	}
 
 	public function get_all_ldap_nt_passwords($basedn) {
 		$this->_init_ldap();
-		$filter = '(uid=*)';	
-		$all_ldap_user_passwords=array();			
+		$filter = '(uid=*)';
+		$all_ldap_user_passwords=array();
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1370,15 +1370,15 @@ class managment_model  extends CI_Model  {
 			ldap_close($this->ldapconn);
 			return $all_ldap_user_passwords;
 			}
-		
+
 		}
-		return false;	
+		return false;
 	}
-	
+
 	public function get_all_ldap_lm_passwords($basedn) {
 		$this->_init_ldap();
-		$filter = '(uid=*)';	
-		$all_ldap_user_passwords=array();			
+		$filter = '(uid=*)';
+		$all_ldap_user_passwords=array();
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1401,15 +1401,15 @@ class managment_model  extends CI_Model  {
 			ldap_close($this->ldapconn);
 			return $all_ldap_user_passwords;
 			}
-		
+
 		}
-		return false;	
-	}	
+		return false;
+	}
 
 	public function get_all_ldap_passwords($basedn) {
 		$this->_init_ldap();
-		$filter = '(uid=*)';	
-		$all_ldap_user_passwords=array();			
+		$filter = '(uid=*)';
+		$all_ldap_user_passwords=array();
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1432,19 +1432,19 @@ class managment_model  extends CI_Model  {
 			ldap_close($this->ldapconn);
 			return $all_ldap_user_passwords;
 			}
-		
+
 		}
-		return false;	
+		return false;
 	}
 
 	public function update_study_submodule_total_hours($study_submodule_id, $new_total_hours,$academic_period_id = null) {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		/*Example SQL
-		UPDATE `study_submodules_academic_periods` 
+		UPDATE `study_submodules_academic_periods`
 		SET study_submodules_academic_periods_totalHours=20
 		WHERE `study_submodules_academic_periods_study_submodules_id` = 1
 		AND `study_submodules_academic_periods_academic_period_id`= 5
@@ -1476,7 +1476,7 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		if ($this->study_submodule_exists($study_submodule_id,$academic_period_id)) {
 			//UPDATE
@@ -1493,10 +1493,10 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		/*Example SQL
-		UPDATE `study_submodules_academic_periods` 
+		UPDATE `study_submodules_academic_periods`
 		SET study_submodules_academic_periods_initialDate=DATE
 		WHERE `study_submodules_academic_periods_study_submodules_id` = 1
 		AND `study_submodules_academic_periods_academic_period_id`= 5
@@ -1529,10 +1529,10 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		/*Example SQL
-		UPDATE `study_submodules_academic_periods` 
+		UPDATE `study_submodules_academic_periods`
 		SET study_submodules_academic_periods_initialDate=DATE
 		WHERE `study_submodules_academic_periods_study_submodules_id` = 1
 		AND `study_submodules_academic_periods_academic_period_id`= 5
@@ -1566,7 +1566,7 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		if ($this->study_submodule_exists($study_submodule_id,$academic_period_id)) {
 			//UPDATE
@@ -1583,7 +1583,7 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		if ($this->study_submodule_exists($study_submodule_id,$academic_period_id)) {
 			//UPDATE
@@ -1600,10 +1600,10 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		/*Example SQL
-		UPDATE `study_submodules_academic_periods` 
+		UPDATE `study_submodules_academic_periods`
 		SET study_submodules_academic_periods_endDate=DATE
 		WHERE `study_submodules_academic_periods_study_submodules_id` = 1
 		AND `study_submodules_academic_periods_academic_period_id`= 5
@@ -1636,10 +1636,10 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		/*Example SQL
-		UPDATE `study_submodules_academic_periods` 
+		UPDATE `study_submodules_academic_periods`
 		SET study_submodules_academic_periods_endDate=DATE
 		WHERE `study_submodules_academic_periods_study_submodules_id` = 1
 		AND `study_submodules_academic_periods_academic_period_id`= 5
@@ -1672,7 +1672,7 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		if ($this->study_submodule_exists($study_submodule_id,$academic_period_id)) {
 			//UPDATE
@@ -1689,7 +1689,7 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
 		if ($this->study_submodule_exists($study_submodule_id,$academic_period_id)) {
 			//UPDATE
@@ -1706,11 +1706,11 @@ class managment_model  extends CI_Model  {
 
 		if ($academic_period_id == null) {
 			$academic_period_id = $this->get_current_academic_period_id();
-		} 
+		}
 
-		/* 
-		SELECT study_submodules_academic_periods_study_submodules_id 
-		FROM study_submodules_academic_periods 
+		/*
+		SELECT study_submodules_academic_periods_study_submodules_id
+		FROM study_submodules_academic_periods
 		WHERE study_submodules_academic_periods_study_submodules_id=1 AND study_submodules_academic_periods_academic_period_id=5
 		*/
 
@@ -1725,7 +1725,7 @@ class managment_model  extends CI_Model  {
 		$user_data = new stdClass();
 		if ($query->num_rows() == 1){
 			return true;
-		}	
+		}
 		else {
 			return false;
 		}
@@ -1733,8 +1733,8 @@ class managment_model  extends CI_Model  {
 
 	public function get_all_ldap_users_uid($basedn) {
 		$this->_init_ldap();
-		$filter = '(uid=*)';	
-		$all_ldap_users_uid=array();			
+		$filter = '(uid=*)';
+		$all_ldap_users_uid=array();
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -1752,7 +1752,7 @@ class managment_model  extends CI_Model  {
 			ldap_close($this->ldapconn);
 			return $all_ldap_users_uid;
 			}
-		
+
 		}
 		return false;
 	}
@@ -1784,9 +1784,9 @@ class managment_model  extends CI_Model  {
 		$CI =& get_instance();
 
         $CI->load->config('samba');
-		
+
 		$this->_init_ldap();
-	
+
 		if ($this->_bind()) {
 			// Preparar los datos
 			$user_data_array = array();
@@ -1799,9 +1799,9 @@ class managment_model  extends CI_Model  {
 		    $user_data_array["objectClass"][2]="posixAccount";
 		    $user_data_array["objectClass"][1]="person";
 		    $user_data_array["objectClass"][0]="top";
-		    
+
 		    $user_data_array["cn"]=$user_data->cn;
-		    
+
 		    if ($user_data->sn != "") {
 		    	$user_data_array["sn"]=$user_data->sn;
 		    }
@@ -1824,38 +1824,38 @@ class managment_model  extends CI_Model  {
 		    if ($user_data->telephoneNumber != "") {
 		    	$user_data_array["homePhone"]=$user_data->telephoneNumber;
 		    }
-		    
+
 		    //$user_data_array["st"]=$user_data->st;
 		    if ($user_data->l != null && $user_data->l !="") {
-		    	$user_data_array["l"]=$user_data->l;	
+		    	$user_data_array["l"]=$user_data->l;
 		    }
 		    if ($user_data->postalCode != null && $user_data->postalCode !="") {
-		    	$user_data_array["postalCode"]=$user_data->postalCode;	
-		    }		    
-		    
+		    	$user_data_array["postalCode"]=$user_data->postalCode;
+		    }
+
 		    if ($user_data->dateOfBirth != "") {
 		    	$user_data_array["dateOfBirth"]=$user_data->dateOfBirth;
 		    }
 		    if ($user_data->email != "") {
 		    	$user_data_array["email"]=$user_data->email;
 		    }
-		    if ($user_data->gender != "") {	
+		    if ($user_data->gender != "") {
 		    	$user_data_array["gender"]=$user_data->gender;
 		    }
-		    
+
 		    if ($user_data->homePostalAddress != "") {
 		    	$user_data_array["homePostalAddress"]=$user_data->homePostalAddress;
 		    }
-		    
+
 		    $user_data_array["irisPersonalUniqueID"]=$user_data->irisPersonalUniqueID;
-		    
+
 		    if ($user_data->irisPersonalUniqueIDType != "") {
 		    	$user_data_array["irisPersonalUniqueIDType"]=$user_data->irisPersonalUniqueIDType;
 		    }
 
 		    //TODO: PHOTO
 		    //$user_data_array["gender"]=$user_data->gender;
-	    
+
 			if(class_exists('Imagick')){
 		   		$photo_path = "/usr/share/ebre-escool/uploads/person_photos/" . $user_data->photo;
 		   		//echo $photo_path . "\n";
@@ -1867,13 +1867,13 @@ class managment_model  extends CI_Model  {
 						//$im->setCompressionQuality(90);
 						$im->setImageFormat('jpeg');
 						$user_data_array['jpegphoto'] = $im->getImageBlob();
-			   		}	
+			   		}
 		   		}
-		   		
+
 			} else {
 				echo "Error: No Imagick class found<br/>";
 			}
-		    		    
+
 		    $uidnumber = 1000 + (int )$user_data->id;
 		    $user_data_array["uidnumber"]= $uidnumber;
 
@@ -1884,7 +1884,7 @@ class managment_model  extends CI_Model  {
 			}
 
 		    $user_data_array["shadowLastChange"]= floor(time()/86400);
-		    
+
 		    //TODO: posix config file!
 		    $user_data_array["loginShell"]="/bin/bash";
 
@@ -1907,12 +1907,12 @@ class managment_model  extends CI_Model  {
 				        break;
 				    case 3:											//STUDENT
 				    	$user_data_array["sambaLogonScript"]=$CI->config->item('samba_student_logonScript');
-				        break;    
+				        break;
 				    default:
 				    	$user_data_array["sambaLogonScript"]=$CI->config->item('samba_default_logonScript');
 				        break;
 				}
-		    	
+
 		    }
 
 		    $user_data_array["sambaHomeDrive"]=$CI->config->item('samba_homeDrive');
@@ -1925,19 +1925,19 @@ class managment_model  extends CI_Model  {
 		    $user_data_array["sambaMungedDial"]=$CI->config->item('samba_mungedDial');
 		    $user_data_array["sambaPrimaryGroupSID"]=$CI->config->item('samba_primaryGroupSID');
 
-		    //Calculate Windows Passwords		    
-			$cr = new Crypt_CHAP_MSv1();		
+		    //Calculate Windows Passwords
+			$cr = new Crypt_CHAP_MSv1();
 
 			if ( $ldap_passwords == false) {
 				$user_data_array["sambaNTPassword"]=strtoupper(bin2hex($cr->ntPasswordHash($user_data->password)));
-				$user_data_array["sambaLMPassword"]=strtoupper(bin2hex($cr->lmPasswordHash($user_data->password)));		    
+				$user_data_array["sambaLMPassword"]=strtoupper(bin2hex($cr->lmPasswordHash($user_data->password)));
 			} else {
 				$user_data_array["sambaNTPassword"]=$ldap_passwords->sambaNTPassword;
-				$user_data_array["sambaLMPassword"]=$ldap_passwords->sambaLMPassword;		
+				$user_data_array["sambaLMPassword"]=$ldap_passwords->sambaLMPassword;
 			}
-		    
-		    
-		    
+
+
+
 			//echo "user dn: " . $user_data->dn . "<br/>";
 			//echo "user_data_array: " . var_dump($user_data_array) . "<br/>";
 
@@ -1982,7 +1982,7 @@ class managment_model  extends CI_Model  {
 			return true;
 
 		}
-		
+
 		return false;
 	}
 
@@ -2059,8 +2059,8 @@ class managment_model  extends CI_Model  {
 	function update_user_ldap_dn($username, $ldap_dn) {
 
 		/*Example SQL
-		UPDATE `users` 
-		SET `ldap_dn`= "new_ldap_dn" 
+		UPDATE `users`
+		SET `ldap_dn`= "new_ldap_dn"
 		WHERE `username`="username"
 		*/
 
@@ -2081,9 +2081,9 @@ class managment_model  extends CI_Model  {
 		$sambaLMPassword="";
 
 		$this->_init_ldap();
-		$filter = '(uid='.$username.')';	
+		$filter = '(uid='.$username.')';
 		//Get Ldap base DN for active users. It could be different from basedn
-		$active_users_basedn = $this->config->item('active_users_basedn');			
+		$active_users_basedn = $this->config->item('active_users_basedn');
 		if ($this->_bind()) {
 	     	$sr = ldap_search($this->ldapconn, $active_users_basedn, $filter);
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
@@ -2114,7 +2114,7 @@ class managment_model  extends CI_Model  {
 
 	/*
 	NOTE: I decided to modify Ldap users RECREATING THEM ldap object from zero every time. Please consider following notes about passwords:
-	IF $new_password=false then password is not changed on mysql then does not change passwords on Ldap. Be careful: Ldap passwords cannot be recalculated without unhashed password! 
+	IF $new_password=false then password is not changed on mysql then does not change passwords on Ldap. Be careful: Ldap passwords cannot be recalculated without unhashed password!
 	The only possibility is to backup ldap passwords hashes before deleting object
 	*/
 	function syncUserToLdap($user_data,$new_password=false) {
@@ -2130,8 +2130,8 @@ class managment_model  extends CI_Model  {
 			if ($new_password == false) {
 				// WE HAVE TO BACKUP current Ldap passwords to restore_it
 				$ldap_passwords=$this->managment_model->get_ldap_passwords($user_data->username);
-			} 
-			
+			}
+
 			//user_exists is false if user doesn't not exists or is user DN if user exists
 			if ($user_exists === $user_data->dn) {
 				$this->managment_model->deleteLdapUser($user_data->dn);
@@ -2155,7 +2155,7 @@ class managment_model  extends CI_Model  {
 
 		//DEBUG:
 		//echo "user_data dn: " . $user_data->dn;
-		
+
 		//public function addLdapUser($user_data,$ldap_passwords=false) {
 		$result = $this->managment_model->addLdapUser($user_data,$ldap_passwords);
 
@@ -2173,7 +2173,7 @@ class managment_model  extends CI_Model  {
 
 		/*
 		SELECT teacher_id,teacher_academic_periods_id,classroom_group_academic_periods_classroom_group_id
-		FROM teacher 
+		FROM teacher
 		INNER JOIN teacher_academic_periods ON teacher_academic_periods.teacher_academic_periods_teacher_id =teacher.teacher_id
 		INNER JOIN classroom_group_academic_periods ON classroom_group_academic_periods.classroom_group_academic_periods_mentorId =teacher_academic_periods_teacher_id
 		WHERE teacher_person_id=1809 AND teacher_academic_periods_academic_period_id=5 AND classroom_group_academic_periods_academic_period_id=5
@@ -2181,12 +2181,12 @@ class managment_model  extends CI_Model  {
 
 		$this->db->select('teacher_id,teacher_academic_periods_id,classroom_group_academic_periods_classroom_group_id');
 		$this->db->from('teacher');
-		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id =teacher.teacher_id');	
-		$this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_mentorId =teacher_academic_periods_teacher_id');	
-		$this->db->where('teacher_person_id',$teacher_person_id);	
+		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id =teacher.teacher_id');
+		$this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_mentorId =teacher_academic_periods_teacher_id');
+		$this->db->where('teacher_person_id',$teacher_person_id);
 		$this->db->where('teacher_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->where('teacher_academic_periods_academic_period_id',$academic_period_id);
-		
+
 		$query = $this->db->get();
         //echo $this->db->last_query();
 
@@ -2202,12 +2202,12 @@ class managment_model  extends CI_Model  {
 		$get_current_academic_period = $this->get_current_academic_period_id();
 		/*
 		SELECT teacher_academic_periods_code
-		FROM teacher_academic_periods 
+		FROM teacher_academic_periods
 		INNER JOIN teacher ON teacher.teacher_id =  teacher_academic_periods.teacher_academic_periods_teacher_id
 		INNER JOIN person ON person.person_id = teacher.teacher_person_id
 		WHERE teacher_academic_periods_academic_period_id=5 AND person_id= 56
 		*/
-		
+
 		$this->db->select('teacher_academic_periods_code');
 		$this->db->from('teacher_academic_periods');
 		$this->db->join('teacher','teacher.teacher_id =  teacher_academic_periods.teacher_academic_periods_teacher_id');
@@ -2222,7 +2222,7 @@ class managment_model  extends CI_Model  {
 		if ($query->num_rows() > 0) {
 			$row = $query->row();
 			return $row->teacher_academic_periods_code;
-		}			
+		}
 		return false;
 	}
 
@@ -2233,12 +2233,12 @@ class managment_model  extends CI_Model  {
 		}
 
 		/*
-		SELECT `teacher_academic_periods_code`, `person_sn1`, `person_sn2`, `person_givenName`, `person_id`, `person_official_id` 
-		FROM (`teacher_academic_periods`) JOIN `teacher` ON `teacher`.`teacher_id` = `teacher_academic_periods`.`teacher_academic_periods_teacher_id` 
-		JOIN `person` ON `person`.`person_id` = `teacher`.`teacher_person_id` 
-		WHERE `teacher_academic_periods_teacher_id` = '71' AND `teacher_academic_periods_academic_period_id` = '5' 
+		SELECT `teacher_academic_periods_code`, `person_sn1`, `person_sn2`, `person_givenName`, `person_id`, `person_official_id`
+		FROM (`teacher_academic_periods`) JOIN `teacher` ON `teacher`.`teacher_id` = `teacher_academic_periods`.`teacher_academic_periods_teacher_id`
+		JOIN `person` ON `person`.`person_id` = `teacher`.`teacher_person_id`
+		WHERE `teacher_academic_periods_teacher_id` = '71' AND `teacher_academic_periods_academic_period_id` = '5'
 		*/
-		
+
         $this->db->select('teacher_academic_periods_code, person_sn1, person_sn2, person_givenName, person_id, person_official_id');
         $this->db->from('teacher_academic_periods');
         $this->db->join('teacher', 'teacher.teacher_id = teacher_academic_periods.teacher_academic_periods_teacher_id');
@@ -2257,7 +2257,7 @@ class managment_model  extends CI_Model  {
    				$teachers_array[$row['teacher_academic_periods_code']] = $row['teacher_academic_periods_code'] . " - " . $row['person_sn1'] . " " . $row['person_sn2'] . ", " . $row['person_givenName'] . " - " . $row['person_official_id'];
 			}
 			return $teachers_array;
-		}			
+		}
 		else
 			return false;
 	}
@@ -2269,7 +2269,7 @@ class managment_model  extends CI_Model  {
 
 		/*
 		SELECT teacher_id,teacher_academic_periods_id,classroom_group_academic_periods_classroom_group_id
-		FROM teacher 
+		FROM teacher
 		INNER JOIN teacher_academic_periods ON teacher_academic_periods.teacher_academic_periods_teacher_id =teacher.teacher_id
 		INNER JOIN classroom_group_academic_periods ON classroom_group_academic_periods.classroom_group_academic_periods_mentorId =teacher_academic_periods_teacher_id
 		WHERE teacher_person_id=1809 AND teacher_academic_periods_academic_period_id=5 AND classroom_group_academic_periods_academic_period_id=5
@@ -2277,12 +2277,12 @@ class managment_model  extends CI_Model  {
 
 		$this->db->select('teacher_id,teacher_academic_periods_id,classroom_group_academic_periods_classroom_group_id');
 		$this->db->from('teacher');
-		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id =teacher.teacher_id');	
-		$this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_mentorId =teacher_academic_periods_teacher_id');	
-		$this->db->where('teacher_person_id',$person_id);	
+		$this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id =teacher.teacher_id');
+		$this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_mentorId =teacher_academic_periods_teacher_id');
+		$this->db->where('teacher_person_id',$person_id);
 		$this->db->where('teacher_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->where('teacher_academic_periods_academic_period_id',$academic_period_id);
-		
+
 		$query = $this->db->get();
         //echo $this->db->last_query();
 
@@ -2318,18 +2318,18 @@ class managment_model  extends CI_Model  {
 		//Verify old password:
 		if ($old_pasword != null) {
 			$old_password_hashed = md5($old_pasword);
-		
+
 			//echo "old_pasword: " . $old_pasword . "<br/>";
 			//echo "old_password_hashed: " . $old_password_hashed . "<br/>";
 			//echo "user_data->password: " . $user_data->password . "<br/>";
 
 			if (!($old_password_hashed === $user_data->password )) {
-				return -1;	
-			}	
-		}		
+				return -1;
+			}
+		}
 
 		/*
-		UPDATE `users` 
+		UPDATE `users`
 		SET `password` = md5('password')
 		WHERE `username`="username"
 		*/
@@ -2341,7 +2341,7 @@ class managment_model  extends CI_Model  {
                'initial_password' => '',
                'force_change_password_next_login' => 'n',
                'last_modification_user' => $this->session->userdata('user_id') ,
-			   'active' => 1  
+			   'active' => 1
             );
 
 		if ($username_is_userid) {
@@ -2365,7 +2365,7 @@ class managment_model  extends CI_Model  {
 				$this->managment_model->deleteLdapUser($user_exists);
 				$user_data->dn = $user_exists;
 			}
-		} 
+		}
 		$user_data->password = $new_password;
 		//echo "user_data dn: " . $user_data->dn;
 		$result = $this->managment_model->addLdapUser($user_data);
@@ -2387,20 +2387,20 @@ class managment_model  extends CI_Model  {
 			$user_id=$username;
 			$user_data = $this->get_user_data($user_id);
 		} else {
-			$user_data = $this->get_user_data_by_username($username);	
+			$user_data = $this->get_user_data_by_username($username);
 		}
-		
+
 
 		if ($user_data == false) {
 			return -2;
-		}		
-		
+		}
+
 		//echo "user_data:\n" ;
 		//var_dump($user_data);
 		//echo "user_data end:\n" ;
 
 		/*
-		UPDATE `users` 
+		UPDATE `users`
 		SET `password` = md5('password')
 		WHERE `username`="username"
 		*/
@@ -2412,14 +2412,14 @@ class managment_model  extends CI_Model  {
                'initial_password' => $new_password,
                'force_change_password_next_login' => 'y',
 			   'last_modification_user' => $this->session->userdata('user_id') ,
-			   'active' => 1              
+			   'active' => 1
             );
 		if ($username_is_userid) {
 			$this->db->where('id', $user_id);
 		} else {
-			$this->db->where('username', $username);	
+			$this->db->where('username', $username);
 		}
-				
+
 		$this->db->update('users', $data);
 
 		$active_users_basedn = $this->config->item('active_users_basedn');
@@ -2436,7 +2436,7 @@ class managment_model  extends CI_Model  {
 				$this->managment_model->deleteLdapUser($user_exists);
 				$user_data->dn = $user_exists;
 			}
-		} 
+		}
 		$user_data->password = $new_password;
 		//echo "user_data dn: " . $user_data->dn;
 		$result = $this->managment_model->addLdapUser($user_data);
@@ -2458,13 +2458,13 @@ class managment_model  extends CI_Model  {
 			//Username not found
 			return -2;
 		}
-		
+
 		//echo "user_data:\n" ;
 		//var_dump($user_data);
 		//echo "user_data end:\n" ;
 
 		/*
-		UPDATE `users` 
+		UPDATE `users`
 		SET `password` = md5('password')
 		WHERE `username`="username"
 		*/
@@ -2476,10 +2476,10 @@ class managment_model  extends CI_Model  {
                'initial_password' => '',
                'force_change_password_next_login' => 'n',
                'last_modification_user' => $this->session->userdata('user_id') ,
-			   'active' => 1              
+			   'active' => 1
             );
 
-		$this->db->where('username', $username);		
+		$this->db->where('username', $username);
 		$this->db->update('users', $data);
 
 		$active_users_basedn = $this->config->item('active_users_basedn');
@@ -2496,7 +2496,7 @@ class managment_model  extends CI_Model  {
 				$this->managment_model->deleteLdapUser($user_exists);
 				$user_data->dn = $user_exists;
 			}
-		} 
+		}
 		$user_data->password = $new_password;
 		//echo "user_data dn: " . $user_data->dn;
 		$result = $this->managment_model->addLdapUser($user_data);
@@ -2506,13 +2506,13 @@ class managment_model  extends CI_Model  {
 		$this->managment_model->update_user_ldap_dn($user_data->username, $user_data->dn);
 		return true;
 
-	}						
+	}
 
 	function get_user_data($userid,$user_id_is_username=false) {
 
 		/* Example
-		SELECT `id`, `users`.`person_id`, `username`, `password`, `users`.`initial_password`, `mainOrganizationaUnitId`, `ldap_dn`, `person_givenName`, 
-		`person_sn1`, `person_sn2`, `person_email`, `person_secondary_email`, `person_terciary_email`, `person_official_id`, `person_official_id_type`, 
+		SELECT `id`, `users`.`person_id`, `username`, `password`, `users`.`initial_password`, `mainOrganizationaUnitId`, `ldap_dn`, `person_givenName`,
+		`person_sn1`, `person_sn2`, `person_email`, `person_secondary_email`, `person_terciary_email`, `person_official_id`, `person_official_id_type`,
 		`person_date_of_birth`, `person_gender`, `person_secondary_official_id`, `person_secondary_official_id_type`, `person_homePostalAddress`,
 		 `person_photo`, `person_locality_id`, `locality_name`, `postalcode_code`, `person_telephoneNumber`, `person_mobile`
 		FROM (`users`)
@@ -2525,7 +2525,7 @@ class managment_model  extends CI_Model  {
 
 		$this->db->select('id, users.person_id, username, password,users.initial_password, mainOrganizationaUnitId,ldap_dn, person_givenName,person_sn1,
 		       person_sn2,person_email,person_secondary_email,person_terciary_email,person_official_id,person_official_id_type,
-		       person_date_of_birth,person_gender,person_secondary_official_id,person_secondary_official_id_type, 
+		       person_date_of_birth,person_gender,person_secondary_official_id,person_secondary_official_id_type,
 		       person_homePostalAddress, person_photo, person_locality_id,locality_name,postalcode_code, person_telephoneNumber, person_mobile');
 		$this->db->from('users');
 		$this->db->join('person','users.person_id = person.person_id');
@@ -2534,9 +2534,9 @@ class managment_model  extends CI_Model  {
 		if ($user_id_is_username) {
 			$this->db->where('username',$userid);
 		} else {
-			$this->db->where('id',$userid);	
+			$this->db->where('id',$userid);
 		}
-		
+
 		$this->db->limit(1);
 
 		$query = $this->db->get();
@@ -2545,14 +2545,14 @@ class managment_model  extends CI_Model  {
 
 		$user_data = new stdClass();
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 
 			$user_data->id = $row->id;
 			$user_data->person_id = $row->person_id;
 			$user_data->username = $row->username;
 			$user_data->password = $row->password;
 			$user_data->initial_password = $row->initial_password;
-			
+
 			$user_data->ldap_dn = $row->ldap_dn;
 			$user_data->person_givenName = $row->person_givenName;
 			$user_data->person_sn1 = $row->person_sn1;
@@ -2590,8 +2590,8 @@ class managment_model  extends CI_Model  {
 			        break;
 			    case 3:
 			    	//STUDENT
-			        $user_data->basedn_where_insert_new_ldap_user = $this->config->item('active_students_basedn');			        
-			        break;    
+			        $user_data->basedn_where_insert_new_ldap_user = $this->config->item('active_students_basedn');
+			        break;
 			    default:
 			        $user_data->basedn_where_insert_new_ldap_user = $this->config->item('active_others_basedn');
 			        break;
@@ -2602,11 +2602,11 @@ class managment_model  extends CI_Model  {
 			$user_data->dn = "cn=" . $user_data->cn . ",". $user_data->basedn_where_insert_new_ldap_user;
 
 			return $user_data;
-		}	
+		}
 		else
 			return false;
 
-	
+
 	}
 
 	function get_user_data_by_username($username) {
@@ -2632,7 +2632,7 @@ class managment_model  extends CI_Model  {
 			}
 		}
 
-		return $academic_periods;	
+		return $academic_periods;
 
 	}
 
@@ -2649,11 +2649,11 @@ class managment_model  extends CI_Model  {
 		if ($query->num_rows() > 0){
 			foreach($query->result() as $row)	{
 				$all_usernames[] = $row->username;
-			}			
-			return $all_usernames; 
-		}	
+			}
+			return $all_usernames;
+		}
 		else
-			return false;		
+			return false;
 	}
 
 	function get_academic_period_by_periodid($period_id) {
@@ -2669,9 +2669,9 @@ class managment_model  extends CI_Model  {
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row;
-		}	
+		}
 		else
 			return false;
 	}
@@ -2683,7 +2683,7 @@ class managment_model  extends CI_Model  {
 		}
 
 		/*
-		SELECT DISTINCT course_id , course_study_id 
+		SELECT DISTINCT course_id , course_study_id
 		FROM course
 		INNER JOIN courses_academic_periods ON courses_academic_periods.courses_academic_periods_course_id = course.course_id
 		WHERE courses_academic_periods_academic_period_id= 5
@@ -2692,7 +2692,7 @@ class managment_model  extends CI_Model  {
 		$this->db->select('course_id , course_study_id');
 		$this->db->distinct();
 		$this->db->from('course');
-		$this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');	
+		$this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
 		$this->db->where('courses_academic_periods_academic_period_id', $academic_period_id);
 
 		$query = $this->db->get();
@@ -2704,7 +2704,7 @@ class managment_model  extends CI_Model  {
 				$all_courses_study_info[$row->course_id] = $row->course_study_id;
 			}
 		}
-		
+
 		return $all_courses_study_info;
 
 	}
@@ -2716,16 +2716,16 @@ class managment_model  extends CI_Model  {
 		}
 
 		/*
-		SELECT DISTINCT classroom_group_id,classroom_group_course_id 
-		FROM classroom_group 
+		SELECT DISTINCT classroom_group_id,classroom_group_course_id
+		FROM classroom_group
 		INNER JOIN classroom_group_academic_periods ON classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id
-		WHERE classroom_group_academic_periods_academic_period_id = 5	
+		WHERE classroom_group_academic_periods_academic_period_id = 5
 		*/
 
 		$this->db->select('classroom_group_id,classroom_group_course_id');
 		$this->db->distinct();
 		$this->db->from('classroom_group');
-		$this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id');	
+		$this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id');
 		$this->db->where('classroom_group_academic_periods_academic_period_id', $academic_period_id);
 
 		$query = $this->db->get();
@@ -2737,15 +2737,15 @@ class managment_model  extends CI_Model  {
 				$all_classrooms_groups_course_info[$row->classroom_group_id] = $row->classroom_group_course_id;
 			}
 		}
-		
+
 		return $all_classrooms_groups_course_info;
 
 	}
 
-	
+
 	public function get_all_enrollments_courses_info( $academic_period_id = null) {
 
-		
+
 		if ($academic_period_id == null) {
 			$academic_period_shortname = $this->get_current_academic_period()->shortname;
 		} else {
@@ -2755,19 +2755,19 @@ class managment_model  extends CI_Model  {
 
 		/*
 		SELECT DISTINCT `enrollment_id`,`study_submodules_courseid`,`course_study_id`
-		FROM `enrollment` 
+		FROM `enrollment`
 		INNER JOIN enrollment_submodules ON `enrollment_submodules_enrollment_id` = enrollment_id
 		INNER JOIN study_submodules ON `study_submodules_id`  = `enrollment_submodules_submoduleid`
 		INNER JOIN course ON course.course_id = study_submodules.study_submodules_courseid
-		WHERE `enrollment_periodid`="2014-15" 
-		*/	
+		WHERE `enrollment_periodid`="2014-15"
+		*/
 
 		$this->db->select('enrollment_id , study_submodules_courseid, course_study_id');
 		$this->db->distinct();
 		$this->db->from('enrollment');
-		$this->db->join('enrollment_submodules','enrollment_submodules_enrollment_id = enrollment.enrollment_id');	
-		$this->db->join('study_submodules','study_submodules.study_submodules_id  = enrollment_submodules.enrollment_submodules_submoduleid');	
-		$this->db->join('course','course.course_id = study_submodules.study_submodules_courseid');	
+		$this->db->join('enrollment_submodules','enrollment_submodules_enrollment_id = enrollment.enrollment_id');
+		$this->db->join('study_submodules','study_submodules.study_submodules_id  = enrollment_submodules.enrollment_submodules_submoduleid');
+		$this->db->join('course','course.course_id = study_submodules.study_submodules_courseid');
 		$this->db->where('enrollment_periodid', $academic_period_shortname);
 
 		$query = $this->db->get();
@@ -2783,7 +2783,7 @@ class managment_model  extends CI_Model  {
 					$course->study_id = $row->course_study_id;
 
 					array_push ($all_enrollments_courses_info[$row->enrollment_id],$course);
-					
+
 				} else {
 					$courses = array();
 
@@ -2792,14 +2792,14 @@ class managment_model  extends CI_Model  {
 					$course->study_id = $row->course_study_id;
 
 					$courses[] = $course;
-					$all_enrollments_courses_info[$row->enrollment_id] = $courses;	
+					$all_enrollments_courses_info[$row->enrollment_id] = $courses;
 				}
 			}
 		}
-		
+
 		return $all_enrollments_courses_info;
 	}
-	
+
 	function get_enrollment_reports_all_enrolled_persons_by_academic_period ($academic_period_id=null,$orderby="DESC") {
 
 		if ($academic_period_id == null) {
@@ -2822,35 +2822,35 @@ class managment_model  extends CI_Model  {
 				echo "Enrollment id: " . $key;
 				echo "<br/>";
 				echo "Number of courses: " . count($value) . " | courses: " . var_export($value)  . "<br/>";
-				}		
+				}
 		*/
 
 		/*
-		SELECT `enrollment_id`, `enrollment_periodid`, `enrollment_personid`, `person_sn1`, `person_sn2`, `person_givenName`, `person_official_id`, 
-		`users`.`id`, `users`.`username`, `users`.`password`, `users`.`initial_password`, `users`.`force_change_password_next_login`,users.ldap_dn, `enrollment_study_id`, 
-		`studies`.`studies_shortname`, `studies`.`studies_name`, `studies_studies_law_id`, `studies_law_shortname`, `studies_law_name`, `enrollment_course_id`, 
+		SELECT `enrollment_id`, `enrollment_periodid`, `enrollment_personid`, `person_sn1`, `person_sn2`, `person_givenName`, `person_official_id`,
+		`users`.`id`, `users`.`username`, `users`.`password`, `users`.`initial_password`, `users`.`force_change_password_next_login`,users.ldap_dn, `enrollment_study_id`,
+		`studies`.`studies_shortname`, `studies`.`studies_name`, `studies_studies_law_id`, `studies_law_shortname`, `studies_law_name`, `enrollment_course_id`,
 		`course_shortname`, `course_name`, `enrollment_group_id`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name`, `enrollment_entryDate`, `
-		enrollment_last_update`, `enrollment_creationUserId`, `enrollment_lastupdateUserId`, `enrollment_markedForDeletion`, `enrollment_markedForDeletionDate` 
-		FROM (`enrollment`) 
-		LEFT JOIN `person` ON `person`.`person_id` = `enrollment`.`enrollment_personid` 
-		LEFT JOIN `users` ON `users`.`person_id` = `person`.`person_id` 
-		LEFT JOIN `studies` ON `studies`.`studies_id` = `enrollment`.`enrollment_study_id` 
-		LEFT JOIN `studies_law` ON `studies_law`.`studies_law_id` = `studies`.`studies_studies_law_id` 
-		LEFT JOIN `course` ON `course`.`course_id` = `enrollment`.`enrollment_course_id` 
-		LEFT JOIN `classroom_group` ON `classroom_group`.`classroom_group_id` = `enrollment`.`enrollment_group_id` 
-		WHERE `enrollment_periodid` = '2014-15' 
-		ORDER BY `enrollment_entryDate` DESC 
+		enrollment_last_update`, `enrollment_creationUserId`, `enrollment_lastupdateUserId`, `enrollment_markedForDeletion`, `enrollment_markedForDeletionDate`
+		FROM (`enrollment`)
+		LEFT JOIN `person` ON `person`.`person_id` = `enrollment`.`enrollment_personid`
+		LEFT JOIN `users` ON `users`.`person_id` = `person`.`person_id`
+		LEFT JOIN `studies` ON `studies`.`studies_id` = `enrollment`.`enrollment_study_id`
+		LEFT JOIN `studies_law` ON `studies_law`.`studies_law_id` = `studies`.`studies_studies_law_id`
+		LEFT JOIN `course` ON `course`.`course_id` = `enrollment`.`enrollment_course_id`
+		LEFT JOIN `classroom_group` ON `classroom_group`.`classroom_group_id` = `enrollment`.`enrollment_group_id`
+		WHERE `enrollment_periodid` = '2014-15'
+		ORDER BY `enrollment_entryDate` DESC
 		*/
 
 		//enrollments
 		$this->db->select('enrollment_id, enrollment_periodid, enrollment_personid,person_sn1,person_sn2,person_givenName,person_official_id,
 		    users.id,users.username, users.password, users.initial_password, users.force_change_password_next_login, users.ldap_dn, enrollment_study_id, studies.studies_shortname,
 			studies.studies_name, studies_studies_law_id,studies_law_shortname,studies_law_name,enrollment_course_id, course_shortname,course_name, enrollment_group_id,
-			classroom_group_code,classroom_group_shortName,classroom_group_name, enrollment_entryDate, enrollment_last_update, enrollment_creationUserId, 
+			classroom_group_code,classroom_group_shortName,classroom_group_name, enrollment_entryDate, enrollment_last_update, enrollment_creationUserId,
 			enrollment_lastupdateUserId, enrollment_markedForDeletion, enrollment_markedForDeletionDate,count(enrollment_submodules_id) as num_study_submodules');
 		$this->db->from('enrollment');
-		$this->db->join('enrollment_submodules','enrollment_submodules.enrollment_submodules_enrollment_id = enrollment.enrollment_id','left');	
-		$this->db->join('person','person.person_id = enrollment.enrollment_personid','left');	
+		$this->db->join('enrollment_submodules','enrollment_submodules.enrollment_submodules_enrollment_id = enrollment.enrollment_id','left');
+		$this->db->join('person','person.person_id = enrollment.enrollment_personid','left');
 		$this->db->join('users','users.person_id = person.person_id','left');
 		$this->db->join('studies','studies.studies_id = enrollment.enrollment_study_id','left');
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id','left');
@@ -2859,7 +2859,7 @@ class managment_model  extends CI_Model  {
 		$this->db->group_by('enrollment_id, enrollment_periodid, enrollment_personid,person_sn1,person_sn2,person_givenName,person_official_id,
 		    users.id,users.username, users.password, users.initial_password, users.force_change_password_next_login, users.ldap_dn, enrollment_study_id, studies.studies_shortname,
 			studies.studies_name, studies_studies_law_id,studies_law_shortname,studies_law_name,enrollment_course_id, course_shortname,course_name, enrollment_group_id,
-			classroom_group_code,classroom_group_shortName,classroom_group_name, enrollment_entryDate, enrollment_last_update, enrollment_creationUserId, 
+			classroom_group_code,classroom_group_shortName,classroom_group_name, enrollment_entryDate, enrollment_last_update, enrollment_creationUserId,
 			enrollment_lastupdateUserId, enrollment_markedForDeletion, enrollment_markedForDeletionDate');
 
 		$this->db->order_by('enrollment_entryDate', $orderby);
@@ -2874,7 +2874,7 @@ class managment_model  extends CI_Model  {
 		if ($query->num_rows() > 0){
 			foreach($query->result() as $row){
 				$enrollment = new stdClass;
-				
+
 				$enrollment->id= $row->enrollment_id;
 				$enrollment->period_id = $row->enrollment_periodid;
 
@@ -2890,7 +2890,7 @@ class managment_model  extends CI_Model  {
 				$enrollment->initial_password = $row->initial_password;
 				$enrollment->md5_initial_password = md5($row->initial_password);
 				$enrollment->ldap_dn = $row->ldap_dn;
-				
+
 				$enrollment->force_change_password_next_login = $row->force_change_password_next_login;
 
 				$enrollment->study_id = $row->enrollment_study_id;
@@ -2946,7 +2946,7 @@ class managment_model  extends CI_Model  {
 				}
 
 				if (!($row->num_study_submodules > 0 )) {
-					$enrollment->error = "Matrícula sense cap UF/UD matrículada!";	
+					$enrollment->error = "Matrícula sense cap UF/UD matrículada!";
 				}
 
 				if (array_key_exists($row->enrollment_id, $all_enrollments_courses_info)) {
@@ -2956,28 +2956,28 @@ class managment_model  extends CI_Model  {
 						//CHECK ENROLLMENT COURSE WITH study_submodules_courses. It have to be the same or a course from same study
 						foreach ($study_submodules_courses as $study_submodules_course) {
 							if ( $enrollment->study_id != $study_submodules_course->study_id ) {
-								$enrollment->error = "Hi ha UFs/UDs matrículades que no són del mateix estudi que l'estudi matrículat!";		
+								$enrollment->error = "Hi ha UFs/UDs matrículades que no són del mateix estudi que l'estudi matrículat!";
 							}
 						}
 
 					} else {
-						$enrollment->error = "ERROR NO ESPERAT!";		
+						$enrollment->error = "ERROR NO ESPERAT!";
 					}
 
 				} else {
-					$enrollment->error = "La matrícula no té cap UF/UD matrículada en cap dels cursos relacionats amb l'estudi matrículat";	
+					$enrollment->error = "La matrícula no té cap UF/UD matrículada en cap dels cursos relacionats amb l'estudi matrículat";
 				}
-				 
+
 
 				//$enrollment->enrollment_course_id
 				//$enrollment->enrollment_group_id
 				//$enrollment->study_id
-				
+
 				$all_enrollments[$row->enrollment_id] = $enrollment;
 			}
 		}
 
-		return $all_enrollments;	
+		return $all_enrollments;
 
 	}
 
@@ -3002,12 +3002,12 @@ class managment_model  extends CI_Model  {
 			return false;
 		}
 	}
-	
+
 
 	function get_studymodules_by_study($withtotal = true) {
 		/* studymodules by study
-		SELECT course_study_id , count(study_module_id) 
-		FROM study_module 
+		SELECT course_study_id , count(study_module_id)
+		FROM study_module
 		INNER JOIN  study_module_academic_periods ON  study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id
 		INNER JOIN study_module_ap_courses ON study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id
 		INNER JOIN course ON study_module_ap_courses.study_module_ap_courses_course_id = course.course_id
@@ -3020,9 +3020,9 @@ class managment_model  extends CI_Model  {
 		//courses
 		$this->db->select('course_study_id,count(study_module_id) as total');
 		$this->db->from('study_module');
-		$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');	
-		$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');	
-		$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');	
+		$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');
+		$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');
+		$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');
 		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);
 		$this->db->group_by('course_study_id');
 		$query = $this->db->get();
@@ -3043,10 +3043,10 @@ class managment_model  extends CI_Model  {
 				*/
 				$this->db->select('study_module_id');
 				$this->db->from('study_module');
-				$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');	
-				$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');	
-				$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');	
-				$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);	
+				$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');
+				$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');
+				$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');
+				$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);
 				$this->db->where('course_study_id',$row->course_study_id);
 				$query1 = $this->db->get();
 				if ($query1->num_rows() > 0){
@@ -3055,13 +3055,13 @@ class managment_model  extends CI_Model  {
 					}
 				}
 				$deposit->studymodules_ids =  $studymodules_ids;
-				
+
 				if ($withtotal) {
 					$studymodules_by_study[$row->course_study_id] = $deposit;
 				}	else {
 					$studymodules_by_study[$row->course_study_id] = $studymodules_ids;
 				}
-				
+
 			}
 		}
 
@@ -3071,8 +3071,8 @@ class managment_model  extends CI_Model  {
 	function get_enrollmentdata_by_study ($withtotal = true) {
 
 		/* studysubmodules by study
-		SELECT enrollment_study_id,studies_shortname,studies_name,count(enrollment_id) as total 
-		FROM enrollment 
+		SELECT enrollment_study_id,studies_shortname,studies_name,count(enrollment_id) as total
+		FROM enrollment
 		INNER JOIN studies ON studies.`studies_id` = enrollment.enrollment_study_id
 		WHERE enrollment_periodid="2014-15"
 		GROUP BY enrollment_study_id,studies_shortname,studies_name
@@ -3110,26 +3110,26 @@ class managment_model  extends CI_Model  {
 				} else {
 					$enrollment_by_study[$row->enrollment_study_id] = $enrollment_ids;
 				}
-				
+
 			}
 		}
 
 		return $enrollment_by_study;
 	}
-		
+
 
 	function get_studysubmodules_by_study( $withtotal = true) {
 
 		/* studysubmodules by study
-	
-		 SELECT `course_study_id`, count(study_module_id) as total 
-		 FROM (`study_submodules`) 
-		 LEFT JOIN `study_module` ON `study_submodules`.`study_submodules_study_module_id` = `study_module`.`study_module_id` 
-		 JOIN `study_module_academic_periods` ON `study_module_academic_periods`.`study_module_academic_periods_study_module_id` = `study_module`.`study_module_id` 
-		 JOIN `study_module_ap_courses` ON `study_module_ap_courses`.`study_module_ap_courses_study_module_ap_id` = `study_module_academic_periods`.`study_module_academic_periods_id` 
-		 JOIN `course` ON `study_module_ap_courses`.`study_module_ap_courses_course_id` = `course`.`course_id` 
-		 WHERE `study_module_academic_periods`.`study_module_academic_periods_academic_period_id` = '5' 
-		 GROUP BY `course_study_id` 
+
+		 SELECT `course_study_id`, count(study_module_id) as total
+		 FROM (`study_submodules`)
+		 LEFT JOIN `study_module` ON `study_submodules`.`study_submodules_study_module_id` = `study_module`.`study_module_id`
+		 JOIN `study_module_academic_periods` ON `study_module_academic_periods`.`study_module_academic_periods_study_module_id` = `study_module`.`study_module_id`
+		 JOIN `study_module_ap_courses` ON `study_module_ap_courses`.`study_module_ap_courses_study_module_ap_id` = `study_module_academic_periods`.`study_module_academic_periods_id`
+		 JOIN `course` ON `study_module_ap_courses`.`study_module_ap_courses_course_id` = `course`.`course_id`
+		 WHERE `study_module_academic_periods`.`study_module_academic_periods_academic_period_id` = '5'
+		 GROUP BY `course_study_id`
 		 */
 
 		$current_academic_period = $this->get_current_academic_period_id();
@@ -3138,10 +3138,10 @@ class managment_model  extends CI_Model  {
 		$this->db->select('course_study_id,count(study_module_id) as total');
 		$this->db->from('study_submodules');
 		$this->db->join('study_module','study_submodules.study_submodules_study_module_id = study_module.study_module_id', 'left');
-		$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');	
-		$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');	
-		$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');	
-		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);	
+		$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');
+		$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');
+		$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');
+		$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);
 		$this->db->group_by('course_study_id');
 		$query = $this->db->get();
 		//echo $this->db->last_query();
@@ -3158,10 +3158,10 @@ class managment_model  extends CI_Model  {
 				$this->db->select('study_submodules_id');
 				$this->db->from('study_submodules');
 				$this->db->join('study_module','study_submodules.study_submodules_study_module_id = study_module.study_module_id', 'left');
-				$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');	
-				$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');	
-				$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');	
-				$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);	
+				$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');
+				$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id = study_module_academic_periods.study_module_academic_periods_id');
+				$this->db->join('course','study_module_ap_courses.study_module_ap_courses_course_id = course.course_id');
+				$this->db->where('study_module_academic_periods.study_module_academic_periods_academic_period_id',$current_academic_period);
 				$this->db->where('course_study_id',$row->course_study_id);
 				$query1 = $this->db->get();
 				if ($query1->num_rows() > 0){
@@ -3176,7 +3176,7 @@ class managment_model  extends CI_Model  {
 				} else {
 					$studysubmodules_by_study[$row->course_study_id] = $studysubmodules_ids;
 				}
-				
+
 			}
 		}
 
@@ -3185,8 +3185,8 @@ class managment_model  extends CI_Model  {
 
 	function get_classroomgroups_by_study( $withtotal = true ) {
 		/* classroomgroups by study
-		SELECT course_study_id, count(classroom_group_id) 
-		FROM classroom_group 
+		SELECT course_study_id, count(classroom_group_id)
+		FROM classroom_group
 		LEFT JOIN course ON classroom_group.`classroom_group_course_id`=course.course_id
 		GROUP BY course_study_id
 		 */
@@ -3228,7 +3228,7 @@ class managment_model  extends CI_Model  {
 				} else {
 					$classroomgroups_by_study[$row->course_study_id] = $classroomgroups_ids;
 				}
-					
+
 			}
 		}
 
@@ -3238,8 +3238,8 @@ class managment_model  extends CI_Model  {
 
 	function get_courses_by_study( $withtotal = true ) {
 		/* courses by study
-		SELECT course_study_id, count(`course_id`) 
-		FROM course 
+		SELECT course_study_id, count(`course_id`)
+		FROM course
 		GROUP BY course_study_id
 		 */
 
@@ -3277,9 +3277,9 @@ class managment_model  extends CI_Model  {
 				if ($withtotal) {
 					$courses_by_study[$row->course_study_id] = $deposit;
 				} else {
-					$courses_by_study[$row->course_study_id] = $courses_ids;	
+					$courses_by_study[$row->course_study_id] = $courses_ids;
 				}
-				
+
 			}
 		}
 
@@ -3288,8 +3288,8 @@ class managment_model  extends CI_Model  {
 
 	function get_teachers_by_department( $withtotal = true, $academic_period = null) {
 		/* teachers by department
-		SELECT `teacher_department_id`, count(`teacher_id`) 
-		FROM `teacher` 
+		SELECT `teacher_department_id`, count(`teacher_id`)
+		FROM `teacher`
 		GROUP BY teacher_department_id */
 
 		if ($academic_period ==  null) {
@@ -3339,7 +3339,7 @@ class managment_model  extends CI_Model  {
 	function get_studies_by_department( $withtotal = true ) {
 		/* studies by department
 		SELECT `department_id`,count(`study_id`) as total
-		FROM `study_department` 
+		FROM `study_department`
 		GROUP BY department_id */
 
 		//deparments
@@ -3372,15 +3372,15 @@ class managment_model  extends CI_Model  {
 				} else {
 					$studies_by_department[$row->department_id] = $studies_ids;
 				}
-				
-				
+
+
 			}
 		}
 
 		return $studies_by_department;
 	}
 
-	
+
 	function get_all_studies_report_info($academic_period_id = null,$orderby = "DESC") {
 		/*
 		SELECT studies_id,studies_shortname,studies_name,studies_studies_organizational_unit_id, study_department.department_id, department_shortname
@@ -3413,9 +3413,9 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies_law','studies.studies_studies_law_id = studies_law.studies_law_id', 'left');
         $this->db->join('studies_academic_periods','studies_academic_periods.studies_academic_periods_study_id = studies.studies_id');
         $this->db->where('studies_academic_periods_academic_period_id',$academic_period_id);
-		
+
 		$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
         //echo $this->db->last_query();
 
@@ -3424,7 +3424,7 @@ class managment_model  extends CI_Model  {
 			$all_studies = array();
 			foreach($query->result() as $row){
 				$study = new stdClass;
-				
+
 				$study->id = $row->studies_id;
 				$study->shortname = $row->studies_shortname;
 				$study->name = $row->studies_name;
@@ -3434,7 +3434,7 @@ class managment_model  extends CI_Model  {
 				$study->studies_studies_law_shortname = $row->studies_law_shortname;
 
 				//get courses info
-				if ( array_key_exists ( $row->studies_id , $courses_by_study )) {					
+				if ( array_key_exists ( $row->studies_id , $courses_by_study )) {
 					$study->numberOfCourses = $courses_by_study[$row->studies_id]->total;
 					$study->courses_ids = $courses_by_study[$row->studies_id]->courses_ids;
 
@@ -3444,46 +3444,46 @@ class managment_model  extends CI_Model  {
 				}
 
 				//get classroomgroups info
-				if ( array_key_exists ( $row->studies_id , $classroomgroups_by_study )) {					
+				if ( array_key_exists ( $row->studies_id , $classroomgroups_by_study )) {
 					$study->numberOfClassroomgroups = $classroomgroups_by_study[$row->studies_id]->total;
 					$study->classroomgroups_ids = $classroomgroups_by_study[$row->studies_id]->classroomgroups_ids;
 
 				}	else {
 					$study->numberOfClassroomgroups = "";
 					$study->classroomgroups_ids = "";
-				}	
+				}
 
 				//get studymodules info
-				if ( array_key_exists ( $row->studies_id , $studymodules_by_study )) {					
+				if ( array_key_exists ( $row->studies_id , $studymodules_by_study )) {
 					$study->numberOfStudyModules = $studymodules_by_study[$row->studies_id]->total;
 					$study->studymodules_ids = $studymodules_by_study[$row->studies_id]->studymodules_ids;
 
 				}	else {
 					$study->numberOfStudyModules = "";
 					$study->studymodules_ids = "";
-				}		
+				}
 
 				//get studysubmodules info
-				if ( array_key_exists ( $row->studies_id , $studysubmodules_by_study )) {					
+				if ( array_key_exists ( $row->studies_id , $studysubmodules_by_study )) {
 					$study->numberOfStudySubModules = $studysubmodules_by_study[$row->studies_id]->total;
 					$study->studysubmodules_ids = $studysubmodules_by_study[$row->studies_id]->studysubmodules_ids;
 
 				}	else {
 					$study->numberOfStudySubModules = "";
 					$study->studysubmodules_ids = "";
-				}	
+				}
 
 
 				//get ENROLLMENT INFO
-				if ( array_key_exists ( $row->studies_id , $enrollmentdata_by_study )) {					
+				if ( array_key_exists ( $row->studies_id , $enrollmentdata_by_study )) {
 					$study->numberOfEnrolledStudies = $enrollmentdata_by_study[$row->studies_id]->total;
 					//$study->studysubmodules_ids = $studysubmodules_by_study[$row->studies_id]->studysubmodules_ids;
 
 				}	else {
 					$study->numberOfEnrolledStudies = "";
 					//$study->studysubmodules_ids = "";
-				}		
-				
+				}
+
 
 				/*
 				$teacher_fullname = $row->person_sn1 . " " . $row->person_sn1 . ", " . $row->person_givenName;
@@ -3499,7 +3499,7 @@ class managment_model  extends CI_Model  {
 				$study->location_id = $row->study_location_id;				*/
 
 				//get number of teacher Deparments
-				/*if ( array_key_exists ( $row->study_id , $teachers_by_study )) {					
+				/*if ( array_key_exists ( $row->study_id , $teachers_by_study )) {
 					$study->numberOfTeachers = $teachers_by_study[$row->study_id]->total;
 					$study->teacher_ids = $teachers_by_study[$row->study_id]->teachers_ids;
 
@@ -3509,21 +3509,21 @@ class managment_model  extends CI_Model  {
 				}
 
 				//get number of teacher Studies
-				if ( array_key_exists ( $row->study_id , $studies_by_study )) {					
+				if ( array_key_exists ( $row->study_id , $studies_by_study )) {
 					$study->numberOfStudies = $studies_by_study[$row->study_id]->total;
 					$study->studies_ids = $studies_by_study[$row->study_id]->studies_ids;
 				}	else {
 					$study->numberOfStudies = "";
 					$study->studies_ids = "";
 				}*/
-				
+
 				$all_studies[$row->studies_id] = $study;
 			}
 			return $all_studies;
-		}	
+		}
 		else
 			return false;
-		
+
 
 		/*$all_studies = array();
 
@@ -3556,7 +3556,7 @@ class managment_model  extends CI_Model  {
         //GET period_id
         $period_id = $this->get_current_academic_period_id();
         if ($period!=null) {
-            $period_id = $period;    
+            $period_id = $period;
         }
 
         /*
@@ -3584,23 +3584,23 @@ class managment_model  extends CI_Model  {
 
         $this->db->order_by('course_number', $order_by);
 
-               
+
         $query = $this->db->get();
 
         //echo $this->db->last_query();
 
-        $courses_study_module = array();        
+        $courses_study_module = array();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row)    {
-                $course = new stdClass();   
+                $course = new stdClass();
 
                 $course->id = $row->study_module_ap_courses_course_id;
                 $course->shortname = $row->course_shortname;
                 $course->name = $row->course_name;
                 $course->number = $row->course_number;
 
-				$course->cycle_id = $row->course_cycle_id;                
-                
+				$course->cycle_id = $row->course_cycle_id;
+
                 $course->study_id = $row->course_study_id;
                 $course->studies_name = $row->studies_name;
                 $course->studies_shortname = $row->studies_shortname;
@@ -3610,7 +3610,7 @@ class managment_model  extends CI_Model  {
 
                 $courses_study_module[]=$course;
             }
-        }   
+        }
         return $courses_study_module;
 
     }
@@ -3625,20 +3625,20 @@ class managment_model  extends CI_Model  {
 		//classgroups
 		//Example SQL:
 		/*
-		
+
 		*/
 
-		$this->db->select('study_module_id, study_module_academic_periods_external_code, study_module_shortname, study_module_name,study_module_hoursPerWeek, 
-						   study_module_order, study_module_academic_periods_initialDate, study_module_academic_periods_endDate, study_module_type, 
+		$this->db->select('study_module_id, study_module_academic_periods_external_code, study_module_shortname, study_module_name,study_module_hoursPerWeek,
+						   study_module_order, study_module_academic_periods_initialDate, study_module_academic_periods_endDate, study_module_type,
 						   study_module_subtype, study_module_description');
 		$this->db->from('study_module_academic_periods');
 		$this->db->join('study_module','study_module.study_module_id = study_module_academic_periods.study_module_academic_periods_study_module_id', 'left');
 		$this->db->where('study_module_academic_periods_academic_period_id',$academic_period);
-		
+
 		//$this->db->order_by('studies_shortname', $orderby);
 
 
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -3647,7 +3647,7 @@ class managment_model  extends CI_Model  {
 			$all_study_modules = array();
 			foreach($query->result() as $row){
 				$study_module = new stdClass;
-				
+
 				$study_module->id = $row->study_module_id;
 				$study_module->code = $row->study_module_academic_periods_external_code;
 				$study_module->shortname = $row->study_module_shortname;
@@ -3668,7 +3668,7 @@ class managment_model  extends CI_Model  {
 
 				//get number of teacher Deparments
 				/*
-				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {
 					$course->numberOfTeachers = $teachers_by_course[$row->course_id]->total;
 					$course->teacher_ids = $teachers_by_course[$row->course_id]->teachers_ids;
 
@@ -3676,11 +3676,11 @@ class managment_model  extends CI_Model  {
 					$course->numberOfTeachers = "";
 					$course->teacher_ids = "";
 				}	*/
-				
+
 				$all_study_modules[$row->study_module_id] = $study_module;
 			}
 			return $all_study_modules;
-		}	
+		}
 		else
 			return false;
 
@@ -3691,17 +3691,17 @@ class managment_model  extends CI_Model  {
 		//classgroups
 		//Example SQL:
 		/*
-		SELECT lesson_id,lesson_academic_period_id, academic_periods.academic_periods_shortname,lesson_code, course_id, course_shortname, course_name, 
-		course_study_id ,studies_shortname, studies_name ,lesson_classroom_group_id, classroom_group_code, classroom_group_shortName,classroom_group_name,lesson_teacher_id, 
-		teacher_academic_periods_code, teacher_person_id, person_givenName, person_sn1, person_sn2, lesson_study_module_id, study_module_shortname, 
+		SELECT lesson_id,lesson_academic_period_id, academic_periods.academic_periods_shortname,lesson_code, course_id, course_shortname, course_name,
+		course_study_id ,studies_shortname, studies_name ,lesson_classroom_group_id, classroom_group_code, classroom_group_shortName,classroom_group_name,lesson_teacher_id,
+		teacher_academic_periods_code, teacher_person_id, person_givenName, person_sn1, person_sn2, lesson_study_module_id, study_module_shortname,
 			   study_module_name, lesson_location_id, location_name, location_shortName, lesson_day, lesson_time_slot_id, time_slot_start_time, time_slot_end_time, time_slot_lective , time_slot_order
-		FROM `lesson` 
+		FROM `lesson`
 		LEFT JOIN academic_periods ON academic_periods.academic_periods_id = lesson.lesson_academic_period_id
 		LEFT JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_classroom_group_id
         LEFT JOIN course ON course.course_id = classroom_group.classroom_group_course_id
 		LEFT JOIN studies ON studies.studies_id = course.course_study_id
 		LEFT JOIN teacher ON teacher.teacher_id = lesson.lesson_teacher_id
-		TODO 
+		TODO
 		LEFT JOIN person ON person.person_id = teacher.teacher_person_id
 		LEFT JOIN study_module ON study_module.study_module_id = lesson.lesson_study_module_id
 		LEFT JOIN location ON location.location_id = lesson.lesson_location_id
@@ -3710,7 +3710,7 @@ class managment_model  extends CI_Model  {
 		*/
 
 		$this->db->select('lesson_id,lesson_academic_period_id,academic_periods.academic_periods_shortname,lesson_code, course_id, course_shortname, course_name, course_study_id ,studies_shortname, studies_name, lesson_classroom_group_id, classroom_group_code, classroom_group_shortName,
-			   classroom_group_name,lesson_teacher_id, teacher_academic_periods_code, teacher_person_id, person_givenName, person_sn1, person_sn2, lesson_codi_assignatura, lesson_study_module_id, study_module_shortname, 
+			   classroom_group_name,lesson_teacher_id, teacher_academic_periods_code, teacher_person_id, person_givenName, person_sn1, person_sn2, lesson_codi_assignatura, lesson_study_module_id, study_module_shortname,
 			   study_module_name, lesson_location_id, location_name, location_shortName, lesson_day, lesson_time_slot_id, time_slot_start_time, time_slot_end_time, time_slot_lective , time_slot_order');
 		$this->db->from('lesson');
 		$this->db->join('academic_periods','academic_periods.academic_periods_id = lesson.lesson_academic_period_id', 'left');
@@ -3725,9 +3725,9 @@ class managment_model  extends CI_Model  {
 		$this->db->join('time_slot','time_slot.time_slot_id = lesson.lesson_time_slot_id', 'left');
 		$this->db->where('lesson_academic_period_id',$academic_period);
 		$this->db->where('teacher_academic_periods_academic_period_id',$academic_period);
-		
+
 		//$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
 
 		//echo $this->db->last_query();
@@ -3736,10 +3736,10 @@ class managment_model  extends CI_Model  {
 			$all_lessons = array();
 			foreach($query->result() as $row){
 				$lesson = new stdClass;
-				
+
 				$lesson->id = $row->lesson_id;
 				$lesson->academic_period = $row->lesson_academic_period_id;
-				$lesson->academic_period_shortname = $row->academic_periods_shortname;				
+				$lesson->academic_period_shortname = $row->academic_periods_shortname;
 				$lesson->code = $row->lesson_code;
 
 				$lesson->course_id = $row->course_id;
@@ -3765,7 +3765,7 @@ class managment_model  extends CI_Model  {
 				$lesson->study_module_id = $row->lesson_study_module_id;
 				$lesson->study_module_shortname = $row->study_module_shortname;
 				$lesson->study_module_name = $row->study_module_name;
-	
+
 
 				$lesson->location_id = $row->lesson_location_id;
 				$lesson->location_name = $row->location_name;
@@ -3777,11 +3777,11 @@ class managment_model  extends CI_Model  {
 				$lesson->end_time = $row->time_slot_end_time;
 				$lesson->lective = $row->time_slot_lective;
 				$lesson->order = $row->time_slot_order;
-				
+
 				$all_lessons[$row->lesson_id] = $lesson;
 			}
 			return $all_lessons;
-		}	
+		}
 		else
 			return false;
 
@@ -3800,14 +3800,14 @@ class managment_model  extends CI_Model  {
 
 		*/
 		$this->db->select('teacher_academic_periods_code, person_sn1, person_sn2, person_givenName, person_id, person_official_id');
-		$this->db->from('teacher_academic_periods');        
+		$this->db->from('teacher_academic_periods');
 		$this->db->join('teacher', 'teacher.teacher_id = teacher_academic_periods.teacher_academic_periods_teacher_id');
 		$this->db->join('person', 'person.person_id = teacher.teacher_person_id');
 		$this->db->order_by('teacher_academic_periods_code', $orderby);
 
         $query = $this->db->get();
         //echo $this->db->last_query(). "<br/>";
-		
+
 		if ($query->num_rows() > 0) {
 
 			$teachers_array = array();
@@ -3816,7 +3816,7 @@ class managment_model  extends CI_Model  {
    				$teachers_array[$row['teacher_academic_periods_code']] = $row['teacher_academic_periods_code'] . " - " . $row['person_sn1'] . " " . $row['person_sn2'] . ", " . $row['person_givenName'] . " - " . $row['person_official_id'];
 			}
 			return $teachers_array;
-		}			
+		}
 		else
 			return false;
 	}
@@ -3825,8 +3825,8 @@ class managment_model  extends CI_Model  {
 	function get_all_study_submodules_ids_byteacher_id($academic_period_id,$teacher_id) {
 
 		/*
-		SELECT DISTINCT `study_submodules_id` 
-		FROM (`lesson`) 
+		SELECT DISTINCT `study_submodules_id`
+		FROM (`lesson`)
 		INNER JOIN study_submodules ON study_submodules.`study_submodules_study_module_id`  = lesson.lesson_study_module_id
 		INNER JOIN study_submodules_academic_periods ON study_submodules_academic_periods.`study_submodules_academic_periods_study_submodules_id` =  study_submodules.`study_submodules_id`
 		WHERE `lesson_teacher_id` = '127' AND `lesson_academic_period_id` = '5' AND `study_submodules_academic_periods_academic_period_id`=5
@@ -3855,8 +3855,8 @@ class managment_model  extends CI_Model  {
 
 	function get_all_classroomgroupsids_by_mentor_id($academic_period_id,$mentor_id) {
 		/*
-		SELECT `classroom_group_academic_periods_classroom_group_id` 
-		FROM (`classroom_group_academic_periods`) 
+		SELECT `classroom_group_academic_periods_classroom_group_id`
+		FROM (`classroom_group_academic_periods`)
 		WHERE `classroom_group_academic_periods_mentorId` = '71' AND `classroom_group_academic_periods_academic_period_id` = '5'
 		*/
 
@@ -3874,7 +3874,7 @@ class managment_model  extends CI_Model  {
 				$classroomgroupids[] = $row->classroom_group_academic_periods_classroom_group_id;
 			}
 		}
-		return $classroomgroupids;	
+		return $classroomgroupids;
 	}
 
 	function get_all_study_submodules_id_by_mentor_id($academic_period_id,$teacher_code,$orderby = "ASC") {
@@ -3889,10 +3889,10 @@ class managment_model  extends CI_Model  {
 		}
 
 		/*
-		SELECT DISTINCT `study_submodules_id` 
-		FROM (`lesson`) 
-		JOIN `study_submodules` ON `study_submodules`.`study_submodules_study_module_id` = `lesson`.`lesson_study_module_id` 
-		JOIN `study_submodules_academic_periods` ON `study_submodules_academic_periods`.`study_submodules_academic_periods_study_submodules_id` = `study_submodules`.`study_submodules_id` 
+		SELECT DISTINCT `study_submodules_id`
+		FROM (`lesson`)
+		JOIN `study_submodules` ON `study_submodules`.`study_submodules_study_module_id` = `lesson`.`lesson_study_module_id`
+		JOIN `study_submodules_academic_periods` ON `study_submodules_academic_periods`.`study_submodules_academic_periods_study_submodules_id` = `study_submodules`.`study_submodules_id`
 		WHERE `lesson_classroom_group_id` IN ('25') AND `lesson_academic_period_id` = '5' AND `study_submodules_academic_periods_academic_period_id` = '5'
 		*/
 
@@ -3915,7 +3915,7 @@ class managment_model  extends CI_Model  {
 				$study_submodules_id[] = $row->study_submodules_id;
 			}
 		}
-		return $study_submodules_id;	
+		return $study_submodules_id;
 	}
 
 
@@ -3932,11 +3932,11 @@ class managment_model  extends CI_Model  {
 
 	function get_all_study_submodules_ids_classroomgroupid_and_teacher_id($academic_period_id,$teacher_id,$classroomgroupid) {
 		/*
-		SELECT DISTINCT `study_submodules_id` 
-		FROM (`lesson`) 
-		JOIN `study_submodules` ON `study_submodules`.`study_submodules_study_module_id` = `lesson`.`lesson_study_module_id` 
-		JOIN `study_submodules_academic_periods` ON `study_submodules_academic_periods`.`study_submodules_academic_periods_study_submodules_id` = `study_submodules`.`study_submodules_id` 
-		WHERE `lesson_classroom_group_id` = '40' AND `lesson_academic_period_id` = '5' AND `study_submodules_academic_periods_academic_period_id` = '5' 
+		SELECT DISTINCT `study_submodules_id`
+		FROM (`lesson`)
+		JOIN `study_submodules` ON `study_submodules`.`study_submodules_study_module_id` = `lesson`.`lesson_study_module_id`
+		JOIN `study_submodules_academic_periods` ON `study_submodules_academic_periods`.`study_submodules_academic_periods_study_submodules_id` = `study_submodules`.`study_submodules_id`
+		WHERE `lesson_classroom_group_id` = '40' AND `lesson_academic_period_id` = '5' AND `study_submodules_academic_periods_academic_period_id` = '5'
 		*/
 
 		$this->db->select('study_submodules_id');
@@ -3963,11 +3963,11 @@ class managment_model  extends CI_Model  {
 
 	function get_all_study_submodules_ids_classroomgroupid($academic_period_id,$classroomgroupid) {
 		/*
-		SELECT DISTINCT `study_submodules_id` 
-		FROM (`lesson`) 
-		JOIN `study_submodules` ON `study_submodules`.`study_submodules_study_module_id` = `lesson`.`lesson_study_module_id` 
-		JOIN `study_submodules_academic_periods` ON `study_submodules_academic_periods`.`study_submodules_academic_periods_study_submodules_id` = `study_submodules`.`study_submodules_id` 
-		WHERE `lesson_classroom_group_id` = '40' AND `lesson_academic_period_id` = '5' AND `study_submodules_academic_periods_academic_period_id` = '5' 
+		SELECT DISTINCT `study_submodules_id`
+		FROM (`lesson`)
+		JOIN `study_submodules` ON `study_submodules`.`study_submodules_study_module_id` = `lesson`.`lesson_study_module_id`
+		JOIN `study_submodules_academic_periods` ON `study_submodules_academic_periods`.`study_submodules_academic_periods_study_submodules_id` = `study_submodules`.`study_submodules_id`
+		WHERE `lesson_classroom_group_id` = '40' AND `lesson_academic_period_id` = '5' AND `study_submodules_academic_periods_academic_period_id` = '5'
 		*/
 
 		$this->db->select('study_submodules_id');
@@ -3994,9 +3994,9 @@ class managment_model  extends CI_Model  {
 	function get_teacher_id_from_teacher_code($teacher_code, $current_academic_period_id = null) {
 
 		if ($current_academic_period_id == null) {
-			$current_academic_period_id = $this->get_current_academic_period_id();	
+			$current_academic_period_id = $this->get_current_academic_period_id();
 		}
-		
+
 
 		$this->db->select('teacher_academic_periods_teacher_id');
 		$this->db->from('teacher_academic_periods');
@@ -4015,7 +4015,7 @@ class managment_model  extends CI_Model  {
 	}
 
 	function get_all_study_submodules_report_info_by_teacher_code($academic_period,$teacher_code,$orderby = "DESC") {
-		
+
 		$study_submodules_id = $this->get_all_study_submodules_ids_byteacher_code($academic_period,$teacher_code);
 
 		if (!(count($study_submodules_id)>0)) {
@@ -4026,10 +4026,10 @@ class managment_model  extends CI_Model  {
 		//classgroups
 		//Example SQL:
 		/*
-		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
+		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
 		studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,study_submodules_order,study_submodules_description
-		FROM study_submodules_academic_periods 
+		FROM study_submodules_academic_periods
 		LEFT JOIN study_submodules ON study_submodules.study_submodules_id = study_submodules_academic_periods.study_submodules_academic_periods_study_submodules_id
 		LEFT JOIN study_module ON study_module.study_module_id = study_submodules.study_submodules_study_module_id
 		LEFT JOIN course ON  course.course_id = study_submodules.study_submodules_courseid
@@ -4038,10 +4038,10 @@ class managment_model  extends CI_Model  {
 		WHERE study_submodules_academic_periods_academic_period_id = 5
 		*/
 
-		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
-							studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, 
-							study_submodules_academic_periods_initialDate_planned, study_submodules_academic_periods_endDate_planned, 
+		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
+							studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate,
+							study_submodules_academic_periods_initialDate_planned, study_submodules_academic_periods_endDate_planned,
 							study_submodules_academic_periods_totalHours,
 							study_submodules_order,study_submodules_description');
 		$this->db->from('study_submodules_academic_periods');
@@ -4052,9 +4052,9 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
 		$this->db->where('study_submodules_academic_periods_academic_period_id',$academic_period);
 		$this->db->where_in('study_submodules_id',$study_submodules_id);
-		
+
 		$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -4062,7 +4062,7 @@ class managment_model  extends CI_Model  {
 			$all_study_submodules = array();
 			foreach($query->result() as $row){
 				$study_submodule = new stdClass;
-				
+
 				$study_submodule->id = $row->study_submodules_id;
 				$study_submodule->shortname = $row->study_submodules_shortname;
 				$study_submodule->name = $row->study_submodules_name;
@@ -4089,10 +4089,10 @@ class managment_model  extends CI_Model  {
 				$study_submodule->study_submodule_endDate = $row->study_submodules_academic_periods_endDate;
 				$study_submodule->study_submodule_initialDate_planned = $row->study_submodules_academic_periods_initialDate_planned;
 				$study_submodule->study_submodule_endDate_planned = $row->study_submodules_academic_periods_endDate_planned;
-				
+
 				//get number of teacher Deparments
 				/*
-				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {
 					$course->numberOfTeachers = $teachers_by_course[$row->course_id]->total;
 					$course->teacher_ids = $teachers_by_course[$row->course_id]->teachers_ids;
 
@@ -4100,11 +4100,11 @@ class managment_model  extends CI_Model  {
 					$course->numberOfTeachers = "";
 					$course->teacher_ids = "";
 				}	*/
-				
+
 				$all_study_submodules[$row->study_submodules_id] = $study_submodule;
 			}
 			return $all_study_submodules;
-		}	
+		}
 		else
 			return false;
 
@@ -4122,10 +4122,10 @@ class managment_model  extends CI_Model  {
 		//classgroups
 		//Example SQL:
 		/*
-		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
+		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
 		studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,study_submodules_order,study_submodules_description
-		FROM study_submodules_academic_periods 
+		FROM study_submodules_academic_periods
 		LEFT JOIN study_submodules ON study_submodules.study_submodules_id = study_submodules_academic_periods.study_submodules_academic_periods_study_submodules_id
 		LEFT JOIN study_module ON study_module.study_module_id = study_submodules.study_submodules_study_module_id
 		LEFT JOIN course ON  course.course_id = study_submodules.study_submodules_courseid
@@ -4134,8 +4134,8 @@ class managment_model  extends CI_Model  {
 		WHERE study_submodules_academic_periods_academic_period_id = 5
 		*/
 
-		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
+		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
 							studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate,
 							study_submodules_academic_periods_initialDate_planned, study_submodules_academic_periods_endDate_planned, study_submodules_academic_periods_totalHours,
 							study_submodules_order,study_submodules_description');
@@ -4147,9 +4147,9 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
 		$this->db->where('study_submodules_academic_periods_academic_period_id',$academic_period);
 		$this->db->where_in('study_submodules_id',$study_submodules_id);
-		
+
 		$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -4157,7 +4157,7 @@ class managment_model  extends CI_Model  {
 			$all_study_submodules = array();
 			foreach($query->result() as $row){
 				$study_submodule = new stdClass;
-				
+
 				$study_submodule->id = $row->study_submodules_id;
 				$study_submodule->shortname = $row->study_submodules_shortname;
 				$study_submodule->name = $row->study_submodules_name;
@@ -4185,10 +4185,10 @@ class managment_model  extends CI_Model  {
 				$study_submodule->study_submodule_initialDate_planned = $row->study_submodules_academic_periods_initialDate_planned;
 				$study_submodule->study_submodule_endDate_planned = $row->study_submodules_academic_periods_endDate_planned;
 
-				
+
 				//get number of teacher Deparments
 				/*
-				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {
 					$course->numberOfTeachers = $teachers_by_course[$row->course_id]->total;
 					$course->teacher_ids = $teachers_by_course[$row->course_id]->teachers_ids;
 
@@ -4196,11 +4196,11 @@ class managment_model  extends CI_Model  {
 					$course->numberOfTeachers = "";
 					$course->teacher_ids = "";
 				}	*/
-				
+
 				$all_study_submodules[$row->study_submodules_id] = $study_submodule;
 			}
 			return $all_study_submodules;
-		}	
+		}
 		else
 			return false;
 
@@ -4209,7 +4209,7 @@ class managment_model  extends CI_Model  {
 
 
 	function get_all_study_submodules_report_info_by_classroomgroupid($academic_period,$classroom_group_id,$orderby = "DESC") {
-		
+
 		$study_submodules_id = $this->get_all_study_submodules_ids_classroomgroupid($academic_period,$classroom_group_id);
 
 		if (!(count($study_submodules_id)>0)) {
@@ -4220,10 +4220,10 @@ class managment_model  extends CI_Model  {
 		//classgroups
 		//Example SQL:
 		/*
-		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
+		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
 		studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,study_submodules_order,study_submodules_description
-		FROM study_submodules_academic_periods 
+		FROM study_submodules_academic_periods
 		LEFT JOIN study_submodules ON study_submodules.study_submodules_id = study_submodules_academic_periods.study_submodules_academic_periods_study_submodules_id
 		LEFT JOIN study_module ON study_module.study_module_id = study_submodules.study_submodules_study_module_id
 		LEFT JOIN course ON  course.course_id = study_submodules.study_submodules_courseid
@@ -4232,9 +4232,9 @@ class managment_model  extends CI_Model  {
 		WHERE study_submodules_academic_periods_academic_period_id = 5
 		*/
 
-		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
-							studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, 
+		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
+							studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate,
 							study_submodules_academic_periods_initialDate_planned, study_submodules_academic_periods_endDate_planned,
 							study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,
 							study_submodules_order,study_submodules_description');
@@ -4246,9 +4246,9 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
 		$this->db->where('study_submodules_academic_periods_academic_period_id',$academic_period);
 		$this->db->where_in('study_submodules_id',$study_submodules_id);
-		
+
 		$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -4256,7 +4256,7 @@ class managment_model  extends CI_Model  {
 			$all_study_submodules = array();
 			foreach($query->result() as $row){
 				$study_submodule = new stdClass;
-				
+
 				$study_submodule->id = $row->study_submodules_id;
 				$study_submodule->shortname = $row->study_submodules_shortname;
 				$study_submodule->name = $row->study_submodules_name;
@@ -4283,10 +4283,10 @@ class managment_model  extends CI_Model  {
 				$study_submodule->study_submodule_endDate = $row->study_submodules_academic_periods_endDate;
 				$study_submodule->study_submodule_initialDate_planned = $row->study_submodules_academic_periods_initialDate_planned;
 				$study_submodule->study_submodule_endDate_planned = $row->study_submodules_academic_periods_endDate_planned;
-				
+
 				//get number of teacher Deparments
 				/*
-				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {
 					$course->numberOfTeachers = $teachers_by_course[$row->course_id]->total;
 					$course->teacher_ids = $teachers_by_course[$row->course_id]->teachers_ids;
 
@@ -4294,11 +4294,11 @@ class managment_model  extends CI_Model  {
 					$course->numberOfTeachers = "";
 					$course->teacher_ids = "";
 				}	*/
-				
+
 				$all_study_submodules[$row->study_submodules_id] = $study_submodule;
 			}
 			return $all_study_submodules;
-		}	
+		}
 		else
 			return false;
 
@@ -4311,10 +4311,10 @@ class managment_model  extends CI_Model  {
 		//classgroups
 		//Example SQL:
 		/*
-		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
+		SELECT study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+		study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
 		studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,study_submodules_order,study_submodules_description
-		FROM study_submodules_academic_periods 
+		FROM study_submodules_academic_periods
 		LEFT JOIN study_submodules ON study_submodules.study_submodules_id = study_submodules_academic_periods.study_submodules_academic_periods_study_submodules_id
 		LEFT JOIN study_module ON study_module.study_module_id = study_submodules.study_submodules_study_module_id
 		LEFT JOIN course ON  course.course_id = study_submodules.study_submodules_courseid
@@ -4323,9 +4323,9 @@ class managment_model  extends CI_Model  {
 		WHERE study_submodules_academic_periods_academic_period_id = 5
 		*/
 
-		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname, 
-							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id, 
-							studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate, 
+		$this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_submodules_study_module_id, study_module_shortname,
+							study_module_name, study_submodules_courseid, course_shortname, course_name , course.course_study_id, studies_shortname, studies_name,studies_studies_law_id,
+							studies_law_shortname, studies_law_name, study_submodules_academic_periods_initialDate,
 							study_submodules_academic_periods_initialDate_planned, study_submodules_academic_periods_endDate_planned,
 							study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,
 							study_submodules_order,study_submodules_description');
@@ -4337,9 +4337,9 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
 		$this->db->where('study_submodules_academic_periods_academic_period_id',$academic_period);
 		//$this->db->limit(10);
-		
+
 		$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -4347,7 +4347,7 @@ class managment_model  extends CI_Model  {
 			$all_study_submodules = array();
 			foreach($query->result() as $row){
 				$study_submodule = new stdClass;
-				
+
 				$study_submodule->id = $row->study_submodules_id;
 				$study_submodule->shortname = $row->study_submodules_shortname;
 				$study_submodule->name = $row->study_submodules_name;
@@ -4374,10 +4374,10 @@ class managment_model  extends CI_Model  {
 				$study_submodule->study_submodule_endDate = $row->study_submodules_academic_periods_endDate;
 				$study_submodule->study_submodule_initialDate_planned = $row->study_submodules_academic_periods_initialDate_planned;
 				$study_submodule->study_submodule_endDate_planned = $row->study_submodules_academic_periods_endDate_planned;
-				
+
 				//get number of teacher Deparments
 				/*
-				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {
 					$course->numberOfTeachers = $teachers_by_course[$row->course_id]->total;
 					$course->teacher_ids = $teachers_by_course[$row->course_id]->teachers_ids;
 
@@ -4385,11 +4385,11 @@ class managment_model  extends CI_Model  {
 					$course->numberOfTeachers = "";
 					$course->teacher_ids = "";
 				}	*/
-				
+
 				$all_study_submodules[$row->study_submodules_id] = $study_submodule;
 			}
 			return $all_study_submodules;
-		}	
+		}
 		else
 			return false;
 
@@ -4401,17 +4401,17 @@ class managment_model  extends CI_Model  {
 		*/
 		$this->db->select('academic_periods_id,academic_periods_shortname, academic_periods_name,academic_periods_alt_name,academic_periods_current');
 		$this->db->from('academic_periods');
-	
+
 
 		$this->db->order_by('academic_periods_id', $orderby);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() > 0){
 			$all_academic_periods = array();
 			foreach($query->result() as $row){
 				$academic_period = new stdClass;
-				
+
 				$academic_period->id = $row->academic_periods_id;
 				$academic_period->shortname = $row->academic_periods_shortname;
 				$academic_period->name = $row->academic_periods_name;
@@ -4421,7 +4421,7 @@ class managment_model  extends CI_Model  {
 				$all_academic_periods[$academic_period->id] = $academic_period;
 			}
 			return $all_academic_periods;
-		}	
+		}
 		else
 			return false;
 	}
@@ -4430,17 +4430,17 @@ class managment_model  extends CI_Model  {
 		$this->db->select('academic_periods_initial_date,academic_periods_final_date');
 		$this->db->from('academic_periods');
 		$this->db->where('academic_periods_id',$academic_period_id);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			$dates = new stdClass();
 			$dates->initial_date = $row->academic_periods_initial_date;
 			$dates->final_date = $row->academic_periods_final_date;
 
 			return $dates;
-		}	
+		}
 		else {
 			return false;
 		}
@@ -4451,34 +4451,34 @@ class managment_model  extends CI_Model  {
 		$this->db->select('academic_periods_initial_date');
 		$this->db->from('academic_periods');
 		$this->db->where('academic_periods_id',$academic_period_id);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->academic_periods_initial_date;
-		}	
+		}
 		else {
 			return false;
 		}
-	
+
 	}
 
 	public function get_academic_period_final_date($academic_period_id){
 		$this->db->select('academic_periods_final_date');
 		$this->db->from('academic_periods');
 		$this->db->where('academic_periods_id',$academic_period_id);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->academic_periods_final_date;
-		}	
+		}
 		else {
 			return false;
 		}
-		
+
 	}
 
 	function get_current_academic_period_id() {
@@ -4494,9 +4494,9 @@ class managment_model  extends CI_Model  {
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->academic_periods_id;
-		}	
+		}
 		else
 			return false;
 	}
@@ -4516,7 +4516,7 @@ class managment_model  extends CI_Model  {
 		if ($query->num_rows() == 1){
 			$academic_period = new stdClass;
 			$row = $query->row();
-				
+
 			$academic_period->id = $row->academic_periods_id;
 			$academic_period->shortname = $row->academic_periods_shortname;
 			$academic_period->name = $row->academic_periods_name;
@@ -4524,7 +4524,7 @@ class managment_model  extends CI_Model  {
 			$academic_period->current = $row->academic_periods_current;
 
 			return $academic_period;
-		}	
+		}
 		else
 			return false;
 	}
@@ -4532,7 +4532,7 @@ class managment_model  extends CI_Model  {
 	function get_all_classgroups_report_info($academic_period,$orderby = "DESC") {
 
 		/* SQL SCRIPT FOR MIGRATION
-		UPDATE  classroom_group_academic_periods AS cgap 
+		UPDATE  classroom_group_academic_periods AS cgap
 		INNER JOIN classroom_group AS cg ON cg.classroom_group_id 	 = cgap.classroom_group_academic_periods_classroom_group_id
 		SET cgap.classroom_group_academic_periods_mentorId = cg.classroom_group_mentorId, cgap.classroom_group_academic_periods_description = cg.classroom_group_description, cgap.classroom_group_academic_periods_shift = cg.classroom_group_shift,  cgap.classroom_group_academic_periods_location = cg.classroom_group_location_id
 		WHERE classroom_group_academic_periods_academic_period_id = 5
@@ -4541,28 +4541,28 @@ class managment_model  extends CI_Model  {
 		//classgroups
 		//Example SQL:
 		/*
-		SELECT `classroom_group_id`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name`, `classroom_group_course_id`, 
-		`classroom_group_academic_periods_description`, `classroom_group_academic_periods_mentorId`, `classroom_group_academic_periods_shift`, 
-		`classroom_group_academic_periods_location`, `course_shortname`, `course_name`, `course_study_id`, `studies_shortname`, `studies_name`, 
+		SELECT `classroom_group_id`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name`, `classroom_group_course_id`,
+		`classroom_group_academic_periods_description`, `classroom_group_academic_periods_mentorId`, `classroom_group_academic_periods_shift`,
+		`classroom_group_academic_periods_location`, `course_shortname`, `course_name`, `course_study_id`, `studies_shortname`, `studies_name`,
 		`studies_studies_organizational_unit_id`, `studies_studies_law_id`, `studies_law_shortname`, `studies_law_name`, `teacher_person_id`,
 		 `teacher_academic_periods_code`, `teacher_academic_periods_department_id`, `person_givenName`, `person_sn1`, `person_sn2`, `shift_name`,
-		  `location_name`, `location_shortName` 
-		  FROM (`classroom_group_academic_periods`) 
-		  LEFT JOIN `classroom_group` ON `classroom_group`.`classroom_group_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_classroom_group_id` 
-		  LEFT JOIN `course` ON `course`.`course_id` = `classroom_group`.`classroom_group_course_id` 
-		  LEFT JOIN `studies` ON `studies`.`studies_id` = `course`.`course_study_id` 
-		  LEFT JOIN `studies_law` ON `studies_law`.`studies_law_id` = `studies`.`studies_studies_law_id` 
-		  LEFT JOIN `teacher` ON `teacher`.`teacher_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_mentorId` 
-		  JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `teacher`.`teacher_id` 
-		  LEFT JOIN `person` ON `person`.`person_id` = `teacher`.`teacher_person_id` 
-		  LEFT JOIN `shift` ON `shift`.`shift_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_shift` 
-		  LEFT JOIN `location` ON `location`.`location_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_location` 
-		  WHERE `classroom_group_academic_periods_academic_period_id` = '5' AND `teacher_academic_periods_academic_period_id` = '5' 
-		  ORDER BY `studies_shortname` DESC 
+		  `location_name`, `location_shortName`
+		  FROM (`classroom_group_academic_periods`)
+		  LEFT JOIN `classroom_group` ON `classroom_group`.`classroom_group_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_classroom_group_id`
+		  LEFT JOIN `course` ON `course`.`course_id` = `classroom_group`.`classroom_group_course_id`
+		  LEFT JOIN `studies` ON `studies`.`studies_id` = `course`.`course_study_id`
+		  LEFT JOIN `studies_law` ON `studies_law`.`studies_law_id` = `studies`.`studies_studies_law_id`
+		  LEFT JOIN `teacher` ON `teacher`.`teacher_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_mentorId`
+		  JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `teacher`.`teacher_id`
+		  LEFT JOIN `person` ON `person`.`person_id` = `teacher`.`teacher_person_id`
+		  LEFT JOIN `shift` ON `shift`.`shift_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_shift`
+		  LEFT JOIN `location` ON `location`.`location_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_location`
+		  WHERE `classroom_group_academic_periods_academic_period_id` = '5' AND `teacher_academic_periods_academic_period_id` = '5'
+		  ORDER BY `studies_shortname` DESC
 		*/
 
-		$this->db->select('classroom_group_id, classroom_group_code, classroom_group_shortName, classroom_group_name, classroom_group_course_id, classroom_group_academic_periods_description, classroom_group_academic_periods_mentorId, classroom_group_academic_periods_shift, 
-		classroom_group_academic_periods_location, course_shortname, course_name, course_study_id, studies_shortname, studies_name, studies_studies_organizational_unit_id, studies_studies_law_id, studies_law_shortname, 
+		$this->db->select('classroom_group_id, classroom_group_code, classroom_group_shortName, classroom_group_name, classroom_group_course_id, classroom_group_academic_periods_description, classroom_group_academic_periods_mentorId, classroom_group_academic_periods_shift,
+		classroom_group_academic_periods_location, course_shortname, course_name, course_study_id, studies_shortname, studies_name, studies_studies_organizational_unit_id, studies_studies_law_id, studies_law_shortname,
 		studies_law_name, teacher_person_id, teacher_academic_periods_code,teacher_academic_periods_department_id, person_givenName, person_sn1, person_sn2,shift_name,location_name, location_shortName');
 		$this->db->from('classroom_group_academic_periods');
 		$this->db->join('classroom_group','classroom_group.classroom_group_id = classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id', 'left');
@@ -4579,7 +4579,7 @@ class managment_model  extends CI_Model  {
 
 
 		$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -4588,7 +4588,7 @@ class managment_model  extends CI_Model  {
 			$all_classroom_groups = array();
 			foreach($query->result() as $row){
 				$classroom_group = new stdClass;
-				
+
 				$classroom_group->id = $row->classroom_group_id;
 				$classroom_group->code = $row->classroom_group_code;
 				$classroom_group->shortname = $row->classroom_group_shortName;
@@ -4606,7 +4606,7 @@ class managment_model  extends CI_Model  {
 				$classroom_group->study_law_id = $row->studies_studies_law_id;
 				$classroom_group->study_law_name = $row->studies_law_shortname;
 				$classroom_group->study_law_shortname = $row->studies_law_name;
-				
+
 				$classroom_group->mentor_id = $row->classroom_group_academic_periods_mentorId;
 				$classroom_group->mentor_person_id = $row->teacher_person_id;
 				$classroom_group->mentor_code = $row->teacher_academic_periods_code;
@@ -4624,7 +4624,7 @@ class managment_model  extends CI_Model  {
 
 				//get number of teacher Deparments
 				/*
-				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {
 					$course->numberOfTeachers = $teachers_by_course[$row->course_id]->total;
 					$course->teacher_ids = $teachers_by_course[$row->course_id]->teachers_ids;
 
@@ -4632,20 +4632,20 @@ class managment_model  extends CI_Model  {
 					$course->numberOfTeachers = "";
 					$course->teacher_ids = "";
 				}	*/
-				
+
 				$all_classroom_groups[$row->classroom_group_id] = $classroom_group;
 			}
 			return $all_classroom_groups;
-		}	
+		}
 		else
 			return false;
 
 	}
-	
+
 
 	function get_all_courses_report_info($orderby = "DESC") {
 
-			
+
 		//$teachers_by_department = $this->get_teachers_by_department();
 		//$studies_by_department = $this->get_studies_by_department();
 
@@ -4654,14 +4654,14 @@ class managment_model  extends CI_Model  {
 		//Example SQL:
 		/*
 		SELECT course_id, course_shortname, course_name, course_number course_cycle_id, course_study_id, cycle_id, cycle_shortname, cycle_name, studies_id, studies_shortname, studies_name, studies_studies_organizational_unit_id, studies_studies_law_id, studies_law_shortname, studies_law_name
-		FROM `course` 
+		FROM `course`
 		LEFT JOIN cycle ON cycle.cycle_id = course.course_cycle_id
 		LEFT JOIN studies ON studies.studies_id = course.course_study_id
 		LEFT JOIN studies_law ON studies_law.studies_law_id = studies.studies_studies_law_id
 		WHERE 1
 		*/
 
-		$this->db->select('course_id, course_shortname, course_name, course_number, course_cycle_id, course_study_id, cycle_shortname, cycle_name,  
+		$this->db->select('course_id, course_shortname, course_name, course_number, course_cycle_id, course_study_id, cycle_shortname, cycle_name,
 			               studies_shortname, studies_name, studies_studies_organizational_unit_id, studies_studies_law_id,
 			               studies_law_shortname, studies_law_name');
 		$this->db->from('course');
@@ -4669,14 +4669,14 @@ class managment_model  extends CI_Model  {
 		$this->db->join('studies','studies.studies_id = course.course_study_id', 'left');
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
 		$this->db->order_by('studies_shortname', $orderby);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() > 0){
 			$all_courses = array();
 			foreach($query->result() as $row){
 				$course = new stdClass;
-				
+
 				$course->id = $row->course_id;
 				$course->shortname = $row->course_shortname;
 				$course->name = $row->course_name;
@@ -4691,11 +4691,11 @@ class managment_model  extends CI_Model  {
 				$course->studies_studies_law_id = $row->studies_studies_law_id;
 				$course->studies_law_shortname = $row->studies_law_shortname;
 				$course->studies_law_name = $row->studies_law_name;
-				
+
 
 				//get number of teacher Deparments
 				/*
-				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $teachers_by_course )) {
 					$course->numberOfTeachers = $teachers_by_course[$row->course_id]->total;
 					$course->teacher_ids = $teachers_by_course[$row->course_id]->teachers_ids;
 
@@ -4705,18 +4705,18 @@ class managment_model  extends CI_Model  {
 				}
 
 				//get number of teacher Studies
-				if ( array_key_exists ( $row->course_id , $studies_by_course )) {					
+				if ( array_key_exists ( $row->course_id , $studies_by_course )) {
 					$course->numberOfStudies = $studies_by_course[$row->course_id]->total;
 					$course->studies_ids = $studies_by_course[$row->course_id]->studies_ids;
 				}	else {
 					$course->numberOfStudies = "";
 					$course->studies_ids = "";
 				}*/
-				
+
 				$all_courses[$row->course_id] = $course;
 			}
 			return $all_courses;
-		}	
+		}
 		else
 			return false;
 
@@ -4729,7 +4729,7 @@ class managment_model  extends CI_Model  {
 			$academic_period = $this->get_current_academic_period_id();
 		}
 
-			
+
 		$teachers_by_department = $this->get_teachers_by_department();
 		$studies_by_department = $this->get_studies_by_department();
 
@@ -4747,7 +4747,7 @@ class managment_model  extends CI_Model  {
 		$this->db->join('location','department.department_location_id = location.location_id', 'left');
 		$this->db->order_by('department_name', $orderby);
 		$this->db->where('teacher_academic_periods_academic_period_id', $academic_period);
-		
+
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -4756,7 +4756,7 @@ class managment_model  extends CI_Model  {
 			$all_departments = array();
 			foreach($query->result() as $row){
 				$department = new stdClass;
-				
+
 				$department->id = $row->department_id;
 				$department->shortname = $row->department_shortname;
 				$department->name = $row->department_name;
@@ -4770,10 +4770,10 @@ class managment_model  extends CI_Model  {
 				$department->organizational_unit = $row->organizational_unit_name;
 				$department->organizational_unit_id = $row->organizational_unit_id;
 				$department->location = $row->location_name;
-				$department->location_id = $row->department_location_id;				
+				$department->location_id = $row->department_location_id;
 
 				//get number of teacher Deparments
-				if ( array_key_exists ( $row->department_id , $teachers_by_department )) {					
+				if ( array_key_exists ( $row->department_id , $teachers_by_department )) {
 					$department->numberOfTeachers = $teachers_by_department[$row->department_id]->total;
 					$department->teacher_ids = $teachers_by_department[$row->department_id]->teachers_ids;
 
@@ -4783,21 +4783,21 @@ class managment_model  extends CI_Model  {
 				}
 
 				//get number of teacher Studies
-				if ( array_key_exists ( $row->department_id , $studies_by_department )) {					
+				if ( array_key_exists ( $row->department_id , $studies_by_department )) {
 					$department->numberOfStudies = $studies_by_department[$row->department_id]->total;
 					$department->studies_ids = $studies_by_department[$row->department_id]->studies_ids;
 				}	else {
 					$department->numberOfStudies = "";
 					$department->studies_ids = "";
 				}
-				
+
 				$all_departments[$row->department_id] = $department;
 			}
 			return $all_departments;
-		}	
+		}
 		else
 			return false;
-		
+
 
 		/*$all_departments = array();
 
@@ -4831,7 +4831,7 @@ class managment_model  extends CI_Model  {
 		$this->db->select('classroom_group_id,classroom_group_code,classroom_group_shortName,classroom_group_name,classroom_group_description,classroom_group_educationalLevelId,classroom_group_mentorId');
 		$this->db->from('classroom_group');
 		$this->db->order_by('classroom_group_code', $orderby);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() > 0){
@@ -4840,7 +4840,7 @@ class managment_model  extends CI_Model  {
 				$groups_array[$row->classroom_group_code] = $row->classroom_group_name;
 			}
 			return $groups_array;
-		}	
+		}
 		else
 			return false;
 	}
@@ -4851,27 +4851,27 @@ class managment_model  extends CI_Model  {
 		$this->db->from('classroom_group');
 		$this->db->where('classroom_group_code', $group_code);
 		$this->db->count_all_results();
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
-			$row = $query->row(); 
+			$row = $query->row();
 			return array($row->classroom_group_shortName,$row->classroom_group_name);
 		}
 		else
 			return false;
 	}
-	
+
 	function getGroupTotals($group_code) {
 		//classroom_group
 		$this->db->select('classroom_group_name,classroom_group_shortName');
 		$this->db->from('classroom_group');
 		$this->db->where('classroom_group_code', $group_code);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
-			$row = $query->row(); 
+			$row = $query->row();
 			return array($row->classroom_group_shortName,$row->classroom_group_name);
 		}
 		else
@@ -4880,12 +4880,12 @@ class managment_model  extends CI_Model  {
 
 function getAllGroupStudentsInfo($group){
 
-/* 
-SELECT distinct(classroom_group_code), person_givenName, person_sn1, person_sn2 
-FROM enrollment_modules 
-JOIN person ON person.person_id = enrollment_modules.enrollment_modules_personid 
-JOIN classroom_group ON enrollment_modules.enrollment_modules_group_id = classroom_group.classroom_group_id 
-WHERE classroom_group.classroom_group_id = 3 
+/*
+SELECT distinct(classroom_group_code), person_givenName, person_sn1, person_sn2
+FROM enrollment_modules
+JOIN person ON person.person_id = enrollment_modules.enrollment_modules_personid
+JOIN classroom_group ON enrollment_modules.enrollment_modules_group_id = classroom_group.classroom_group_id
+WHERE classroom_group.classroom_group_id = 3
 ORDER BY person.person_sn1
 */
 
@@ -4917,7 +4917,7 @@ ORDER BY person.person_sn1
 			}
 
 			return $student_info_array;
-		}			
+		}
 		else
 			return false;
 
@@ -4931,27 +4931,27 @@ ORDER BY person.person_sn1
 		$query = $this->db->get();
 
 		//echo $this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
-		
+
 		//$teacher = new stdClass();
 
 		foreach ($query->result_array() as $row)	{
 
 				$teacher = new stdClass();
-				
+
 				$teacher->teacher_id = $row['teacher_id'];
 				$teacher->givenName = $row['person_givenName'];
 				$teacher->sn1 = $row['person_sn1'];
 				$teacher->sn2 = $row['person_sn2'];
 				$teacher->photo_url = $row['person_photo'];
-				
+
 				$all_teachers[] = $teacher;
 
 			}
 			return $all_teachers;
 			//print_r($all_teachers);
-		}			
+		}
 		return false;
 	}
 
@@ -4961,9 +4961,9 @@ ORDER BY person.person_sn1
         $this->db->select('classroom_group_id,classroom_group_code,classroom_group_shortName,classroom_group_name');
 
 		$this->db->order_by('classroom_group_code', $orderby);
-		       
+
         $query = $this->db->get();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$groups_array = array();
@@ -4972,10 +4972,10 @@ ORDER BY person.person_sn1
    				$groups_array[$row['classroom_group_id']] = $row['classroom_group_code'] . " - " . $row['classroom_group_name'] . "( " . $row['classroom_group_shortName'] . " )";
 			}
 			return $groups_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	function startsWith($haystack, $needle) {
 	    // search backwards starting from haystack length characters from the end
@@ -4986,13 +4986,13 @@ ORDER BY person.person_sn1
 		/*
 		SELECT enrollment_id,enrollment_personid FROM enrollment WHERE 1 ORDER BY enrollment_personid
 		*/
-		
+
 		$this->db->select('enrollment_id,enrollment_periodid,enrollment_personid');
         $this->db->from('enrollment');
 		$this->db->order_by('enrollment_personid');
-		       
+
         $query = $this->db->get();
-		
+
 		$last_enrollment = null;
 		$enrollments_by_person_id = array();
 		if ($query->num_rows() > 0) {
@@ -5020,22 +5020,22 @@ ORDER BY person.person_sn1
 				$last_enrollment = $enrollment;
 			}
 		}
-		
+
 		return $enrollments_by_person_id;
 	}
 
 	function get_teachers_by_person_id(){
-		
+
 		/*
 		SELECT teacher_id,teacher_user_id,teacher_person_id FROM teacher WHERE 1 ORDER BY teacher_person_id
 		*/
-		
+
 		$this->db->select('teacher_id,teacher_user_id,teacher_person_id');
         $this->db->from('teacher');
 		$this->db->order_by('teacher_person_id');
-		       
+
         $query = $this->db->get();
-		
+
 		$last_teacher = null;
 		$teachers_by_person_id = array();
 		if ($query->num_rows() > 0) {
@@ -5063,20 +5063,20 @@ ORDER BY person.person_sn1
 				$last_teacher = $teacher;
 			}
 		}
-		
+
 		return $teachers_by_person_id;
 	}
 	function get_employees_by_person_id(){
 		/*
 		SELECT employees_id,employees_person_id,employees_code FROM employees WHERE 1 ORDER BY employees_person_id
 		*/
-		
+
 		$this->db->select('employees_id,employees_person_id,employees_code');
         $this->db->from('employees');
 		$this->db->order_by('employees_person_id');
-		       
+
         $query = $this->db->get();
-		
+
 		$last_employee = null;
 		$employees_by_person_id = array();
 		if ($query->num_rows() > 0) {
@@ -5104,20 +5104,20 @@ ORDER BY person.person_sn1
 				$last_employee = $employee;
 			}
 		}
-		
+
 		return $employees_by_person_id;
 	}
 	function get_hidden_student_by_person_id(){
 		/*
 		SELECT hidden_student_id,hidden_student_person_id FROM hidden_student WHERE 1 ORDER BY hidden_student_person_id
 		*/
-		
+
 		$this->db->select('hidden_student_id,hidden_student_person_id');
         $this->db->from('hidden_student');
 		$this->db->order_by('hidden_student_person_id');
-		       
+
         $query = $this->db->get();
-		
+
 		$last_hidden_student = null;
 		$hidden_students_by_person_id = array();
 		if ($query->num_rows() > 0) {
@@ -5144,7 +5144,7 @@ ORDER BY person.person_sn1
 				$last_hidden_student = $hidden_student;
 			}
 		}
-		
+
 		return $hidden_students_by_person_id;
 	}
 
@@ -5166,9 +5166,9 @@ ORDER BY person.person_sn1
 		/*
 		SELECT username,person_sn1,person_sn2,person_givenName,person_official_id,person_email,
 		       person_secondary_email,person_terciary_email,person_photo,person_telephoneNumber,person_mobile
-		FROM users 
+		FROM users
 		INNER JOIN person ON users.person_id= person.person_id
-		WHERE 1 
+		WHERE 1
 		ORDER BY username
 		*/
 
@@ -5179,17 +5179,17 @@ ORDER BY person.person_sn1
         $this->db->join('person','users.person_id= person.person_id');
 		$this->db->order_by('username');
 		$this->db->where('mark_as_not_duplicated',0);
-		
-		       
+
+
         $query = $this->db->get();
-		
+
 		$last_user = null;
 		$posible_duplicated_users = array();
 		if ($query->num_rows() > 0) {
 			foreach ($query->result() as $row)	{
 				$user = new stdClass();
 				$user->id = $row->id;
-				$user->person_id = $row->person_id;			
+				$user->person_id = $row->person_id;
 				$user->username = $row->username;
 				$user->person_sn1 = $row->person_sn1;
 				$user->person_sn2 = $row->person_sn2;
@@ -5209,7 +5209,7 @@ ORDER BY person.person_sn1
 				$user->last_login = $row->last_login;
 				$user->active = $row->active;
 				$user->mark_as_not_duplicated = $row->mark_as_not_duplicated;
-				
+
 
 				$user->enrollments = "";
 
@@ -5217,7 +5217,7 @@ ORDER BY person.person_sn1
 					if (array_key_exists($user->person_id, $enrollments_by_person_id)) {
 						foreach ($enrollments_by_person_id[$user->person_id] as $enrollment) {
 							$user->enrollments = $user->enrollments . $enrollment->id . " ( " . $enrollment->periodid . ")" . ", ";
-						}		
+						}
 					}
 				}
 
@@ -5227,7 +5227,7 @@ ORDER BY person.person_sn1
 					if (array_key_exists($user->person_id, $teachers_by_person_id)) {
 						foreach ($teachers_by_person_id[$user->person_id] as $teacher) {
 							$user->teachers = $user->teachers . $teacher->id . " ( " . $teacher->user_id . ")" . ", ";
-						}		
+						}
 					}
 				}
 
@@ -5237,7 +5237,7 @@ ORDER BY person.person_sn1
 					if (array_key_exists($user->person_id, $employees_by_person_id)) {
 						foreach ($employees_by_person_id[$user->person_id] as $employee) {
 							$user->employees = $user->employees . $employee->id . " ( " . $employee->code . ")" . ", ";
-						}		
+						}
 					}
 				}
 
@@ -5247,15 +5247,15 @@ ORDER BY person.person_sn1
 					if (array_key_exists($user->person_id, $hidden_students_by_person_id)) {
 						foreach ($hidden_students_by_person_id[$user->person_id] as $hidden_student) {
 							$user->hidden_students = $user->hidden_students . $hidden_student->id . ", ";
-						}		
+						}
 					}
 				}
-				
+
 
 				if ($last_user != null) {
    					//check if last user is very similar (posible duplicate)
    					if($this->startsWith($user->username,$last_user->username)) {
-   						$posible_duplicated_user = new stdClass();   						
+   						$posible_duplicated_user = new stdClass();
    						$posible_duplicated_users[$row->id] = $user;
    						$posible_duplicated_users[$last_user->id] = $last_user;
    					}
@@ -5264,7 +5264,7 @@ ORDER BY person.person_sn1
    				$last_user = $user;
 			}
 			return $posible_duplicated_users;
-		}			
+		}
 		else
 			return $posible_duplicated_users;
 	}
@@ -5276,11 +5276,11 @@ ORDER BY person.person_sn1
         $this->db->select('teacher_1code,person_sn1,person_sn2,person_givenName,person_id,person_official_id');
 
 		//$this->db->order_by('lesson_code', $orderby);
-		
+
 		$this->db->join('person', 'person.person_id = teacher.teacher_person_id');
-        
+
         $query = $this->db->get();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$teachers_array = array();
@@ -5289,7 +5289,7 @@ ORDER BY person.person_sn1
    				$teachers_array[$row['teacher1_code']] = $row['teacher1_code'] . " - " . $row['person_sn1'] . " " . $row['person_sn2'] . ", " . $row['person_givenName'] . " - " . $row['person_official_id'];
 			}
 			return $teachers_array;
-		}			
+		}
 		else
 			return false;
 	}
@@ -5297,16 +5297,16 @@ ORDER BY person.person_sn1
 	/*
 	function getAllLessonsWithGroupCodeShortNames($orderby="asc") {
 		$all_lessons=$this->getAllLessons();
-		
+
 		foreach ($all_lessons as $lesson_key => $lesson) {
 			$lesson->classroom_group_shortname="PROVA";
 		}
-		
+
 		return $all_lessons;
 	}*/
 /*
 	function getAllTimeSlots($orderby="asc") {
-		
+
 		$this->db->select('time_slot_id,time_slot_start_time,time_slot_end_time,time_slot_lective');
 		$this->db->from('time_slot');
 		$this->db->order_by('time_slot_order', $orderby);
@@ -5318,7 +5318,7 @@ ORDER BY person.person_sn1
 		else
 			return false;
 	}
-	
+
 	function getAllLessons($exists_assignatures_table=false,$orderby="asc") {
 		//classroom_group
         if (!$exists_assignatures_table) {
@@ -5327,16 +5327,16 @@ ORDER BY person.person_sn1
         else {
             $this->db->select('lesson_id,lesson_code,classroom_group.groupShortName,classroom_group_code,teacher1_code,lesson_shortname,assignatura.nom_assignatura,classrom_code,day_code,hour_code');
         }
-                                                
+
 		$this->db->from('lesson');
 		$this->db->order_by('lesson_code', $orderby);
 		$this->db->join('classroom_group', 'classroom_group.groupCode = lesson.classroom_group_code', 'left');
                 if ($exists_assignatures_table) {
-                        $this->db->join('assignatura', 'lesson.lesson_shortname = assignatura.codi_assignatura', 'left');                                        
+                        $this->db->join('assignatura', 'lesson.lesson_shortname = assignatura.codi_assignatura', 'left');
                 }
-		
+
 		$query = $this->db->get();
-		
+
 		if ($query->num_rows() > 0)
 			return $query;
 		else
@@ -5349,70 +5349,70 @@ ORDER BY person.person_sn1
 		$this->db->select('classroom_group_id,classroom_group_code,classroom_group_shortName,classroom_group_name,classroom_group_description,classroom_group_educationalLevelId,classroom_group_mentorId');
 		$this->db->from('classroom_group');
 		$this->db->order_by('classroom_group_code', $orderby);
-		
+
 		$query = $this->db->get();
-		
+
 		if ($query->num_rows() > 0)
 			return $query;
 		else
 			return false;
 	}
-	
+
 	function getGroupNameByGroupCode($group_code) {
 		//classroom_group
 		$this->db->select('classroom_group_name');
 		$this->db->from('classroom_group');
 		$this->db->where('classroom_group_code', $group_code);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1)	{
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->groupName;
 		}
 		else
 			return false;
 	}
-	
+
 	function getGroupShortNameByGroupCode($group_code) {
 		//classroom_group
 		$this->db->select('classroom_group_shortName');
 		$this->db->from('classroom_group');
 		$this->db->where('classroom_group_code', $group_code);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->groupShortame;
 		}
 		else
 			return false;
 	}
-	
+
 	function getGroupNamesByGroupCode($group_code) {
 		//classroom_group
 		$this->db->select('classroom_group_name,classroom_group_shortName');
 		$this->db->from('classroom_group');
 		$this->db->where('classroom_group_code', $group_code);
-		
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
-			$row = $query->row(); 
+			$row = $query->row();
 			return array($row->classroom_group_shortName,$row->classroom_group_name);
 		}
 		else
 			return false;
 	}
-  
+
 	function get_group_by_teachercode_and_day($teacher1_code,$day_code)	{
-	/* 
+	/*
         SELECT assignatura.nom_assignatura, grup.nom_grup, grup.codi_grup,
                    classe.codi_dia, classe.codi_hora, classe.codi_assignatura,
                    interval_horari.hora_inici, interval_horari.hora_final, optativa
         FROM assignatura
-                 NATURAL JOIN classe NATURAL JOIN grup 
+                 NATURAL JOIN classe NATURAL JOIN grup
                  NATURAL JOIN interval_horari
         WHERE classe.codi_professor = '{$VALS['teacher1_code']}'
                   AND  classe.codi_dia = '{$VALS['day_of_week']}'
@@ -5429,8 +5429,8 @@ ORDER BY person.person_sn1
 		$this->db->where('classe.codi_professor',$teacher1_code);
 		$this->db->where('classe.codi_dia',$day_code);
 		$this->db->order_by('classe.codi_hora', 'asc');
-		$this->db->order_by('classroom_group.nom_grup', 'asc'); 
-		
+		$this->db->order_by('classroom_group.nom_grup', 'asc');
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() > 0)
@@ -5438,5 +5438,5 @@ ORDER BY person.person_sn1
 		else
 			return false;
 	}
-*/	
+*/
 }

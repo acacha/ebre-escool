@@ -1,5 +1,5 @@
 <div class="main-content">
-    
+
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
         try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -18,7 +18,7 @@
         </ul>
     </div><!-- /.breadcrumbs -->
 
-    
+
 
     <div class="page-content">
 
@@ -119,25 +119,25 @@
                         <?php foreach( (array) $teachers as $teacher_id => $teacher): ?>
                         <?php if( $teacher_id == $default_teacher): ?>
                         <option value="<?php echo $teacher_id; ?>" selected="selected"><?php echo $teacher; ?></option>
-                    <?php else: ?> 
+                    <?php else: ?>
                     <option value="<?php echo $teacher_id; ?>" ><?php echo $teacher; ?></option>
-                <?php endif; ?> 
-            <?php endforeach; ?> 
-        </select> 
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </select>
     </center>
     <div style="height: 10px;"></div>
     <!-- <center>
         <?php echo lang('show_full_timetable'); ?>
-        <input id="show_compact_timetable" <?php if ($compact) { echo "checked"; }?> type="checkbox" class="switch-small" 
-        data-label-icon="icon-eye-open" 
-        data-on-label="<i class='icon-ok'></i>" 
+        <input id="show_compact_timetable" <?php if ($compact) { echo "checked"; }?> type="checkbox" class="switch-small"
+        data-label-icon="icon-eye-open"
+        data-on-label="<i class='icon-ok'></i>"
         data-off-label="<i class='icon-remove'></i>"
         data-off="danger">
     </center>-->
     <center>
-        <?php echo lang('show_legend'); ?> <input id="hide_show_legend" type="checkbox" class="switch-small" 
-        data-label-icon="icon-eye-open" 
-        data-on-label="<i class='icon-ok'></i>" 
+        <?php echo lang('show_legend'); ?> <input id="hide_show_legend" type="checkbox" class="switch-small"
+        data-label-icon="icon-eye-open"
+        data-on-label="<i class='icon-ok'></i>"
         data-off-label="<i class='icon-remove'></i>"
         data-off="danger">
     </center>
@@ -178,10 +178,10 @@
                         </td>
                         <td>
                             <?php echo $all_teacher_study_modules_hours_per_week[$i]; $i++;?>
-                        </td>                              
+                        </td>
                     </tr>
                 <?php endforeach; ?>
-                
+
             </tbody>
         </table>
     </center>
@@ -191,7 +191,7 @@
 
 <div id="teacher_timetable" class="timetable" data-days="5" data-hours="<?php echo $time_slots_count;?>">
     <ul class="tt-events">
-        
+
         <?php $day_index = 0; $iii=0;?>
         <?php foreach ($days as $day) : ?>
 
@@ -250,7 +250,7 @@
             <?php endforeach; ?>
         <?php endif;?>
 
-<?php $day_index++;?> 
+<?php $day_index++;?>
 
 <?php endforeach; ?>
 
@@ -264,7 +264,7 @@
 
     <div class="tt-time" data-time="<?php echo $time_slot_index;?>">
         <?php echo $time_slot_start_time1;?><span class="hidden-phone">:<?php echo $time_slot_start_time2;?></span></div>
-        <?php $time_slot_index++;?>    
+        <?php $time_slot_index++;?>
     <?php endforeach; ?>
 
 </div>
@@ -273,7 +273,7 @@
     <?php foreach ($days as $day) : ?>
     <div class="tt-day" data-day="<?php echo $day_index;?>">
         <?php echo $day->day_shortname;?>.</div>
-        <?php $day_index++;?>    
+        <?php $day_index++;?>
     <?php endforeach; ?>
 </div>
 </div>
@@ -281,9 +281,9 @@
 <div style="height: 10 px;"></div>
 
 <center>
-    <?php echo lang('show_teacher_data');?> <input id="hide_show_teacher_legend" type="checkbox" class="switch-small" 
-    data-label-icon="icon-eye-open" 
-    data-on-label="<i class='icon-ok'></i>" 
+    <?php echo lang('show_teacher_data');?> <input id="hide_show_teacher_legend" type="checkbox" class="switch-small"
+    data-label-icon="icon-eye-open"
+    data-on-label="<i class='icon-ok'></i>"
     data-off-label="<i class='icon-remove'></i>"
     data-off="danger">
 </center>
@@ -363,11 +363,11 @@
                     <td>
                         <?php foreach($all_teacher_study_modules_list as $teacher_study_modules){ ?>
                         <a href="study_module_info/<?php echo $teacher_study_modules;?>"><?php echo $teacher_study_modules;?></a>
-                        <?php echo " ";} ?>                                
+                        <?php echo " ";} ?>
                     </td>
                 </tr>
                 -->
-                
+
             </tbody>
         </table>
     </center>
@@ -386,7 +386,7 @@
             <?php if (array_key_exists($day->day_number,$lessonsfortimetablebygroupid[$teacher_group['classroom_group_id']])) : ?>
             <?php foreach ( $lessonsfortimetablebygroupid[$teacher_group['classroom_group_id']][$day->day_number] as $day_lessons) : ?>
             <?php foreach ( $day_lessons as $day_lesson) : ?>
-            <?php 
+            <?php
             if ($day_lesson->time_slot_lective) {
                 //var_export($day_lesson->study_modules);
                 $first_study_module= array_values($day_lesson->study_modules);
@@ -396,34 +396,34 @@
                 } else {
                     $bootstrap_button_colour = "btn-beige";
                 }
-                
+
                                         //$bootstrap_button_colour = "btn-warning";
             } else {
                 $bootstrap_button_colour = "btn-inverse";
             }
 
             $time_slot_current_position = $day_lesson->time_slot_order - $first_time_slot_orderbygroupid[$teacher_group['classroom_group_id']];
-            
-            ?> 
-            <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>" 
-                data-start="<?php echo $time_slot_current_position;?>" 
+
+            ?>
+            <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>"
+                data-start="<?php echo $time_slot_current_position;?>"
                 data-duration="<?php echo $day_lesson->duration;?>" style="margin-top:5px;">
 
                 <?php if ($day_lesson->time_slot_lective): ?>
                     <a href="<?php echo base_url('/index.php/curriculum/classroom_group/read') ."/". $day_lesson->group_id;?>"><?php echo $day_lesson->group_code;?></a>
                     <?php
                         foreach ($day_lesson->study_modules as $study_module_key => $study_module) {
-                           echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a> ";    
+                           echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a> ";
                         }
-                    ?> 
+                    ?>
                     <?php
                         $count_i=0;
                         foreach ($day_lesson->teachers as $teacher_key => $teacher) {
                            echo "<a href=\"" . base_url('/index.php/teachers/index/read/' . $teacher->id ) ."\">" . $teacher->code . "</a>";
                            if ($count_i < (count($day_lesson->teachers)-1)) {
                                 echo ", ";
-                           }       
-                           $count_i++; 
+                           }
+                           $count_i++;
                         }
                     ?>
                     <br/>
@@ -431,7 +431,7 @@
                         $count_i=1;
                         foreach ($day_lesson->locations as $location_key => $location) {
                            echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a> ";
-                           $count_i++; 
+                           $count_i++;
                         }
                     ?>
                 <?php else:?>
@@ -439,18 +439,18 @@
                 <?php endif;?>
 
             </li>
-            <?php $iii++;?>  
+            <?php $iii++;?>
         <?php endforeach; ?>
     <?php endforeach; ?>
             <?php endif;?>
-    <?php $day_index++;?> 
+    <?php $day_index++;?>
 <?php endforeach; ?>
 
 </ul>
 <div class="tt-times">
-    
+
     <?php $time_slot_index = 0; ?>
-    
+
     <?php foreach ($array_all_teacher_groups_time_slots[$teacher_group['classroom_group_id']] as $time_slot_key => $time_slot) : ?>
     <?php
     list($time_slot_start_time1, $time_slot_start_time2) = explode(':', $time_slot['time_slot_start_time']);
@@ -458,7 +458,7 @@
 
     <div class="tt-time" data-time="<?php echo $time_slot_index;?>">
         <?php echo $time_slot_start_time1;?><span class="hidden-phone">:<?php echo $time_slot_start_time2;?></span></div>
-        <?php $time_slot_index++;?>    
+        <?php $time_slot_index++;?>
     <?php endforeach; ?>
 </div>
 <div class="tt-days">
@@ -466,19 +466,19 @@
     <?php foreach ($days as $day) : ?>
     <div class="tt-day" data-day="<?php echo $day_index;?>">
         <?php echo $day->day_shortname;?>.</div>
-        <?php $day_index++;?>    
-    <?php endforeach; ?>    
+        <?php $day_index++;?>
+    <?php endforeach; ?>
 </div>
 </div>
 </div>
 <?php endforeach; ?>
-</div>    
+</div>
 
 
 
 <div class="well">
-    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/deed.en_GB">
-        <img alt="Creative Commons Licence" style="border-width: 0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/uk/88x31.png" /></a><br />
+    <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.0/uk/deed.en_GB">
+        <img alt="Creative Commons Licence" style="border-width: 0" src="https://i.creativecommons.org/l/by-nc-sa/2.0/uk/88x31.png" /></a><br />
         <?php echo lang('creative_commons_timetables_text');?>
     </div>
 </div>
@@ -493,13 +493,13 @@ $(function() {
     //* CLASSROOMGROUP DROPDOWN  **
     //*****************************
 
-    //Jquery select plugin: http://ivaynberg.github.io/select2/
+    //Jquery select plugin: https://ivaynberg.github.io/select2/
     $("#teacher").select2();
 
     var theSelection = $("#teacher").select2('data').text;
     $("#teacher_title_name").text(theSelection);
 
-    $('#teacher').on("change", function(e) {  
+    $('#teacher').on("change", function(e) {
         var selectedValue = $("#teacher").select2("val");
         var theSelection = $("#teacher").select2('data').text;
         $("#teacher_title_name").text(theSelection);
@@ -536,7 +536,7 @@ $(function() {
     $('#show_compact_timetable').on('switch-change', function (e, data) {
         var $element = $(data.el),
         value = data.value;
-        
+
         var pathArray = window.location.pathname.split( '/' );
         var secondLevelLocation = pathArray[1];
 

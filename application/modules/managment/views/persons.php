@@ -27,17 +27,17 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
       <script>
 
       var all_persons_table;
 
       $(function(){
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_user_ldaps_academic_period_filter").select2();
 
-              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {  
+              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_user_ldaps_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -56,100 +56,100 @@
                       "aoColumns": [
                         { "mData": function(data, type, full) {
                           return '<label><input class="ace" type="checkbox" name="google-apps-user-checkbox" id="' + data.person_id + '"><span class="lbl">&nbsp;</span></label>';
-                        }},   
+                        }},
                         { "mData": function(data, type, full) {
                           if (data.person_photo != null) {
                             base_url = "<?php echo base_url('uploads/person_photos');?>";
                             fullname = data.person_givenName + " " + data.person_sn1 + "" + data.person_sn2;
-                            return '<a class="image-thumbnail" href="' + base_url + "/" + data.person_photo + '"><img data-rel="tooltip" class="msg-photo" alt="'+ data.fullName +'" title="'+ fullname +'" src="' + base_url + "/" + data.person_photo + '" alt="foto" style="width:75px;"></img></a>';                            
+                            return '<a class="image-thumbnail" href="' + base_url + "/" + data.person_photo + '"><img data-rel="tooltip" class="msg-photo" alt="'+ data.fullName +'" title="'+ fullname +'" src="' + base_url + "/" + data.person_photo + '" alt="foto" style="width:75px;"></img></a>';
                           } else {
                             return 'Sense foto';
                           }
                         }},
                         { "mData": function(data, type, full) {
-                            return data.person_id;            
-                        }},  
-                        { "mData": function(data, type, full) {
-                            return data.person_givenName;            
-                        }},    
-                        { "mData": function(data, type, full) {
-                            return data.person_sn1;                
+                            return data.person_id;
                         }},
                         { "mData": function(data, type, full) {
-                            return data.person_sn2;                
+                            return data.person_givenName;
                         }},
                         { "mData": function(data, type, full) {
-                            return data.person_email;                
-                        }},    
+                            return data.person_sn1;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.person_secondary_email;            
+                            return data.person_sn2;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.person_email;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.person_secondary_email;
                         },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_terciary_email;            
-                        },"bVisible": false},    
-                        { "mData": function(data, type, full) {
-                            return data.person_official_id;            
-                        }},    
-                        { "mData": function(data, type, full) {
-                            return data.person_official_id_type;            
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            return data.person_date_of_birth;            
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            return data.person_gender;            
-                        }}, 
-                        { "mData": function(data, type, full) {
-                            return data.person_secondary_official_id;            
-                        },"bVisible": false}, 
-                        { "mData": function(data, type, full) {
-                            return data.person_secondary_official_id_type;            
+                            return data.person_terciary_email;
                         },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_homePostalAddress;            
-                        }},  
+                            return data.person_official_id;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.person_locality_id;            
-                        }},  
+                            return data.person_official_id_type;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_telephoneNumber;            
-                        },"bVisible": false},  
+                            return data.person_date_of_birth;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_mobile;            
-                        },"bVisible": false},  
+                            return data.person_gender;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.person_secondary_official_id;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.person_secondary_official_id_type;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.person_homePostalAddress;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.person_locality_id;
+                        }},
+                        { "mData": function(data, type, full) {
+                            return data.person_telephoneNumber;
+                        },"bVisible": false},
+                        { "mData": function(data, type, full) {
+                            return data.person_mobile;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
                             return data.person_bank_account_id;
-                        },"bVisible": false},  
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_notes;            
-                        }}, 
+                            return data.person_notes;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.person_entryDate;            
-                        }}, 
+                            return data.person_entryDate;
+                        }},
                         { "mData": function(data, type, full) {
                               return data.person_last_update;
-                        },"bVisible": false},  
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_creationUserId;            
-                        },"bVisible": false},  
+                            return data.person_creationUserId;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_lastupdateUserId;            
-                        },"bVisible": false}, 
+                            return data.person_lastupdateUserId;
+                        },"bVisible": false},
                         { "mData": function(data, type, full) {
-                            return data.person_markedForDeletion;            
-                        }},   
+                            return data.person_markedForDeletion;
+                        }},
                         { "mData": function(data, type, full) {
-                            return data.person_markedForDeletionDate;            
-                        }},   
+                            return data.person_markedForDeletionDate;
+                        }},
                       ],
                       "columnDefs": [
                                       { "type": "html", "targets": 3 }
                                     ],
-                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],       
-                      "sDom": 'TRC<"clear">lfrtip', 
+                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                      "sDom": 'TRC<"clear">lfrtip',
                       "oColVis": {
                           "buttonText": "Mostrar / amagar columnes"
-                      },                   
+                      },
                       "oTableTools": {
                               "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -197,11 +197,11 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-        }); 
+        });
 
 
 
@@ -209,20 +209,20 @@
 
           $('input:checkbox').map(function () {
             this.checked = true;
-          }).get(); 
-          
+          }).get();
+
         });
 
         $("#unselect_all").click(function() {
 
           $('input:checkbox').map(function () {
             this.checked = false;
-          }).get(); 
-          
+          }).get();
+
         });
 
-     
-    
+
+
 
         //$("#select_all_persons_main_organizational_unit_filter").select2({ width: 'resolve', placeholder: "Seleccioneu una unitat organitzativa", allowClear: true });
         /*
@@ -242,7 +242,7 @@
       <td colspan="6" style="text-align: center;"> <strong>Filtres per columnes
         </strong></td>
     </tr>
-    <tr> 
+    <tr>
        <td><?php echo "Unitat organitzativa"?>:</td>
        <td>
         TODO<select id="select_all_persons_main_organizational_unit_filter"><option value=""></option></select>
@@ -252,16 +252,16 @@
         TODO<select id="select_all_persons_user_type_filter"><option value=""></option><option value="1">1</option><option value="2">2</option></select>
       </td>
     </tr>
-  </thead>  
+  </thead>
  </table>
 
- <table style="display:none;"  class="table table-striped table-bordered table-hover table-condensed" id="actions"> 
+ <table style="display:none;"  class="table table-striped table-bordered table-hover table-condensed" id="actions">
   <thead style="background-color: #d9edf7;">
     <tr>
       <td colspan="8" style="text-align: center;"> <strong>Accions massives (aplica l'acció sobre tots els usuaris seleccionats)
         </strong></td>
     </tr>
-    <tr> 
+    <tr>
        <td>
         <button class="btn btn-mini btn-info" id="create_multiple_initial_passwords">
           <i class="icon-bolt"></i>
@@ -319,8 +319,8 @@
         </button>
        </td>
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 </div>
 
@@ -329,7 +329,7 @@
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_persons">
  <thead style="background-color: #d9edf7;">
   <tr>
-     <th>&nbsp;</th> 
+     <th>&nbsp;</th>
      <th title="person_photo">Foto</th>
      <th title="person_id">Id</th>
      <th title="person_givenName">Nom</th>
@@ -344,7 +344,7 @@
      <th title="person_gender">Sexe</th>
      <th title="person_secondary_official_id">Id secundari</th>
      <th title="person_secondary_official_id_type">Tipus Id secundari</th>
-     <th title="person_homePostalAddress">Adreça postal</th>     
+     <th title="person_homePostalAddress">Adreça postal</th>
      <th title="person_locality_id">Localitat</th>
      <th title="person_telephoneNumber">Telèfon</th>
      <th title="person_mobile">Mòbil</th>
@@ -358,10 +358,10 @@
      <th title="person_markedForDeletionDate">Data de baixa</th>
   </tr>
  </thead>
- 
-</table> 
+
+</table>
 
   <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

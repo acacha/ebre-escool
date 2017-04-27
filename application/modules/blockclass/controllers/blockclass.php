@@ -5,7 +5,7 @@ include "application/third_party/skeleton/application/controllers/skeleton_main.
 include "funciones.php";
 global $data;
 
-      class Blockclass extends skeleton_main { 
+      class Blockclass extends skeleton_main {
 
     public $body_header_view ='include/ebre_escool_body_header' ;
 
@@ -13,24 +13,24 @@ global $data;
 
     public $html_header_view ='include/ebre_escool_html_header' ;
 
-    public $body_footer_view ='include/ebre_escool_body_footer' ; 
-    
+    public $body_footer_view ='include/ebre_escool_body_footer' ;
+
         public function load_header_data($active_menu){
 
-              
+
             // CSS
             $header_data= $this->add_css_to_html_header_data(
                 $this->_get_html_header_data(),
-                    "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+                    "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
             $header_data= $this->add_css_to_html_header_data(
                 $header_data,
-                    base_url('assets/css/tribal-timetable.css'));        
+                    base_url('assets/css/tribal-timetable.css'));
             $header_data= $this->add_css_to_html_header_data(
                 $header_data,
-                    "http://cdn.jsdelivr.net/select2/3.4.5/select2.css");
+                    "https://cdn.jsdelivr.net/select2/3.4.5/select2.css");
             $header_data= $this->add_css_to_html_header_data(
                 $header_data,
-                    "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"); 
+                    "https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css");
             $header_data= $this->add_css_to_html_header_data(
                 $header_data,
                     base_url('assets/css/bootstrap-switch.min.css'));
@@ -39,7 +39,7 @@ global $data;
                     base_url('assets/css/bootstrap.min.extracolours.css'));
             $header_data= $this->add_css_to_html_header_data(
                 $header_data,
-                    base_url('assets/css/horaris.css'));            
+                    base_url('assets/css/horaris.css'));
 
             $header_data= $this->add_css_to_html_header_data(
                 $header_data,
@@ -56,7 +56,7 @@ global $data;
 /*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));              
+            base_url('assets/css/no_padding_top.css'));
 */
 
 
@@ -64,10 +64,10 @@ global $data;
             // JAVASCRIPT
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    "http://code.jquery.com/jquery-1.9.1.js");
+                    "https://code.jquery.com/jquery-1.9.1.js");
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    "http://code.jquery.com/ui/1.10.3/jquery-ui.js");
+                    "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/jquery.ba-resize.js'));
@@ -76,22 +76,22 @@ global $data;
                     base_url('assets/js/bootstrap-tooltip.js'));
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    base_url('assets/js/bootstrap-collapse.js'));                
+                    base_url('assets/js/bootstrap-collapse.js'));
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/tribal.js'));
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    base_url('assets/js/tribal-shared.js'));        
+                    base_url('assets/js/tribal-shared.js'));
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/tribal-timetable.js'));
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    "http://cdn.jsdelivr.net/select2/3.4.5/select2.js");
+                    "https://cdn.jsdelivr.net/select2/3.4.5/select2.js");
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");
+                    "https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/bootstrap-switch.min.js'));
@@ -104,7 +104,7 @@ global $data;
                     base_url('assets/js/ace-elements.min.js'));
             $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    base_url('assets/js/ace.min.js'));            
+                    base_url('assets/js/ace.min.js'));
 
         $header_data['menu']= $active_menu;
             return $header_data;
@@ -136,21 +136,21 @@ global $data;
 
                     $data['lock']="<a href=\"?lock=20.2\">".$data['button_lock']."Bloquear aula 20.2</button></a>";
                     $data['unlock']="<a href=\"?unlock=20.2\">".$data['button_unlock']."Desbloquear aula 20.2</button></a>";
-             
+
            //Teacher aula 20.3
             }elseif($ip=="192.168.50.13"){
-               
+
                  $data['lock']="<a href=\"?lock=20.3\">".$data['button_lock']."Bloquear aula 20.3</button></a>";
                  $data['unlock']="<a href=\"?unlock=20.3\">".$data['button_unlock']."Desbloquear aula 20.3</button></a>";
-             
-               
-           //Teacher  aula 20.4 
+
+
+           //Teacher  aula 20.4
             }elseif($ip=="192.168.50.14"){
-               
+
                   $data['lock']="<a href=\"?lock=20.4\">".$data['button_lock']."Bloquear aula 20.4</button></a>";
                   $data['unlock']="<a href=\"?unlock=20.4\">".$data['button_unlock']."Desbloquear aula 20.4</button></a>";
-               
-              
+
+
            //localhost
             }elseif($ip=="127.0.0.1"){
 
@@ -175,22 +175,10 @@ global $data;
             $this->load->view('commands',$data);
             $this->_load_body_footer();
         }
-    
 
-        
+
+
 
 
 
 }
-           
-
-
-            
-        
-        
-    
- 
-    
-    
-
-

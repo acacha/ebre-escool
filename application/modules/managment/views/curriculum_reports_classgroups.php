@@ -27,7 +27,7 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
       <div class="alert alert-block alert-success">
         <button type="button" class="close" data-dismiss="alert">
           <i class="icon-remove"></i>
@@ -44,10 +44,10 @@
 
       $(function(){
 
-        //Jquery select plugin: http://ivaynberg.github.io/select2/
+        //Jquery select plugin: https://ivaynberg.github.io/select2/
         $("#select_classroom_group_academic_period_filter").select2();
 
-        $('#select_classroom_group_academic_period_filter').on("change", function(e) {  
+        $('#select_classroom_group_academic_period_filter').on("change", function(e) {
             var selectedValue = $("#select_classroom_group_academic_period_filter").select2("val");
             var pathArray = window.location.pathname.split( '/' );
             var secondLevelLocation = pathArray[1];
@@ -106,12 +106,12 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-             
-        });  
+
+        });
 
         $("#select_classroom_group_study_code_filter").on( 'change', function () {
             var val = $(this).val();
@@ -135,7 +135,7 @@
 
 
 
-   
+
 
 });
 </script>
@@ -148,8 +148,8 @@
       <td colspan="13" style="text-align: center;"> <h4>Filtres per columnes
         </h4></td>
     </tr>
-    <tr> 
-       <td><?php echo lang('classroom_group_academic_period')?>: 
+    <tr>
+       <td><?php echo lang('classroom_group_academic_period')?>:
           <select id="select_classroom_group_academic_period_filter">
           <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
 
@@ -161,13 +161,13 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
@@ -176,8 +176,8 @@
        <td><?php echo lang('classroom_group_study_code')?>: <select id="select_classroom_group_study_code_filter"><option value=""></option></select></td>
        <td><?php echo lang('classroom_group_shift')?>: <select id="select_classroom_group_shift"><option value=""></option></select></td>
     </tr>
-  </thead>  
-</table>  
+  </thead>
+</table>
 
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_groups">
  <thead style="background-color: #d9edf7;">
@@ -188,8 +188,8 @@
       </a>
       </h4></td>
   </tr>
-  
-  <tr> 
+
+  <tr>
      <th><?php echo lang('classroom_group_id')?></th>
      <th><?php echo lang('classroom_group_code')?></th>
      <th><?php echo lang('classroom_group_name')?></th>
@@ -207,7 +207,7 @@
  </thead>
 
  <tfoot>
-    <tr> 
+    <tr>
      <th><?php echo lang('classroom_group_id')?></th>
      <th><?php echo lang('classroom_group_code')?></th>
      <th><?php echo lang('classroom_group_name')?></th>
@@ -222,7 +222,7 @@
      <th><?php echo lang('classroom_group_num_submodules')?></th>
      <th><?php echo lang('classroom_group_description')?></th>
     </tr>
- </tfoot> 
+ </tfoot>
  <tbody>
   <!-- Iteration that shows classroom_groups-->
    <?php if (is_array($all_classgroups) or ($all_classgroups instanceof Traversable)): ?>
@@ -295,11 +295,11 @@
 
 
  </tbody>
-</table> 
+</table>
 
 </div>
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

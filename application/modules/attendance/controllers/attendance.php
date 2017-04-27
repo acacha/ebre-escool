@@ -16,14 +16,14 @@ class attendance extends skeleton_main {
 		$active_menu = $menu;
 
 		//CSS URLS
-		$jquery_ui_css_url = "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
-		$jquery_ui_editable_css_url = "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
-		$select2_css_url = "http://cdn.jsdelivr.net/select2/3.4.5/select2.css";
+		$jquery_ui_css_url = "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
+		$jquery_ui_editable_css_url = "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
+		$select2_css_url = "https://cdn.jsdelivr.net/select2/3.4.5/select2.css";
 		//JS URLS
-		$jquery_url= "http://code.jquery.com/jquery-1.9.1.js";
-		$jquery_ui_url= "http://code.jquery.com/ui/1.10.3/jquery-ui.js";
-		$select2_url= "http://cdn.jsdelivr.net/select2/3.4.5/select2.js";
-		$jquery_ui_editable_url= "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
+		$jquery_url= "https://code.jquery.com/jquery-1.9.1.js";
+		$jquery_ui_url= "https://code.jquery.com/ui/1.10.3/jquery-ui.js";
+		$select2_url= "https://cdn.jsdelivr.net/select2/3.4.5/select2.js";
+		$jquery_ui_editable_url= "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
 
 		if (defined('ENVIRONMENT') && ENVIRONMENT=="development") {
   			$jquery_ui_css_url = base_url('assets/css/jquery-ui.css');
@@ -47,7 +47,7 @@ class attendance extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css'));  
+            base_url('assets/css/datepicker.css'));
 
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
@@ -55,9 +55,9 @@ class attendance extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-            base_url('assets/css/tribal-timetable.css')); 
+            base_url('assets/css/tribal-timetable.css'));
 
-		
+
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/css/bootstrap-switch.min.css'));
@@ -65,7 +65,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/bootstrap.min.extracolours.css')); 
+            base_url('assets/css/bootstrap.min.extracolours.css'));
 
 //ACE
         $header_data= $this->add_css_to_html_header_data(
@@ -104,15 +104,15 @@ class attendance extends skeleton_main {
             $header_data,
             base_url('assets/css/daterangepicker.css'));
 
-/*        
+/*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));        
+            base_url('assets/css/no_padding_top.css'));
 
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/chosen.min.css'));        
+            base_url('assets/css/chosen.min.css'));
 
 		//JS Already load at skeleton main!!!
 		$header_data= $this->add_javascript_to_html_header_data(
@@ -121,7 +121,7 @@ class attendance extends skeleton_main {
 */
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			$jquery_ui_url);	
+			$jquery_ui_url);
 
 
 		$header_data= $this->add_javascript_to_html_header_data(
@@ -156,7 +156,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/bootstrap-collapse.js'));                
+            base_url('assets/js/bootstrap-collapse.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -166,7 +166,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/tribal-shared.js'));        
+            base_url('assets/js/tribal-shared.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -176,7 +176,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js");
+            "https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js");
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
@@ -201,7 +201,7 @@ class attendance extends skeleton_main {
                     $header_data,
                     base_url('assets/js/bootstrap-switch.min.js'));
 
- //ACE        
+ //ACE
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace-extra.min.js'));
@@ -211,7 +211,7 @@ class attendance extends skeleton_main {
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace.min.js'));
-                    
+
 /*
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
@@ -223,12 +223,12 @@ class attendance extends skeleton_main {
                     base_url('assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js'));
 		$header_data= $this->add_javascript_to_html_header_data(
         			$header_data,
-        			base_url('assets/js/jquery.gritter.min.js')); 
+        			base_url('assets/js/jquery.gritter.min.js'));
 
 		$header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ebre-escool.js'));
-        
+
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/jquery.easy-pie-chart.min.js'));
@@ -240,7 +240,7 @@ class attendance extends skeleton_main {
                     base_url('assets/js/flot/jquery.flot.pie.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    base_url('assets/js/jquery.sparkline.min.js'));        
+                    base_url('assets/js/jquery.sparkline.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/date-time/moment.min.js'));
@@ -250,10 +250,10 @@ class attendance extends skeleton_main {
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/date-time/locales/bootstrap-datepicker.ca.js'));
-    
-        
+
+
 		$header_data['menu']= $active_menu;
-		return $header_data; 
+		return $header_data;
 	}
 
 	public function load_header_data($menu = false){
@@ -261,14 +261,14 @@ class attendance extends skeleton_main {
 		$active_menu = $menu;
 
 		//CSS URLS
-		$jquery_ui_css_url = "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
-		$jquery_ui_editable_css_url = "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
-		$select2_css_url = "http://cdn.jsdelivr.net/select2/3.4.5/select2.css";
+		$jquery_ui_css_url = "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
+		$jquery_ui_editable_css_url = "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
+		$select2_css_url = "https://cdn.jsdelivr.net/select2/3.4.5/select2.css";
 		//JS URLS
-		$jquery_url= "http://code.jquery.com/jquery-1.9.1.js";
-		$jquery_ui_url= "http://code.jquery.com/ui/1.10.3/jquery-ui.js";
-		$select2_url= "http://cdn.jsdelivr.net/select2/3.4.5/select2.js";
-		$jquery_ui_editable_url= "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
+		$jquery_url= "https://code.jquery.com/jquery-1.9.1.js";
+		$jquery_ui_url= "https://code.jquery.com/ui/1.10.3/jquery-ui.js";
+		$select2_url= "https://cdn.jsdelivr.net/select2/3.4.5/select2.js";
+		$jquery_ui_editable_url= "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
 
 		if (defined('ENVIRONMENT') && ENVIRONMENT=="development") {
   			$jquery_ui_css_url = base_url('assets/css/jquery-ui.css');
@@ -292,7 +292,7 @@ class attendance extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css'));  
+            base_url('assets/css/datepicker.css'));
 
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
@@ -300,9 +300,9 @@ class attendance extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-            base_url('assets/css/tribal-timetable.css')); 
+            base_url('assets/css/tribal-timetable.css'));
 
-		
+
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/css/bootstrap-switch.min.css'));
@@ -310,7 +310,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/bootstrap.min.extracolours.css')); 
+            base_url('assets/css/bootstrap.min.extracolours.css'));
 
 //ACE
         $header_data= $this->add_css_to_html_header_data(
@@ -336,15 +336,15 @@ class attendance extends skeleton_main {
             $header_data,
             base_url('assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css'));
 
-/*        
+/*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));        
+            base_url('assets/css/no_padding_top.css'));
 
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/chosen.min.css'));        
+            base_url('assets/css/chosen.min.css'));
 */
 		//JS Already load at skeleton main!!!
 		$header_data= $this->add_javascript_to_html_header_data(
@@ -353,7 +353,7 @@ class attendance extends skeleton_main {
 
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			$jquery_ui_url);	
+			$jquery_ui_url);
 
 
 		$header_data= $this->add_javascript_to_html_header_data(
@@ -388,7 +388,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/bootstrap-collapse.js'));                
+            base_url('assets/js/bootstrap-collapse.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -398,7 +398,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/tribal-shared.js'));        
+            base_url('assets/js/tribal-shared.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -420,7 +420,7 @@ class attendance extends skeleton_main {
                     $header_data,
                     base_url('assets/js/bootstrap-switch.min.js'));
 
- //ACE        
+ //ACE
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace-extra.min.js'));
@@ -430,7 +430,7 @@ class attendance extends skeleton_main {
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace.min.js'));
-                    
+
 /*
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
@@ -442,7 +442,7 @@ class attendance extends skeleton_main {
                     base_url('assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js'));
 		$header_data= $this->add_javascript_to_html_header_data(
         			$header_data,
-        			base_url('assets/js/jquery.gritter.min.js')); 
+        			base_url('assets/js/jquery.gritter.min.js'));
 
 		$header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
@@ -450,8 +450,8 @@ class attendance extends skeleton_main {
 
 
 		$header_data['menu']= $active_menu;
-		return $header_data; 
-        
+		return $header_data;
+
     }
 
     public function load_header_data_11($menu = false){
@@ -459,14 +459,14 @@ class attendance extends skeleton_main {
         $active_menu = $menu;
 
         //CSS URLS
-        $jquery_ui_css_url = "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
-        $jquery_ui_editable_css_url = "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
-        $select2_css_url = "http://cdn.jsdelivr.net/select2/3.4.5/select2.css";
+        $jquery_ui_css_url = "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
+        $jquery_ui_editable_css_url = "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
+        $select2_css_url = "https://cdn.jsdelivr.net/select2/3.4.5/select2.css";
         //JS URLS
-        $jquery_url= "http://code.jquery.com/jquery-1.9.1.js";
-        $jquery_ui_url= "http://code.jquery.com/ui/1.10.3/jquery-ui.js";
-        $select2_url= "http://cdn.jsdelivr.net/select2/3.4.5/select2.js";
-        $jquery_ui_editable_url= "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
+        $jquery_url= "https://code.jquery.com/jquery-1.9.1.js";
+        $jquery_ui_url= "https://code.jquery.com/ui/1.10.3/jquery-ui.js";
+        $select2_url= "https://cdn.jsdelivr.net/select2/3.4.5/select2.js";
+        $jquery_ui_editable_url= "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
 
         if (defined('ENVIRONMENT') && ENVIRONMENT=="development") {
             $jquery_ui_css_url = base_url('assets/css/jquery-ui.css');
@@ -490,7 +490,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css'));  
+            base_url('assets/css/datepicker.css'));
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
@@ -498,9 +498,9 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/tribal-timetable.css')); 
+            base_url('assets/css/tribal-timetable.css'));
 
-        
+
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/css/bootstrap-switch.min.css'));
@@ -508,7 +508,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/bootstrap.min.extracolours.css')); 
+            base_url('assets/css/bootstrap.min.extracolours.css'));
 
 //ACE
         $header_data= $this->add_css_to_html_header_data(
@@ -544,15 +544,15 @@ class attendance extends skeleton_main {
             $header_data,
             base_url('assets/css/dataTables.colVis.css'));
 
-/*        
+/*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));        
+            base_url('assets/css/no_padding_top.css'));
 
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/chosen.min.css'));        
+            base_url('assets/css/chosen.min.css'));
 */
         //JS Already load at skeleton main!!!
         $header_data= $this->add_javascript_to_html_header_data(
@@ -561,7 +561,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            $jquery_ui_url);    
+            $jquery_ui_url);
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -596,7 +596,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/bootstrap-collapse.js'));                
+            base_url('assets/js/bootstrap-collapse.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -606,7 +606,7 @@ class attendance extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/tribal-shared.js'));        
+            base_url('assets/js/tribal-shared.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -628,7 +628,7 @@ class attendance extends skeleton_main {
                     $header_data,
                     base_url('assets/js/bootstrap-switch.min.js'));
 
- //ACE        
+ //ACE
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace-extra.min.js'));
@@ -638,7 +638,7 @@ class attendance extends skeleton_main {
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace.min.js'));
-                    
+
 /*
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
@@ -650,7 +650,7 @@ class attendance extends skeleton_main {
                     base_url('assets/grocery_crud/js/jquery_plugins/jquery.fancybox-1.3.4.js'));
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
-                    base_url('assets/js/jquery.gritter.min.js')); 
+                    base_url('assets/js/jquery.gritter.min.js'));
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
@@ -671,15 +671,15 @@ class attendance extends skeleton_main {
 
 
         $header_data['menu']= $active_menu;
-        return $header_data; 
-        
+        return $header_data;
+
     }
 
 
 	function __construct()
     {
         parent::__construct();
-        
+
         $this->load->model('attendance_model');
         $this->load->library('ebre_escool_ldap');
 
@@ -689,7 +689,7 @@ class attendance extends skeleton_main {
 		$this->load->add_package_path(APPPATH.'third_party/grocery-crud/application/');
         $this->load->library('grocery_CRUD');
         $this->load->add_package_path(APPPATH.'third_party/image-crud/application/');
-		$this->load->library('image_CRUD');  
+		$this->load->library('image_CRUD');
 
 		/* Set language */
 		$current_language=$this->session->userdata("current_language");
@@ -697,12 +697,12 @@ class attendance extends skeleton_main {
 			$current_language= $this->config->item('default_language','skeleton_auth');
 		}
 		$this->grocery_crud->set_language($current_language);
-    	$this->lang->load('skeleton', $current_language);	       
-    	
-    	$this->lang->load('attendance', $current_language);	
-    	
-		$this->lang->load('managment', $current_language);        
-        
+    	$this->lang->load('skeleton', $current_language);
+
+    	$this->lang->load('attendance', $current_language);
+
+		$this->lang->load('managment', $current_language);
+
 	}
 
 
@@ -712,7 +712,7 @@ class attendance extends skeleton_main {
 	public function read($table=null){
 
 		$this->db->select('alumne, incidencia, data, hora');
-		$this->db->where('alumne', $_POST['alumne']); 
+		$this->db->where('alumne', $_POST['alumne']);
 		$this->db->where('hora', $_POST['hora']);
 		$query = $this->db->get($table);
 		$resultat = array();
@@ -723,17 +723,17 @@ class attendance extends skeleton_main {
 		    $resultat[] = $row->alumne ." - ".$row->incidencia." - ".$row->data." - ".$row->hora;
 		}
 		print_r(json_encode($resultat));
-	}	
+	}
 
 	public function insert($table=null){
 
 		//echo $table;
-		$this->db->insert($table, $_POST); 
+		$this->db->insert($table, $_POST);
 		$rows = $this->db->affected_rows();
 		print_r(json_encode($this->db->affected_rows()));
-		//$this->db->insert($table, $data); 
+		//$this->db->insert($table, $data);
 		//print_r(json_encode($data));
-	}		
+	}
 
 	public function update(){
 
@@ -744,20 +744,20 @@ class attendance extends skeleton_main {
         );
 
 		$this->db->where('cycle_id', '6');
-		$this->db->update('cycle', $data); 
-		print_r(json_encode($data));
-	}	
-
-	public function delete(){
-		$data = array(
-			'Esborrat' => 'id 8'		
-		);
-		$this->db->where('cycle_id', '8');
-		$this->db->delete('cycle'); 
+		$this->db->update('cycle', $data);
 		print_r(json_encode($data));
 	}
 
-	fi proves ajax json */	 
+	public function delete(){
+		$data = array(
+			'Esborrat' => 'id 8'
+		);
+		$this->db->where('cycle_id', '8');
+		$this->db->delete('cycle');
+		print_r(json_encode($data));
+	}
+
+	fi proves ajax json */
 
 
 
@@ -769,7 +769,7 @@ class attendance extends skeleton_main {
         day : day,
         date: date,
         study_submodule_id: study_submodule_id,
-        absence_type : selected_value 
+        absence_type : selected_value
 		*/
 
         $result = new stdClass();
@@ -821,7 +821,7 @@ class attendance extends skeleton_main {
 
 	    if (!$error) {
 	    	if ( ($person_id != "") && ($time_slot_id != "") && ($day != "") && ($date != "") && ($study_submodule_id != "") && ($absence_type != "") )
-	    	$result = $this->attendance_model->crud_incidence($person_id,$time_slot_id,$day,$date,$study_submodule_id,$absence_type);	
+	    	$result = $this->attendance_model->crud_incidence($person_id,$time_slot_id,$day,$date,$study_submodule_id,$absence_type);
 	    }
 
 	    print_r(json_encode($result));
@@ -855,7 +855,7 @@ class attendance extends skeleton_main {
 
 		$result = new stdClass();
 		if ($student_id != null) {
-			$result = $this->attendance_model->get_incidents_statistics_by_student($student_id,$classroom_group_id,$initial_date,$final_date);	
+			$result = $this->attendance_model->get_incidents_statistics_by_student($student_id,$classroom_group_id,$initial_date,$final_date);
 		}
 
 		print_r(json_encode($result));
@@ -863,7 +863,7 @@ class attendance extends skeleton_main {
 
 	public function create_test_incidents_managment_by_ajax() {
 		$data = array();
-        $this->load->view('create_test_incidents_managment_by_ajax.php',$data); 
+        $this->load->view('create_test_incidents_managment_by_ajax.php',$data);
 	}
 
 	/*
@@ -876,14 +876,14 @@ class attendance extends skeleton_main {
         	echo "User not logged";
     	}
 
-		//TODO: validate data	
+		//TODO: validate data
 
     	$this->attendance_model->insert_incidence($_POST);
 
 	}
-	
-	public function test_incidents_managment_by_ajax () {	
-		
+
+	public function test_incidents_managment_by_ajax () {
+
 		$active_menu = array();
 		$active_menu['menu']='#maintenances';
 		$active_menu['submenu1']='#attendance_managment';
@@ -892,15 +892,15 @@ class attendance extends skeleton_main {
 	    $this->check_logged_user();
 
 		/* Ace */
-	    $header_data = $this->load_ace_files($active_menu); 
+	    $header_data = $this->load_ace_files($active_menu);
 
 		// HTML HEADER
-        $this->_load_html_header($header_data); 
-        $this->_load_body_header();      
-       
-       	// BODY       
+        $this->_load_html_header($header_data);
+        $this->_load_body_header();
+
+       	// BODY
        	$data = array();
-        $this->load->view('test_incidents_managment_by_ajax.php',$data); 
+        $this->load->view('test_incidents_managment_by_ajax.php',$data);
 
 	}
 
@@ -913,24 +913,24 @@ class attendance extends skeleton_main {
 	    $this->check_logged_user();
 
 		/* Ace */
-	    $header_data = $this->load_ace_files($active_menu);  
+	    $header_data = $this->load_ace_files($active_menu);
 
-	    // Grocery Crud 
+	    // Grocery Crud
 	    $this->current_table="hidden_student";
 	    $this->grocery_crud->set_table($this->current_table);
-	        
-	    $this->session->set_flashdata('table_name', $this->current_table);     
-			
+
+	    $this->session->set_flashdata('table_name', $this->current_table);
+
 		//Establish subject:
 	    $this->grocery_crud->set_subject(lang("hidden_students"));
 
-	    //COMMON_COLUMNS               
-	    $this->set_common_columns_name($this->current_table);       
+	    //COMMON_COLUMNS
+	    $this->set_common_columns_name($this->current_table);
 
 	    $this->common_callbacks($this->current_table);
 
 	    $this->grocery_crud->display_as($this->current_table.'_id',lang($this->current_table . '_id'));
-	    $this->grocery_crud->display_as($this->current_table.'_person_id',lang($this->current_table . '_person_id'));     
+	    $this->grocery_crud->display_as($this->current_table.'_person_id',lang($this->current_table . '_person_id'));
 	    $this->grocery_crud->display_as($this->current_table.'_teacher_id',lang($this->current_table . '_teacher_id'));
 	    $this->grocery_crud->display_as($this->current_table.'_academic_period_id',lang($this->current_table . '_academic_period_id'));
 	    $this->grocery_crud->display_as($this->current_table.'_classroom_group_id',lang($this->current_table . '_classroom_group_id'));
@@ -946,7 +946,7 @@ class attendance extends skeleton_main {
 	    $this->grocery_crud->display_as($this->current_table.'_markedForDeletionDate',lang($this->current_table . '_markedForDeletionDate'));
 
 	    //RELATIONS
-	    $this->grocery_crud->set_relation($this->current_table.'_academic_period_id','academic_periods','{academic_periods_shortname}'); 
+	    $this->grocery_crud->set_relation($this->current_table.'_academic_period_id','academic_periods','{academic_periods_shortname}');
 	    $this->grocery_crud->set_relation($this->current_table.'_person_id','person','{person_sn1} {person_sn2}, {person_givenName} ({person_official_id}) - {person_id}');
 	    $this->grocery_crud->set_relation($this->current_table.'_teacher_id','teacher','id: {teacher_id} - person_id: {teacher_person_id} - user_id: {teacher_user_id}');
 	    $this->grocery_crud->set_relation($this->current_table.'_classroom_group_id','classroom_group','{classroom_group_code} - {classroom_group_shortName}. {classroom_group_name} ({classroom_group_id})');
@@ -958,16 +958,16 @@ class attendance extends skeleton_main {
 	    //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-	    
+
 	    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-			
+
 	    $this->userCreation_userModification($this->current_table);
 
 	    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
 
 	    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
-		$this->renderitzar($this->current_table,$header_data);			
+		$this->renderitzar($this->current_table,$header_data);
 	}
 
 	public function time_slots () {
@@ -980,41 +980,41 @@ class attendance extends skeleton_main {
 	    $this->check_logged_user();
 
 		/* Ace */
-	    $header_data = $this->load_ace_files($active_menu);  
+	    $header_data = $this->load_ace_files($active_menu);
 
-	    // Grocery Crud 
+	    // Grocery Crud
 	    $this->current_table="time_slot";
 	    $this->grocery_crud->set_table($this->current_table);
-	        
-	    $this->session->set_flashdata('table_name', $this->current_table);     
-			
+
+	    $this->session->set_flashdata('table_name', $this->current_table);
+
 		//Establish subject:
 	    $this->grocery_crud->set_subject(lang("time_slot"));
 
-	    //COMMON_COLUMNS               
-	    $this->set_common_columns_name($this->current_table);       
+	    //COMMON_COLUMNS
+	    $this->set_common_columns_name($this->current_table);
 
 	    $this->common_callbacks($this->current_table);
 
-	    //ESPECIFIC COLUMNS  
+	    //ESPECIFIC COLUMNS
 	    $this->grocery_crud->display_as($this->current_table.'_id',lang('time_slot_id'));
 	    $this->grocery_crud->display_as($this->current_table.'_external_code',lang('time_slot_external_code'));
-	    $this->grocery_crud->display_as($this->current_table.'_start_time',lang('time_slot_start_time'));       
-	    $this->grocery_crud->display_as($this->current_table.'_end_time',lang('time_slot_end_time'));       
+	    $this->grocery_crud->display_as($this->current_table.'_start_time',lang('time_slot_start_time'));
+	    $this->grocery_crud->display_as($this->current_table.'_end_time',lang('time_slot_end_time'));
 
 	    //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-	    
+
 	    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-			
+
 	    $this->userCreation_userModification($this->current_table);
 
 	    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
 
 	    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
-		$this->renderitzar($this->current_table,$header_data);	
+		$this->renderitzar($this->current_table,$header_data);
 
 	}
 
@@ -1028,19 +1028,19 @@ class attendance extends skeleton_main {
 	    $this->check_logged_user();
 
 		/* Ace */
-	    $header_data = $this->load_ace_files($active_menu);  
+	    $header_data = $this->load_ace_files($active_menu);
 
-	    // Grocery Crud 
+	    // Grocery Crud
 	    $this->current_table="incident";
 	    $this->grocery_crud->set_table($this->current_table);
-	        
-	    $this->session->set_flashdata('table_name', $this->current_table);     
-			
+
+	    $this->session->set_flashdata('table_name', $this->current_table);
+
 		//Establish subject:
 	    $this->grocery_crud->set_subject(lang("incident"));
 
-	    //COMMON_COLUMNS               
-	    $this->set_common_columns_name($this->current_table);       
+	    //COMMON_COLUMNS
+	    $this->set_common_columns_name($this->current_table);
 
 	    $this->common_callbacks($this->current_table);
 
@@ -1051,7 +1051,7 @@ class attendance extends skeleton_main {
 	    	$this->current_table."_creationUserId",$this->current_table."_lastupdateUserId", $this->current_table.'_markedForDeletion',
 	    	$this->current_table.'_markedForDeletionDate');
 
-	    //ESPECIFIC COLUMNS  
+	    //ESPECIFIC COLUMNS
 	    $this->grocery_crud->display_as($this->current_table.'_student_id',lang('student'));
 	    $this->grocery_crud->display_as($this->current_table.'_day',lang('day'));
 	    $this->grocery_crud->display_as($this->current_table.'_day',lang('date'));
@@ -1059,7 +1059,7 @@ class attendance extends skeleton_main {
 	    $this->grocery_crud->display_as($this->current_table.'_study_submodule_id',lang('study_submodule'));
 	    $this->grocery_crud->display_as($this->current_table.'_type',lang('incident_type'));
 	    $this->grocery_crud->display_as($this->current_table.'_notes',lang('incident_notes'));
-	    
+
 	    //Relations
     	$this->grocery_crud->set_relation($this->current_table.'_student_id','person','{person_id} - {person_sn1} {person_sn2}, {person_givenName} - {person_official_id}',array('student_markedForDeletion' => 'n'));
     	$this->grocery_crud->set_relation($this->current_table.'_time_slot_id','time_slot','{time_slot_start_time} - {time_slot_end_time}',array('time_slot_markedForDeletion' => 'n'));
@@ -1069,16 +1069,16 @@ class attendance extends skeleton_main {
 	    //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-	    
+
 	    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-			
+
 	    $this->userCreation_userModification($this->current_table);
 
 	    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
 
 	    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
-		$this->renderitzar($this->current_table,$header_data);	
+		$this->renderitzar($this->current_table,$header_data);
 
 	}
 
@@ -1092,46 +1092,46 @@ class attendance extends skeleton_main {
 	    $this->check_logged_user();
 
 		/* Ace */
-	    $header_data = $this->load_ace_files($active_menu);  
+	    $header_data = $this->load_ace_files($active_menu);
 
-	    // Grocery Crud 
+	    // Grocery Crud
 	    $this->current_table="incident_type";
 	    $this->grocery_crud->set_table($this->current_table);
-	        
-	    $this->session->set_flashdata('table_name', $this->current_table);     
-			
+
+	    $this->session->set_flashdata('table_name', $this->current_table);
+
 		//Establish subject:
 	    $this->grocery_crud->set_subject(lang("incident_type"));
 
-	    //COMMON_COLUMNS               
-	    $this->set_common_columns_name($this->current_table);       
+	    //COMMON_COLUMNS
+	    $this->set_common_columns_name($this->current_table);
 
 	    $this->common_callbacks($this->current_table);
 
-	    //ESPECIFIC COLUMNS  
+	    //ESPECIFIC COLUMNS
 	    $this->grocery_crud->display_as($this->current_table.'_name',lang('name'));
 	    $this->grocery_crud->display_as($this->current_table.'_shortName',lang('shortName'));
 	    $this->grocery_crud->display_as($this->current_table.'_description',lang('description'));
 	    $this->grocery_crud->display_as($this->current_table.'_code',lang('code'));
 	    $this->grocery_crud->display_as($this->current_table.'_order',lang('order'));
-	    
+
 	    //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-	    
+
 	    $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-			
+
 	    $this->userCreation_userModification($this->current_table);
 
 	    $this->grocery_crud->unset_dropdowndetails($this->current_table."_creationUserId",$this->current_table."_lastupdateUserId");
 
 	    $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
-		$this->renderitzar($this->current_table,$header_data);	
+		$this->renderitzar($this->current_table,$header_data);
 
 	}
 
-	
+
 	public function mentoring_groups ( $class_room_group_id = null, $teacher_code = null, $academic_period_id = null ) {
 
 		if ($academic_period_id == null ) {
@@ -1157,21 +1157,21 @@ class attendance extends skeleton_main {
         $user_teacher_code = null;
 
 		if ($user_is_a_teacher) {
-			$user_teacher_code = $this->attendance_model->get_teacher_code_by_personid($person_id);        
+			$user_teacher_code = $this->attendance_model->get_teacher_code_by_personid($person_id);
         	$user_teacher_id = $this->attendance_model->get_teacher_id_by_personid($person_id);
 		}
-        
+
         $teacher_id = null;
         if ($teacher_code == null) {
             $teacher_id = $user_teacher_id;
             $teacher_code = $user_teacher_code;
         } else {
-            if (!$user_is_admin) { 
-                $teacher_id = $user_teacher_id; 
+            if (!$user_is_admin) {
+                $teacher_id = $user_teacher_id;
                 $teacher_code = $user_teacher_code;
-            } 
+            }
         }
-    	
+
     	$teachers_array = array();
     	$data['teachers'] = array();
     	if ($user_is_admin) {
@@ -1193,7 +1193,7 @@ class attendance extends skeleton_main {
 		$header_data = $this->load_header_data($active_menu);
 
         $this->_load_html_header($header_data);
-		
+
 		$this->_load_body_header();
 
 		//Check if user is manager -> Show all groups
@@ -1204,43 +1204,43 @@ class attendance extends skeleton_main {
 		$mentor_id = 0;
 		$default_classroom_group_id = 0;
 		if ($is_mentor) {
-			$mentor_id = $this->session->userdata('teacher_id');	
+			$mentor_id = $this->session->userdata('teacher_id');
 			$default_classroom_group_id = $this->attendance_model->get_first_classroom_group_id_ismentor($this->session->userdata('teacher_id'));
 		} else {
 			$default_classroom_group_id = $this->attendance_model->get_first_classroom_group_id($this->session->userdata('teacher_id'));
 		}
 
 
-		
+
 		$data['is_mentor'] = $is_mentor;
 		$data['mentor_id'] = $mentor_id;
 
 		$data['default_classroom_group_id'] = $default_classroom_group_id;
 		if ( $class_room_group_id != null ) {
-			$data['default_classroom_group_id'] = $class_room_group_id;			
+			$data['default_classroom_group_id'] = $class_room_group_id;
 		}
 
 		$data['check_attendance_date'] = date('d/m/Y');
 
-		
+
 
 		$all_classgroups = array();
 
-		if ($user_is_admin) { 
+		if ($user_is_admin) {
 			$all_classgroups = $this->attendance_model->get_all_groups();
 		} else {
 			if ($is_mentor) {
-				$all_classgroups = $this->attendance_model->get_all_groups_by_mentor_id($academic_period_id,$mentor_id); 
+				$all_classgroups = $this->attendance_model->get_all_groups_by_mentor_id($academic_period_id,$mentor_id);
 			}
 		}
 
-		$data['classroom_groups'] = $all_classgroups;		
-		
-		$data['classroom_groups'] = 
+		$data['classroom_groups'] = $all_classgroups;
 
-		$this->load->view('mentoring_groups',$data);	
+		$data['classroom_groups'] =
 
-		$this->_load_body_footer();		
+		$this->load->view('mentoring_groups',$data);
+
+		$this->_load_body_footer();
 
 	}
 
@@ -1284,21 +1284,21 @@ class attendance extends skeleton_main {
         $incident_types = $this->attendance_model->get_incident_types();
         $data['incident_types'] = $incident_types;
 
-		$this->load->view('mentoring_attendance_by_student',$data);	
+		$this->load->view('mentoring_attendance_by_student',$data);
 
-		$this->_load_body_footer();		
+		$this->_load_body_footer();
 	}
 
 	public function pdf_exemple() {
 		$this->load->add_package_path(APPPATH.'third_party/fpdf-codeigniter/application/');
 		#$this->load->library('fpdf');
 		$this->load->library('fpdf');
-		
+
         $pdf = new FPDF('P', 'mm', 'A4','font/');
-		
+
 		$pdf->AddPage();
 		$pdf->SetFont('Arial','B',16);
-		$pdf->Image('http://fpdf.org/logo.gif');
+		$pdf->Image('https://fpdf.org/logo.gif');
 		$pdf->Cell(0,10,utf8_decode('¡Hola, Món!'),1,2,'L');
 		$pdf->Output();
 	}
@@ -1312,7 +1312,7 @@ class attendance extends skeleton_main {
 	$active_menu['menu']='#maintenances';
 	$active_menu['submenu1']='#attendance_managment';
 	$active_menu['submenu2']='#classroom_groups';
-	
+
 	//Cargar la llibreria fpdf
 	$this->load->add_package_path(APPPATH.'third_party/fpdf-codeigniter/application/');
 	#$this->load->library('fpdf');
@@ -1322,22 +1322,22 @@ class attendance extends skeleton_main {
     $this->check_logged_user();
 
 	/* Ace */
-    $header_data = $this->load_ace_files($active_menu);  	
+    $header_data = $this->load_ace_files($active_menu);
 
-    // Grocery Crud 
+    // Grocery Crud
 	$this->current_table="classroom_group";
     $this->grocery_crud->set_table($this->current_table);
     $this->session->set_flashdata('table_name', $this->current_table);
 
-    //ESTABLISH SUBJECT        
+    //ESTABLISH SUBJECT
     $this->grocery_crud->set_subject(lang('ClassroomGroup'));
 
-    //COMMON_COLUMNS               
+    //COMMON_COLUMNS
     $this->set_common_columns_name($this->current_table);
 
 	//Mandatory fields
     $this->grocery_crud->required_fields($this->current_table.'_code',$this->current_table.'_name',$this->current_table.'_shortName',$this->current_table.'_markedForDeletion');
-        
+
     //express fields
     $this->grocery_crud->express_fields($this->current_table.'_name',$this->current_table.'_shortName',$this->current_table.'_code');
 
@@ -1352,17 +1352,17 @@ class attendance extends skeleton_main {
 	$this->grocery_crud->display_as($this->current_table.'_description',lang('GroupDescription'));
 	$this->grocery_crud->display_as($this->current_table.'_educationalLevelId',lang('EducationalLevelId'));
 	$this->grocery_crud->display_as($this->current_table.'_mentorId',lang('MentorId'));
-    $this->grocery_crud->display_as($this->current_table.'_parentLocation',lang('parentLocation'));      		
+    $this->grocery_crud->display_as($this->current_table.'_parentLocation',lang('parentLocation'));
 
 
     $this->common_callbacks($this->current_table);
-        
+
     //UPDATE AUTOMATIC FIELDS
 	$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 	$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-        
+
    	$this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-        
+
    	//USER ID: show only active users and by default select current userid. IMPORTANT: Field is not editable, always forced to current userid by before_insert_object_callback
     $this->grocery_crud->set_relation($this->current_table.'_creationUserId','users','{username}',array('active' => '1'));
     $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_creationUserId',$this->session->userdata('user_id'));
@@ -1370,22 +1370,22 @@ class attendance extends skeleton_main {
     //LAST UPDATE USER ID: show only active users and by default select current userid. IMPORTANT: Field is not editable, always forced to current userid by before_update_object_callback
     $this->grocery_crud->set_relation($this->current_table.'_lastupdateUserId','users','{username}',array('active' => '1'));
     $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_lastupdateUserId',$this->session->userdata('user_id'));
-        
+
     $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId',$this->current_table.'_lastupdateUserId',$this->current_table.'_parentLocation');
-        
+
     $this->set_theme($this->grocery_crud);
     $this->set_dialogforms($this->grocery_crud);
-        
+
     //Default values:
     $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_parentLocation',1);
-        
+
 	/* show only specified columns */
 	$this->grocery_crud->columns($this->current_table.'_id',$this->current_table.'_code',$this->current_table.'_shortName',$this->current_table.'_name',$this->current_table.'_description',$this->current_table.'_mentorId',$this->current_table.'_entryDate',$this->current_table.'_last_update',$this->current_table.'_creationUserId',$this->current_table.'_lastupdateUserId');
 
     //markedForDeletion
     $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
-	$this->renderitzar($this->current_table,$header_data);	
+	$this->renderitzar($this->current_table,$header_data);
 
 	}
 
@@ -1398,7 +1398,7 @@ class attendance extends skeleton_main {
 		return -1;
     }
 
-	public function check_attendance_classroom_group( $selected_group_id = 0, $teacher_code = null , $selected_study_module_id = 0, 
+	public function check_attendance_classroom_group( $selected_group_id = 0, $teacher_code = null , $selected_study_module_id = 0,
 		$lesson_id = 0, $day = 0, $month = 0, $year = 0, $selected_time_slot_id = 0, $academic_period_id = null ) {
 
 		$this->check_logged_user();
@@ -1414,7 +1414,7 @@ class attendance extends skeleton_main {
 
 		$userid=$this->session->userdata('id');
 		$person_id=$this->session->userdata('person_id');
-		
+
 		//Check if user is a teacher
 		$user_is_a_teacher = $this->attendance_model->is_user_a_teacher($person_id);
 
@@ -1422,7 +1422,7 @@ class attendance extends skeleton_main {
         $data['academic_period_name'] = $this->attendance_model->get_academic_period_name_by_period_id($academic_period_id);
 
 		$data['is_teacher'] = $user_is_a_teacher;
-		
+
 		/*******************
 		/*      BODY       *
 		/*******************/
@@ -1434,15 +1434,15 @@ class attendance extends skeleton_main {
 			//TODO: Return not allowed page!
 			echo "Access Not Allowed!";
 			return false;
-		}		
+		}
 
 		$user_teacher_code = $this->attendance_model->get_teacher_code_by_personid($person_id,$academic_period_id);
 
 		if ($teacher_code == null) {
 	    	$teacher_code = $user_teacher_code;
 	    } else {
-	    	if (!$user_is_admin) { 
-	    		$teacher_code = $user_teacher_code; 
+	    	if (!$user_is_admin) {
+	    		$teacher_code = $user_teacher_code;
 	    	}
 	    }
 
@@ -1453,20 +1453,20 @@ class attendance extends skeleton_main {
 
 	    $teacher_department_id = 2;
 
-		$teacher_id = $teacher_info['teacher_id'];  
+		$teacher_id = $teacher_info['teacher_id'];
 		$teacher_givenName = $teacher_info['givenName'];
 		$teacher_sn1 = $teacher_info['sn1'];
 		$teacher_sn2 = $teacher_info['sn2'];
 
 		//Teacher info to view
-	    $data['teacher_code']= $teacher_code;   
+	    $data['teacher_code']= $teacher_code;
 	    $data['teacher_id']= $teacher_id;
 	    $data['teacher_givenName']= $teacher_givenName;
 	    $data['teacher_sn1']= $teacher_sn1;
 	    $data['teacher_sn2']= $teacher_sn2;
 
-	    //echo "teacher_id: $teacher_id<br/>";       
-	    //echo "teacher_code: $teacher_code<br/>";   
+	    //echo "teacher_id: $teacher_id<br/>";
+	    //echo "teacher_code: $teacher_code<br/>";
 
 	    //Departaments
 	    $data['departments'] = array();
@@ -1479,7 +1479,7 @@ class attendance extends skeleton_main {
 	    } else {
 	    	$data['departments']= $this->attendance_model->get_teacher_departments($teacher_id,$academic_period_id);
 	    }
-        
+
 	    //Obtain class_room_groups
 	    $data['classroom_groups']=array();
 
@@ -1521,13 +1521,13 @@ class attendance extends skeleton_main {
 	    	$iso_date = $year . "-" .  sprintf('%02s', $month) . "-" . sprintf('%02s', $day);
 	    	$iso_date_alt = $year_alt . "-" .  sprintf('%02s', $month) . "-" . sprintf('%02s', $day);
 	    } else {
-	    	$data['check_attendance_date'] = date('d/m/Y');	
+	    	$data['check_attendance_date'] = date('d/m/Y');
 	    	$data['check_attendance_date_alt'] = $day . "/" . $month . "/" .$year_alt;
 	    	$iso_date_alt = $year_alt . "-" .  sprintf('%02s', $month) . "-" . sprintf('%02s', $day);
 	    }
 
 		$data['check_attendance_date_mysql_format'] = $iso_date_alt;
-	    
+
 	    $day_of_week_number = date('N', strtotime($iso_date));
 
 		$days_of_week = array();
@@ -1545,14 +1545,14 @@ class attendance extends skeleton_main {
 		$data['year'] = $year;
 
 		if ($selected_group_id == 0) {
-			$selected_group_id = 25; //2ASIX	
+			$selected_group_id = 25; //2ASIX
 		}	else {
 			//Check if teacher could use this group. Necessary?
 			//TODO
 		}
 
 	    $data['selected_classroom_group_key']=$selected_group_id;
-	    
+
 	    $data['all_lessons'] =array();
 
 	    $all_lessons = $this->attendance_model->getAllLessonsByDay($day_of_week_number,$data['selected_classroom_group_key'],"asc",$academic_period_id);
@@ -1567,9 +1567,9 @@ class attendance extends skeleton_main {
 
 	    // OFFICIAL GROUP STUDENTS: STUDENTS ENROLLED TO GROUP:
 	    $official_students_in_group = $this->attendance_model->getAllGroupStudentsInfo($selected_group_id,$academic_period_id);
-	    
+
 	    //$official_students_in_group = $this->attendance_model->getAllGroupStudentsIds($selected_group_id);
-	    
+
 	    $data['official_students_in_group'] = $official_students_in_group;
 	    $data['official_students_in_group_num'] = count($official_students_in_group);
 
@@ -1592,7 +1592,7 @@ class attendance extends skeleton_main {
 
 		if ($selected_study_module_id == 0) {
 			//TODO: Get default study_module_id
-			$selected_study_module_id = 274;	
+			$selected_study_module_id = 274;
 		}	else {
 			//Check if teacher could use this study_module0
 			//TODO
@@ -1608,7 +1608,7 @@ class attendance extends skeleton_main {
         //print_r($selected_study_module_info);
         $selected_study_module_name = "";
         $selected_study_module_shortname = "";
-        $selected_study_module_code = ""; 
+        $selected_study_module_code = "";
         $data['selected_study_module_error']= false;
         $data['selected_study_module_error_message']= "";
         if (count($selected_study_module_info) > 0) {
@@ -1619,7 +1619,7 @@ class attendance extends skeleton_main {
             $data['selected_study_module_error']= true;
             $data['selected_study_module_error_message']="No s'ha trobat a la base de dades el mòdul professional/Crèdit: " . $selected_study_module_id . " contacteu amb l'administrador.";
         }
-		
+
 		/*
 		echo "selected_study_module_name: $selected_study_module_name<br/>";
 		echo "selected_study_module_shortname: $selected_study_module_shortname<br/>";
@@ -1631,7 +1631,7 @@ class attendance extends skeleton_main {
 
 
 	    $data['study_modules'] = array();
-	    
+
 	    $all_group_study_modules = $this->attendance_model->getAllGroupStudymodules( $selected_group_id, "ASC" , $academic_period_id);
 	    $data['study_modules'] = $all_group_study_modules;
 
@@ -1644,11 +1644,11 @@ class attendance extends skeleton_main {
 	    $data['selected_lesson_id'] = $lesson_id;
 
         //var_dump($selected_time_slot_id);
-	    
+
 	    if ($selected_time_slot_id == 0) {
 	    	if ($lesson_id != 0) {
 		    	$selected_time_slot_id = $this->attendance_model->getTimeSlotKeyFromLessonId($lesson_id);
-		    }	
+		    }
 	    }
 
         //var_dump($selected_time_slot_id);
@@ -1679,7 +1679,7 @@ class attendance extends skeleton_main {
 	    $group_teachers_array = $this->attendance_model->getAllTeachersFromClassgroupId( $selected_group_id );
 	    $data['group_teachers']= $group_teachers_array;
 
-	    //Tutor is default selected_group_teacher 	    
+	    //Tutor is default selected_group_teacher
 	    $tutor_teacher_id = $this->attendance_model->getTutorFromClassgroupId( $selected_group_id );
 
 	    //echo "tutor_teacher_id: $tutor_teacher_id<br/>";
@@ -1701,14 +1701,14 @@ class attendance extends skeleton_main {
         }
 
 	    $data['selected_group_teacher']= $selected_group_teacher;
-	    
+
 	    $data['group_teachers_default_teacher_key']= $tutor_teacher_id;
 	    if ($tutor_teacher_id == $teacher_id) {
 	    	$data['teacher_is_mentor'] = true;
 	    } else {
 	    	$data['teacher_is_mentor'] = false;
 	    }
-	    	    
+
 		//TODO: select current user (sessions user as default teacher)
 	    $data['default_teacher'] = $teacher_code;
 
@@ -1718,7 +1718,7 @@ class attendance extends skeleton_main {
 
 		$data['classroom_group_students'] = array ();
 		$base_photo_url = "uploads/person_photos";
-		
+
 		/*
 		print_r($all_students_in_group);
 		echo "*********************";
@@ -1748,16 +1748,16 @@ class attendance extends skeleton_main {
 			foreach ($official_students_in_group as $official_student_key => $official_student) {
                 if (is_array($all_students_in_group)) {
                     if ( ! array_key_exists($official_student_key, $all_students_in_group) ) {
-                        if ($number_of_enrolled_study_submodules[$official_student->enrollment_id] == 0 ) { 
+                        if ($number_of_enrolled_study_submodules[$official_student->enrollment_id] == 0 ) {
                             $official_student->errorType = "L'alumne no té cap UF/UD matrículada";
                         } else {
-                            $official_student->errorType = "Matrícula incoherent. Alumne matrículat al grup però sense CAP Unitat Formativa DEL GRUP matrículada";  
+                            $official_student->errorType = "Matrícula incoherent. Alumne matrículat al grup però sense CAP Unitat Formativa DEL GRUP matrículada";
                         }
                         $students_with_errors[$official_student_key]= $official_student;
-                    }    
-                }			
+                    }
+                }
 			}
-			
+
             if (is_array($all_students_in_group)) {
     			foreach ($all_students_in_group as $student_key => $student) {
     				if ($number_of_enrolled_study_submodules[$student->enrollment_id] == 0 ) {
@@ -1770,7 +1770,7 @@ class attendance extends skeleton_main {
 			$data['students_with_errors'] = $students_with_errors;
 			$data['students_with_errors_num'] = count($students_with_errors);
 		}
-		
+
 		$hidden_students_in_group= array();
 		$array_student_person_ids = array ();
 		if ( $data['total_number_of_students'] != 0 ) {
@@ -1782,12 +1782,12 @@ class attendance extends skeleton_main {
 					if ($student->photo_url != "") {
 						$path = "/usr/share/ebre-escool/uploads/person_photos/" . $student->photo_url;
 						if (file_exists ($path)) {
-							$student->photo_url = $base_photo_url."/".$student->photo_url;	
+							$student->photo_url = $base_photo_url."/".$student->photo_url;
 						} else {
 							$student->photo_url = '/assets/img/alumnes/foto.png';
-						}	
+						}
 					}	else {
-						$student->photo_url = '/assets/img/alumnes/foto.png';				
+						$student->photo_url = '/assets/img/alumnes/foto.png';
 					}
 
 					if ( array_key_exists($student->person_id, $official_students_in_group) ) {
@@ -1799,12 +1799,12 @@ class attendance extends skeleton_main {
 					if ($student->hidden) {
 						$hidden_students_in_group[] = $student;
 					}
-					
+
 
 					$data['classroom_group_students'][]=$student;
-				}	
+				}
 			}
-				
+
 		}
 
 	    //$hidden_students_in_group= $this->attendance_model->getAllGroupHiddenStudentsInfo($selected_group_id,teacher_id);
@@ -1822,19 +1822,19 @@ class attendance extends skeleton_main {
 		$data['user_is_admin'] = $user_is_admin;
 
 		$data['academic_period_id'] = $this->attendance_model->get_current_academic_period_id();
-		
+
 		$this->load->view('attendance/check_attendance_classroom_group',$data);
-		 
+
 		/*******************
 		/*      FOOTER     *
 		*******************/
-		$this->_load_body_footer();	
+		$this->_load_body_footer();
 	}
 
 
 	public function check_attendance(
 		$teacher_code = null, $day = null, $month = null, $year = null ,$academic_period_id = null) {
- 
+
  		$this->check_logged_user();
 
         if ($academic_period_id == null) {
@@ -1843,7 +1843,7 @@ class attendance extends skeleton_main {
 
 		$active_menu = array();
 		$active_menu['menu']='#check_attendance';
-		
+
 		$header_data = $this->load_header_data($active_menu);
         $this->_load_html_header($header_data);
 
@@ -1857,7 +1857,7 @@ class attendance extends skeleton_main {
 
 		$userid=$this->session->userdata('id');
 		$person_id=$this->session->userdata('person_id');
-		
+
 		//Check if user is a teacher
 		$user_is_a_teacher = $this->attendance_model->is_user_a_teacher($person_id);
 
@@ -1865,7 +1865,7 @@ class attendance extends skeleton_main {
 		$this->_load_body_header($data);
 
 		$user_teacher_code = $this->attendance_model->get_teacher_code_by_personid($person_id);
-		
+
 		//TODO:
 		$user_is_admin = $this->ebre_escool->user_is_admin();
 
@@ -1873,25 +1873,25 @@ class attendance extends skeleton_main {
 			if ( !$user_is_a_teacher  ) {
 				//TODO: Return not allowed page!
 				return null;
-			}		
-		}			
+			}
+		}
 
 		if ($teacher_code == null) {
 	    	$teacher_code = $user_teacher_code;
 	    } else {
-	    	if (!$user_is_admin) { 
-	    		$teacher_code = $user_teacher_code; 
+	    	if (!$user_is_admin) {
+	    		$teacher_code = $user_teacher_code;
 	    	}
 	    }
 
-	    $teacher_info = $this->attendance_model->get_teacher_info_from_teacher_code($teacher_code);   
+	    $teacher_info = $this->attendance_model->get_teacher_info_from_teacher_code($teacher_code);
 
 	    $teacher_id = $teacher_info['teacher_id'];
 	    $teacher_full_name = $teacher_info['givenName'] . " " . $teacher_info['sn1'] . " " . $teacher_info['sn2'];
 
-	    //echo "teacher_id: $teacher_id<br/>";       
-	    //echo "teacher_code: $teacher_code<br/>";       
-        
+	    //echo "teacher_id: $teacher_id<br/>";
+	    //echo "teacher_code: $teacher_code<br/>";
+
 		if ($user_is_admin) {
 			//Load teachers from Model
 			$teachers_array = $this->attendance_model->get_all_teachers_ids_and_names("ASC",false,$academic_period_id);
@@ -1914,7 +1914,7 @@ class attendance extends skeleton_main {
 	    	$data['check_attendance_date'] = $day . "/" . $month . "/" .$year;
 	    	$iso_date = $year . "-" .  sprintf('%02s', $month) . "-" . sprintf('%02s', $day);
 	    } else {
-	    	$data['check_attendance_date'] = date('d/m/Y');	
+	    	$data['check_attendance_date'] = date('d/m/Y');
 	    	$iso_date = $year . "-" .  sprintf('%02s', $month) . "-" . sprintf('%02s', $day);
 	    }
 
@@ -1954,7 +1954,7 @@ class attendance extends skeleton_main {
 		$all_lessons_by_teacherid_and_day = null;
 		$all_lessons_by_teacherid_and_day = $this->attendance_model->get_all_lessons_by_teacherid_and_day($teacher_id,$day_of_week_number,"asc",$academic_period_id);
     	$time_slots_array = $this->attendance_model->get_all_time_slots_with_all_lessons_by_teacherid_and_day($all_lessons_by_teacherid_and_day);
-    	
+
     	//echo "Number of lessons: " . count($all_lessons_by_teacherid_and_day) . "<br/>";
 
 	    $data['time_slots_array'] = $time_slots_array;
@@ -1963,7 +1963,7 @@ class attendance extends skeleton_main {
 	    //print_r($time_slots_array);
 
 	    $teacher_groups_current_day=array();
-	    
+
 	    $all_time_slots=array();
 	    $all_time_slots_reduced=array();
 
@@ -1976,7 +1976,7 @@ class attendance extends skeleton_main {
 			$base_url =  "";
 			$group_shortname =  "";
 			$group_name =  "";
-			
+
 			$lesson_code =  "";
 			$lesson_shortname =  "";
 			$lesson_name =  "";
@@ -1993,7 +1993,7 @@ class attendance extends skeleton_main {
 			$time_slot_data->group_code = $time_slot->group_code;
 			$time_slot_data->group_shortname = $time_slot->group_shortname;
 			$time_slot_data->group_name = $time_slot->group_name;
-			
+
 			$time_slot_data->study_module_id = $time_slot->study_module_id;
 
 			$time_slot_data->lesson_id = $time_slot->lesson_id;
@@ -2001,22 +2001,22 @@ class attendance extends skeleton_main {
 
 
 			$time_slot_data->lesson_location_id = $time_slot->lesson_location_id;
-			
+
 			$time_slot_data->lesson_code = $time_slot->lesson_code;
 			$time_slot_data->lesson_shortname = $time_slot->lesson_shortname;
 			$time_slot_data->lesson_name = $time_slot->lesson_name;
-			
+
 			$time_slot_data->classroom_group_colour = "btn-default";
 			if ( $time_slot->group_code != "" ) {
 				if (array_key_exists($time_slot->group_code, $classroom_groups_colours)) {
 					$time_slot_data->classroom_group_colour = $classroom_groups_colours[$time_slot->group_code];
-				} 
+				}
 			}
 			$time_slot_data->lesson_colour = "btn-default";
 			if ( $time_slot->study_module_id != "" ) {
 				if (array_key_exists($time_slot->study_module_id, $study_modules_colours)) {
 					$time_slot_data->lesson_colour = $study_modules_colours[$time_slot->study_module_id];
-				} 
+				}
 			}
 
    			$all_time_slots[] = $time_slot_data;
@@ -2024,13 +2024,13 @@ class attendance extends skeleton_main {
 
 		if (is_array($all_lessons_by_teacherid_and_day)) {
 			foreach ($all_lessons_by_teacherid_and_day as $time_slot)	{
-			
+
 				$group_id = 0;
 				$group_code = "";
 				$base_url =  "";
 				$group_shortname =  "";
 				$group_name =  "";
-				
+
 				$lesson_id = 0;
 				$lesson_code =  "";
 				$lesson_shortname =  "";
@@ -2046,7 +2046,7 @@ class attendance extends skeleton_main {
 
 				//Obtain lesson for this teacher date and time slot
 				$study_module_id = null;
-				
+
 				if (array_key_exists($lesson_id, $all_lessons_by_teacherid_and_day)) {
 					$group_id = $all_lessons_by_teacherid_and_day[$lesson_id]->group_id;
 					$group_code = $all_lessons_by_teacherid_and_day[$lesson_id]->group_code;
@@ -2079,7 +2079,7 @@ class attendance extends skeleton_main {
 				if ( $group_code != null ) {
 					if (array_key_exists($group_code, $classroom_groups_colours)) {
 						$time_slot_data->classroom_group_colour = $classroom_groups_colours[$group_code];
-					} 
+					}
 				}
 				$time_slot_data->lesson_colour = "btn-default";
 				if ( $study_module_id != null ) {
@@ -2089,10 +2089,10 @@ class attendance extends skeleton_main {
 				}
 
 	   			$all_time_slots_reduced[$lesson_id] = $time_slot_data;
-			}	
+			}
 		}
-		
-		
+
+
 		$data['all_time_slots']=$all_time_slots;
 		$data['all_time_slots_reduced']=$all_time_slots_reduced;
 
@@ -2104,13 +2104,13 @@ class attendance extends skeleton_main {
 		}*/
 
 
-		
-		
-		//Obtain all teacher groups for selected date		
+
+
+		//Obtain all teacher groups for selected date
 
 		if(isset($group_code)){
-			$data['$group_code'] = $group_code;	
-		}	
+			$data['$group_code'] = $group_code;
+		}
 
 		$data['check_attendance_day']="TODO";
 		$data['check_attendance_table_title']=lang('check_attendance_table_title');
@@ -2118,7 +2118,7 @@ class attendance extends skeleton_main {
 		$data['today']=date('d-m-Y');
 
 		$teacher_groups_current_day=array();
-		
+
 		/* Llista alumnes grup */
 
         $default_group_code = $group_code;
@@ -2151,16 +2151,16 @@ class attendance extends skeleton_main {
         $data['academic_periods'] = $academic_periods;
 
 		$this->load->view('attendance/check_attendance',$data);
-		 
+
 		/*******************
 		/*      FOOTER     *
 		*******************/
-		$this->_load_body_footer();		
+		$this->_load_body_footer();
 	}
 
 	protected function _alt_assign_colours($items,$item_id) {
         $items_colours = array();
-        $bootstrap_button_colours = 
+        $bootstrap_button_colours =
             array( 1 => "btn-greenyellow " ,
                    2 => "btn-darkred",
                    3 => "btn-coral",
@@ -2180,13 +2180,13 @@ class attendance extends skeleton_main {
             	$index++;
         	}
         }
-            
+
         return $items_colours;
     }
 
 	protected function _assign_colours($items,$item_id) {
         $items_colours = array();
-        $bootstrap_button_colours = 
+        $bootstrap_button_colours =
             array( 1 => "btn-primary" ,
                    2 => "btn-info"    ,
                    3 => "btn-warning" ,
@@ -2215,7 +2215,7 @@ class attendance extends skeleton_main {
             	$index++;
         	}
         }
-            
+
         return $items_colours;
     }
 
@@ -2228,39 +2228,39 @@ class attendance extends skeleton_main {
         //CSS
         $header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            'http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');
+            'https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/jquery-ui.css'));  
+            base_url('assets/css/jquery-ui.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));  
+            base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));
         //JS
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");                     
+            "https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
             base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/TableTools.js"));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js")); 
+            base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js"));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url("assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js"));   
-        
-        $this->_load_html_header($header_data);
-        //$this->_load_html_header($header_data); 
-        
-        $this->_load_body_header();     
+            base_url("assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js"));
 
-    }	
-	
+        $this->_load_html_header($header_data);
+        //$this->_load_html_header($header_data);
+
+        $this->_load_body_header();
+
+    }
+
 //OSCAR: GET TIME SLOTS
     public function get_time_slots($classroom_group_id=null,$lective)
     {
             $complete_time_slots_array = $this->attendance_model->getAllTimeSlots()->result_array();
-            $data['complete_time_slots_count'] = count($complete_time_slots_array);            
+            $data['complete_time_slots_count'] = count($complete_time_slots_array);
             if($classroom_group_id){
                 $shift = $this->attendance_model->get_group_shift($classroom_group_id);
 			    $all_teacher_groups_time_slots[$classroom_group_id] = $this->attendance_model->get_time_slots_byShift($shift)->result_array();
@@ -2275,7 +2275,7 @@ class attendance extends skeleton_main {
             //Get first and last time slot order
             $keys = array_keys($time_slots_array);
             $first_time_slot_order = $time_slots_array[$keys[0]]['time_slot_order'];
-            $data['first_time_slot_order'] = $first_time_slot_order;            
+            $data['first_time_slot_order'] = $first_time_slot_order;
             $last_time_slot_order = $time_slots_array[$keys[count($time_slots_array)-1]]['time_slot_order'];
             $data['last_time_slot_order'] = $last_time_slot_order;
 
@@ -2298,7 +2298,7 @@ class attendance extends skeleton_main {
             $data['time_slots_count'] = count($time_slots);
 
             return $data;
-    }    
+    }
 
 
 
@@ -2369,7 +2369,7 @@ public function hide_unhide_student_on_classroom_group_and_day() {
 	    		$result->result = false;
         		$result->message = "No valid action specified!";
 	    	}
-	    		
+
 	    }
 
 	    print_r(json_encode($result));
@@ -2377,32 +2377,32 @@ public function hide_unhide_student_on_classroom_group_and_day() {
 
 
 
-public function add_callback_last_update(){  
-   
+public function add_callback_last_update(){
+
     return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" name="'.$this->session->flashdata('table_name').'_last_update" id="field-last_update" readonly>';
 }
 
-public function add_field_callback_entryDate(){  
+public function add_field_callback_entryDate(){
       $data= date('d/m/Y H:i:s', time());
-      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';    
+      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';
 }
 
-public function edit_field_callback_entryDate($value, $primary_key){  
+public function edit_field_callback_entryDate($value, $primary_key){
     //$this->session->flashdata('table_name');
-      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', strtotime($value)) .'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';    
+      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', strtotime($value)) .'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';
     }
-    
-public function edit_callback_last_update($value, $primary_key){ 
-    //$this->session->flashdata('table_name'); 
+
+public function edit_callback_last_update($value, $primary_key){
+    //$this->session->flashdata('table_name');
      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', time()) .'"  name="'.$this->session->flashdata('table_name').'_last_update" id="field-last_update" readonly>';
-    }   
+    }
 
 //UPDATE AUTOMATIC FIELDS BEFORE INSERT
 function before_insert_object_callback($post_array, $primary_key) {
         //UPDATE LAST UPDATE FIELD
         $data= date('d/m/Y H:i:s', time());
         $post_array['entryDate'] = $data;
-        
+
         $post_array['creationUserId'] = $this->session->userdata('user_id');
         return $post_array;
 }
@@ -2412,7 +2412,7 @@ function before_update_object_callback($post_array, $primary_key) {
         //UPDATE LAST UPDATE FIELD
         $data= date('d/m/Y H:i:s', time());
         $post_array['last_update'] = $data;
-        
+
         $post_array['lastupdateUserId'] = $this->session->userdata('user_id');
         return $post_array;
 }
@@ -2421,7 +2421,7 @@ function load_ace_files($active_menu){
 
 		$header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+            "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
@@ -2434,23 +2434,23 @@ function load_ace_files($active_menu){
                 base_url('assets/css/ace-responsive.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace-skins.min.css'));  
+                base_url('assets/css/ace-skins.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/test_incidents_managment_by_ajax_css.css'));     
+                base_url('assets/css/test_incidents_managment_by_ajax_css.css'));
 /*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));  
+            base_url('assets/css/no_padding_top.css'));
 */
-        
+
         //JS
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/jquery-1.9.1.js");
+            "https://code.jquery.com/jquery-1.9.1.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/ui/1.10.3/jquery-ui.js");   
+            "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
@@ -2460,7 +2460,7 @@ function load_ace_files($active_menu){
                 base_url('assets/js/ace-elements.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/js/ace.min.js'));    
+                base_url('assets/js/ace.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ebre-escool.js'));
@@ -2491,34 +2491,34 @@ function renderitzar($table_name,$header_data = null)
        $output = $this->grocery_crud->render();
 
        // HTML HEADER
-        $this->_load_html_header($header_data,$output); 
-        $this->_load_body_header();      
-       
-       // BODY       
+        $this->_load_html_header($header_data,$output);
+        $this->_load_body_header();
+
+       // BODY
        $default_values=$this->_get_default_values();
        $default_values["table_name"]=$table_name;
        $default_values["field_prefix"]=$table_name."_";
-       $this->load->view('defaultvalues_view.php',$default_values); 
+       $this->load->view('defaultvalues_view.php',$default_values);
 
-       $this->load->view($table_name.'.php',$output);     
-       
-       // FOOTER     
-       $this->_load_body_footer();  
+       $this->load->view($table_name.'.php',$output);
+
+       // FOOTER
+       $this->_load_body_footer();
 
 }
 
 function common_callbacks()
 {
-        //CALLBACKS        
+        //CALLBACKS
         $this->grocery_crud->callback_add_field($this->session->flashdata('table_name').'_entryDate',array($this,'add_field_callback_entryDate'));
         $this->grocery_crud->callback_edit_field($this->session->flashdata('table_name').'_entryDate',array($this,'edit_field_callback_entryDate'));
-        
-        //Camps last update no editable i automàtic        
+
+        //Camps last update no editable i automàtic
         $this->grocery_crud->callback_edit_field($this->session->flashdata('table_name').'_last_update',array($this,'edit_callback_last_update'));
 }
 
 function userCreation_userModification($table_name)
-{   
+{
     //USER ID: show only active users and by default select current userid. IMPORTANT: Field is not editable, always forced to current userid by before_insert_object_callback
     $this->grocery_crud->set_relation($table_name.'_creationUserId','users','{username}',array('active' => '1'));
     $this->grocery_crud->set_default_value($table_name,$table_name.'_creationUserId',$this->session->userdata('user_id'));
@@ -2531,10 +2531,10 @@ function userCreation_userModification($table_name)
 function set_common_columns_name($table_name){
     $this->grocery_crud->display_as($table_name.'_entryDate',lang('entryDate'));
     $this->grocery_crud->display_as($table_name.'_last_update',lang('last_update'));
-    $this->grocery_crud->display_as($table_name.'_creationUserId',lang('creationUserId'));                  
-    $this->grocery_crud->display_as($table_name.'_lastupdateUserId',lang('lastupdateUserId'));   
-    $this->grocery_crud->display_as($table_name.'_markedForDeletion',lang('markedForDeletion'));       
-    $this->grocery_crud->display_as($table_name.'_markedForDeletionDate',lang('markedForDeletionDate')); 
+    $this->grocery_crud->display_as($table_name.'_creationUserId',lang('creationUserId'));
+    $this->grocery_crud->display_as($table_name.'_lastupdateUserId',lang('lastupdateUserId'));
+    $this->grocery_crud->display_as($table_name.'_markedForDeletion',lang('markedForDeletion'));
+    $this->grocery_crud->display_as($table_name.'_markedForDeletionDate',lang('markedForDeletionDate'));
 }
 
 }

@@ -1,5 +1,5 @@
 <div class="main-content">
- 
+
 <div id="breadcrumbs" class="breadcrumbs">
  <script type="text/javascript">
   try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -31,7 +31,7 @@
 <div class="space-3"></div>
 
               <div class="row-fluid">
-                
+
                 <div class="span1"></div>
 
                 <div class="span5 widget-container-span">
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="widget-body">
-                      <div class="widget-main">                        
+                      <div class="widget-main">
 
                     <ol class="dd-list">
                       <li class="dd-item dd2-item" data-id="13">
@@ -132,7 +132,7 @@
                     </div>
                   </div>
                 </div>
-                      
+
                 <div class="span5 widget-container-span">
                   <div class="widget-box collapsed">
                     <div class="widget-header widget-header-small header-color-orange">
@@ -153,7 +153,7 @@
                     </div>
 
                     <div class="widget-body">
-                      <div class="widget-main">                        
+                      <div class="widget-main">
 
                     <ol class="dd-list">
                       <li class="dd-item dd2-item" data-id="13">
@@ -196,57 +196,57 @@
                   </div>
                 </div>
 
-                
+
 
               <div class="span2"></div>
             </div>
 
         <div class="row-fluid">
           <div class="span4"></div>
-          
+
           <div class="span4">
-          <i class="icon-group"></i> <b>Unitat organitzativa</b>: 
+          <i class="icon-group"></i> <b>Unitat organitzativa</b>:
           <!--Solved error missage: ERROR. PENDENT DEFINIR DEFAULT for users_is_inventory-->
           <?php if(($data['user_is_admin'] || $data['user_is_inventory'])): ?>
             <select id="organizational_units" style="width: 250px">
              <option></option>
              <?php if( $data['selected_organizational_unit_key'] == "All" ): ?>
                 <option value="All" selected="selected"><?php echo $data['all_organizational_units_text'];?></option>
-             <?php else: ?> 
+             <?php else: ?>
                 <option value="All"><?php echo $data['all_organizational_units_text'];?></option>
-             <?php endif; ?> 
+             <?php endif; ?>
 
-             
+
              <?php foreach( (array) $data['organizational_units'] as $organizational_unit_key => $organizational_unit): ?>
               <?php if( $data['selected_organizational_unit_key'] == $organizational_unit_key ): ?>
                <option value="<?php echo $organizational_unit_key; ?>" selected="selected"><?php echo $organizational_unit; ?></option>
-              <?php else: ?> 
+              <?php else: ?>
                 <option value="<?php echo $organizational_unit_key; ?>" ><?php echo $organizational_unit; ?></option>
-              <?php endif; ?> 
-             <?php endforeach; ?> 
-            </select> 
-          <?php else: ?>          
+              <?php endif; ?>
+             <?php endforeach; ?>
+            </select>
+          <?php else: ?>
             <?php echo $data['organizational_units'][$data['selected_organizational_unit_key']] ?>
           <?php endif; ?>
 
-        
+
           </div>
-          
+
           <div class="span4"></div>
 
         </div>
-        
+
 
     <div style="height: 10px;"></div>
 
 
-  <?php if ($data['grocery_crud_state'] == "list"): ?>       
+  <?php if ($data['grocery_crud_state'] == "list"): ?>
 
-    
+
 
   <div class="table-header">
     <!--
-    <i class="icon-group"></i> 
+    <i class="icon-group"></i>
     <div class="inline position-relative">
               Unitat organitzativa principal:
               <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -256,26 +256,26 @@
 
                           <ul class="dropdown-menu pull-right dropdown-125 dropdown-lighter dropdown-caret">
                             <?php if (count($data['organizational_units']) > 1): ?>
-                              <li> 
+                              <li>
                                 <a href="#">
                                   <i class="icon-caret-right bigger-110">&nbsp;</i>
                                   Totes
                                 </a>
-                              </li>      
+                              </li>
                             <?php endif; ?>
                           <?php foreach ($data['organizational_units'] as $organizational_unit_key => $organizational_unit): ?>
                             <li <?php if ($data['selected_organizational_unit_key'] == $organizational_unit_key ) { echo 'class="active"';} ?> >
-                              <a href="#" 
+                              <a href="#"
                                 <?php if ($data['selected_organizational_unit_key'] == $organizational_unit_key ) { echo 'class="blue"';}?> >
                                 <i class="icon-caret-right bigger-110">&nbsp;</i>
                                 <?php echo $organizational_unit; ?>
                               </a>
-                            </li>      
+                            </li>
                           <?php endforeach; ?>
                           </ul>
     </div>
-    
-    <i class="icon-double-angle-right"></i> 
+
+    <i class="icon-double-angle-right"></i>
     <div class="inline position-relative">
               Tipus de material:
               <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -284,25 +284,25 @@
                           </button>
 
                           <ul class="dropdown-menu pull-right dropdown-125 dropdown-lighter dropdown-caret">
-                            <li <?php if ($data['selected_material_id'] == 0 ) { echo 'class="active"';} ?>> 
+                            <li <?php if ($data['selected_material_id'] == 0 ) { echo 'class="active"';} ?>>
                               <a href="#" <?php if ($data['selected_material_id'] == 0 ) { echo 'class="blue"';}?> >
                                 <i class="icon-caret-right bigger-110">&nbsp;</i>
                                 <?php echo $data['default_selected_material_name']; ?>
                               </a>
-                            </li>  
+                            </li>
                           <?php foreach ($data['materials'] as $material_key => $material): ?>
                             <li <?php if ($data['selected_material_id'] == $material_key ) { echo 'class="active"';} ?> >
-                              <a href="#" 
+                              <a href="#"
                                 <?php if ($data['selected_material_id'] == $material_key ) { echo 'class="blue"';}?> >
                                 <i class="icon-caret-right bigger-110">&nbsp;</i>
                                 <?php echo $material; ?>
                               </a>
-                            </li>      
+                            </li>
                           <?php endforeach; ?>
                           </ul>
     </div>
-    <i class="icon-double-angle-right" ></i> 
-    
+    <i class="icon-double-angle-right" ></i>
+
     <div class="inline position-relative">
               Ubicació:
               <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -311,26 +311,26 @@
                           </button>
 
                           <ul class="dropdown-menu pull-right dropdown-125 dropdown-lighter dropdown-caret">
-                            <li <?php if ($data['selected_location_id'] == 0 ) { echo 'class="active"';}?> > 
+                            <li <?php if ($data['selected_location_id'] == 0 ) { echo 'class="active"';}?> >
                               <a href="#" <?php if ($data['selected_location_id'] == 0) { echo 'class="blue"';}?>>
                                 <i class="icon-caret-right bigger-110">&nbsp;</i>
                                 <?php echo $data['default_selected_location_name']; ?>
                               </a>
-                            </li>  
+                            </li>
                           <?php foreach ($data['locations'] as $location_key => $location): ?>
                             <li <?php if ($data['selected_location_id'] == $location_key ) { echo 'class="active"';} ?> >
-                              <a href="#" 
+                              <a href="#"
                                 <?php if ($data['selected_location_id'] == $location_key ) { echo 'class="blue"';}?> >
                                 <i class="icon-caret-right bigger-110">&nbsp;</i>
                                 <?php echo $location; ?>
                               </a>
-                            </li>      
+                            </li>
                           <?php endforeach; ?>
                           </ul>
     </div>
-    
+
     <div class="inline position-relative" style="float:right;">
-              Proveidors: 
+              Proveidors:
               <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
                             <?php echo $data['selected_provider_name'];?>
                             <i class="icon-angle-down icon-on-right bigger-110"></i>
@@ -342,15 +342,15 @@
                                 <i class="icon-caret-right bigger-110">&nbsp;</i>
                                 <?php echo $data['default_selected_provider_name']; ?>
                               </a>
-                            </li>                              
+                            </li>
                           <?php foreach ($data['providers'] as $provider_key => $provider_name): ?>
                             <li <?php if ($data['selected_provider_id'] == $provider_key ) { echo 'class="active"';} ?> >
-                              <a href="#" 
+                              <a href="#"
                                 <?php if ($data['selected_provider_id'] == $provider_key ) { echo 'class="blue"';}?> >
                                 <i class="icon-caret-right bigger-110">&nbsp;</i>
                                 <?php echo $provider_name; ?>
                               </a>
-                            </li>      
+                            </li>
                           <?php endforeach; ?>
                           </ul>
     </div>
@@ -367,7 +367,7 @@
 
 
 </div>
-      
+
 
 
 </div>
@@ -377,10 +377,10 @@
 <script>
   $(document).ready(function(){
 
-    //Jquery select plugin: http://ivaynberg.github.io/select2/
-    $("#organizational_units").select2(); 
+    //Jquery select plugin: https://ivaynberg.github.io/select2/
+    $("#organizational_units").select2();
 
-    $('#organizational_units').on("change", function(e) {   
+    $('#organizational_units').on("change", function(e) {
         selectedValue = $("#organizational_units").select2("val");
         var pathArray = window.location.pathname.split( '/' );
         var secondLevelLocation = pathArray[1];

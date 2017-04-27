@@ -4,42 +4,42 @@
 include "application/third_party/skeleton/application/controllers/skeleton_main.php";
 
 class enrollment extends skeleton_main {
-	
+
     public $body_header_view ='include/ebre_escool_body_header.php' ;
     public $body_header_lang_file ='ebre_escool_body_header' ;
 
     public $html_header_view ='include/ebre_escool_html_header' ;
 
-    public $body_footer_view ='include/ebre_escool_body_footer' ;       
+    public $body_footer_view ='include/ebre_escool_body_footer' ;
 
 	function __construct()
     {
         parent::__construct();
-        
+
         //$this->load->model('attendance_model');
         $this->load->model('enrollment_model');
         //$this->load->library('ebre_escool_ldap');
-        //$this->config->load('managment');        
+        //$this->config->load('managment');
         $this->config->load('wizard');
         $this->config->load('auth_ldap');
-        
-         // Load FPDF        
+
+         // Load FPDF
         $this->load->add_package_path(APPPATH.'third_party/fpdf-codeigniter/application/');
-        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');        
+        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');
         $this->load->library('pdf',$params); // Load library
-        
+
         /* Set language */
         $current_language=$this->session->userdata("current_language");
         if ($current_language == "") {
             $current_language= $this->config->item('default_language');
         }
-        
+
         // Load the language file
         $this->lang->load('enrollment',$current_language);
         $this->load->helper('language');
 
 	}
-	
+
 	protected function _getvar($name){
 		if (isset($_GET[$name])) return $_GET[$name];
 		else if (isset($_POST[$name])) return $_POST[$name];
@@ -76,7 +76,7 @@ class enrollment extends skeleton_main {
         $active_menu['submenu2']='#enrollment_only_current_period';
 
         $this->check_logged_user();
-		
+
         /* Ace */
         $header_data = $this->load_ace_files($active_menu);
 
@@ -84,23 +84,23 @@ class enrollment extends skeleton_main {
 		$this->current_table="enrollment";
         $this->grocery_crud->set_table($this->current_table);
         $this->session->set_flashdata('table_name', $this->current_table);
-        
+
         //ESTABLISH SUBJECT
-        $this->grocery_crud->set_subject(lang('enrollment'));       
- 
+        $this->grocery_crud->set_subject(lang('enrollment'));
+
         $this->common_callbacks($this->current_table);
 
-        //COMMON_COLUMNS               
+        //COMMON_COLUMNS
         $this->set_common_columns_name($this->current_table);
 
         //SPECIFIC COLUMNS
-        $this->grocery_crud->display_as($this->current_table.'_id',lang('enrollment_id'));  
-        $this->grocery_crud->display_as($this->current_table.'_periodid',lang('periodid'));        
+        $this->grocery_crud->display_as($this->current_table.'_id',lang('enrollment_id'));
+        $this->grocery_crud->display_as($this->current_table.'_periodid',lang('periodid'));
         $this->grocery_crud->display_as($this->current_table.'_personid',lang('personid'));
         $this->grocery_crud->display_as($this->current_table.'_study_id',lang('enrollment_studies'));
         $this->grocery_crud->display_as($this->current_table.'_course_id',lang('enrollment_courses'));
         $this->grocery_crud->display_as($this->current_table.'_group_id',lang('enrollment_classgroups'));
-            
+
 
         //RELACIONS
         $this->grocery_crud->set_relation($this->current_table.'_personid','person','{person_sn1} {person_sn2}, {person_givenName} - {person_official_id} ');
@@ -111,16 +111,16 @@ class enrollment extends skeleton_main {
         //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-        
+
         $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-   		
+
         $this->userCreation_userModification($this->current_table);
-        
+
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId','study_submodules_lastupdateUserId');
-   
+
         $this->set_theme($this->grocery_crud);
         $this->set_dialogforms($this->grocery_crud);
-        
+
         $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
 
         if ($only_current_academic_period) {
@@ -132,7 +132,7 @@ class enrollment extends skeleton_main {
             $this->current_table.'_entryDate',$this->current_table.'_last_update',$this->current_table.'_creationUserId',
             $this->current_table.'_lastupdateUserId',$this->current_table.'_markedForDeletion',$this->current_table.'_markedForDeletionDate');
 
-        $this->renderitzar($this->current_table,$header_data);                   
+        $this->renderitzar($this->current_table,$header_data);
 
 	}
 
@@ -148,7 +148,7 @@ class enrollment extends skeleton_main {
         $active_menu['submenu2']='#enrollment_submodules';
 
         $this->check_logged_user();
-        
+
         /* Ace */
         $header_data = $this->load_ace_files($active_menu);
 
@@ -156,34 +156,34 @@ class enrollment extends skeleton_main {
         $this->current_table="enrollment_submodules";
         $this->grocery_crud->set_table($this->current_table);
         $this->session->set_flashdata('table_name', $this->current_table);
-        
+
         //ESTABLISH SUBJECT
-        $this->grocery_crud->set_subject(lang('enrollment_submodules'));       
+        $this->grocery_crud->set_subject(lang('enrollment_submodules'));
 
         $this->common_callbacks($this->current_table);
 
-        //COMMON_COLUMNS               
+        //COMMON_COLUMNS
         $this->set_common_columns_name($this->current_table);
 
         ///SPECIFIC COLUMNS
-        $this->grocery_crud->display_as($this->current_table.'_id',lang('enrollment_id')); 
-        $this->grocery_crud->display_as($this->current_table.'_moduleid',lang('moduleid'));             
-        $this->grocery_crud->display_as($this->current_table.'_submoduleid',lang('submoduleid'));               
+        $this->grocery_crud->display_as($this->current_table.'_id',lang('enrollment_id'));
+        $this->grocery_crud->display_as($this->current_table.'_moduleid',lang('moduleid'));
+        $this->grocery_crud->display_as($this->current_table.'_submoduleid',lang('submoduleid'));
 
         //RELACIONS
         $this->grocery_crud->set_relation($this->current_table.'_enrollment_id','enrollment','{enrollment_periodid} - {enrollment_personid} - {enrollment_study_id} - {enrollment_course_id} - {enrollment_group_id}');
-        $this->grocery_crud->set_relation($this->current_table.'_moduleid','study_module','{study_module_name}');      
-        $this->grocery_crud->set_relation($this->current_table.'_submoduleid','study_submodules','{study_submodules_name}');      
+        $this->grocery_crud->set_relation($this->current_table.'_moduleid','study_module','{study_module_name}');
+        $this->grocery_crud->set_relation($this->current_table.'_submoduleid','study_submodules','{study_submodules_name}');
 
         //UPDATE AUTOMATIC FIELDS
         $this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
         $this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-        
+
         $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId','study_submodules_lastupdateUserId');
 
         $this->userCreation_userModification($this->current_table);
-           
+
         $this->set_theme($this->grocery_crud);
         $this->set_dialogforms($this->grocery_crud);
 
@@ -193,7 +193,7 @@ class enrollment extends skeleton_main {
             $this->current_table.'_submoduleid',$this->current_table.'_entryDate',$this->current_table.'_last_update',
             $this->current_table.'_creationUserId',$this->current_table.'_lastupdateUserId',$this->current_table.'_markedForDeletion',
             $this->current_table.'_markedForDeletionDate');
-                   
+
         $this->renderitzar($this->current_table,$header_data);  ;
     }
 
@@ -210,27 +210,27 @@ class enrollment extends skeleton_main {
         $active_menu['submenu2']='#enrollment_studies';
 
         $this->check_logged_user();
-        
-        //Ace 
+
+        //Ace
         $header_data = $this->load_ace_files($active_menu);
 
-		//Grocery Crud 
+		//Grocery Crud
 		$this->current_table="enrollment_studies";
         $this->grocery_crud->set_table($this->current_table);
         $this->session->set_flashdata('table_name', $this->current_table);
-        
+
         //ESTABLISH SUBJECT
-        $this->grocery_crud->set_subject(lang('enrollment_studies'));       
-        
+        $this->grocery_crud->set_subject(lang('enrollment_studies'));
+
         $this->common_callbacks($this->current_table);
 
-        //COMMON_COLUMNS               
+        //COMMON_COLUMNS
         $this->set_common_columns_name($this->current_table);
 
         //SPECIFIC COLUMNS
-        $this->grocery_crud->display_as($this->current_table.'_periodid',lang('periodid'));          
-        $this->grocery_crud->display_as($this->current_table.'_personid',lang('personid'));   
-        $this->grocery_crud->display_as($this->current_table.'_study_id',lang('study_id'));        		
+        $this->grocery_crud->display_as($this->current_table.'_periodid',lang('periodid'));
+        $this->grocery_crud->display_as($this->current_table.'_personid',lang('personid'));
+        $this->grocery_crud->display_as($this->current_table.'_study_id',lang('study_id'));
 
         //RELACIONS
         $this->grocery_crud->set_relation($this->current_table.'_personid','person','{person_givenName} {person_sn1} {person_sn2}');
@@ -239,24 +239,24 @@ class enrollment extends skeleton_main {
         //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-        
+
         $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-   		
+
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId','study_submodules_lastupdateUserId');
 
-        $this->userCreation_userModification($this->current_table);        
-   
+        $this->userCreation_userModification($this->current_table);
+
         $this->set_theme($this->grocery_crud);
         $this->set_dialogforms($this->grocery_crud);
-        
+
         $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
-                   
+
         $this->renderitzar($this->current_table,$header_data);
 	}
 
  FI ENROLLMENT STUDIES */
 
-/* OBSOLET! ENROLLMENT CLASS GROUP 
+/* OBSOLET! ENROLLMENT CLASS GROUP
 
 	public function enrollment_class_group() {
 
@@ -266,54 +266,54 @@ class enrollment extends skeleton_main {
         $active_menu['submenu2']='#enrollment_class_group';
 
         $this->check_logged_user();
-        
-        //Ace 
+
+        //Ace
         $header_data = $this->load_ace_files($active_menu);
 
-		// Grocery Crud 
+		// Grocery Crud
 		$this->current_table="enrollment_class_group";
         $this->grocery_crud->set_table($this->current_table);
         $this->session->set_flashdata('table_name', $this->current_table);
-        
+
         //ESTABLISH SUBJECT
-        $this->grocery_crud->set_subject(lang('enrollment_class_group'));       
+        $this->grocery_crud->set_subject(lang('enrollment_class_group'));
 
         $this->common_callbacks($this->current_table);
 
-        //COMMON_COLUMNS               
+        //COMMON_COLUMNS
         $this->set_common_columns_name($this->current_table);
 
         //SPECIFIC COLUMNS
         $this->grocery_crud->display_as($this->current_table.'_periodid',lang('periodid'));
-        $this->grocery_crud->display_as($this->current_table.'_personid',lang('personid'));          
-        $this->grocery_crud->display_as($this->current_table.'_study_id',lang('study_id'));   
-        $this->grocery_crud->display_as($this->current_table.'_group_id',lang('group_id'));        		
+        $this->grocery_crud->display_as($this->current_table.'_personid',lang('personid'));
+        $this->grocery_crud->display_as($this->current_table.'_study_id',lang('study_id'));
+        $this->grocery_crud->display_as($this->current_table.'_group_id',lang('group_id'));
 
         //RELACIONS
         $this->grocery_crud->set_relation($this->current_table.'_personid','person','{person_givenName} {person_sn1} {person_sn2}');
         $this->grocery_crud->set_relation($this->current_table.'_study_id','studies','{studies_shortname}');
-        $this->grocery_crud->set_relation($this->current_table.'_group_id','classroom_group','{classroom_group_code}');        
+        $this->grocery_crud->set_relation($this->current_table.'_group_id','classroom_group','{classroom_group_code}');
 
         //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-        
+
         $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId','study_submodules_lastupdateUserId');
 
         $this->userCreation_userModification($this->current_table);
-           
+
         $this->set_theme($this->grocery_crud);
         $this->set_dialogforms($this->grocery_crud);
 
         $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
-                   
-        $this->renderitzar($this->current_table,$header_data);	
+
+        $this->renderitzar($this->current_table,$header_data);
 	}
 
  FI ENROLLMENT CLASS GROUP */
 
-/* OBSOLET! ENROLLMENT MODULES 
+/* OBSOLET! ENROLLMENT MODULES
 
 	public function enrollment_modules() {
 
@@ -323,50 +323,50 @@ class enrollment extends skeleton_main {
         $active_menu['submenu2']='#enrollment_modules';
 
         $this->check_logged_user();
-        
-        // Ace 
+
+        // Ace
         $header_data = $this->load_ace_files($active_menu);
 
-		// Grocery Crud 
+		// Grocery Crud
 		$this->current_table="enrollment_modules";
         $this->grocery_crud->set_table($this->current_table);
         $this->session->set_flashdata('table_name', $this->current_table);
-        
+
         //ESTABLISH SUBJECT
-        $this->grocery_crud->set_subject(lang('enrollment_modules'));       
+        $this->grocery_crud->set_subject(lang('enrollment_modules'));
 
         $this->common_callbacks($this->current_table);
 
-        //COMMON_COLUMNS               
+        //COMMON_COLUMNS
         $this->set_common_columns_name($this->current_table);
 
         //SPECIFIC COLUMNS
         $this->grocery_crud->display_as($this->current_table.'_periodid',lang('periodid'));
         $this->grocery_crud->display_as($this->current_table.'_personid',lang('personid'));
-        $this->grocery_crud->display_as($this->current_table.'_study_id',lang('study_id'));          
-        $this->grocery_crud->display_as($this->current_table.'_group_id',lang('group_id'));   
-        $this->grocery_crud->display_as($this->current_table.'_moduleid',lang('moduleid'));        		
+        $this->grocery_crud->display_as($this->current_table.'_study_id',lang('study_id'));
+        $this->grocery_crud->display_as($this->current_table.'_group_id',lang('group_id'));
+        $this->grocery_crud->display_as($this->current_table.'_moduleid',lang('moduleid'));
 
         //RELACIONS
         $this->grocery_crud->set_relation($this->current_table.'_personid','person','{person_givenName} {person_sn1} {person_sn2}');
         $this->grocery_crud->set_relation($this->current_table.'_study_id','studies','{studies_shortname}');
-        $this->grocery_crud->set_relation($this->current_table.'_group_id','classroom_group','{classroom_group_code}');      
-        $this->grocery_crud->set_relation($this->current_table.'_moduleid','study_module','{study_module_name}');      
+        $this->grocery_crud->set_relation($this->current_table.'_group_id','classroom_group','{classroom_group_code}');
+        $this->grocery_crud->set_relation($this->current_table.'_moduleid','study_module','{study_module_name}');
 
         //UPDATE AUTOMATIC FIELDS
 		$this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
 		$this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-        
+
         $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId','study_submodules_lastupdateUserId');
 
         $this->userCreation_userModification($this->current_table);
-           
+
         $this->set_theme($this->grocery_crud);
         $this->set_dialogforms($this->grocery_crud);
 
         $this->grocery_crud->set_default_value($this->current_table,$this->current_table.'_markedForDeletion','n');
-                   
+
         $this->renderitzar($this->current_table,$header_data);  ;
 	}
 
@@ -378,81 +378,81 @@ class enrollment extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
 			$this->_get_html_header_data(),
-			base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));	
+			base_url('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css'));
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-			'http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');	
+			'https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css');
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-			base_url('assets/css/jquery-ui.css'));		
+			base_url('assets/css/jquery-ui.css'));
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-			base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));	
+			base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-			base_url('assets/css/tooltipster.css'));			
+			base_url('assets/css/tooltipster.css'));
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));  
+            base_url('assets/css/no_padding_top.css'));
 
 
 		//JS
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			base_url("assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js"));			
+			base_url("assets/grocery_crud/js/jquery_plugins/ui/jquery-ui-1.10.3.custom.min.js"));
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			base_url("assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js"));			
+			base_url("assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js"));
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");						
+			"https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js");
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
 			base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/TableTools.js"));
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js"));				
+			base_url("assets/grocery_crud/themes/datatables/extras/TableTools/media/js/ZeroClipboard.js"));
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			base_url("assets/js/jquery.tooltipster.min.js"));		
+			base_url("assets/js/jquery.tooltipster.min.js"));
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ebre-escool.js'));
-        
-			
-		$this->_load_html_header($header_data); 
-		
-		$this->_load_body_header();		
+
+
+		$this->_load_html_header($header_data);
+
+		$this->_load_body_header();
 
 	}
 
-public function add_callback_last_update(){  
-   
+public function add_callback_last_update(){
+
     return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" name="'.$this->session->flashdata('table_name').'_last_update" id="field-last_update" readonly>';
 }
 
-public function add_field_callback_entryDate(){  
+public function add_field_callback_entryDate(){
       $data= date('d/m/Y H:i:s', time());
-      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';    
+      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';
 }
 
-public function edit_field_callback_entryDate($value, $primary_key){  
+public function edit_field_callback_entryDate($value, $primary_key){
     //$this->session->flashdata('table_name');
-      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', strtotime($value)) .'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';    
+      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', strtotime($value)) .'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';
     }
-    
-public function edit_callback_last_update($value, $primary_key){ 
-    //$this->session->flashdata('table_name'); 
+
+public function edit_callback_last_update($value, $primary_key){
+    //$this->session->flashdata('table_name');
      return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', time()) .'"  name="'.$this->session->flashdata('table_name').'_last_update" id="field-last_update" readonly>';
-    }    
+    }
 
 //UPDATE AUTOMATIC FIELDS BEFORE INSERT
 function before_insert_object_callback($post_array, $primary_key) {
         //UPDATE LAST UPDATE FIELD
         $data= date('d/m/Y H:i:s', time());
         $post_array['entryDate'] = $data;
-        
+
         $post_array['creationUserId'] = $this->session->userdata('user_id');
         return $post_array;
 }
@@ -462,7 +462,7 @@ function before_update_object_callback($post_array, $primary_key) {
         //UPDATE LAST UPDATE FIELD
         $data= date('d/m/Y H:i:s', time());
         $post_array['last_update'] = $data;
-        
+
         $post_array['lastupdateUserId'] = $this->session->userdata('user_id');
         return $post_array;
 }
@@ -487,16 +487,16 @@ function check_logged_user()
 
 function common_callbacks()
 {
-        //CALLBACKS        
+        //CALLBACKS
         $this->grocery_crud->callback_add_field($this->session->flashdata('table_name').'_entryDate',array($this,'add_field_callback_entryDate'));
         $this->grocery_crud->callback_edit_field($this->session->flashdata('table_name').'_entryDate',array($this,'edit_field_callback_entryDate'));
-        
-        //Camps last update no editable i automàtic        
+
+        //Camps last update no editable i automàtic
         $this->grocery_crud->callback_edit_field($this->session->flashdata('table_name').'_last_update',array($this,'edit_callback_last_update'));
 }
 
 function userCreation_userModification($table_name)
-{   
+{
     //USER ID: show only active users and by default select current userid. IMPORTANT: Field is not editable, always forced to current userid by before_insert_object_callback
     $this->grocery_crud->set_relation($table_name.'_creationUserId','users','{username}',array('active' => '1'));
     $this->grocery_crud->set_default_value($table_name,$table_name.'_creationUserId',$this->session->userdata('user_id'));
@@ -511,33 +511,33 @@ function renderitzar($table_name,$header_data)
        $output = $this->grocery_crud->render();
 
        // HTML HEADER
-       
-       $this->_load_html_header($header_data,$output); 
-    
-       //      BODY       
+
+       $this->_load_html_header($header_data,$output);
+
+       //      BODY
 
        $this->_load_body_header();
-       
+
        $default_values=$this->_get_default_values();
        $default_values["table_name"]=$table_name;
        $default_values["field_prefix"]=$table_name."_";
-       $this->load->view('defaultvalues_view.php',$default_values); 
+       $this->load->view('defaultvalues_view.php',$default_values);
 
-       //$this->load->view('course.php',$output);     
-       $this->load->view($table_name.'.php',$output);     
-       
-       //      FOOTER     
-       $this->_load_body_footer();  
+       //$this->load->view('course.php',$output);
+       $this->load->view($table_name.'.php',$output);
+
+       //      FOOTER
+       $this->_load_body_footer();
 
 }
 
 function set_common_columns_name($table_name){
     $this->grocery_crud->display_as($table_name.'_entryDate',lang('entryDate'));
     $this->grocery_crud->display_as($table_name.'_last_update',lang('last_update'));
-    $this->grocery_crud->display_as($table_name.'_creationUserId',lang('creationUserId'));                  
-    $this->grocery_crud->display_as($table_name.'_lastupdateUserId',lang('lastupdateUserId'));   
-    $this->grocery_crud->display_as($table_name.'_markedForDeletion',lang('markedForDeletion'));       
-    $this->grocery_crud->display_as($table_name.'_markedForDeletionDate',lang('markedForDeletionDate')); 
+    $this->grocery_crud->display_as($table_name.'_creationUserId',lang('creationUserId'));
+    $this->grocery_crud->display_as($table_name.'_lastupdateUserId',lang('lastupdateUserId'));
+    $this->grocery_crud->display_as($table_name.'_markedForDeletion',lang('markedForDeletion'));
+    $this->grocery_crud->display_as($table_name.'_markedForDeletionDate',lang('markedForDeletionDate'));
 }
 
 function load_wizard_files($active_menu){
@@ -545,18 +545,18 @@ function load_wizard_files($active_menu){
     //CSS
     $header_data= $this->add_css_to_html_header_data(
         $this->_get_html_header_data(),
-        "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");                
+        "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
 
     $header_data = $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/jquery.gritter.css'));  
+            base_url('assets/css/jquery.gritter.css'));
 
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            base_url('assets/css/select2.css')); 
+            base_url('assets/css/select2.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            base_url('assets/css/modifications_select2.css')); 
+            base_url('assets/css/modifications_select2.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
             base_url('assets/css/ace-fonts.css'));
@@ -568,26 +568,26 @@ function load_wizard_files($active_menu){
             base_url('assets/css/ace-responsive.min.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            base_url('assets/css/ace-skins.min.css'));     
+            base_url('assets/css/ace-skins.min.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            'http://cdn.datatables.net/1.10.0/css/jquery.dataTables.css'); 
+            'https://cdn.datatables.net/1.10.0/css/jquery.dataTables.css');
     $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css')); 
-    /*                      
+            base_url('assets/css/datepicker.css'));
+    /*
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-        base_url('assets/css/no_padding_top.css'));  
+        base_url('assets/css/no_padding_top.css'));
     */
 
     //JS
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://code.jquery.com/jquery-1.9.1.js");
+        "https://code.jquery.com/jquery-1.9.1.js");
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://code.jquery.com/ui/1.10.3/jquery-ui.js");   
+        "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
 
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
@@ -597,35 +597,35 @@ function load_wizard_files($active_menu){
             base_url('assets/js/ace-elements.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-            base_url('assets/js/ace.min.js'));    
+            base_url('assets/js/ace.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
                 $header_data,
                 base_url('assets/js/ebre-escool.js'));
 
-    /* 
+    /*
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://code.jquery.com/jquery-1.9.1.js");
+        "https://code.jquery.com/jquery-1.9.1.js");
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://code.jquery.com/ui/1.10.3/jquery-ui.js");  
-    */    
-    
+        "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
+    */
+
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/select2.min.js'));           
+        base_url('assets/js/select2.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/jquery.gritter.min.js'));          
+        base_url('assets/js/jquery.gritter.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/fuelux.spinner.min.js'));         
+        base_url('assets/js/fuelux.spinner.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/bootstrap-editable.min.js'));          
+        base_url('assets/js/bootstrap-editable.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/ace-editable.min.js'));       
+        base_url('assets/js/ace-editable.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
         base_url('assets/js/bootstrap.min.js'));
@@ -649,13 +649,13 @@ function load_wizard_files($active_menu){
         base_url('assets/js/jquery.maskedinput.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/ebre-escool.js'));  
+        base_url('assets/js/ebre-escool.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://cdn.datatables.net/1.10.0/js/jquery.dataTables.js");   
+        "https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js");
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/bootstrap-datepicker.js'));      
+        base_url('assets/js/bootstrap-datepicker.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
         base_url('assets/js/bootstrap-datepicker.ca.js'));
@@ -666,7 +666,7 @@ function load_wizard_files($active_menu){
     /*
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/fuelux.wizard.min.js'));                                                  
+        base_url('assets/js/fuelux.wizard.min.js'));
     */
 
     $header_data['menu']= $active_menu;
@@ -680,18 +680,18 @@ function load_wizard_files1($active_menu){
     //CSS
     $header_data= $this->add_css_to_html_header_data(
         $this->_get_html_header_data(),
-        "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");                
+        "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
 
     $header_data = $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/jquery.gritter.css'));  
+            base_url('assets/css/jquery.gritter.css'));
 
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            base_url('assets/css/select2.css')); 
+            base_url('assets/css/select2.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            base_url('assets/css/modifications_select2.css')); 
+            base_url('assets/css/modifications_select2.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
             base_url('assets/css/ace-fonts.css'));
@@ -703,26 +703,26 @@ function load_wizard_files1($active_menu){
             base_url('assets/css/ace-responsive.min.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            base_url('assets/css/ace-skins.min.css'));     
+            base_url('assets/css/ace-skins.min.css'));
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-            'http://cdn.datatables.net/1.10.0/css/jquery.dataTables.css'); 
+            'https://cdn.datatables.net/1.10.0/css/jquery.dataTables.css');
     $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css')); 
-    /*                      
+            base_url('assets/css/datepicker.css'));
+    /*
     $header_data= $this->add_css_to_html_header_data(
         $header_data,
-        base_url('assets/css/no_padding_top.css'));  
+        base_url('assets/css/no_padding_top.css'));
     */
 
     //JS
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://code.jquery.com/jquery-1.9.1.js");
+        "https://code.jquery.com/jquery-1.9.1.js");
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://code.jquery.com/ui/1.10.3/jquery-ui.js");   
+        "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
 
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
@@ -732,26 +732,26 @@ function load_wizard_files1($active_menu){
             base_url('assets/js/ace-elements.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-            base_url('assets/js/ace.min.js'));    
+            base_url('assets/js/ace.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
                 $header_data,
-                base_url('assets/js/ebre-escool.js'));  
-    
+                base_url('assets/js/ebre-escool.js'));
+
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/select2.min.js'));           
+        base_url('assets/js/select2.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/jquery.gritter.min.js'));          
+        base_url('assets/js/jquery.gritter.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/fuelux.spinner.min.js'));         
+        base_url('assets/js/fuelux.spinner.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/bootstrap-editable.min.js'));          
+        base_url('assets/js/bootstrap-editable.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        base_url('assets/js/ace-editable.min.js'));       
+        base_url('assets/js/ace-editable.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
         base_url('assets/js/bootstrap.min.js'));
@@ -763,7 +763,7 @@ function load_wizard_files1($active_menu){
         base_url('assets/js/jquery.maskedinput.min.js'));
     $header_data= $this->add_javascript_to_html_header_data(
         $header_data,
-        "http://cdn.datatables.net/1.10.0/js/jquery.dataTables.js");  
+        "https://cdn.datatables.net/1.10.0/js/jquery.dataTables.js");
     $header_data['menu']= $active_menu;
 
     return $header_data;
@@ -777,22 +777,22 @@ function load_ace_files($active_menu,$header_data=false){
     if($header_data != false)   {
             $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");    
+            "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     } else {
             $header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");                
+            "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
     }
 
         $header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+            "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/select2.css')); 
+                base_url('assets/css/select2.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/modifications_select2.css')); 
+                base_url('assets/css/modifications_select2.css'));
 
 
         $header_data= $this->add_css_to_html_header_data(
@@ -806,19 +806,19 @@ function load_ace_files($active_menu,$header_data=false){
                 base_url('assets/css/ace-responsive.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace-skins.min.css'));      
-/*                      
+                base_url('assets/css/ace-skins.min.css'));
+/*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));  
+            base_url('assets/css/no_padding_top.css'));
 */
         //JS
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/jquery-1.9.1.js");
+            "https://code.jquery.com/jquery-1.9.1.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/ui/1.10.3/jquery-ui.js");   
+            "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
@@ -828,7 +828,7 @@ function load_ace_files($active_menu,$header_data=false){
                 base_url('assets/js/ace-elements.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/js/ace.min.js'));    
+                base_url('assets/js/ace.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ebre-escool.js'));
@@ -848,7 +848,7 @@ public function upload_photo() {
      $result = array();
 
      $file = $_FILES['avatar'];
-     if(!preg_match('/^image\//' , $file['type']) 
+     if(!preg_match('/^image\//' , $file['type'])
         || !preg_match('/\.(jpe?g|gif|png)$/' , $file['name'])
             || getimagesize($file['tmp_name']) === FALSE
         ) {
@@ -864,7 +864,7 @@ public function upload_photo() {
         $result['message'] = 'Unspecified error!';
      }
      else {
-        
+
         //$filename = $file['name'];
         $extension = strtolower(preg_replace('/^.*\./', '', $file['name']));
         $base_filename = $_POST['official_id'] . "_" . $_POST['username'];
@@ -879,12 +879,12 @@ public function upload_photo() {
         //echo "save_path1: " . $save_path1 . "\n";
         //echo "thumb_path: " . $thumb_path . "\n";
 
-        if( 
+        if(
             ! move_uploaded_file($file['tmp_name'] , $save_path)
-            OR 
+            OR
             ! copy($save_path, $save_path1)
             OR
-            !$this->resize($save_path, $thumb_path, 150) 
+            !$this->resize($save_path, $thumb_path, 150)
           )
         {
             $result['status'] = 'ERR';
@@ -941,7 +941,7 @@ protected function resize($in_file, $out_file, $new_width, $new_height=FALSE)
         $new_height = (int)(($height * $new_width) / $width);
     }
 
-    
+
     $new_image = imagecreatetruecolor($new_width, $new_height);
     imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
@@ -960,7 +960,7 @@ public function get_last_study_id () {
     }
 
     $last_study_id = $this->enrollment_model->get_last_study_id($person_id);
-    
+
     echo '{
     "aaData": ';
 
@@ -974,9 +974,9 @@ public function get_previous_enrollments( $person_official_id = false ) {
     $previous_enrollments = array();
 
     if ( ! ($person_official_id == false) ) {
-        $previous_enrollments = $this->enrollment_model->get_previous_enrollments($person_official_id);    
+        $previous_enrollments = $this->enrollment_model->get_previous_enrollments($person_official_id);
     }
-    
+
 
     echo '{
     "aaData": ';
@@ -992,12 +992,12 @@ public function get_simultaneous_studies( $person_official_id = false,$period = 
     $simultaneous_studies = array();
 
     if ( ! ($person_official_id == false) ) {
-        if ( ! ($period == false) ) {  
+        if ( ! ($period == false) ) {
             $period_id = $this->enrollment_model->get_academic_period_id_by_period($period);
             $simultaneous_studies = $this->enrollment_model->get_simultaneous_studies($person_official_id,$period_id);
         }
     }
-    
+
 
     echo '{
     "aaData": ';
@@ -1015,8 +1015,8 @@ public function get_enrollment_study_modules( $enrollment_id = false, $period = 
     $study_modules = array();
 
     if ( ! ($enrollment_id == false) && ! ( $period == false ) ) {
-        $study_modules = $this->enrollment_model->get_enrollment_study_modules_by_enrollment_id_and_period($enrollment_id,$period );    
-    }    
+        $study_modules = $this->enrollment_model->get_enrollment_study_modules_by_enrollment_id_and_period($enrollment_id,$period );
+    }
 
     echo '{
     "aaData": ';
@@ -1032,9 +1032,9 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
     $study_submodules = array();
 
     if ( ! ($enrollment_id == false) && ! ( $period == false )) {
-        $study_submodules = $this->enrollment_model->get_enrollment_study_submodules_by_enrollment_id_and_period($enrollment_id,$period );    
+        $study_submodules = $this->enrollment_model->get_enrollment_study_submodules_by_enrollment_id_and_period($enrollment_id,$period );
     }
-    
+
 
     echo '{
     "aaData": ';
@@ -1047,7 +1047,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
     public function wizard_without_modify_person_and_user_data($study=false,$classroom_group=false,$study_modules=false) {
 
-        $this->check_logged_user(); 
+        $this->check_logged_user();
 
         $user_is_admin = $this->session->userdata('is_admin');
         if (!$user_is_admin) {
@@ -1059,41 +1059,41 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         $active_menu['submenu1']='#wizard_without_modify_person_and_user_data';
 
         /* Wizard */
-        //$header_data = $this->load_wizard_files(); 
+        //$header_data = $this->load_wizard_files();
 
         /* Ace */
-        //$header_data= $this->load_ace_files($active_menu,$header_data);  
+        //$header_data= $this->load_ace_files($active_menu,$header_data);
 
         $header_data= $this->load_wizard_files($active_menu);
 
         if($study == false){
             $study = 2;
-        }    
-        
-        if($classroom_group == false){
-            $classroom_group = 3;  
         }
-        
+
+        if($classroom_group == false){
+            $classroom_group = 3;
+        }
+
         if($study_modules == false){
             $study_modules = array();
             $study_modules[]=282;   //  "M1"
             $study_modules[]=268;   //  "M2";
-        }    
+        }
 
-       $this->_load_html_header($header_data); 
-       
+       $this->_load_html_header($header_data);
+
        $data = array();
-       
+
        $enrollment_studies = $this->enrollment_model->get_enrollment_studies();
        $localities = $this->enrollment_model->get_localities();
 
        $all_person_official_ids = $this->enrollment_model->get_all_person_official_ids();
 
-       $data['user_is_admin'] = $user_is_admin;       
+       $data['user_is_admin'] = $user_is_admin;
 
 
        $data['all_person_official_ids'] = $all_person_official_ids;
-       
+
        $data['enrollment_studies'] = $enrollment_studies;
        $data['localities'] = $localities;
        $enrollment_classroom_groups = $this->enrollment_model->get_enrollment_classroom_groups($study);
@@ -1101,18 +1101,18 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
        $enrollment_study_modules = $this->enrollment_model->get_enrollment_study_modules($classroom_group);
        $data['enrollment_study_modules'] = $enrollment_study_modules;
        $enrollment_study_submodules = $this->enrollment_model->get_enrollment_study_submodules($study_modules);
-       $data['enrollment_study_submodules'] = $enrollment_study_submodules;       
+       $data['enrollment_study_submodules'] = $enrollment_study_submodules;
        $enrollment_students = $this->enrollment_model->get_students();
-       $data['enrollment_students'] = $enrollment_students;              
+       $data['enrollment_students'] = $enrollment_students;
 
        // print_r($enrollment_students);
-       
-       // BODY       
+
+       // BODY
        $this->_load_body_header();
-       $this->load->view('wizard_without_modify_person_and_user_data.php',$data);     
-       
-       // FOOTER     
-       $this->_load_body_footer(); 
+       $this->load->view('wizard_without_modify_person_and_user_data.php',$data);
+
+       // FOOTER
+       $this->_load_body_footer();
 
 
     }
@@ -1122,7 +1122,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
     public function wizard($study=false,$classroom_group=false,$study_modules=false) {
 
-        $this->check_logged_user(); 
+        $this->check_logged_user();
 
         $user_is_admin = $this->session->userdata('is_admin');
 
@@ -1135,40 +1135,40 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         $active_menu['submenu1']='#wizard';
 
         /* Wizard */
-        //$header_data = $this->load_wizard_files(); 
+        //$header_data = $this->load_wizard_files();
 
         /* Ace */
-        //$header_data= $this->load_ace_files($active_menu,$header_data);  
+        //$header_data= $this->load_ace_files($active_menu,$header_data);
 
         $header_data= $this->load_wizard_files($active_menu);
 
         if($study == false){
             $study = 2;
-        }    
-        
-        if($classroom_group == false){
-            $classroom_group = 3;  
         }
-        
+
+        if($classroom_group == false){
+            $classroom_group = 3;
+        }
+
         if($study_modules == false){
             $study_modules = array();
             $study_modules[]=282;   //  "M1"
             $study_modules[]=268;   //  "M2";
-        }    
+        }
 
-       $this->_load_html_header($header_data); 
-       
+       $this->_load_html_header($header_data);
+
        $data = array();
-       
+
        $enrollment_studies = $this->enrollment_model->get_enrollment_studies();
        $localities = $this->enrollment_model->get_localities();
 
        $all_person_official_ids = $this->enrollment_model->get_all_person_official_ids();
 
-       $data['user_is_admin'] = $user_is_admin;       
+       $data['user_is_admin'] = $user_is_admin;
 
        $data['all_person_official_ids'] = $all_person_official_ids;
-       
+
        $data['enrollment_studies'] = $enrollment_studies;
        $data['localities'] = $localities;
        $enrollment_classroom_groups = $this->enrollment_model->get_enrollment_classroom_groups($study);
@@ -1176,18 +1176,18 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
        $enrollment_study_modules = $this->enrollment_model->get_enrollment_study_modules($classroom_group);
        $data['enrollment_study_modules'] = $enrollment_study_modules;
        $enrollment_study_submodules = $this->enrollment_model->get_enrollment_study_submodules($study_modules);
-       $data['enrollment_study_submodules'] = $enrollment_study_submodules;       
+       $data['enrollment_study_submodules'] = $enrollment_study_submodules;
        $enrollment_students = $this->enrollment_model->get_students();
-       $data['enrollment_students'] = $enrollment_students;              
+       $data['enrollment_students'] = $enrollment_students;
 
        // print_r($enrollment_students);
-       
-       // BODY       
+
+       // BODY
        $this->_load_body_header();
-       $this->load->view('wizard.php',$data);     
-       
-       // FOOTER     
-       $this->_load_body_footer(); 
+       $this->load->view('wizard.php',$data);
+
+       // FOOTER
+       $this->_load_body_footer();
 
     }
 
@@ -1195,8 +1195,8 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         $active_menu = array();
         $active_menu['menu']='#enrollment_wizard';
-        $active_menu['submenu1']='#enrollment_change_classroomgroup';    
-      
+        $active_menu['submenu1']='#enrollment_change_classroomgroup';
+
         $this->check_logged_user();
 
         if (!$this->session->userdata('is_admin')) {
@@ -1205,7 +1205,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         /* Ace */
         $header_data= $this->load_wizard_files1($active_menu);
-        $this->_load_html_header($header_data); 
+        $this->_load_html_header($header_data);
 
 
         $data = array();
@@ -1217,16 +1217,16 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             $academic_period_id = $this->enrollment_model->get_current_academic_period_id();
         }
         $all_person_official_ids = $this->enrollment_model->get_all_person_official_ids_by_enrollment_period($academic_period_id);
-        
+
         $data['all_person_official_ids'] = $all_person_official_ids;
-       
-        // BODY       
+
+        // BODY
         $this->_load_body_header();
 
-        $this->load->view('change_classroom_group.php',$data);     
+        $this->load->view('change_classroom_group.php',$data);
 
-        // FOOTER     
-        $this->_load_body_footer();         
+        // FOOTER
+        $this->_load_body_footer();
 
     }
 
@@ -1244,7 +1244,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         /* Ace */
         $header_data= $this->load_wizard_files1($active_menu);
-        $this->_load_html_header($header_data); 
+        $this->_load_html_header($header_data);
 
 
         $data = array();
@@ -1254,23 +1254,23 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         $data['all_person_official_ids'] = $all_person_official_ids;
         $data['localities'] = $localities;
-       
-        // BODY       
+
+        // BODY
         $this->_load_body_header();
 
-        
-        $this->load->view('enrollment_delete.php',$data);     
-        // FOOTER     
-        $this->_load_body_footer();         
-        
+
+        $this->load->view('enrollment_delete.php',$data);
+        // FOOTER
+        $this->_load_body_footer();
+
     }
 
-    
+
 
     public function enrollment_modify_person() {
-       
+
         $active_menu['menu']='#enrollment_wizard';
-        $active_menu['submenu1']='#enrollment_modify_person';    
+        $active_menu['submenu1']='#enrollment_modify_person';
 
         $this->check_logged_user();
 
@@ -1280,7 +1280,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         /* Ace */
         $header_data= $this->load_wizard_files($active_menu);
-        $this->_load_html_header($header_data); 
+        $this->_load_html_header($header_data);
 
         $data = array();
 
@@ -1289,29 +1289,29 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         $data['all_person_official_ids'] = $all_person_official_ids;
         $data['localities'] = $localities;
-       
-        // BODY       
+
+        // BODY
         $this->_load_body_header();
 
-        $this->load->view('enrollment_modify_person.php',$data);   
+        $this->load->view('enrollment_modify_person.php',$data);
 
-        // FOOTER     
-        $this->_load_body_footer(); 
+        // FOOTER
+        $this->_load_body_footer();
     }
 
     public function enrollment_modify($student_official_id = null) {
         $data = array();
         $active_menu = array();
-   
+
         $active_menu['menu']='#enrollment_wizard';
-        $active_menu['submenu1']='#enrollment_modify';    
+        $active_menu['submenu1']='#enrollment_modify';
 
         $data["student_official_id"] = false;
 
         if ($student_official_id != null ) {
             $data["student_official_id"] = $student_official_id;
         }
-        
+
 
         $this->check_logged_user();
         if ( ! $this->session->userdata('is_admin')) {
@@ -1321,7 +1321,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         /* Ace */
         $header_data= $this->load_wizard_files1($active_menu);
-        $this->_load_html_header($header_data); 
+        $this->_load_html_header($header_data);
 
 
         $all_person_official_ids = $this->enrollment_model->get_all_person_official_ids();
@@ -1329,14 +1329,14 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         $data['all_person_official_ids'] = $all_person_official_ids;
         $data['localities'] = $localities;
-       
-        // BODY       
+
+        // BODY
         $this->_load_body_header();
 
-        $this->load->view('enrollment_modify.php',$data);     
+        $this->load->view('enrollment_modify.php',$data);
 
-        // FOOTER     
-        $this->_load_body_footer(); 
+        // FOOTER
+        $this->_load_body_footer();
     }
 
     public function enrollment_query_by_person($only_person_data = false, $student_official_id = null) {
@@ -1345,7 +1345,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         $active_menu = array();
         if ($only_person_data == false) {
             $active_menu['menu']='#enrollment_wizard';
-            $active_menu['submenu1']='#enrollment_query_by_person';    
+            $active_menu['submenu1']='#enrollment_query_by_person';
         } else {
             $active_menu['menu']='#maintenances';
             $active_menu['submenu1']='#persons';
@@ -1357,39 +1357,39 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         if ($student_official_id != null ) {
             $data["student_official_id"] = $student_official_id;
         }
-        
+
 
         $this->check_logged_user();
 
         /* Ace */
         $header_data= $this->load_wizard_files1($active_menu);
-        $this->_load_html_header($header_data); 
+        $this->_load_html_header($header_data);
 
 
-        
+
 
         $all_person_official_ids = $this->enrollment_model->get_all_person_official_ids();
         $localities = $this->enrollment_model->get_localities();
 
         $data['all_person_official_ids'] = $all_person_official_ids;
         $data['localities'] = $localities;
-       
-        // BODY       
+
+        // BODY
         $this->_load_body_header();
 
         if ( $this->session->userdata('is_admin')) {
-            $this->load->view('enrollment_query_by_person.php',$data);     
+            $this->load->view('enrollment_query_by_person.php',$data);
         } elseif ( $this->session->userdata('is_teacher')) {
             $this->load->view('enrollment_query_by_person.php',$data);
         } elseif ( $this->session->userdata('is_student'))   {
             $this->load->view('enrollment_query_by_person_for_students.php',$data);
-        } 
-        // FOOTER     
-        $this->_load_body_footer(); 
+        }
+        // FOOTER
+        $this->_load_body_footer();
     }
 
     public function get_study_law($study_id=false){
-        
+
         $study_id=1;
 
         if(isset($_POST['study_id'])) {
@@ -1421,10 +1421,10 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         echo '}';
 
 
-    }   
+    }
 
     public function check_enrollment($selected_student=false,$academic_period=false){
-        
+
         $selected_student=1;
         $academic_period=1;
 
@@ -1437,7 +1437,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         }
 
         $check_enrollment = $this->enrollment_model->check_enrollment($selected_student,$academic_period);
-        
+
         if($check_enrollment){
             print_r(json_encode($check_enrollment));
         } else {
@@ -1447,7 +1447,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
     }
 
     public function get_study_type($study_id=false){
-        
+
         $study_id=1;
 
         if(isset($_POST['study_id'])) {
@@ -1471,15 +1471,15 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             } else {
                 $student_enrollment_data = $this->enrollment_model->get_student_enrollment_data_by_enrollment_id($_POST['enrollment_id']);
             }
-            
+
             if($student_enrollment_data){
                 print_r(json_encode($student_enrollment_data));
                 return;
             } else {
-                return false;                
+                return false;
             }
         }
-        
+
         if($person_id==false){
             if(isset($_POST['person_id'])){
                 if($period_id==false){
@@ -1518,7 +1518,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
                         print_r(json_encode($student_enrollment_data));
                     } else {
                         return false;
-                    }            
+                    }
                 } else {
                     return false;
                 }
@@ -1533,18 +1533,18 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         }
     }
 
-    public function change_classroom_group_action($enrollment_id=false, $current_group=false, $new_group=false) { 
+    public function change_classroom_group_action($enrollment_id=false, $current_group=false, $new_group=false) {
         if($enrollment_id==false) {
             if(isset($_POST['enrollment_id'])){
                 $enrollment_id = $_POST['enrollment_id'];
             }
             if(isset($_POST['current_group'])){
                 $current_group = $_POST['current_group'];
-            } 
+            }
             if(isset($_POST['new_group'])){
                 $new_group = $_POST['new_group'];
             }
-            
+
             //echo "enrollment_id: " . $enrollment_id ."\n";
             //echo "current_group: " . $current_group ."\n";
             //echo "new_group: " . $new_group ."\n";
@@ -1597,9 +1597,9 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             } else {
 
                 return false;
-            }            
+            }
         }
-        
+
 
     }
 
@@ -1624,15 +1624,15 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             } else {
 
                 return false;
-            }            
+            }
         }
 
     }
-    
+
 
     public function check_student($person_official_id=false) {
 
-        
+
         if($person_official_id==false){
             if(isset($_POST['student_official_id'])){
                 $official_id = $_POST['student_official_id'];
@@ -1653,13 +1653,13 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             } else {
 
                 return false;
-            }            
+            }
         }
 
     }
 
     public function courses() {
-        
+
         if(isset($_POST['study_id'])){
             $study_id = $_POST['study_id'];
             $resultat = array();
@@ -1705,10 +1705,10 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
         $chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $password = array();
-        
+
         $password['password'] = substr(str_shuffle($chars),0,$length);
-            
-        print_r(json_encode($password));    
+
+        print_r(json_encode($password));
     }
 
     public function classroom_group() {
@@ -1720,7 +1720,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             if (is_array($enrollment_classroom_groups)) {
                 foreach($enrollment_classroom_groups as $key => $value){
                     $resultat[$key]=$value;
-                }    
+                }
             }
             print_r(json_encode($resultat));
         } else {
@@ -1730,7 +1730,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
 
     public function study_modules() {
 
-        $course_id = $_POST['course_id']; 
+        $course_id = $_POST['course_id'];
         $courses_ids = $_POST['courses_ids'];
 
         $resultat = array();
@@ -1742,7 +1742,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             $resultat[$key]=$value;
             $courses[] = $value['study_module_ap_courses_course_id'];
         }
-                
+
         $courses = array_unique($courses);
         $res = array();
 
@@ -1750,9 +1750,9 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
         {
             foreach ($enrollment_study_modules as $enrollment_study_module){
                 if($enrollment_study_module['study_module_ap_courses_course_id'] == $course){
-                    $res[$course][]=$enrollment_study_module;    
+                    $res[$course][]=$enrollment_study_module;
                 }
-                
+
             }
         }
 
@@ -1782,9 +1782,9 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
                 {
                     foreach ($enrollment_study_modules as $enrollment_study_module){
                         if($enrollment_study_module['classroom_group_code'] == $grup){
-                            $res[$grup][]=$enrollment_study_module;    
+                            $res[$grup][]=$enrollment_study_module;
                         }
-                        
+
                     }
                 }
 
@@ -1794,9 +1794,9 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
     }
 
     public function all_study_submodules_by_study() {
-        
+
         $study_id = $_POST['study_id'];
-                
+
         $resultat = array();
 
         $enrollment_study_submodules = $this->enrollment_model->get_enrollment_all_study_submodules_by_study(
@@ -1816,13 +1816,13 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
     }
 
     public function all_study_submodules_by_modules() {
-        
+
         $study_module_ids = $_POST['study_module_ids'];
 
         $course_id = $_POST['course_id'];
 
         $modules = explode("-",$study_module_ids);
-        
+
         $resultat = array();
 
         $enrollment_study_submodules = $this->enrollment_model->get_enrollment_all_study_submodules_by_modules(
@@ -1842,13 +1842,13 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
     }
 
     public function study_submodules() {
-        
+
         $modules = $_POST['study_module_ids'];
         $classroom_group_id = $_POST['classroom_group_id'];
         $classroom_groups = $_POST['classroom_groups'];
 
         $modules = explode("-",$modules);
-        
+
         $resultat = array();
 
         $enrollment_study_submodules = $this->enrollment_model->get_enrollment_study_submodules($modules,$classroom_group_id,"asc","order");
@@ -1877,11 +1877,11 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             $classroom_group_id = $_POST['classroom_group_id'];
             $study_module_ids = "";
             if ( isset($_POST['study_module_ids']) ) {
-                $study_module_ids = $_POST['study_module_ids'];    
+                $study_module_ids = $_POST['study_module_ids'];
             }
             $study_submodules_ids = "";
             if ( isset($_POST['study_submodules_ids']) ) {
-                $study_submodules_ids = $_POST['study_submodules_ids'];    
+                $study_submodules_ids = $_POST['study_submodules_ids'];
             }
 
             //print_r("prova:" . $_POST['study_submodules_ids']);
@@ -1893,7 +1893,7 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             if ( $study_submodules_ids != "") {
                 $study_submodules_ids_array = explode('-',$study_submodules_ids);
             }
-                
+
             //CHECKS:
             //person_id: Integer > 0 . Check person exists?
 
@@ -1931,9 +1931,9 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             $enrollment = $this->enrollment_model->insert_enrollment($period_id, $person_id, $study_id, $course_id, $classroom_group_id);
 
             //CHECK IF CORRECT THEN CONTINUE
-            if ( $enrollment != false) {                
+            if ( $enrollment != false) {
                 $enrollment_id  = $this->db->insert_id();
-                //WHEN LOGSE SUBMODULES NOT EXISTS! --> 
+                //WHEN LOGSE SUBMODULES NOT EXISTS! -->
                 //TODO LOGSE: study_module_ids is void. Create with study_module_ids and study_submodules_ids to NULL
                 //print_r("1 : ".$study_submodules_ids);
                 //print_r("2 : ". print_r($study_submodules_ids_array));
@@ -1953,18 +1953,18 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
                     $resultat['result_code'] = 1;
                     $resultat['result_message'] = "Enrollment done without errors. LOGSE? Any record inserted to enrollment_submodules table";
                     $resultat['enrollment'] = $enrollment;
-                    $resultat['enrollment_submodules'] = $enrollment_submodules; 
+                    $resultat['enrollment_submodules'] = $enrollment_submodules;
                 }   else {
                     $enrollment_submodules = $this->enrollment_model->insert_enrollment_submodules($enrollment_id, $study_submodules_ids_array);
                     if ($enrollment_submodules != false) {
                         $resultat['result_code'] = 0;
                         $resultat['result_message'] = "Enrollment done without errors";
                         $resultat['enrollment'] = $enrollment;
-                        $resultat['enrollment_submodules'] = $enrollment_submodules;    
+                        $resultat['enrollment_submodules'] = $enrollment_submodules;
                     } else {
                         $resultat['result_code'] = 101;
                             $resultat['result_message'] = "Error inserting enrollment to enrollment_submodules table!";
-                        }    
+                        }
                 }
 
             }
@@ -1975,15 +1975,15 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
             }
 
             print_r(json_encode($resultat));
-            
+
             //OBSOLET
             //$enrollment = $this->enrollment_model->insert_enrollment($period_id, $person_id);
             //$enrollment_studies = $this->enrollment_model->insert_enrollment_studies($period_id, $person_id, $study_id);
-            //$enrollment_class_group = $this->enrollment_model->insert_enrollment_class_group($period_id, $person_id, $study_id, $classroom_group_id);                
+            //$enrollment_class_group = $this->enrollment_model->insert_enrollment_class_group($period_id, $person_id, $study_id, $classroom_group_id);
 
             //$enrollment_modules = $this->enrollment_model->insert_enrollment_modules($period_id, $person_id, $study_id, $classroom_group_id, $study_module_ids);
 
-            
+
 
             /*
             CREATE TABLE IF NOT EXISTS `enrollment` (
@@ -2017,22 +2017,22 @@ public function get_enrollment_study_submodules( $enrollment_id = false, $period
               PRIMARY KEY (`enrollment_submodules_id`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
             */
-    }   
+    }
 
 function enrollment_pdf() {
 
 $password = "";
 
 if(isset($_GET['password'])){
-    $password = $_GET['password'];    
-} 
+    $password = $_GET['password'];
+}
 
 $person_id = "";
 
 if(isset($_GET['person_id'])){
-    $person_id = $_GET['person_id'];    
-} 
-    
+    $person_id = $_GET['person_id'];
+}
+
 ob_start();
 
 // UNCOMMENT THIS TO ACTIVATE ERROR REPORTING!
@@ -2052,14 +2052,14 @@ require_once ("functions.inc");
 require_once ("../../plugins/admin/HighSchoolUsers/functions.php");
 require_once ("/usr/share/php/fpdf/fpdf.php");
 */
-               
+
 /*
 session::start();
 $config= session::global_get('config');
 */
 
 //*******************************************************************
-//**                  CONFIGURATION                                **           
+//**                  CONFIGURATION                                **
 //*******************************************************************
 
 //GENERAL CONFIG
@@ -2068,17 +2068,17 @@ $config= session::global_get('config');
 $rulesURL= $this->config->item('rulesURL');
 $servicesURL= $this->config->item('servicesURL');
 
-$HIGHSCHOOLSNAME = $this->config->item('highSchoolName'); 
-$HIGHSCHOOLSUFFIXEMAIL = $this->config->item('highSchoolSuffixEmail'); 
+$HIGHSCHOOLSNAME = $this->config->item('highSchoolName');
+$HIGHSCHOOLSUFFIXEMAIL = $this->config->item('highSchoolSuffixEmail');
 
-/////////////////// DO NOT TOUCH WHEN CONFIGURING 
+/////////////////// DO NOT TOUCH WHEN CONFIGURING
 //PDF DOCUMENT
 // DOCUMENT NAME= externalID_internalID_documentNameSufix
 $documentNameSufix= $this->config->item('documentNameSufix');
 
 //WINDOWS HEADER AT PDF DOCUMENT
 // TITLE USER FULL NAME
-$windowheadertitle= $this->config->item('windowheadertitle'); 
+$windowheadertitle= $this->config->item('windowheadertitle');
 
 //IMAGES PATHS
 $logo_image= $this->config->item('logo_image');
@@ -2100,7 +2100,7 @@ $IMPORTANT_NOTE= $this->config->item('IMPORTANT_NOTE');
 
 $LOCALITY_NAME = $this->config->item('Locality');
 
-/////////////////// DO NOT TOUCH WHEN CONFIGURING 
+/////////////////// DO NOT TOUCH WHEN CONFIGURING
 
 if ($password== "") {
     echo "<br/>Fatal Error! No Password provided at query string!";
@@ -2144,14 +2144,14 @@ $academic_period="2014-15";
 */
 // Assuming today is March 10th, 2001, 5:16:18 pm, and that we are in the
 // Mountain Standard Time (MST) Time Zone
-$date= date('j-m-y');   
+$date= date('j-m-y');
 setlocale(LC_TIME, "ca_ES.UTF-8");
 $day_of_month = strftime("%e");
 $month = strftime("%B");
 $year = strftime("%G");
 //$date2= strftime("%B");
 
-/////////////////// END DO NOT TOUCH WHEN CONFIGURING 
+/////////////////// END DO NOT TOUCH WHEN CONFIGURING
 
 //TEXTS
 
@@ -2160,7 +2160,7 @@ En/Na $givenName $sn1 $sn2, amb número identificatiu $externalID, ha estat matr
 EOF;
 
 $text2 = <<<EOF
-En firmar aquesta matrícula esteu acceptant les normes d'ús dels recursos TIC del centre. Les normes les podeu consultar a: 
+En firmar aquesta matrícula esteu acceptant les normes d'ús dels recursos TIC del centre. Les normes les podeu consultar a:
 
 
 EOF;
@@ -2172,7 +2172,7 @@ Amb el vostre compte d'usuari de centre podeu accedir a una sèrie de serveis qu
 EOF;
 
 $text4 = <<<EOF
-En aquesta pàgina web també podeu trobar les instruccions per tal de modificar la vostra paraula de pas. És important que escolliu una paraula de pas prou segura i que us sigui fàcil de recordar. 
+En aquesta pàgina web també podeu trobar les instruccions per tal de modificar la vostra paraula de pas. És important que escolliu una paraula de pas prou segura i que us sigui fàcil de recordar.
 
 IMPORTANT: Si oblideu la vosta paraula de pas, la forma de recuperar-la serà enviar-vos una de nova a la vostra adreça de correu electrònic personal, per tant és molt important que ens proporcioneu una adreça de correu electrònic vàlida.
 
@@ -2181,10 +2181,10 @@ EOF;
 $text5 = <<<EOF
 $LOCALITY_NAME, $day_of_month de $month de $year
 EOF;
-    
+
 
 //*******************************************************************
-//**                  CONFIGURATION END                            **           
+//**                  CONFIGURATION END                            **
 //*******************************************************************
 
 
@@ -2202,7 +2202,7 @@ ob_end_clean();
 $pdf = new FPDF('P', 'mm', 'A4','font/');
 
 
-//DOCUMENT TITLE: Appears at PDF window title 
+//DOCUMENT TITLE: Appears at PDF window title
 $pdf->SetTitle(utf8_decode($windowheadertitle)." ". utf8_decode($fullName), false);
 
 
@@ -2220,103 +2220,103 @@ for ($i = 1; $i <= $numPages; $i++) {
 
     //HEADER IMAGE
     $pdf->Image($logo_image,$pdf->GetX(),$pdf->GetY());
-    
+
     //TITLE
     $pdf->SetY(45);
     $pdf->Cell(170,10,utf8_decode($STR_TITLE),1,2,'C');
-    
+
     //TEXT1
-    $pdf->SetFont('Times','',10);   
+    $pdf->SetFont('Times','',10);
     $pdf->Ln();
     $pdf->write(5,utf8_decode($text1));
-    
+
     //ENROLLMENT DATA
     //USER
     $pdf->Ln();
     $pdf->Ln();
-    $pdf->SetX($pdf->GetX()+10);    
-    $pdf->SetFont('Times','B',10); 
+    $pdf->SetX($pdf->GetX()+10);
+    $pdf->SetFont('Times','B',10);
     $pdf->write(5,"- ". utf8_decode($STR_User).": ",0);
-    $pdf->SetFont('Times','',10); 
+    $pdf->SetFont('Times','',10);
     $pdf->write(5,utf8_decode($uid),0);
     $pdf->Ln();
-    
-    $pdf->SetX($pdf->GetX()+10);    
-    $pdf->SetFont('Times','B',10); 
+
+    $pdf->SetX($pdf->GetX()+10);
+    $pdf->SetFont('Times','B',10);
     $pdf->write(5,"- ". utf8_decode($STR_Password).": ",0);
-    $pdf->SetFont('Times','',10); 
+    $pdf->SetFont('Times','',10);
     $pdf->write(5,utf8_decode($password),0);
     $pdf->Ln();
-    
-    $pdf->SetX($pdf->GetX()+10);    
-    $pdf->SetFont('Times','B',10); 
+
+    $pdf->SetX($pdf->GetX()+10);
+    $pdf->SetFont('Times','B',10);
     $pdf->write(5,"- ". utf8_decode($STR_PersonalEmail).": ",0);
-    $pdf->SetFont('Times','',10); 
+    $pdf->SetFont('Times','',10);
     $pdf->write(5,utf8_decode($personal_email),0);
     $pdf->Ln();
-    
-    $pdf->SetX($pdf->GetX()+10);    
-    $pdf->SetFont('Times','B',10); 
+
+    $pdf->SetX($pdf->GetX()+10);
+    $pdf->SetFont('Times','B',10);
     $pdf->write(5,"- ". utf8_decode($STR_Email).": ",0);
-    $pdf->SetFont('Times','',10); 
+    $pdf->SetFont('Times','',10);
     $pdf->write(5,utf8_decode($emailCorporatiu),0);
     $pdf->Ln();
-    
+
     //TEXT 2
-    $pdf->Ln();     
+    $pdf->Ln();
     $pdf->write(5,utf8_decode($text2));
-    
+
     //RULES URL
-    $pdf->SetX($pdf->GetX()+10);    
-    $pdf->SetFont('Times','B',10); 
+    $pdf->SetX($pdf->GetX()+10);
+    $pdf->SetFont('Times','B',10);
     $pdf->write(5,utf8_decode($rulesURL));
     $pdf->Ln();
     $pdf->Ln();
 
     //IMPORTANT NOTE
-    $pdf->SetFont('Times','',10);   
-    $pdf->SetLeftMargin(20+10); 
-    $pdf->SetRightMargin(20+10); 
+    $pdf->SetFont('Times','',10);
+    $pdf->SetLeftMargin(20+10);
+    $pdf->SetRightMargin(20+10);
     $pdf->MultiCell(0,5,utf8_decode($IMPORTANT_NOTE),1,"L");
-    $pdf->SetLeftMargin(20); 
-    $pdf->SetRightMargin(20); 
+    $pdf->SetLeftMargin(20);
+    $pdf->SetRightMargin(20);
     $pdf->Ln();
-    
+
     //TEXT3
     $pdf->write(5,utf8_decode($text3));
-    
+
     //SERVICES URL
-    $pdf->SetX($pdf->GetX()+10);    
-    $pdf->SetFont('Times','B',10); 
+    $pdf->SetX($pdf->GetX()+10);
+    $pdf->SetFont('Times','B',10);
     $pdf->write(5,utf8_decode($servicesURL));
     $pdf->Ln();
     $pdf->Ln();
-    
+
     //TEXT 4
-    $pdf->SetFont('Times','',10); 
+    $pdf->SetFont('Times','',10);
     $pdf->write(5,utf8_decode($text4));
     $pdf->Ln();
-    
+
     //USER_SIGNATURE
-    $pdf->SetFont('Times','',10); 
+    $pdf->SetFont('Times','',10);
     $pdf->write(5,utf8_decode($STR_UserSignature. ","));
     $pdf->Ln();
-    
+
     //FOOTNOTE
     $pdf->SetY(-50);
-    $pdf->SetFont('Times','',10);   
+    $pdf->SetFont('Times','',10);
     $pdf->write(5,utf8_decode($text5));
-    
+
     //OFICIAL SIGNATURE
     $pdf->Ln();
     $pdf->Image($signature_image,$pdf->GetX()-3, $pdf->GetY());
     $pdf->write(5,utf8_decode($STR_SchoolSignature),0);
-    
-    //TYPE    
+
+    //TYPE
     $pdf->Ln();
     $pdf->Line($pdf->GetX(), $pdf->GetY(), $pdf->GetX()+170, $pdf->GetY());
     $pdf->SetX(133);
-    
+
     switch ($pageTypes[$i-1]) {
         case "user":
             $pdf->write(5,utf8_decode($STR_UserPageType),0);
@@ -2329,7 +2329,7 @@ for ($i = 1; $i <= $numPages; $i++) {
             break;
     }
 }
-    
+
 $pdf->Output($documentName,"D");
 
 }
@@ -2343,16 +2343,16 @@ function get_user_data($userid,$user_id_is_username=false) {
     /* Example
     SELECT id, users.person_id, username, password, mainOrganizationaUnitId,ldap_dn, person_givenName,person_sn1,
            person_sn2,person_email,person_secondary_email,person_terciary_email,person_official_id,person_official_id_type,
-           person_date_of_birth,person_gender,person_secondary_official_id,person_secondary_official_id_type, 
+           person_date_of_birth,person_gender,person_secondary_official_id,person_secondary_official_id_type,
            person_homePostalAddress, person_photo, person_locality_id, person_telephoneNumber, person_mobile
-    FROM users 
+    FROM users
     INNER JOIN person ON users.person_id = person.person_id
     WHERE id = 1
     */
 
     $this->db->select('id, users.person_id, username, password, mainOrganizationaUnitId,ldap_dn, person_givenName,person_sn1,
            person_sn2,person_email,person_secondary_email,person_terciary_email,person_official_id,person_official_id_type,
-           person_date_of_birth,person_gender,person_secondary_official_id,person_secondary_official_id_type, 
+           person_date_of_birth,person_gender,person_secondary_official_id,person_secondary_official_id_type,
            person_homePostalAddress, person_photo, person_locality_id,locality_name,postalcode_code, person_telephoneNumber, person_mobile');
     $this->db->from('users');
     $this->db->join('person','users.person_id = person.person_id');
@@ -2361,9 +2361,9 @@ function get_user_data($userid,$user_id_is_username=false) {
     if ($user_id_is_username) {
         $this->db->where('username',$userid);
     } else {
-        $this->db->where('id',$userid); 
+        $this->db->where('id',$userid);
     }
-    
+
     $this->db->limit(1);
 
     $query = $this->db->get();
@@ -2372,7 +2372,7 @@ function get_user_data($userid,$user_id_is_username=false) {
 
     $user_data = new stdClass();
     if ($query->num_rows() == 1){
-        $row = $query->row(); 
+        $row = $query->row();
 
         $user_data->id = $row->id;
         $user_data->person_id = $row->person_id;
@@ -2400,14 +2400,14 @@ function get_user_data($userid,$user_id_is_username=false) {
 
         $user_data->basedn_where_insert_new_ldap_user = $this->config->item('active_students_basedn');
 
-        //echo "user_data->basedn_where_insert_new_ldap_user: " . $user_data->basedn_where_insert_new_ldap_user; 
+        //echo "user_data->basedn_where_insert_new_ldap_user: " . $user_data->basedn_where_insert_new_ldap_user;
 
         $user_data->cn = trim($user_data->person_givenName . " " . $user_data->person_sn1 . " " . $user_data->person_sn2);
         $user_data->sn = trim($user_data->person_sn1 . " " . $user_data->person_sn2);
         $user_data->dn = "cn=" . $user_data->cn . ",". $user_data->basedn_where_insert_new_ldap_user;
 
         return $user_data;
-    }   
+    }
     else
         return false;
 
@@ -2433,59 +2433,59 @@ function insert_update_user() {
     //var_export($_POST);
 
     if(isset($_POST['student_person_id'])){
-        $person_id = $_POST['student_person_id'];    
-    } 
+        $person_id = $_POST['student_person_id'];
+    }
 
-    //Not to be saved at table persons instead on users table. The existent username field in person table 
+    //Not to be saved at table persons instead on users table. The existent username field in person table
     //is a temporal one for migration purposes
     //$student['username'] = $_POST['student_username'];
-    $user['username'] = $_POST['student_username']; 
+    $user['username'] = $_POST['student_username'];
 
     $student_generated_password = $_POST['student_generated_password'];
     $student_password = $_POST['student_password'];
-    $student_verify_password = $_POST['student_verify_password'];    
+    $student_verify_password = $_POST['student_verify_password'];
 
-    $student_not_change_user_data=false;    
+    $student_not_change_user_data=false;
     if ( isset($_POST['student_not_change_user_data']) ) {
-        $student_not_change_user_data = $_POST['student_not_change_user_data'];    
+        $student_not_change_user_data = $_POST['student_not_change_user_data'];
     }
-    
+
     $student['person_official_id'] = $_POST['student_official_id'];
     $student['person_official_id_type'] = $_POST['student_official_id_type'];
-    $student['person_secondary_official_id'] = $_POST['student_secondary_official_id'];    
+    $student['person_secondary_official_id'] = $_POST['student_secondary_official_id'];
     //TSI always code 4 TODO: put harcoded value in config file
     $student['person_secondary_official_id_type'] = 4;
 
     $student['person_givenName'] = $_POST['student_givenName'];
     $student['person_sn1'] = $_POST['student_sn1'];
     $student['person_sn2'] = $_POST['student_sn2'];
-       
+
     $student['person_email'] = $_POST['student_username'] . "@iesebre.com";
 
     $student['person_secondary_email'] = "";
     if ($_POST['student_secondary_email'] != "") {
-        $student['person_secondary_email'] = $_POST['student_secondary_email'];    
+        $student['person_secondary_email'] = $_POST['student_secondary_email'];
     }
-    
-    
+
+
     $student['person_homePostalAddress'] = $_POST['student_homePostalAddress'];
-    
+
     $student['person_locality_id'] = $_POST['student_locality'];
     //$student['student_postal_code'] = $_POST['student_postal_code'];
     $postalcode = $_POST['student_postal_code'];
 
-    $student['person_telephoneNumber'] = $_POST['student_telephoneNumber'];                
-    $student['person_mobile'] = $_POST['student_mobile'];   
-    
+    $student['person_telephoneNumber'] = $_POST['student_telephoneNumber'];
+    $student['person_mobile'] = $_POST['student_mobile'];
+
     //CONVERT TO MYSQL FORMAT DATE OF BIRTH DATE
     $date = date('Y-m-d', strtotime($_POST['student_date_of_birth']));
 
-    $student['person_date_of_birth'] = $date;   
+    $student['person_date_of_birth'] = $date;
 
-    $student['person_gender'] = $_POST['student_gender']; 
+    $student['person_gender'] = $_POST['student_gender'];
 
     if (isset($_POST['student_photo']) ) {
-        $student['person_photo'] = $_POST['student_photo']; 
+        $student['person_photo'] = $_POST['student_photo'];
     }
 
     $student['person_lastupdateUserId'] = $current_userid;
@@ -2528,7 +2528,7 @@ function insert_update_user() {
     $ldap_password="";
     //echo "action:" . $action;
     if($action=='update'){
-        
+
         // *********** UPDATE USER
 
         /* TODO: Eliminar. Crec és un error?
@@ -2549,7 +2549,7 @@ function insert_update_user() {
                 } else {
                     echo "Password not especified!\n";
                     return false;
-                }    
+                }
             }
         }
         */
@@ -2557,13 +2557,13 @@ function insert_update_user() {
         //Username not changes if action is update
         //FIRST UPDATE TABLE PERSON
         if ($person_id != -1 ) {
-            $result = $this->enrollment_model->update_student_data($person_id, $student);    
+            $result = $this->enrollment_model->update_student_data($person_id, $student);
             if ($result) { //UPDATE user table is correct
                 $partial_message = "Dades personals canviades correctament!";
                 if (!$student_not_change_user_data) {
                     //Check if password is set. Then update users table
                     $new_calculated_md5_password="";
-                    if ($student_password != "") {                    
+                    if ($student_password != "") {
                         $new_calculated_md5_password = md5($student_password);
                         $ldap_password = $student_password;
                     } else {
@@ -2571,21 +2571,21 @@ function insert_update_user() {
                             $new_calculated_md5_password = md5($student_generated_password);
                             $ldap_password = $student_generated_password;
                             $user['initial_password'] = $student_generated_password;
-                            $user['force_change_password_next_login'] = "y";    
+                            $user['force_change_password_next_login'] = "y";
                         } else {
                             $result_json_object = new stdClass();
                             $result_json_object->error = true;
                             $result_json_object->message = "Error. No password specified!";
                             echo json_encode($result_json_object);
                             return false;
-                        }                    
+                        }
                     }
 
-                    $user['password'] = $new_calculated_md5_password;                
+                    $user['password'] = $new_calculated_md5_password;
                     $user['last_modification_user'] = $this->session->userdata('user_id');
 
                     //Last user to modify
-                    $result = $this->enrollment_model->update_user_data($user['username'], $user);  
+                    $result = $this->enrollment_model->update_user_data($user['username'], $user);
 
                     if (!$result) {
                         $result_json_object = new stdClass();
@@ -2597,10 +2597,10 @@ function insert_update_user() {
                         $rows_changed = $this->db->affected_rows();
 
                         if ($rows_changed == 1) {
-                            $partial_message = "User " . $user['username'] . " updated correctly!";    
+                            $partial_message = "User " . $user['username'] . " updated correctly!";
                         }
                         elseif ($rows_changed == 0) {
-                            $partial_message = "User " . $user['username'] . " updated correctly. Nothing to change";    
+                            $partial_message = "User " . $user['username'] . " updated correctly. Nothing to change";
                         } else {
                             $result_json_object = new stdClass();
                             $result_json_object->error = true;
@@ -2618,7 +2618,7 @@ function insert_update_user() {
             echo json_encode($result_json_object);
             return false;
         }
-        
+
     } else {
         // *********** CREATE NEW USER
 
@@ -2644,10 +2644,10 @@ function insert_update_user() {
                 $result_json_object->message = "Passwords not especified!";
                 echo json_encode($result_json_object);
                 return false;
-            }    
+            }
         }
-        
-        
+
+
         //Data validation for insert
         //Mandatory fields: person_givenName, person_sn1, person_official_id, person_official_id_type
         if ( $student['person_givenName'] == "" || $student['person_sn1'] == "" | $student['person_official_id'] == "" || $student['person_official_id_type'] == "") {
@@ -2657,7 +2657,7 @@ function insert_update_user() {
             echo json_encode($result_json_object);
             return false;
         }
-             
+
         $student['person_sn1'] = $_POST['student_sn1'];
 
         $student['person_creationUserId'] = $current_userid;
@@ -2676,16 +2676,16 @@ function insert_update_user() {
                 $user['password'] = $calculated_md5_password;
                 //NEW USER: then set initial password and force to change
                 $user['initial_password'] = $updated_password;
-                $user['force_change_password_next_login'] = "y";           
+                $user['force_change_password_next_login'] = "y";
                 $user['creation_user'] = $this->session->userdata('user_id');
                 $user['last_modification_user'] = $this->session->userdata('user_id');
                 $user['person_id'] = $result;
                 $user['created_on'] = $date;
                 $user['active'] = 1;
 
-                //echo "User:\n";            
+                //echo "User:\n";
                 //print_r($user);
-                $result = $this->enrollment_model->insert_user_data($user);  
+                $result = $this->enrollment_model->insert_user_data($user);
 
                 if ($result == false) {
                     $result_json_object = new stdClass();
@@ -2693,7 +2693,7 @@ function insert_update_user() {
                     $result_json_object->message = "Error inserting user data to users table!";
                     echo json_encode($result_json_object);
                     return false;
-                }  
+                }
                 $partial_message = "User " . $user['username'] . " inserted correctly!";
             }
         } else {
@@ -2712,7 +2712,7 @@ function insert_update_user() {
         //echo "active_users_basedn: " . $active_users_basedn;
         //GET USER DATA FORM DATABASE
         $user_data = new stdClass();
-        
+
         $user_data = $this->get_user_data_by_username($user['username']);
         //echo "user name: " . $user_data->username;
         $user_exists=$this->enrollment_model->user_exists($user_data->username,$active_users_basedn);
@@ -2725,7 +2725,7 @@ function insert_update_user() {
                 $user_data->password = $ldap_password;
                 $ldap_passwords=false;
             } else {
-                //NOT CHANGE LDAP PASSWORD: Recover first the passwords    
+                //NOT CHANGE LDAP PASSWORD: Recover first the passwords
                 $ldap_passwords = $this->enrollment_model->get_ldap_passwords($user_data->username);
             }
 
@@ -2742,7 +2742,7 @@ function insert_update_user() {
             $user_data->password = $ldap_password;
             $ldap_passwords=false;
         }
-        
+
         //echo "user_data->dn : " . $user_data->dn;
         //echo "user_data dn: " . $user_data->dn;
         $result = $this->enrollment_model->addLdapUser($user_data,$ldap_passwords);
@@ -2758,7 +2758,7 @@ function insert_update_user() {
         $result_json_object = new stdClass();
         $result_json_object->error = false;
         $result_json_object->message = $partial_message . " | " . " Usuari ldap sincronitzat correctament!";
-        $result_json_object->inserted_person_id = $inserted_student; 
+        $result_json_object->inserted_person_id = $inserted_student;
         echo json_encode($result_json_object);
         return true;
     } else {
@@ -2770,6 +2770,3 @@ function insert_update_user() {
     }
     }
 }
-
-
-

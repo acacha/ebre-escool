@@ -25,11 +25,11 @@
                 </h1>
 </div><!-- /.page-header -->
 
-	  
+
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
 
       <div class="alert alert-block alert-success">
         <button type="button" class="close" data-dismiss="alert">
@@ -45,10 +45,10 @@
       <script>
       $(function(){
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_classroom_group_academic_period_filter").select2();
 
-              $('#select_classroom_group_academic_period_filter').on("change", function(e) {  
+              $('#select_classroom_group_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_classroom_group_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -103,12 +103,12 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-             
-        });  
+
+        });
 
 });
 </script>
@@ -121,8 +121,8 @@
       <td colspan="13" style="text-align: center;"> <h5>Filtres per columnes
         </h5></td>
     </tr>
-    <tr> 
-       <td><?php echo lang('classroom_group_academic_period')?>: 
+    <tr>
+       <td><?php echo lang('classroom_group_academic_period')?>:
           <select id="select_classroom_group_academic_period_filter">
           <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
 
@@ -134,21 +134,21 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
           </select>
        </td>
     </tr>
-  </thead>  
-</table>    
+  </thead>
+</table>
 
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_groups">
  <thead style="background-color: #d9edf7;">
@@ -180,7 +180,7 @@
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/classroom_group/read/' . $classroom_group->id ) ;?>">
           <?php echo $classroom_group->name;?>
-      </a> 
+      </a>
      </td>
 
         <?php $mentor_fullname =  $classroom_group->mentor_givenname . " " . $classroom_group->mentor_sn1 . " " . $classroom_group->mentor_sn2; ?>
@@ -192,18 +192,18 @@
           <?php echo $mentor_fullname;?>
       ( person id: <a href="<?php echo base_url('/index.php/persons/index/edit/' . $classroom_group->mentor_id ) ;?>">
           <?php echo $classroom_group->mentor_person_id ;?>
-      </a> )   
+      </a> )
       </a>
      </td>
    </tr>
   <?php endforeach; ?>
 <?php endif; ?>
  </tbody>
-</table> 
+</table>
 
 </div>
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

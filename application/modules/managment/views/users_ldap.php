@@ -27,7 +27,7 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
       <script>
 
       var all_ldap_users_table;
@@ -38,7 +38,7 @@
 
               $("#academic_period_text").text( $("#select_class_list_academic_period_filter").select2("data").text);
 
-              $('#select_class_list_academic_period_filter').on("change", function(e) {  
+              $('#select_class_list_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_class_list_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -47,10 +47,10 @@
                   window.location.href = baseURL + "/" + selectedValue;
               });
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_user_ldaps_academic_period_filter").select2();
 
-              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {  
+              $('#select_user_ldaps_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_user_ldaps_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -69,10 +69,10 @@
                         { "mData": function(data, type, full) {
                                     return '<label><input class="ace" type="checkbox" name="form-field-checkbox" id="' + data.id + '"><span class="lbl">&nbsp;</span></label>';
                                   }},
-                        { "mData": "enrollment_id" },          
+                        { "mData": "enrollment_id" },
                         { "mData": function(data, type, full) {
                                     return data.id;
-                                  } },          
+                                  } },
                         { "mData": function(data, type, full) {
                                     url1 = "<?php echo base_url('/index.php/skeleton/users/read/'); ?>/" + data.id;
                                     url2 = "<?php echo base_url('/index.php/skeleton/users/edit/'); ?>/" + data.id;
@@ -82,7 +82,7 @@
                                     url1 = "<?php echo base_url('/index.php/persons/index/read/'); ?>/" + data.person_id;
                                     url2 = "<?php echo base_url('/index.php/persons/index/edit/'); ?>/" + data.person_id;
                                     return '<a href="' + url1 +'">' + data.person_sn1 + ' ' + data.person_sn2  + ', ' + data.person_givenName + '</a> (<a href="' + url2 + '">' + data.person_id + '</a>)';
-                                  }},                                 
+                                  }},
                         { "mData": "username" },
                         { "mData": function(data, type, full) {
                                     if (data.password_in_ldap_format == data.ldap_password) {
@@ -92,13 +92,13 @@
                                         return "Not Synced";
                                     }
                                     return '<a href="' + url1 +'">' + data.person_sn1 + ' ' + data.person_sn2  + ', ' + data.person_givenName + '</a> (<a href="' + url2 + '">' + data.person_id + '</a>)';
-                                  }}, 
+                                  }},
                         { "mData": "password" },
                         { "mData": "password_in_ldap_format" },
                         { "mData": "ldap_password" },
                         { "mData": "ldap_pwdLastSet" },
                         { "mData": "ldap_LogonTime" },
-                        { "mData": "enrollment_id" },   
+                        { "mData": "enrollment_id" },
                         { "mData": "enrollment_periodid" },
                         { "mData": "enrollment_entryDate" },
                         { "mData": "enrollment_last_update" },
@@ -120,7 +120,7 @@
                                           case 4:
                                               usertype = "No classificat";
                                               break;
-                                      } 
+                                      }
                                     return usertype;
                                   }},
                         { "mData": function(data, type, full) {
@@ -139,20 +139,20 @@
                                       } else {
                                         return "ERROR WINDOWS PASSWORD";
                                       }
-                                      
+
                                     }
 
                                   }},
-                        { "mData": "last_login" },          
+                        { "mData": "last_login" },
                         { "mData": function(data, type, full) {
                                     return data.force_change_password_next_login;
-                                  }},          
+                                  }},
                         { "mData": function(data, type, full) {
                                           if (data.md5_initial_password == data.password) {
                                               return "No";
                                           } else {
                                               return "Sí";
-                                          }  
+                                          }
                                   }},
                         { "mData": function(data, type, full) {
                                     if ( data.real_ldap_dn && (data.ldap_dn!="")) {
@@ -164,38 +164,38 @@
                                     } else {
                                         return "No es pot saber";
                                     }
-                                  }},           
+                                  }},
                         { "mData": function(data, type, full) {
                                     return data.ldap_dn;
-                                  }}, 
+                                  }},
                         { "mData": function(data, type, full) {
                                     if (data.real_ldap_dn) {
                                       return data.real_ldap_dn;
                                     } else {
                                       return "No trobat";
                                     }
-                                  }},           
+                                  }},
                         { "mData": function(data, type, full) {
                                     return data.role;
-                                  }},     
+                                  }},
                         { "mData": function(data, type, full) {
                                     return data.creation_date;
-                                  }},            
+                                  }},
                         { "mData": function(data, type, full) {
                                     return data.last_modification_date;
-                                  }},            
+                                  }},
                         { "mData": function(data, type, full) {
                                     return data.creation_user;
-                                  }},  
+                                  }},
                         { "mData": function(data, type, full) {
                                     return data.last_modification_user;
-                                  }},                      
+                                  }},
                       ],
                       "columnDefs": [
                                       { "type": "html", "targets": 3 }
                                     ],
-                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],       
-                      "sDom": 'TC<"clear">lfrtip',               
+                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
+                      "sDom": 'TC<"clear">lfrtip',
                       "oTableTools": {
                               "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -239,29 +239,29 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-        }); 
+        });
 
         $("#select_all").click(function() {
 
           $('input:checkbox').map(function () {
             this.checked = true;
-          }).get(); 
-          
+          }).get();
+
         });
 
         $("#unselect_all").click(function() {
 
           $('input:checkbox').map(function () {
             this.checked = false;
-          }).get(); 
-          
+          }).get();
+
         });
 
-      
+
         $("#sync_mysql_password_to_ldap").click(function() {
               var txt;
               var r = confirm("Esteu segurs que voleu fer aquesta sincronització massiva de paswords de MySQL a Ldap?");
@@ -269,8 +269,8 @@
 
                   var values = $('input:checkbox:checked.ace').map(function () {
                     return this.id;
-                  }).get(); 
-                  
+                  }).get();
+
                   //AJAX
                   $.ajax({
                   url:'<?php echo base_url("index.php/managment/sync_mysql_password_to_ldap");?>',
@@ -310,7 +310,7 @@
                   }
                 }).done(function(data){
                     //TODO: Something to check?
-                
+
                 });
               }
 
@@ -325,8 +325,8 @@
 
                   var values = $('input:checkbox:checked.ace').map(function () {
                     return this.id;
-                  }).get(); 
-                  
+                  }).get();
+
                   //AJAX
                   $.ajax({
                   url:'<?php echo base_url("index.php/managment/interchange_windows_passwords");?>',
@@ -366,7 +366,7 @@
                   }
                 }).done(function(data){
                     //TODO: Something to check?
-                
+
                 });
               }
 
@@ -379,8 +379,8 @@
 
                   var values = $('input:checkbox:checked.ace').map(function () {
                     return this.id;
-                  }).get(); 
-                  
+                  }).get();
+
                   //AJAX
                   $.ajax({
                   url:'<?php echo base_url("index.php/managment/avoid_change_of_password_on_windows");?>',
@@ -420,12 +420,12 @@
                   }
                 }).done(function(data){
                     //TODO: Something to check?
-                
+
                 });
               }
 
         });
-        
+
 
         $("#sync_mysql_ldap").click(function() {
               var txt;
@@ -434,8 +434,8 @@
 
                   var values = $('input:checkbox:checked.ace').map(function () {
                     return this.id;
-                  }).get(); 
-                  
+                  }).get();
+
                   //AJAX
                   $.ajax({
                   url:'<?php echo base_url("index.php/managment/sync_mysql_ldap");?>',
@@ -475,13 +475,13 @@
                   }
                 }).done(function(data){
                     //TODO: Something to check?
-                
+
                 });
               }
 
         });
 
-        
+
         $("#assign_ldap_rol").click(function() {
               var txt;
               var r = confirm("Esteu segurs que voleu fer aquesta modificació massiva d'assignació de rols?");
@@ -489,8 +489,8 @@
 
                   var values = $('input:checkbox:checked.ace').map(function () {
                     return this.id;
-                  }).get(); 
-                  
+                  }).get();
+
                   //AJAX
                   $.ajax({
                   url:'<?php echo base_url("index.php/managment/assign_multiple_ldap_roles");?>',
@@ -530,7 +530,7 @@
                   }
                 }).done(function(data){
                     //TODO: Something to check?
-                
+
                 });
               }
 
@@ -545,8 +545,8 @@
 
                     var values = $('input:checkbox:checked.ace').map(function () {
                       return this.id;
-                    }).get(); 
-                    
+                    }).get();
+
                     //AJAX
                     $.ajax({
                     url:'<?php echo base_url("index.php/managment/create_multiple_initial_passwords");?>',
@@ -586,12 +586,12 @@
                     }
                   }).done(function(data){
                       //TODO: Something to check?
-                  
+
                   });
                 }
 
-                
-                
+
+
 
         });
 
@@ -635,7 +635,7 @@
       <td style="text-align: center;"> <strong>Període acadèmic:
         </strong>
       </td>
-      <td colspan="4" style="text-align: center;"> 
+      <td colspan="4" style="text-align: center;">
               <select id="select_class_list_academic_period_filter">
                 <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
                   <?php if ( $selected_academic_period_id) : ?>
@@ -644,18 +644,18 @@
                     <?php else: ?>
                         <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                     <?php endif; ?>
-                  <?php else: ?>   
+                  <?php else: ?>
                       <?php if ( $academic_period_value->current == 1) : ?>
                         <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                       <?php else: ?>
                         <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                      <?php endif; ?> 
-                  <?php endif; ?> 
+                      <?php endif; ?>
+                  <?php endif; ?>
                 <?php endforeach; ?>
-                </select>    
+                </select>
       </td>
     </tr>
-    <tr> 
+    <tr>
        <td><?php echo "Unitat organitzativa"?>:</td>
        <td>
         TODO<select id="select_all_ldap_users_main_organizational_unit_filter"><option value=""></option></select>
@@ -665,15 +665,15 @@
         TODO<select id="select_all_ldap_users_user_type_filter"><option value=""></option><option value="1">1</option><option value="2">2</option></select>
       </td>
     </tr>
-  </thead>  
+  </thead>
  </table>
- <table  class="table table-striped table-bordered table-hover table-condensed" id="actions"> 
+ <table  class="table table-striped table-bordered table-hover table-condensed" id="actions">
   <thead style="background-color: #d9edf7;">
     <tr>
       <td colspan="8" style="text-align: center;"> <strong>Accions massives (aplica l'acció sobre tots els usuaris seleccionats)
         </strong></td>
     </tr>
-    <tr> 
+    <tr>
        <td>
         <button class="btn btn-mini btn-info" id="create_multiple_initial_passwords">
           <i class="icon-bolt"></i>
@@ -731,8 +731,8 @@
         </button>
        </td>
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 </div>
 
@@ -746,7 +746,7 @@
       </h4></td>
   </tr>
   <tr>
-     <th>&nbsp;</th> 
+     <th>&nbsp;</th>
      <th><?php echo lang('user_ldap_enrollment_id')?></th>
      <th><?php echo lang('user_ldap_id')?></th>
      <th><?php echo lang('user_ldap_id')?></th>
@@ -769,28 +769,28 @@
      <th><?php echo lang('user_ldap_initial_password')?></th>
      <th><?php echo "LM password calculated"?></th>
      <th><?php echo "Real LM password"?></th>
-     <th><?php echo "NT password calculated"?></th>     
+     <th><?php echo "NT password calculated"?></th>
      <th><?php echo "Real NT password"?></th>
      <th><?php echo "Windows Passwords Ok?"?></th>
      <th><?php echo lang('user_ldap_last_login')?></th>
-     <th><?php echo lang('user_ldap_force_change_password_next_login')?></th>     
+     <th><?php echo lang('user_ldap_force_change_password_next_login')?></th>
      <th><?php echo lang('user_ldap_changed_initial_password')?></th>
-     <th><?php echo lang('user_ldap_ldap_dn_error')?></th>     
-     <th><?php echo lang('user_ldap_ldap_dn')?></th>     
-     <th><?php echo lang('user_ldap_real_ldap_dn')?></th>     
-     <th><?php echo lang('user_ldap_ldap_role')?></th>     
-     <th><?php echo lang('user_ldap_creation_date')?></th> 
-     <th><?php echo lang('user_ldap_last_modification_date')?></th> 
+     <th><?php echo lang('user_ldap_ldap_dn_error')?></th>
+     <th><?php echo lang('user_ldap_ldap_dn')?></th>
+     <th><?php echo lang('user_ldap_real_ldap_dn')?></th>
+     <th><?php echo lang('user_ldap_ldap_role')?></th>
+     <th><?php echo lang('user_ldap_creation_date')?></th>
+     <th><?php echo lang('user_ldap_last_modification_date')?></th>
      <th><?php echo lang('user_ldap_creation_user')?></th>
      <th><?php echo lang('user_ldap_last_modification_user')?></th>
   </tr>
  </thead>
- 
-</table> 
+
+</table>
 
 
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

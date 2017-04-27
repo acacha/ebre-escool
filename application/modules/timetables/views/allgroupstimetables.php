@@ -96,11 +96,11 @@
                     <?php foreach( (array) $classroom_groups as $classroom_group_id => $classroom_group): ?>
                         <?php if( $classroom_group_id == $default_classroom_group): ?>
                             <option value="<?php echo $classroom_group_id; ?>" selected="selected"><?php echo $classroom_group; ?></option>
-                        <?php else: ?> 
+                        <?php else: ?>
                             <option value="<?php echo $classroom_group_id; ?>" ><?php echo $classroom_group; ?></option>
-                        <?php endif; ?> 
-                    <?php endforeach; ?> 
-                </select> 
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="span4"></div>
         </div>
@@ -110,12 +110,12 @@
         <table border="0">
             <tr>
                 <td>
-                    <?php echo lang('show_legend'); ?> 
+                    <?php echo lang('show_legend'); ?>
                 </td>
                 <td>
-                    <input id="hide_show_legend" type="checkbox" class="switch-small" 
-                    data-label-icon="icon-eye-open" 
-                    data-on-label="<i class='icon-ok'></i>" 
+                    <input id="hide_show_legend" type="checkbox" class="switch-small"
+                    data-label-icon="icon-eye-open"
+                    data-on-label="<i class='icon-ok'></i>"
                     data-off-label="<i class='icon-remove'></i>"
                     data-off="danger">
                 </td>
@@ -123,18 +123,18 @@
             <tr>
                 <td><?php echo "Mostrar llista de professors: "; ?></td>
                 <td>
-                    <input id="hide_show_teachers_list" type="checkbox" class="switch-small" 
-                    data-label-icon="icon-eye-open" 
-                    data-on-label="<i class='icon-ok'></i>" 
+                    <input id="hide_show_teachers_list" type="checkbox" class="switch-small"
+                    data-label-icon="icon-eye-open"
+                    data-on-label="<i class='icon-ok'></i>"
                     data-off-label="<i class='icon-remove'></i>"
-                    data-off="danger">    
-                </td>    
+                    data-off="danger">
+                </td>
             </tr>
             <tr>
                 <td><strong>Hores totals setmanals:</strong></td>
                 <td>
                     <?php echo $total_week_hours;?>
-                </td>    
+                </td>
             </tr>
             <tr>
                 <td><strong>Tutor/a:</strong></td>
@@ -142,11 +142,11 @@
                     <?php if($group_mentor != false ): ?>
                         <?php echo $group_mentor->sn1 . " " . $group_mentor->sn2 . ", " . $group_mentor->givenName . " ( " . $group_mentor->code  . ")" ;?>
                     <?php endif;?>
-                </td>    
+                </td>
             </tr>
 
         </table>
-        </center>            
+        </center>
 
         <div style="height: 10px;"></div>
 
@@ -183,7 +183,7 @@
                             </td>
                             <td>
                                 <?php echo $all_teacher_study_modules_hours_per_week[$i]; $i++;?>
-                            </td>  
+                            </td>
                         </tr>
                         <?php endforeach; ?>
 
@@ -235,14 +235,14 @@
         <div style="height: 10px;"></div>
 
 
-        <style type="text/css"> 
+        <style type="text/css">
             <?php
             $colours_already_alternated = array();
             ?>
             <?php foreach ($days as $day) : ?>
                 <?php foreach ( $lessonsfortimetablebygroupid[$day->day_number] as $day_lessons) : ?>
-                        <?php foreach ( $day_lessons as $day_lesson) : ?>                
-                        <?php 
+                        <?php foreach ( $day_lessons as $day_lesson) : ?>
+                        <?php
                             if ($day_lesson->time_slot_lective) {
                                 //var_export($day_lesson->study_modules);
                                 $num_study_modules_same_time_slot = count($day_lesson->study_modules);
@@ -254,12 +254,12 @@
                                     $alternate_colour = $study_modules_alternate_colours[ $study_module_values[1]->id ];
                                     if ( ! array_key_exists ( $first_bootstrap_button_colour , $colours_already_alternated ) ) {
 echo <<<EOT
-    .${first_bootstrap_button_colour}_alternate:before { 
+    .${first_bootstrap_button_colour}_alternate:before {
       content: '';
       position: absolute;
       left: 0%;
-      width: 100%; 
-      height: 200%; 
+      width: 100%;
+      height: 200%;
       background-color: rgb(255, 255, 255); /* fallback */
       background-color: $alternate_colour;
       top: 0;
@@ -279,7 +279,7 @@ EOT;
                 <?php endforeach;?>
             <?php endforeach;?>
 
-            
+
 
         </style>
 
@@ -293,7 +293,7 @@ EOT;
 
                     <?php foreach ( $lessonsfortimetablebygroupid[$day->day_number] as $day_lessons) : ?>
                         <?php foreach ( $day_lessons as $day_lesson) : ?>
-                            <?php 
+                            <?php
                                 $bootstrap_button_colour_alternate="";
                                 if ($day_lesson->time_slot_lective) {
                                     //var_export($day_lesson->study_modules);
@@ -308,20 +308,20 @@ EOT;
                                 } else {
                                     $bootstrap_button_colour = "btn-inverse";
                                 }
-                            $time_slot_current_position = $day_lesson->time_slot_order - $first_time_slot_order; ?> 
+                            $time_slot_current_position = $day_lesson->time_slot_order - $first_time_slot_order; ?>
 
 
 
-                            <li class="test1 tt-event <?php echo $bootstrap_button_colour;?> <?php echo $bootstrap_button_colour_alternate;  ;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>" 
-                            data-start="<?php echo $time_slot_current_position;?>" 
+                            <li class="test1 tt-event <?php echo $bootstrap_button_colour;?> <?php echo $bootstrap_button_colour_alternate;  ;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>"
+                            data-start="<?php echo $time_slot_current_position;?>"
                             data-duration="<?php echo $day_lesson->duration;?>" style="margin-top:5px;">
                                     <?php if ($day_lesson->time_slot_lective): ?>
 
                                     <?php
                                         foreach ($day_lesson->study_modules as $study_module_key => $study_module) {
-                                           echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a>  ";     
+                                           echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a>  ";
                                         }
-                                    ?>                                    
+                                    ?>
 
                                     <a href="<?php echo  base_url('/index.php/curriculum/classroom_group/read') ."/". $day_lesson->group_id;?>"><?php echo $day_lesson->group_code;?></a>
 
@@ -330,33 +330,33 @@ EOT;
                                            echo "<a href=\"" . base_url('/index.php/teachers/index/read/' . $teacher->id ) ."\">" . $teacher->code . "</a> ";
                                         }
                                     ?><br/>
-                                    
+
                                     <?php
                                         foreach ($day_lesson->locations as $location_key => $location) {
                                            echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a> ";
                                         }
                                     ?>
-                                    
+
                                     <?php //DEBUG:echo $day_lesson->group_code;?>
                                     <?php //echo $day_lesson->study_module_shortname;?>
-                                    <?php //echo $day_lesson->location_code;?> 
+                                    <?php //echo $day_lesson->location_code;?>
                                     <?php
                                         foreach ($day_lesson->study_modules as $study_module_key => $study_module) {
                                            echo $study_module->id . " ";
                                         }
-                                    ?>  
-                                        
+                                    ?>
+
                                 <?php else:?>
                                     <?php echo $day_lesson->study_module_shortname;?>
                                 <?php endif;?>
-                                
+
                             </li>
                         <?php endforeach; ?>
 
                     <?php endforeach; ?>
                 <?php endif;?>
 
-                    <?php $day_index++;?> 
+                    <?php $day_index++;?>
 
                 <?php endforeach; ?>
 
@@ -386,8 +386,8 @@ EOT;
         </div>
 
         <div class="well">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/deed.en_GB">
-            <img alt="Creative Commons Licence" style="border-width: 0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/uk/88x31.png" /></a><br />
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.0/uk/deed.en_GB">
+            <img alt="Creative Commons Licence" style="border-width: 0" src="https://i.creativecommons.org/l/by-nc-sa/2.0/uk/88x31.png" /></a><br />
             <?php echo lang('creative_commons_timetables_text');?>
         </div>
     </div>
@@ -402,13 +402,13 @@ $(function() {
 //* CLASSROOMGROUP DROPDOWN  **
 //*****************************
 
-//Jquery select plugin: http://ivaynberg.github.io/select2/
-$("#cl_groups").select2(); 
+//Jquery select plugin: https://ivaynberg.github.io/select2/
+$("#cl_groups").select2();
 
 var theSelection = $("#cl_groups").select2('data').text;
 $("#classroom_group_name").text(theSelection);
 
-$('#cl_groups').on("change", function(e) {   
+$('#cl_groups').on("change", function(e) {
 
     selectedValue = $("#cl_groups").select2("val");
     var theSelection = $("#cl_groups").select2('data').text;

@@ -6,10 +6,10 @@
  * @package    	Ebre-escool
  * @author     	Sergi Tur <sergiturbadenas@gmail.com>
  * @version    	1.0
- * @link		http://www.acacha.com/index.php/ebre-escool
+ * @link		https://www.acacha.com/index.php/ebre-escool
  */
 class timetables_model  extends CI_Model  {
-	
+
 	function __construct()
     {
         parent::__construct();
@@ -20,18 +20,18 @@ class timetables_model  extends CI_Model  {
         if ($current_language == "") {
             $current_language= $this->config->item('default_language','skeleton_auth');
         }
-        
+
         $this->lang->load('timetables', $current_language);
     }
-    
+
     function get_primary_key($table_name) {
 		$fields = $this->db->field_data($table_name);
-		
+
 		foreach ($fields as $field)	{
 			if ($field->primary_key) {
 					return $field->name;
 			}
-		} 	
+		}
 		return false;
 	}
 
@@ -43,7 +43,7 @@ class timetables_model  extends CI_Model  {
 
 		/*
 		SELECT DISTINCT group_code,group_shortName,group_name
-		FROM `lesson` 
+		FROM `lesson`
 		INNER JOIN classroom_group ON `lesson`.`lesson_classroom_group_id`  = classroom_group.classroom_group_id
 		WHERE lesson_teacher_id=39
 		*/
@@ -55,23 +55,23 @@ class timetables_model  extends CI_Model  {
 
 		$this->db->where('lesson.lesson_teacher_id',$teacher_id);
 		$this->db->where('lesson.lesson_academic_period_id',$academic_period_id);
-		
+
 		$this->db->order_by('classroom_group_code', $orderby);
-        
+
         $query = $this->db->get();
-		
+
 		if ($query->num_rows() > 0)
 			return $query->result_array();
 		else
 			return false;
 
-		
+
 	}
 //
 function get_all_group_by_study_module($study_module,$teacher_id) {
 
 /*
-SELECT DISTINCT classroom_group_code, lesson_teacher_id,lesson_study_module_id FROM lesson 
+SELECT DISTINCT classroom_group_code, lesson_teacher_id,lesson_study_module_id FROM lesson
 JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_classroom_group_id WHERE lesson_teacher_id = 30
 */
 
@@ -90,9 +90,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         $this->db->join('study_module', 'study_module.study_module_id = lesson.lesson_study_module_id');
 		$this->db->where('lesson_study_module_id',$study_module);
 		$this->db->where('lesson_teacher_id',$teacher_id);
- */       
+ */
         $query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 		foreach ($query->result() as $row)
 		{
 			if($row->classroom_group_code)
@@ -102,11 +102,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		}
 		//if ($query->num_rows() > 0) {
 		//	return $query;
-		//}			
+		//}
 		//else
 		//	return false;
 
-}	
+}
 
 	function get_teachers_study_modules_list($classroom_group_id) {
 
@@ -118,13 +118,13 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		INNER JOIN teacher ON teacher.teacher_id = lesson.lesson_teacher_id
 		INNER JOIN teacher_academic_periods ON  teacher_academic_periods.`teacher_academic_periods_teacher_id` = teacher.teacher_id
 		INNER JOIN person ON person.person_id = teacher.teacher_person_id
-		WHERE `lesson_classroom_group_id`=1 AND `teacher_academic_periods_academic_period_id`=5 
+		WHERE `lesson_classroom_group_id`=1 AND `teacher_academic_periods_academic_period_id`=5
 		ORDER BY `lesson_teacher_id`,`lesson_study_module_id`
 		*/
 
 		$this->db->select('lesson_teacher_id,lesson_study_module_id, study_module_shortname, study_module_name');
 		$this->db->distinct();
-		$this->db->from('lesson');        
+		$this->db->from('lesson');
         $this->db->join('teacher','teacher.teacher_id = lesson.lesson_teacher_id');
         $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
         $this->db->join('person','person.person_id = teacher.teacher_person_id');
@@ -134,14 +134,14 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('teacher_academic_periods_academic_period_id',$current_academic_period_id);
 
 		$this->db->order_by('lesson_teacher_id, study_module_shortname','ASC');
-        
-        $query = $this->db->get();	
+
+        $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
 
 			$teachers_study_modules_list = array();
 
-			foreach ($query->result_array() as $row)	{	
+			foreach ($query->result_array() as $row)	{
 				$study_module = new stdClass();
 
 				$study_module->id = $row["lesson_study_module_id"];
@@ -178,7 +178,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 		$this->db->select('lesson_teacher_id, teacher_person_id, teacher_academic_periods_code, person.person_sn1, person.person_sn2,person.person_givenName');
 		$this->db->distinct();
-		$this->db->from('lesson');        
+		$this->db->from('lesson');
         $this->db->join('teacher','teacher.teacher_id = lesson.lesson_teacher_id');
         $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
         $this->db->join('person','person.person_id = teacher.teacher_person_id');
@@ -186,15 +186,15 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('lesson_classroom_group_id',$classroom_group_id);
 		$this->db->where('teacher_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->where('lesson_academic_period_id',$academic_period_id);
-        
-        $query = $this->db->get();	
+
+        $query = $this->db->get();
      	//echo $this->db->last_query();
 
         if ($query->num_rows() > 0) {
 
 			$teachers_list = array();
 
-			foreach ($query->result_array() as $row)	{	
+			foreach ($query->result_array() as $row)	{
 				$teacher = new stdClass();
 
 				$teacher->id = $row['lesson_teacher_id'];
@@ -205,18 +205,18 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 				$study_modules = "";
 
-				
+
 				if (array_key_exists($teacher->id,$teachers_study_modules_list)) {
 					$i=1;
 					foreach ( $teachers_study_modules_list[$teacher->id]->studymodules as $study_module ) {
 						$study_modules = $study_modules . $study_module->shortName;
 						if ($i < count( $teachers_study_modules_list[$teacher->id]->studymodules )) {
-							$study_modules = $study_modules . ", "; 	
+							$study_modules = $study_modules . ", ";
 						}
 						$i++;
-					}	
+					}
 				}
-				
+
 
 				$teacher->study_modules = $study_modules;
 
@@ -230,7 +230,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		return false;
 
 	}
-	
+
 
 	function get_mentor( $classroom_group_id, $academic_period_id=null) {
 
@@ -240,7 +240,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 		/*
 		SELECT `classroom_group_academic_periods_mentorId`,person_sn1,person_sn2,person_givenName, `teacher_academic_periods_code`
-		FROM `classroom_group` 
+		FROM `classroom_group`
 		INNER JOIN classroom_group_academic_periods ON classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = `classroom_group`.`classroom_group_id`
 		INNER JOIN teacher ON teacher.teacher_id = classroom_group_academic_periods_mentorId
 		INNER JOIN teacher_academic_periods ON teacher_academic_periods.`teacher_academic_periods_teacher_id` = teacher.teacher_id
@@ -249,7 +249,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		*/
 
 		$this->db->select('classroom_group_academic_periods_mentorId, person_sn1, person_sn2, person_givenName, teacher_academic_periods_code, teacher_id');
-		$this->db->from('classroom_group');        
+		$this->db->from('classroom_group');
         $this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id');
         $this->db->join('teacher','teacher.teacher_id = classroom_group_academic_periods_mentorId');
         $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
@@ -258,9 +258,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('classroom_group_academic_periods_classroom_group_id',$classroom_group_id);
 		$this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->limit(1);
-        
+
         $query = $this->db->get();
-		
+
 		if ($query->num_rows() == 1) {
 			$row = $query->row();
 			$teacher = new stdClass();
@@ -280,16 +280,16 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 	//
 	function get_all_group_study_modules($classroom_group_id, $academic_period_id = null) {
-		
+
 		/*
-		SELECT DISTINCT `study_module_id`, `study_module_shortname`, `study_module_name`, `study_module_hoursPerWeek` 
-		FROM (`study_module`) 
-		JOIN `study_module_academic_periods` ON `study_module_academic_periods`.`study_module_academic_periods_study_module_id` = `study_module`.`study_module_id` 
-		JOIN `study_module_ap_courses` ON `study_module_ap_courses`.`study_module_ap_courses_study_module_ap_id` = `study_module_academic_periods`.`study_module_academic_periods_id` 
-		JOIN `course` ON `course`.`course_id` = `study_module_ap_courses`.`study_module_ap_courses_course_id` 
-		JOIN `classroom_group` ON `course`.`course_id` = `classroom_group`.`classroom_group_course_id` 
-		WHERE `classroom_group_id` = '13' AND `study_module_academic_periods_academic_period_id` = '5' 
-		ORDER BY `study_module_shortname` asc 
+		SELECT DISTINCT `study_module_id`, `study_module_shortname`, `study_module_name`, `study_module_hoursPerWeek`
+		FROM (`study_module`)
+		JOIN `study_module_academic_periods` ON `study_module_academic_periods`.`study_module_academic_periods_study_module_id` = `study_module`.`study_module_id`
+		JOIN `study_module_ap_courses` ON `study_module_ap_courses`.`study_module_ap_courses_study_module_ap_id` = `study_module_academic_periods`.`study_module_academic_periods_id`
+		JOIN `course` ON `course`.`course_id` = `study_module_ap_courses`.`study_module_ap_courses_course_id`
+		JOIN `classroom_group` ON `course`.`course_id` = `classroom_group`.`classroom_group_course_id`
+		WHERE `classroom_group_id` = '13' AND `study_module_academic_periods_academic_period_id` = '5'
+		ORDER BY `study_module_shortname` asc
 		*/
 
 		if ($academic_period_id==null) {
@@ -301,20 +301,20 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         $this->db->select('study_module_id,study_module_shortname,study_module_name,study_module_hoursPerWeek');
 		$this->db->from('study_module');
 		$this->db->distinct();
-		$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');		
+		$this->db->join('study_module_academic_periods','study_module_academic_periods.study_module_academic_periods_study_module_id = study_module.study_module_id');
 		$this->db->join('study_module_ap_courses','study_module_ap_courses.study_module_ap_courses_study_module_ap_id =  study_module_academic_periods.study_module_academic_periods_id');
 		$this->db->join('course','course.course_id = study_module_ap_courses.study_module_ap_courses_course_id');
 		$this->db->join('classroom_group','course.course_id = classroom_group.classroom_group_course_id');
 		$this->db->where('classroom_group_id',$classroom_group_id);
 		$this->db->where('study_module_academic_periods_academic_period_id',$academic_period_id);
 		$this->db->order_by('study_module_shortname', "asc");
-        
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() > 0) {
 			return $query;
-		}			
+		}
 		else
 			return false;
 	}
@@ -326,10 +326,10 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         }
 
 		/*
-		SELECT DISTINCT `classroom_group_code`, `study_module_id`, `study_module_shortname`, `study_module_name`, `study_module_hoursPerWeek` 
-		FROM (`lesson`) 
-		LEFT JOIN `study_module` ON `lesson`.`lesson_study_module_id` = `study_module`.`study_module_id` 
-		LEFT JOIN `classroom_group` ON `lesson`.`lesson_classroom_group_id` = `classroom_group`.`classroom_group_id` 
+		SELECT DISTINCT `classroom_group_code`, `study_module_id`, `study_module_shortname`, `study_module_name`, `study_module_hoursPerWeek`
+		FROM (`lesson`)
+		LEFT JOIN `study_module` ON `lesson`.`lesson_study_module_id` = `study_module`.`study_module_id`
+		LEFT JOIN `classroom_group` ON `lesson`.`lesson_classroom_group_id` = `classroom_group`.`classroom_group_id`
 		WHERE `lesson_teacher_id`=127
 
 		*/
@@ -345,24 +345,24 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		//	echo $this->db->last_query();
 		if ($query->num_rows() > 0) {
 			return $query;
-		}			
+		}
 		else
 			return false;
 	}
 
 	function get_all_lessonsfortimetablebygroupid($classroom_group_id,$academic_period_id = null)	{
 		/*
-		SELECT `lesson_id`, `lesson_teacher_id`, `teacher_academic_periods_code`, `lesson_code`, `lesson_day`, `time_slot_start_time`, 
-		       `time_slot_order`, `study_module_id`, `study_module_shortname`, `study_module_name`, `lesson_classroom_group_id`, `classroom_group_code`, 
-		       `classroom_group_shortName`, `classroom_group_name`, `lesson_location_id`, `location_shortName` 
-		FROM (`lesson`) 
-		JOIN `time_slot` ON `lesson`.`lesson_time_slot_id` = `time_slot`.`time_slot_id` 
-		LEFT JOIN `study_module` ON `lesson`.`lesson_study_module_id` = `study_module`.`study_module_id` 
-		LEFT JOIN `classroom_group` ON `lesson`.`lesson_classroom_group_id` = `classroom_group`.`classroom_group_id` 
-		LEFT JOIN `location` ON `location`.`location_id` = `lesson`.`lesson_location_id` 
-		JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `lesson`.`lesson_teacher_id` 
-		WHERE `lesson`.`lesson_classroom_group_id` = 25 AND `lesson`.`lesson_academic_period_id` = '5' AND `teacher_academic_periods`.`teacher_academic_periods_academic_period_id` = '5' 
-		ORDER BY `lesson_day`, `time_slot_order` asc 
+		SELECT `lesson_id`, `lesson_teacher_id`, `teacher_academic_periods_code`, `lesson_code`, `lesson_day`, `time_slot_start_time`,
+		       `time_slot_order`, `study_module_id`, `study_module_shortname`, `study_module_name`, `lesson_classroom_group_id`, `classroom_group_code`,
+		       `classroom_group_shortName`, `classroom_group_name`, `lesson_location_id`, `location_shortName`
+		FROM (`lesson`)
+		JOIN `time_slot` ON `lesson`.`lesson_time_slot_id` = `time_slot`.`time_slot_id`
+		LEFT JOIN `study_module` ON `lesson`.`lesson_study_module_id` = `study_module`.`study_module_id`
+		LEFT JOIN `classroom_group` ON `lesson`.`lesson_classroom_group_id` = `classroom_group`.`classroom_group_id`
+		LEFT JOIN `location` ON `location`.`location_id` = `lesson`.`lesson_location_id`
+		JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `lesson`.`lesson_teacher_id`
+		WHERE `lesson`.`lesson_classroom_group_id` = 25 AND `lesson`.`lesson_academic_period_id` = '5' AND `teacher_academic_periods`.`teacher_academic_periods_academic_period_id` = '5'
+		ORDER BY `lesson_day`, `time_slot_order` asc
 		*/
 
         if ( $academic_period_id == null ) {
@@ -374,7 +374,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         	lesson_classroom_group_id, classroom_group_code,classroom_group_shortName,classroom_group_name,lesson_location_id,location_shortName');
 
 		$this->db->order_by('lesson_day,time_slot_order', "asc");
-		
+
 		$this->db->join('time_slot', 'lesson.lesson_time_slot_id = time_slot.time_slot_id');
 		$this->db->join('study_module', 'lesson.lesson_study_module_id = study_module.study_module_id','left');
 		$this->db->join('classroom_group', 'lesson.lesson_classroom_group_id = classroom_group.classroom_group_id','left');
@@ -384,11 +384,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('lesson.lesson_classroom_group_id',$classroom_group_id);
 		$this->db->where('lesson.lesson_academic_period_id',$academic_period_id);
 		$this->db->where('teacher_academic_periods.teacher_academic_periods_academic_period_id',$academic_period_id);
-        
+
         $query = $this->db->get();
 
       	//echo $this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$all_lessonsfortimetablebygroupid = array();
@@ -402,12 +402,12 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 			foreach ($query->result_array() as $row)	{
 
 				//echo "<br/>counter i: " . $counter_i . "<br/>";
-				
+
 				$day=$row['lesson_day'];
 				$time_slot_start_time = $row['time_slot_start_time'];
 				$lesson_id = $row['lesson_id'];
 				$lesson_teacher_id = $row['lesson_teacher_id'];
-				$lesson_teacher_code = $row['teacher_academic_periods_code'];				
+				$lesson_teacher_code = $row['teacher_academic_periods_code'];
 				$lesson_code = $row['lesson_code'];
 				$time_slot_order = $row['time_slot_order'];
 				$study_module_id = $row['study_module_id'];
@@ -422,13 +422,13 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 				$not_new_day=true;
 				if ($previous_day == null || $day != $previous_day) {
-					$day_lessons = new stdClass;	
+					$day_lessons = new stdClass;
 					$lesson_by_day = array();
 					$not_new_day=false;
 				}
 
-				//echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id 
-				//. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ; 
+				//echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id
+				//. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ;
 
 				//DETECT LESSONS DONE BY MULTIPLE TEACHERS
 
@@ -437,17 +437,17 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 				if ( ($day == $previous_day) && ($time_slot_start_time == $real_previous_time_slot_start_time) ) {
 					if ($lesson_teacher_id == $previous_lesson_teacher_id) {
 						echo "ALERT DUPLICATED LESSON! Lesson _info:<br/>";
-						echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id 
-						. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ; 
+						echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id
+						. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ;
 						$not_doubled_lesson=false;
 					} else {
 						//DOUBLED LESSON:
 						$not_doubled_lesson=false;
 					}
-					
+
 				}
 
-				//detect consecutive lessons and aggrupate in on event with more duration 
+				//detect consecutive lessons and aggrupate in on event with more duration
 				if ( (($time_slot_start_time -1) == $real_previous_time_slot_start_time) &&  $previous_lesson_code == $lesson_code && $this->is_time_slot_lective_by_time_slot_order($time_slot_order-1) && $not_new_day && $not_doubled_lesson  ) {
 					//Change previous lesson duration (++) and skip this one
 					$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->duration++;
@@ -456,23 +456,23 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 						$new_location = new stdClass();
 						$new_location->code=$location_shortname;
 						$new_location->id=$location_id;
-						
-						$lesson_data->locations[$new_location->id]=$new_location;	
+
+						$lesson_data->locations[$new_location->id]=$new_location;
 					}
 					if ( ! array_key_exists ( $study_module_id , $all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->study_modules ) ) {
 						$new_study_module = new stdClass();
 						$new_study_module->id = $study_module_id;
 						$new_study_module->shortname = $study_module_shortname;
-						$new_study_module->name = $study_module_name;						
-						
-						$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->study_modules[$new_study_module->id]=$new_study_module;	
+						$new_study_module->name = $study_module_name;
+
+						$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->study_modules[$new_study_module->id]=$new_study_module;
 					}
 					if ( ! array_key_exists ( $lesson_teacher_id , $all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->teachers ) ) {
 						$new_teacher = new stdClass();
 						$new_teacher->id = $lesson_teacher_id;
 						$new_teacher->code = $lesson_teacher_code;
-						
-						$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->teachers[$new_teacher->id]=$new_teacher;	
+
+						$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->teachers[$new_teacher->id]=$new_teacher;
 					}
 				} else {
 					if ($not_doubled_lesson) {
@@ -485,7 +485,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 						$new_study_module = new stdClass();
 						$new_study_module->id = $study_module_id;
 						$new_study_module->shortname = $study_module_shortname;
-						$new_study_module->name = $study_module_name;						
+						$new_study_module->name = $study_module_name;
 						$lesson_data->study_modules[$new_study_module->id]=$new_study_module;
 
 						$lesson_data->group_code= $group_code;
@@ -496,7 +496,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 						$new_teacher = new stdClass();
 						$new_teacher->id = $lesson_teacher_id;
-						$new_teacher->code = $lesson_teacher_code;						
+						$new_teacher->code = $lesson_teacher_code;
 						$lesson_data->teachers[$new_teacher->id]=$new_teacher;
 
 						$lesson_data->locations=array();
@@ -505,51 +505,51 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 							$new_location->code=$location_shortname;
 							$new_location->id=$location_id;
 							$lesson_data->locations[$new_location->id]=$new_location;
-						} 
-						
+						}
+
 						$lesson_data->duration= 1;
 
 						$lesson_by_day[$time_slot_start_time] = $lesson_data;
 
-									
+
 						$day_lessons->lesson_by_day = $lesson_by_day;
 
-	   					$all_lessonsfortimetablebygroupid[$day] = $day_lessons;	
+	   					$all_lessonsfortimetablebygroupid[$day] = $day_lessons;
 	   					$previous_time_slot_start_time = $time_slot_start_time;
 
 					} else {
 						/*echo "ALERT DUPLICATED LESSON! Lesson _info:<br/>";
-						echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id 
+						echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id
 						. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname .
 						" | location: " . $location_id . " | location_shortname: " . $location_shortname  ."<br/>";*/
 						if ( ! array_key_exists ( $study_module_id , $all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->study_modules ) ) {
 							$new_study_module = new stdClass();
 							$new_study_module->id = $study_module_id;
 							$new_study_module->shortname = $study_module_shortname;
-							$new_study_module->name = $study_module_name;						
-							
-							$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->study_modules[$new_study_module->id]=$new_study_module;	
+							$new_study_module->name = $study_module_name;
+
+							$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->study_modules[$new_study_module->id]=$new_study_module;
 						}
 						if ( ! array_key_exists ( $lesson_teacher_id , $all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->teachers ) ) {
 							$new_teacher = new stdClass();
 							$new_teacher->id = $lesson_teacher_id;
 							$new_teacher->code = $lesson_teacher_code;
-							
-							$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->teachers[$new_teacher->id]=$new_teacher;	
+
+							$all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->teachers[$new_teacher->id]=$new_teacher;
 						}
 						if ( ! array_key_exists ( $location_id , $all_lessonsfortimetablebygroupid[$day]->lesson_by_day[$previous_time_slot_start_time]->locations ) ) {
 							$new_location = new stdClass();
 							$new_location->code=$location_shortname;
 							$new_location->id=$location_id;
-							
-							$lesson_data->locations[$new_location->id]=$new_location;	
+
+							$lesson_data->locations[$new_location->id]=$new_location;
 						}
 						$previous_time_slot_start_time = $previous_time_slot_start_time;
 					}
    				}
 
    				$real_previous_time_slot_start_time = $time_slot_start_time;
-   				
+
    				$previous_day=$day;
    				$previous_lesson_teacher_id = $lesson_teacher_id;
    				$previous_lesson_code = $lesson_code;
@@ -558,7 +558,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
    			return $all_lessonsfortimetablebygroupid;
 
-		}			
+		}
 		else
 			return false;
 
@@ -569,9 +569,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         $this->db->select('time_slot_lective');
 
 		$this->db->where('time_slot.time_slot_order',$time_slot_order);
-        
+
         $query = $this->db->get();
-		
+
 		if ($query->num_rows() > 0) {
 			$row = $query->row();
 			if ($row->time_slot_lective == 1)
@@ -591,21 +591,21 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         }
 
 		/*
-		SELECT `lesson_id`, `lesson_code`, `lesson_day`, `lesson_time_slot_id`, `time_slot_start_time`, `time_slot_order`, `study_module_id`, 
-		`study_module_shortname`, `study_module_name`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name` 
-		FROM (`lesson`) 
-		JOIN `teacher` ON `lesson`.`lesson_teacher_id` = `teacher`.`teacher_id` 
-		JOIN `time_slot` ON `lesson`.`lesson_time_slot_id` = `time_slot`.`time_slot_id` 
-		LEFT JOIN `study_module` ON `lesson`.`lesson_study_module_id` = `study_module`.`study_module_id` 
-		LEFT JOIN `classroom_group` ON `lesson`.`lesson_classroom_group_id` = `classroom_group`.`classroom_group_id` 
-		WHERE `teacher`.`teacher_id` = '89' ORDER BY `lesson_day`, `time_slot_order` asc 
+		SELECT `lesson_id`, `lesson_code`, `lesson_day`, `lesson_time_slot_id`, `time_slot_start_time`, `time_slot_order`, `study_module_id`,
+		`study_module_shortname`, `study_module_name`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name`
+		FROM (`lesson`)
+		JOIN `teacher` ON `lesson`.`lesson_teacher_id` = `teacher`.`teacher_id`
+		JOIN `time_slot` ON `lesson`.`lesson_time_slot_id` = `time_slot`.`time_slot_id`
+		LEFT JOIN `study_module` ON `lesson`.`lesson_study_module_id` = `study_module`.`study_module_id`
+		LEFT JOIN `classroom_group` ON `lesson`.`lesson_classroom_group_id` = `classroom_group`.`classroom_group_id`
+		WHERE `teacher`.`teacher_id` = '89' ORDER BY `lesson_day`, `time_slot_order` asc
 		*/
 
 		$this->db->from('lesson');
         $this->db->select('lesson_id, lesson_teacher_id, lesson_code, lesson_day, lesson_time_slot_id, time_slot_start_time, time_slot_order, study_module_id, study_module_shortname, study_module_name,
         	lesson_classroom_group_id,classroom_group_code, classroom_group_shortName, classroom_group_name, lesson_location_id,location_shortName');
 		$this->db->order_by('lesson_day,time_slot_order', "asc");
-		
+
 		$this->db->join('teacher', 'lesson.lesson_teacher_id = teacher.teacher_id');
 		$this->db->join('time_slot', 'lesson.lesson_time_slot_id = time_slot.time_slot_id');
 		$this->db->join('study_module', 'lesson.lesson_study_module_id = study_module.study_module_id','left');
@@ -614,12 +614,12 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 		$this->db->where('teacher.teacher_id',$teacher_id);
 		$this->db->where('lesson.lesson_academic_period_id',$academic_period_id);
-		 	
-        
+
+
         $query = $this->db->get();
 
         //echo $this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$all_lessonsfortimetablebyteacherid = array();
@@ -650,17 +650,17 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 				$location_shortname = $row['location_shortName'];
 				$location_id = $row['lesson_location_id'];
-			
+
 				$is_not_new_day=true;
 				if ($previous_day == null || $day != $previous_day) {
 					//NEW DAY
 					$is_not_new_day=false;
-					$day_lessons = new stdClass;	
+					$day_lessons = new stdClass;
 					$lesson_by_day = array();
 				}
 
-				//echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id 
-				//. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ; 
+				//echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id
+				//. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ;
 
 				//DETECT LESSONS DONE BY MULTIPLE TEACHERS
 
@@ -669,8 +669,8 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 				if ( ($day == $previous_day) && ($time_slot_start_time == $real_previous_time_slot_start_time) ) {
 					if ($group_id == $previous_group_id) {
 						echo "ALERT DUPLICATED LESSON! Lesson _info:<br/>";
-						echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id 
-						. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ; 
+						echo "<br/>day: " . $day . " | time_slot_start_time: " . $time_slot_start_time . " | lesson_id: " . $lesson_id . " | teacher: " . $lesson_teacher_id
+						. " | lesson_code: " . $lesson_code . " | time_slot_order: " . $time_slot_order . " | study_module_shortname: " . $study_module_shortname ."<br/>" ;
 						$not_doubled_lesson=false;
 					} else {
 						//DOUBLED LESSON:
@@ -687,8 +687,8 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 						$new_location = new stdClass();
 						$new_location->code=$location_shortname;
 						$new_location->id=$location_id;
-						
-						$lesson_data->locations[$new_location->id]=$new_location;	
+
+						$lesson_data->locations[$new_location->id]=$new_location;
 					}
 				} else {
 					if ($not_doubled_lesson) {
@@ -701,9 +701,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 						$lesson_data->study_module_shortname= $study_module_shortname;
 						$lesson_data->study_module_shortname= $study_module_shortname;
 						$lesson_data->study_module_name= $study_module_name;
-						
+
 						$lesson_data->time_slot_lective=true;
-	
+
 						/* a doubled lesson could have múltiple groups: Next lines are obsolet!
 						$lesson_data->group_id= $group_id;
 						$lesson_data->group_code= $group_code;
@@ -718,7 +718,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 						$new_group->group_shortName = $group_shortName;
 						$new_group->group_name = $group_name;
 
-						$lesson_data->groups[$new_group->group_id]=$new_group;				
+						$lesson_data->groups[$new_group->group_id]=$new_group;
 
 						$lesson_data->locations=array();
 						if ($location_shortname != null) {
@@ -727,17 +727,17 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 							$new_location->id=$location_id;
 							$lesson_data->locations[$new_location->id]=$new_location;
 						}
-						
+
 						$lesson_data->duration= 1;
 
 						$lesson_by_day[$time_slot_start_time] = $lesson_data;
 
-									
+
 						$day_lessons->lesson_by_day = $lesson_by_day;
 
 	   					$all_lessonsfortimetablebyteacherid[$day] = $day_lessons;
 	   					$previous_time_slot_start_time = $time_slot_start_time;
-	   					
+
 	   					//TODO REMOVE
 	   					//$previous_lesson_time_slot_id = $lesson_time_slot_id;
 					} else {
@@ -757,13 +757,13 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 							$new_location = new stdClass();
 							$new_location->code=$location_shortname;
 							$new_location->id=$location_id;
-							
-							$lesson_data->locations[$new_location->id]=$new_location;	
+
+							$lesson_data->locations[$new_location->id]=$new_location;
 						}
-						
+
 						$previous_time_slot_start_time = $previous_time_slot_start_time;
 					}
-	
+
    				}
 
    				$real_previous_time_slot_start_time = $time_slot_start_time;
@@ -775,7 +775,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
    				$counter_i++;
    			}
 			return $all_lessonsfortimetablebyteacherid;
-		}			
+		}
 		else
 			return false;
 
@@ -799,9 +799,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		}
 
 		/*
-		SELECT `classroom_group_id`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name` 
-		ROM (`classroom_group`) 
-		JOIN `classroom_group_academic_periods` ON `classroom_group_academic_periods`.`classroom_group_academic_periods_classroom_group_id` = `classroom_group`.`classroom_group_id` 
+		SELECT `classroom_group_id`, `classroom_group_code`, `classroom_group_shortName`, `classroom_group_name`
+		ROM (`classroom_group`)
+		JOIN `classroom_group_academic_periods` ON `classroom_group_academic_periods`.`classroom_group_academic_periods_classroom_group_id` = `classroom_group`.`classroom_group_id`
 		WHERE `classroom_group_academic_periods_academic_period_id` = '5' ORDER BY `classroom_group_code` asc
 		*/
 		$this->db->from('classroom_group');
@@ -809,16 +809,16 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         $this->db->join('classroom_group_academic_periods','classroom_group_academic_periods.classroom_group_academic_periods_classroom_group_id = classroom_group.classroom_group_id');
         $this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period_id);
         $this->db->where('classroom_group_type',1);
-        
+
 
 		$this->db->order_by('classroom_group_code', $orderby);
-		
+
 		//$this->db->join('person', 'person.person_id = teacher.teacher_person_id');
-        
+
         $query = $this->db->get();
      	//echo $this->db->last_query();
 
-		
+
 		if ($query->num_rows() > 0) {
 
 			$classroom_groups_array = array();
@@ -827,16 +827,16 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
    				$classroom_groups_array[$row['classroom_group_id']] = $row['classroom_group_code'] . " - " . $row['classroom_group_name'] . " ( " . $row['classroom_group_shortName'] . ") - " . $row['classroom_group_id'];
 			}
 			return $classroom_groups_array;
-		}			
+		}
 		else
 			return false;
 	}
 
 	function getAllLectiveDays() {
-		
+
 		$monday = new stdClass;
-        $monday->day_shortname = lang('monday_shortname'); 
-        $monday->day_number = 1; 
+        $monday->day_shortname = lang('monday_shortname');
+        $monday->day_number = 1;
 
         $tuesday = new stdClass;
         $tuesday->day_shortname = lang('tuesday_shortname');
@@ -857,7 +857,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         return array ($monday, $tuesday, $wednesday, $thursday, $friday );
     }
 
-    public function get_time_slots_byShift($shift = 1) {   
+    public function get_time_slots_byShift($shift = 1) {
 
        	switch ($shift) {
        		//Morning
@@ -868,12 +868,12 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
     		case 2:
         		return $this->getTimeSlots("asc",9,15);
         		break;
-    	} 
+    	}
     }
 
 
 	function getAllTimeSlots($orderby="asc") {
-		
+
 		$this->db->select('time_slot_id,time_slot_start_time,time_slot_end_time,time_slot_lective,time_slot_order');
 		$this->db->from('time_slot');
 		$this->db->order_by('time_slot_order', $orderby);
@@ -895,12 +895,12 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		INNER JOIN time_slot ON time_slot.time_slot_id = `lesson`.lesson_time_slot_id
 		WHERE classroom_group.classroom_group_id =25
 		*/
-	
+
 		$this->db->select_min('time_slot_order','min_time_slot_order');
 		$this->db->from('lesson');
 		$this->db->join('classroom_group', 'classroom_group.classroom_group_id = lesson.lesson_classroom_group_id');
 		$this->db->join('time_slot', 'time_slot.time_slot_id = lesson.lesson_time_slot_id');
-		
+
 		$this->db->where('classroom_group.classroom_group_id',$classroom_group_id);
 
 		$query = $this->db->get();
@@ -921,7 +921,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->from('lesson');
 		$this->db->join('classroom_group', 'classroom_group.classroom_group_id = lesson.lesson_classroom_group_id');
 		$this->db->join('time_slot', 'time_slot.time_slot_id = lesson.lesson_time_slot_id');
-		
+
 		$this->db->where('classroom_group.classroom_group_id',$classroom_group_id);
 
 		$query = $this->db->get();
@@ -937,11 +937,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 	}
 
 	function getMaxTimeSlotOrderForTeacher($teacher_id) {
-	
+
 		$this->db->select_max('time_slot_order','max_time_slot_order');
 		$this->db->from('lesson');
 		$this->db->join('time_slot', 'lesson.lesson_time_slot_id = time_slot.time_slot_id');
-		
+
 		$this->db->where('lesson.lesson_teacher_id',$teacher_id);
 
 		$query = $this->db->get();
@@ -957,11 +957,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 	}
 
 	function getMinTimeSlotOrderForTeacher($teacher_id) {
-	
+
 		$this->db->select_min('time_slot_order','min_time_slot_order');
 		$this->db->from('lesson');
 		$this->db->join('time_slot', 'lesson.lesson_time_slot_id = time_slot.time_slot_id');
-		
+
 		$this->db->where('lesson.lesson_teacher_id',$teacher_id);
 
 		$query = $this->db->get();
@@ -984,13 +984,13 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->from('teacher');
 
 		$this->db->join('person','teacher.teacher_person_id = person.person_id');
-		
+
 
 		$this->db->where('teacher.teacher_id',$teacher_id);
 
 
 		$query = $this->db->get();
-		//echo $this->db->last_query()."<br />";		
+		//echo $this->db->last_query()."<br />";
 
 
 		if ($query->num_rows() > 0) {
@@ -1048,9 +1048,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->academic_periods_id;
-		}	
+		}
 		else
 			return false;
 	}
@@ -1064,8 +1064,8 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 
 
 		/*
-		SELECT `teacher_academic_periods_code` 
-		FROM `teacher_academic_periods` 
+		SELECT `teacher_academic_periods_code`
+		FROM `teacher_academic_periods`
 		WHERE `teacher_academic_periods_academic_period_id`=5 AND `teacher_academic_periods_teacher_id`=5
 		*/
 		$this->db->select('teacher_academic_periods_code');
@@ -1089,8 +1089,8 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$current_academic_period_id = $this->get_current_academic_period_id();
 
 		/*
-		SELECT `teacher_academic_periods_teacher_id` 
-		FROM `teacher_academic_periods` 
+		SELECT `teacher_academic_periods_teacher_id`
+		FROM `teacher_academic_periods`
 		WHERE `teacher_academic_periods_academic_period_id`=5 AND `teacher_academic_periods_code`="02"
 		*/
 
@@ -1160,9 +1160,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->select('time_slot_id,time_slot_start_time,time_slot_end_time,time_slot_lective,time_slot_order');
 		$this->db->from('time_slot');
 		$this->db->order_by('time_slot_order', $orderby);
-		
+
 		$this->db->where('time_slot_order >=',$min_time_slot_order);
-		$this->db->where('time_slot_order <=',$max_time_slot_order);		
+		$this->db->where('time_slot_order <=',$max_time_slot_order);
 
 		$query = $this->db->get();
 
@@ -1189,10 +1189,10 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->select('time_slot_id,time_slot_start_time,time_slot_end_time,time_slot_lective,time_slot_order');
 		$this->db->from('time_slot');
 		$this->db->order_by('time_slot_order', $orderby);
-		
+
 		$this->db->where('time_slot_order >=',$min_time_slot_order);
-		$this->db->where('time_slot_order <=',$max_time_slot_order);		
-		
+		$this->db->where('time_slot_order <=',$max_time_slot_order);
+
 		$query = $this->db->get();
 
 		if ($query->num_rows() > 0)
@@ -1202,7 +1202,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 	}
 
 	function getNotLectiveTimeSlots($orderby="asc") {
-		
+
 		$this->db->select('time_slot_id,time_slot_start_time,time_slot_end_time,time_slot_lective,time_slot_order');
 		$this->db->from('time_slot');
 		$this->db->order_by('time_slot_order', $orderby);
@@ -1215,8 +1215,8 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 			return $query;
 		else
 			return false;
-	}	
-	
+	}
+
 
 	function get_all_teachers_ids_and_names($orderby="asc",$academic_period_id=null) {
 
@@ -1225,11 +1225,11 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		}
 
 		/*
-		SELECT `teacher_academic_periods_code`, `person_sn1`, `person_sn2`, `person_givenName`, `person_id`, `person_official_id` 
-		FROM (`teacher`) 
-		JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `teacher`.`teacher_id` 
-		JOIN `person` ON `person`.`person_id` = `teacher`.`teacher_person_id` 
-		WHERE `teacher_academic_periods_academic_period_id` = '5' 
+		SELECT `teacher_academic_periods_code`, `person_sn1`, `person_sn2`, `person_givenName`, `person_id`, `person_official_id`
+		FROM (`teacher`)
+		JOIN `teacher_academic_periods` ON `teacher_academic_periods`.`teacher_academic_periods_teacher_id` = `teacher`.`teacher_id`
+		JOIN `person` ON `person`.`person_id` = `teacher`.`teacher_person_id`
+		WHERE `teacher_academic_periods_academic_period_id` = '5'
 		ORDER BY `teacher_academic_periods_code` asc
 		*/
 
@@ -1237,16 +1237,16 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
         $this->db->select('teacher.teacher_id, teacher_academic_periods_code, person_sn1,person_sn2, person_givenName, person_id, person_official_id');
 
 		$this->db->order_by('teacher_academic_periods_code', $orderby);
-		
+
 		$this->db->join('teacher_academic_periods', 'teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
 		$this->db->join('person', 'person.person_id = teacher.teacher_person_id');
 
 		$this->db->where('teacher_academic_periods_academic_period_id', $academic_period_id);
-        
+
         $query = $this->db->get();
         //echo $this->db->last_query()."<br />";
 
-		
+
 		if ($query->num_rows() > 0) {
 
 			$teachers_array = array();
@@ -1255,12 +1255,12 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
    				$teachers_array[$row['teacher_academic_periods_code']] = $row['teacher_academic_periods_code'] . " - " . $row['person_sn1'] . " " . $row['person_sn2'] . ", " . $row['person_givenName'] . " - " . $row['person_official_id'] . " (" . $row['teacher_id'] . ")";
 			}
 			return $teachers_array;
-		}			
+		}
 		else
 			return false;
 	}
 
-	
+
 	function get_module_morning_hours($module,$lesson_classroom_group_id=null,$teacher_id=null, $academic_period_id=null)
 	{
         if ($academic_period_id == null) {
@@ -1272,7 +1272,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->distinct();
 		$this->db->where('lesson_study_module_id', $module);
 		$this->db->where('lesson_time_slot_id >=', 1);
-		$this->db->where('lesson_time_slot_id <=',7);	
+		$this->db->where('lesson_time_slot_id <=',7);
 
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
 		if ($lesson_classroom_group_id!=null)	{
@@ -1280,10 +1280,10 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		}
 		if ($teacher_id!=null)	{
 			$this->db->where('lesson_teacher_id', $teacher_id);
-		}		
-		
+		}
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
@@ -1307,14 +1307,14 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
 		if ($lesson_classroom_group_id!=null)	{
 			$this->db->where('lesson_classroom_group_id', $lesson_classroom_group_id);
-		}		
-				
+		}
+
 		if ($teacher_id!=null)	{
 			$this->db->where('lesson_teacher_id', $teacher_id);
 		}
-		
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
@@ -1334,7 +1334,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		SELECT DISTINCT `lesson_day`,`lesson_time_slot_id`
 		FROM lesson
 		WHERE `lesson_teacher_id`=8 AND `lesson_academic_period_id`=5
-		*/	
+		*/
 
 		$this->db->from('lesson');
 		$this->db->select('lesson_day,lesson_time_slot_id');
@@ -1342,10 +1342,10 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('lesson_teacher_id', $teacher_id);
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
 		$this->db->where('lesson_time_slot_id >=', 1);
-		$this->db->where('lesson_time_slot_id <=',7);	
-		
+		$this->db->where('lesson_time_slot_id <=',7);
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
@@ -1364,7 +1364,7 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		SELECT DISTINCT `lesson_day`,`lesson_time_slot_id`
 		FROM lesson
 		WHERE `lesson_teacher_id`=8 AND `lesson_academic_period_id`=5
-		*/	
+		*/
 
 		$this->db->from('lesson');
 		$this->db->select('lesson_day,lesson_time_slot_id');
@@ -1373,9 +1373,9 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
 		$this->db->where('lesson_time_slot_id >=', 9);
 		$this->db->where('lesson_time_slot_id <=',15);
-		
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
@@ -1395,16 +1395,16 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		SELECT DISTINCT `lesson_day`,`lesson_time_slot_id`
 		FROM lesson
 		WHERE `lesson_teacher_id`=8 AND `lesson_academic_period_id`=5
-		*/	
+		*/
 
 		$this->db->from('lesson');
 		$this->db->select('lesson_day,lesson_time_slot_id');
 		$this->db->distinct();
 		$this->db->where('lesson_teacher_id', $teacher_id);
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
-		
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
@@ -1423,16 +1423,16 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		SELECT DISTINCT `lesson_day`,`lesson_time_slot_id`
 		FROM lesson
 		WHERE `lesson_classroom_group_id`=8 AND `lesson_academic_period_id`=5
-		*/	
+		*/
 
 		$this->db->from('lesson');
 		$this->db->select('lesson_day,lesson_time_slot_id');
 		$this->db->distinct();
 		$this->db->where('lesson_classroom_group_id', $group_id);
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
-		
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
@@ -1460,20 +1460,20 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
 		if ($lesson_classroom_group_id!=null)	{
 			$this->db->where('lesson_classroom_group_id', $lesson_classroom_group_id);
-		}		
+		}
 		if ($teacher_id!=null)	{
 			$this->db->where('lesson_teacher_id', $teacher_id);
 		}
-		
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
 		}
 		else
 			return 0;
-	}	
+	}
 
 	//Hores Setmanals totals no reals
 	function get_module_hours_per_week($module,$lesson_classroom_group_id=null,$teacher_id=null,$academic_period_id=null)
@@ -1489,13 +1489,13 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		$this->db->where('lesson_academic_period_id', $academic_period_id);
 		if ($lesson_classroom_group_id!=null)	{
 			$this->db->where('lesson_classroom_group_id', $lesson_classroom_group_id);
-		}		
+		}
 		if ($teacher_id!=null)	{
 			$this->db->where('lesson_teacher_id', $teacher_id);
 		}
-		
+
 		$query = $this->db->get();
-        //echo $this->db->last_query()."<br />";		
+        //echo $this->db->last_query()."<br />";
 
 		if ($query->num_rows() > 0) {
 			return $query->num_rows;
@@ -1503,5 +1503,5 @@ JOIN classroom_group ON classroom_group.classroom_group_id = lesson.lesson_class
 		else
 			return 0;
 	}
-	
+
 }

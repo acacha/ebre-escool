@@ -1,5 +1,5 @@
 ﻿<div class="main-content">
-                
+
 <div id="breadcrumbs" class="breadcrumbs">
  <script type="text/javascript">
   try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -15,7 +15,7 @@
   <li class="active"><?php echo lang('timetable');?></li>
  </ul>
 </div><!-- /.breadcrumbs -->
-       
+
 
         <div class="page-content">
 
@@ -129,7 +129,7 @@
 
         </div>
 
-        
+
         <div class="row-fluid">
             <div class="span12">
 
@@ -171,10 +171,10 @@
                             </td>
                             <td>
                                 <?php echo $all_teacher_study_modules_hours_per_week[$i]; $i++;?>
-                            </td>                            
+                            </td>
                         </tr>
                     <?php endforeach; ?>
-                    
+
                 </tbody>
             </table>
             </center>
@@ -184,15 +184,15 @@
 
         <div id="teacher_timetable" class="timetable" data-days="5" data-hours="<?php echo $time_slots_count;?>">
             <ul class="tt-events">
-                
+
                 <?php $day_index = 0; $iii=0;?>
                 <?php foreach ($days as $day) : ?>
-                    
+
                     <?php if(array_key_exists($day->day_number , $lessonsfortimetablebyteacherid)) : ?>
 
                     <?php foreach ( $lessonsfortimetablebyteacherid[$day->day_number] as $day_lessons) : ?>
                         <?php foreach ( $day_lessons as $day_lesson) : ?>
-                            <?php 
+                            <?php
                             if ($day_lesson->time_slot_lective) {
                                 if (array_key_exists($day_lesson->study_module_id,$study_modules_colours)) {
                                     $bootstrap_button_colour = $study_modules_colours[$day_lesson->study_module_id];
@@ -204,11 +204,11 @@
                             }
 
                             $time_slot_current_position = $day_lesson->time_slot_order - $first_time_slot_order;
-                            
-                            ?> 
 
-                            <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>" 
-                                data-start="<?php echo $time_slot_current_position;?>" 
+                            ?>
+
+                            <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>"
+                                data-start="<?php echo $time_slot_current_position;?>"
                                 data-duration="<?php echo $day_lesson->duration;?>" style="margin-top:5px;">
 
                                 <?php if ($day_lesson->time_slot_lective): ?>
@@ -218,8 +218,8 @@
                                            echo "<a href=\"" . base_url('/index.php/curriculum/classroom_group/read/' . $group->group_id ) ."\">" . $group->group_code . "</a>";
                                            if ($count_i < (count($day_lesson->groups)-1)) {
                                                 echo ", ";
-                                           }       
-                                           $count_i++; 
+                                           }
+                                           $count_i++;
                                         }
                                     ?>
                                     <a href="<?php echo base_url('/index.php/curriculum/study_module/read') ."/". $day_lesson->study_module_id;?>"><?php echo $day_lesson->study_module_shortname;?></a><br/>
@@ -229,15 +229,15 @@
                                         $count_i=1;
                                         foreach ($day_lesson->locations as $location_key => $location) {
                                            echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a> ";
-                                           $count_i++; 
+                                           $count_i++;
                                         }
-                                    ?>                                    
-                                
+                                    ?>
+
                                 <?php else:?>
                                     <?php echo $day_lesson->study_module_shortname;?>
-                                <?php endif;?>    
+                                <?php endif;?>
                             </li>
-                        <?php $iii++;?>  
+                        <?php $iii++;?>
                         <?php endforeach; ?>
 
 
@@ -246,7 +246,7 @@
 
                     <?php endif; ?>
 
-                    <?php $day_index++;?> 
+                    <?php $day_index++;?>
 
                 <?php endforeach; ?>
 
@@ -260,7 +260,7 @@
 
                     <div class="tt-time" data-time="<?php echo $time_slot_index;?>">
                         <?php echo $time_slot_start_time1;?><span class="hidden-phone">:<?php echo $time_slot_start_time2;?></span></div>
-                    <?php $time_slot_index++;?>    
+                    <?php $time_slot_index++;?>
                 <?php endforeach; ?>
 
             </div>
@@ -269,27 +269,27 @@
                 <?php foreach ($days as $day) : ?>
                     <div class="tt-day" data-day="<?php echo $day_index;?>">
                         <?php echo $day->day_shortname;?>.</div>
-                    <?php $day_index++;?>    
+                    <?php $day_index++;?>
                 <?php endforeach; ?>
             </div>
         </div>
-        
+
         <?php //echo var_dump($all_teacher_groups);?>
 
         <?php //echo $all_teacher_groups_count;?>
 
         <div style="height: 10px;"></div>
-         
+
          <center>
-            <?php echo lang('show_teacher_data');?> <input id="hide_show_teacher_legend" type="checkbox" class="switch-small" 
-            data-label-icon="icon-eye-open" 
-            data-on-label="<i class='icon-ok'></i>" 
+            <?php echo lang('show_teacher_data');?> <input id="hide_show_teacher_legend" type="checkbox" class="switch-small"
+            data-label-icon="icon-eye-open"
+            data-on-label="<i class='icon-ok'></i>"
             data-off-label="<i class='icon-remove'></i>"
             data-off="danger">
          </center>
-        
+
         <div style="height: 10px;"></div>
-        
+
         <div id="teacher_legend" style="display: none;">
             <center>
             <table class="table table-striped table-bordered table-hover table-condensed" id="study_modules_legend_table" style="width:50%;">
@@ -362,18 +362,18 @@
                             <td>
                                 <?php foreach($all_teacher_study_modules_list as $teacher_study_modules){ ?>
                                 <a href="study_module_info/<?php echo $teacher_study_modules;?>"><?php echo $teacher_study_modules;?></a>
-                                <?php echo " ";} ?>                                
+                                <?php echo " ";} ?>
                             </td>
                         </tr>
                         -->
-                    
+
                 </tbody>
             </table>
             </center>
         </div>
-        
+
         <center><h3><?php echo lang('group_timetables');?></h3></center>
-        
+
         <div class="row">
 			 <?php foreach ($all_teacher_groups as $teacher_group) : ?>
                 <div class="span6">
@@ -384,7 +384,7 @@
                         <?php foreach ($days as $day) : ?>
                             <?php foreach ( $lessonsfortimetablebygroupid[$teacher_group['classroom_group_id']][$day->day_number] as $day_lessons) : ?>
                                 <?php foreach ( $day_lessons as $day_lesson) : ?>
-                                    <?php 
+                                    <?php
                                     if ($day_lesson->time_slot_lective) {
                                          //var_export($day_lesson->study_modules);
                                          $first_study_module= array_values($day_lesson->study_modules);
@@ -400,18 +400,18 @@
                                     }
 
                                     $time_slot_current_position = $day_lesson->time_slot_order - $first_time_slot_orderbygroupid[$teacher_group['classroom_group_id']];
-                          
-                                    ?> 
-                                    <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>" 
-                                        data-start="<?php echo $time_slot_current_position;?>" 
+
+                                    ?>
+                                    <li class="tt-event <?php echo $bootstrap_button_colour;?>" data-id="10" data-day="<?php echo $day->day_number - 1 ;?>"
+                                        data-start="<?php echo $time_slot_current_position;?>"
                                         data-duration="<?php echo $day_lesson->duration;?>" style="margin-top:5px;">
                                             <?php if ($day_lesson->time_slot_lective): ?>
-                                                
+
                                                 <a href="<?php echo base_url('/index.php/curriculum/classroom_group/read') ."/". $day_lesson->group_id;?>"><?php echo $day_lesson->group_code;?></a>
-                                                
+
                                                 <?php
                                                     foreach ($day_lesson->study_modules as $study_module_key => $study_module) {
-                                                       echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a> ";    
+                                                       echo "<a href=\"" . base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ."\">" . $study_module->shortname . "</a> ";
                                                     }
                                                 ?> <br/>
 
@@ -420,22 +420,22 @@
                                                        echo "<a href=\"" . base_url('/index.php/location/location/index/read/' . $location->id ) ."\">" . $location->code . "</a> ";
                                                     }
                                                 ?>
-                                                
+
                                             <?php else:?>
                                                 <?php echo $day_lesson->study_module_shortname;?>
                                             <?php endif;?>
                                     </li>
-                                    <?php $iii++;?>  
+                                    <?php $iii++;?>
                                 <?php endforeach; ?>
-                            <?php endforeach; ?> 
-                           <?php $day_index++;?> 
+                            <?php endforeach; ?>
+                           <?php $day_index++;?>
                         <?php endforeach; ?>
 
                     </ul>
                     <div class="tt-times">
-                        
+
                         <?php $time_slot_index = 0; ?>
-                        
+
                         <?php foreach ($array_all_teacher_groups_time_slots[$teacher_group['classroom_group_id']] as $time_slot_key => $time_slot) : ?>
                             <?php
                                 list($time_slot_start_time1, $time_slot_start_time2) = explode(':', $time_slot['time_slot_start_time']);
@@ -443,7 +443,7 @@
 
                             <div class="tt-time" data-time="<?php echo $time_slot_index;?>">
                                 <?php echo $time_slot_start_time1;?><span class="hidden-phone">:<?php echo $time_slot_start_time2;?></span></div>
-                            <?php $time_slot_index++;?>    
+                            <?php $time_slot_index++;?>
                         <?php endforeach; ?>
                     </div>
                     <div class="tt-days">
@@ -451,18 +451,18 @@
                             <?php foreach ($days as $day) : ?>
                                 <div class="tt-day" data-day="<?php echo $day_index;?>">
                                 <?php echo $day->day_shortname;?>.</div>
-                                <?php $day_index++;?>    
-                            <?php endforeach; ?>    
+                                <?php $day_index++;?>
+                            <?php endforeach; ?>
                     </div>
                 </div>
             </div>
              <?php endforeach; ?>
-        </div>    
-            
-            
+        </div>
+
+
         <div class="well">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/deed.en_GB">
-                <img alt="Creative Commons Licence" style="border-width: 0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/uk/88x31.png" /></a><br />
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.0/uk/deed.en_GB">
+                <img alt="Creative Commons Licence" style="border-width: 0" src="https://i.creativecommons.org/l/by-nc-sa/2.0/uk/88x31.png" /></a><br />
                 <?php echo lang('creative_commons_timetables_text');?>
         </div>
 
@@ -497,12 +497,12 @@ $(function() {
         //console.log(e, $element, value);
         $("#teacher_legend").slideToggle();
     });
-    
+
 
     $('#show_compact_timetable').on('switch-change', function (e, data) {
         var $element = $(data.el),
         value = data.value;
-        
+
         var pathArray = window.location.pathname.split( '/' );
         var secondLevelLocation = pathArray[1];
         var baseURL = window.location.protocol + "//" + window.location.host + "/" + secondLevelLocation + "/index.php/timetables/mytimetables";
