@@ -10,7 +10,7 @@
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="http://localhost/ebre-escool/">
+            <a href="https://localhost/ebre-escool/">
 
                 Home
 
@@ -20,7 +20,7 @@
             </span>
         </li>
         <li class="">
-            <a href="http://localhost/ebre-escool/index.php/blockclass/commands">
+            <a href="https://localhost/ebre-escool/index.php/blockclass/commands">
 
                 Ejecutar comandos de terminal RB
 
@@ -32,7 +32,7 @@
 
     <div class="page-header position-relative">
         <h1>
-            <a href="http://localhost/ebre-escool/index.php/blockclass/prueba">
+            <a href="https://localhost/ebre-escool/index.php/blockclass/prueba">
 
                Ejecutar comandos de terminal RB
 
@@ -43,12 +43,12 @@
      <div class="well well-lg"><h4 class="blue">Ejecutar comandos de terminal del RB</h4>
      <form method="get" action="?cmd">
    <input type="text" name="cmd" value="" size="40" maxlength="100" placeholder="Introduce un comando de terminal"/><br/>
-   <input type='submit' class="btn btn-info" value="Ejecutar" name="envia"/> 
-               </form> 
-         
-          
+   <input type='submit' class="btn btn-info" value="Ejecutar" name="envia"/>
+               </form>
+
+
          </div>
-  
+
  <?php
    if(isset($_GET['cmd'])){
           echo "<div id=\"muestra\">

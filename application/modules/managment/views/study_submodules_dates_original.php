@@ -2,7 +2,7 @@
 
 .strong {
     font-weight: bold;
-} 
+}
 
 </style>
 
@@ -35,7 +35,7 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
 
 
 
@@ -139,7 +139,7 @@
 							        class_name: 'gritter-error'
 							      });
 							    }
-				             
+
 				          });
 
 
@@ -166,23 +166,23 @@
      					*/
 
 						var selected_academic_period_initial_date = "<?php echo $selected_academic_period_initial_date;?>";
-						var selected_academic_period_initial_date_array = selected_academic_period_initial_date.split("-"); 
-						var _selected_academic_period_initial_date_object= new Date(selected_academic_period_initial_date_array[0], parseInt(selected_academic_period_initial_date_array[1],10)-1, parseInt(selected_academic_period_initial_date_array[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_initial_date_array = selected_academic_period_initial_date.split("-");
+						var _selected_academic_period_initial_date_object= new Date(selected_academic_period_initial_date_array[0], parseInt(selected_academic_period_initial_date_array[1],10)-1, parseInt(selected_academic_period_initial_date_array[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_initial_date = selected_academic_period_initial_date_array[2] +  "-" + selected_academic_period_initial_date_array[1] + "-" + selected_academic_period_initial_date_array[0];
 
 						var selected_academic_period_final_date = "<?php echo $selected_academic_period_final_date;?>";
-						var selected_academic_period_final_date_array = selected_academic_period_final_date.split("-"); 
-						var _selected_academic_period_final_date_object= new Date(selected_academic_period_final_date_array[0], parseInt(selected_academic_period_final_date_array[1],10)-1, parseInt(selected_academic_period_final_date_array[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_final_date_array = selected_academic_period_final_date.split("-");
+						var _selected_academic_period_final_date_object= new Date(selected_academic_period_final_date_array[0], parseInt(selected_academic_period_final_date_array[1],10)-1, parseInt(selected_academic_period_final_date_array[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_final_date = selected_academic_period_final_date_array[2] +  "-" + selected_academic_period_final_date_array[1] + "-" + selected_academic_period_final_date_array[0];
 
 						new_initialDate = value;
-     					var new_initialDate_array = new_initialDate.split("-"); 
+     					var new_initialDate_array = new_initialDate.split("-");
      						/* DEBUG:
 							console.debug("day: " + new_initialDate_array[0]);
 							console.debug("month: " + new_initialDate_array[1]);
 							console.debug("Year: "  + new_initialDate_array[2]);
 							*/
-						var _new_initialDate_object= new Date(new_initialDate_array[2], parseInt(new_initialDate_array[1],10)-1, parseInt(new_initialDate_array[0],10), 0, 0, 0, 0); 	
+						var _new_initialDate_object= new Date(new_initialDate_array[2], parseInt(new_initialDate_array[1],10)-1, parseInt(new_initialDate_array[0],10), 0, 0, 0, 0);
 
 						/*
 						console.debug("_selected_academic_period_initial_date_object: " + _selected_academic_period_initial_date_object);
@@ -209,15 +209,15 @@
      					if (finalDateValue != "") {
      						//console.debug("finalDateValue: " + finalDateValue);
      						//Compare dates
-							var new_finalDate_array = finalDateValue.split("-"); 
-	     					var _new_finalDate_object = new Date(new_finalDate_array[2], parseInt(new_finalDate_array[1],10)-1, parseInt(new_finalDate_array[0],10), 0, 0, 0, 0); 
+							var new_finalDate_array = finalDateValue.split("-");
+	     					var _new_finalDate_object = new Date(new_finalDate_array[2], parseInt(new_finalDate_array[1],10)-1, parseInt(new_finalDate_array[0],10), 0, 0, 0, 0);
 
      						//console.debug("_new_initialDate_object:" + _new_initialDate_object.toDateString());
      						//console.debug("_new_finalDate_object:" + _new_finalDate_object.toDateString());
 							if (_new_initialDate_object > _new_finalDate_object) {
 				            	alert("La data inicial és posterior a la data final! No podeu fer aquesta modificació");
 				            	return "";
-				            }	
+				            }
      					}
 
      					//console.debug("new_initialDate: " + new_initialDate);
@@ -274,10 +274,10 @@
 							        class_name: 'gritter-error'
 							      });
 							    }
-				             
+
 				          });
 
-				        $("#" + this.id).addClass("strong");  
+				        $("#" + this.id).addClass("strong");
 				        return value;
 				    }, {
 				        type: 'datepicker',
@@ -291,7 +291,7 @@
 				    }
 				);
 
-				
+
 
 				$('.editable_finalDate').editable(
 				    function(value, settings) {
@@ -303,25 +303,25 @@
      					*/
 
 						var selected_academic_period_initial_date = "<?php echo $selected_academic_period_initial_date;?>";
-						var selected_academic_period_initial_date_array = selected_academic_period_initial_date.split("-"); 
-						var _selected_academic_period_initial_date_object= new Date(selected_academic_period_initial_date_array[0], parseInt(selected_academic_period_initial_date_array[1],10)-1, parseInt(selected_academic_period_initial_date_array[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_initial_date_array = selected_academic_period_initial_date.split("-");
+						var _selected_academic_period_initial_date_object= new Date(selected_academic_period_initial_date_array[0], parseInt(selected_academic_period_initial_date_array[1],10)-1, parseInt(selected_academic_period_initial_date_array[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_initial_date = selected_academic_period_initial_date_array[2] +  "-" + selected_academic_period_initial_date_array[1] + "-" + selected_academic_period_initial_date_array[0];
 
 						var selected_academic_period_final_date = "<?php echo $selected_academic_period_final_date;?>";
-						var selected_academic_period_final_date_array = selected_academic_period_final_date.split("-"); 
-						var _selected_academic_period_final_date_object= new Date(selected_academic_period_final_date_array[0], parseInt(selected_academic_period_final_date_array[1],10)-1, parseInt(selected_academic_period_final_date_array[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_final_date_array = selected_academic_period_final_date.split("-");
+						var _selected_academic_period_final_date_object= new Date(selected_academic_period_final_date_array[0], parseInt(selected_academic_period_final_date_array[1],10)-1, parseInt(selected_academic_period_final_date_array[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_final_date = selected_academic_period_final_date_array[2] +  "-" + selected_academic_period_final_date_array[1] + "-" + selected_academic_period_final_date_array[0];
 
 
      					new_finalDate = value;
-     					var new_finalDate_array = new_finalDate.split("-"); 							
+     					var new_finalDate_array = new_finalDate.split("-");
 							/* DEBUG:
 							console.debug("day: " + new_finalDate_array[0]);
 							console.debug("month: " + new_finalDate_array[1]);
 							console.debug("Year: "  + new_finalDate_array[2]);
 							*/
 						var _new_finalDate_object= new Date(new_finalDate_array[2], parseInt(new_finalDate_array[1],10)-1, parseInt(new_finalDate_array[0],10), 0, 0, 0, 0);
-							
+
      					study_submodule_id = this.getAttribute("studysubmoduleid");
 
      					//console.debug("new_finalDate: " . new_finalDate);
@@ -343,15 +343,15 @@
      					if (initialDateValue != "") {
      						//console.debug("initialDateValue: " + initialDateValue);
      						//Compare dates
-							var new_initialDate_array = initialDateValue.split("-"); 
-	     					var _new_initialDate_object = new Date(new_initialDate_array[2], parseInt(new_initialDate_array[1],10)-1, parseInt(new_initialDate_array[0],10), 0, 0, 0, 0); 
+							var new_initialDate_array = initialDateValue.split("-");
+	     					var _new_initialDate_object = new Date(new_initialDate_array[2], parseInt(new_initialDate_array[1],10)-1, parseInt(new_initialDate_array[0],10), 0, 0, 0, 0);
 
      						//console.debug("_new_initialDate_object:" + _new_initialDate_object.toDateString());
      						//console.debug("_new_finalDate_object:" + _new_finalDate_object.toDateString());
 							if (_new_finalDate_object < _new_initialDate_object) {
 				            	alert("La data final és anterior a la data inicial! No podeu fer aquesta modificació");
 				            	return "";
-				            }	
+				            }
      					}
 
      					$.ajax({
@@ -405,10 +405,10 @@
 							        class_name: 'gritter-error'
 							      });
 							    }
-				             
+
 				          });
 
-				        $("#" + this.id).addClass("strong");  
+				        $("#" + this.id).addClass("strong");
 				        return value;
 				    }, {
 				        type: 'datepicker',
@@ -433,23 +433,23 @@
      					*/
 
 						var selected_academic_period_initial_date_planned = "<?php echo $selected_academic_period_initial_date_planned;?>";
-						var selected_academic_period_initial_date_planned_array = selected_academic_period_initial_date_planned.split("-"); 
-						var _selected_academic_period_initial_date_planned_object= new Date(selected_academic_period_initial_date_planned_array[0], parseInt(selected_academic_period_initial_date_planned_array[1],10)-1, parseInt(selected_academic_period_initial_date_planned_array[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_initial_date_planned_array = selected_academic_period_initial_date_planned.split("-");
+						var _selected_academic_period_initial_date_planned_object= new Date(selected_academic_period_initial_date_planned_array[0], parseInt(selected_academic_period_initial_date_planned_array[1],10)-1, parseInt(selected_academic_period_initial_date_planned_array[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_initial_date_planned = selected_academic_period_initial_date_planned_array[2] +  "-" + selected_academic_period_initial_date_planned_array[1] + "-" + selected_academic_period_initial_date_planned_array[0];
 
 						var selected_academic_period_final_date_planned = "<?php echo $selected_academic_period_final_date_planned;?>";
-						var selected_academic_period_final_date_array_planned = selected_academic_period_final_date_planned.split("-"); 
-						var _selected_academic_period_final_date_planned_object= new Date(selected_academic_period_final_date_array_planned[0], parseInt(selected_academic_period_final_date_array_planned[1],10)-1, parseInt(selected_academic_period_final_date_array_planned[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_final_date_array_planned = selected_academic_period_final_date_planned.split("-");
+						var _selected_academic_period_final_date_planned_object= new Date(selected_academic_period_final_date_array_planned[0], parseInt(selected_academic_period_final_date_array_planned[1],10)-1, parseInt(selected_academic_period_final_date_array_planned[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_final_date_planned = selected_academic_period_final_date_array_planned[2] +  "-" + selected_academic_period_final_date_array_planned[1] + "-" + selected_academic_period_final_date_array_planned[0];
 
 						new_initialDate_planned = value;
-     					var new_initialDate_planned_array = new_initialDate_planned.split("-"); 
+     					var new_initialDate_planned_array = new_initialDate_planned.split("-");
      						/* DEBUG:
 							console.debug("day: " + new_initialDate_array[0]);
 							console.debug("month: " + new_initialDate_array[1]);
 							console.debug("Year: "  + new_initialDate_array[2]);
 							*/
-						var _new_initialDate_planned_object= new Date(new_initialDate_planned_array[2], parseInt(new_initialDate_planned_array[1],10)-1, parseInt(new_initialDate_planned_array[0],10), 0, 0, 0, 0); 	
+						var _new_initialDate_planned_object= new Date(new_initialDate_planned_array[2], parseInt(new_initialDate_planned_array[1],10)-1, parseInt(new_initialDate_planned_array[0],10), 0, 0, 0, 0);
 
 						/*
 						console.debug("_selected_academic_period_initial_date_planned_object: " + _selected_academic_period_initial_date_planned_object);
@@ -476,15 +476,15 @@
      					if (finalDate_planned_Value != "") {
      						//console.debug("finalDate_planned_Value: " + finalDate_planned_Value);
      						//Compare dates
-							var new_finalDate_planned_array = finalDate_planned_Value.split("-"); 
-	     					var _new_finalDate_planned_object = new Date(new_finalDate_planned_array[2], parseInt(new_finalDate_planned_array[1],10)-1, parseInt(new_finalDate_planned_array[0],10), 0, 0, 0, 0); 
+							var new_finalDate_planned_array = finalDate_planned_Value.split("-");
+	     					var _new_finalDate_planned_object = new Date(new_finalDate_planned_array[2], parseInt(new_finalDate_planned_array[1],10)-1, parseInt(new_finalDate_planned_array[0],10), 0, 0, 0, 0);
 
      						//console.debug("_new_initialDate_object:" + _new_initialDate_object.toDateString());
      						//console.debug("_new_finalDate_object:" + _new_finalDate_object.toDateString());
 							if (_new_initialDate_planned_object > _new_finalDate_planned_object) {
 				            	alert("La data inicial és posterior a la data final! No podeu fer aquesta modificació");
 				            	return "";
-				            }	
+				            }
      					}
 
      					//console.debug("new_initialDate: " + new_initialDate);
@@ -541,10 +541,10 @@
 							        class_name: 'gritter-error'
 							      });
 							    }
-				             
+
 				          });
 
-				        $("#" + this.id).addClass("strong");  
+				        $("#" + this.id).addClass("strong");
 				        return value;
 				    }, {
 				        type: 'datepicker',
@@ -558,7 +558,7 @@
 				    }
 				);
 
-				
+
 
 				$('.editable_finalDate_planned').editable(
 				    function(value, settings) {
@@ -570,25 +570,25 @@
      					*/
 
 						var selected_academic_period_initial_date_planned = "<?php echo $selected_academic_period_initial_date_planned;?>";
-						var selected_academic_period_initial_date_planned_array = selected_academic_period_initial_date_planned.split("-"); 
-						var _selected_academic_period_initial_date_planned_object= new Date(selected_academic_period_initial_date_planned_array[0], parseInt(selected_academic_period_initial_date_planned_array[1],10)-1, parseInt(selected_academic_period_initial_date_planned_array[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_initial_date_planned_array = selected_academic_period_initial_date_planned.split("-");
+						var _selected_academic_period_initial_date_planned_object= new Date(selected_academic_period_initial_date_planned_array[0], parseInt(selected_academic_period_initial_date_planned_array[1],10)-1, parseInt(selected_academic_period_initial_date_planned_array[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_initial_date = selected_academic_period_initial_date_planned_array[2] +  "-" + selected_academic_period_initial_date_planned_array[1] + "-" + selected_academic_period_initial_date_planned_array[0];
 
 						var selected_academic_period_final_date_planned = "<?php echo $selected_academic_period_final_date_planned;?>";
-						var selected_academic_period_final_date_planned_array = selected_academic_period_final_date_planned.split("-"); 
-						var _selected_academic_period_final_date_planned_object= new Date(selected_academic_period_final_date_planned_array[0], parseInt(selected_academic_period_final_date_planned_array[1],10)-1, parseInt(selected_academic_period_final_date_planned_array[2],10), 0, 0, 0, 0); 
+						var selected_academic_period_final_date_planned_array = selected_academic_period_final_date_planned.split("-");
+						var _selected_academic_period_final_date_planned_object= new Date(selected_academic_period_final_date_planned_array[0], parseInt(selected_academic_period_final_date_planned_array[1],10)-1, parseInt(selected_academic_period_final_date_planned_array[2],10), 0, 0, 0, 0);
 						var european_format_selected_academic_period_final_date = selected_academic_period_final_date_planned_array[2] +  "-" + selected_academic_period_final_date_planned_array[1] + "-" + selected_academic_period_final_date_planned_array[0];
 
 
      					new_finalDate_planned = value;
-     					var new_finalDate_planned_array = new_finalDate_planned.split("-"); 							
+     					var new_finalDate_planned_array = new_finalDate_planned.split("-");
 							/* DEBUG:
 							console.debug("day: " + new_finalDate_planned_array[0]);
 							console.debug("month: " + new_finalDate_planned_array[1]);
 							console.debug("Year: "  + new_finalDate_planned_array[2]);
 							*/
 						var _new_finalDate_planned_object= new Date(new_finalDate_planned_array[2], parseInt(new_finalDate_planned_array[1],10)-1, parseInt(new_finalDate_planned_array[0],10), 0, 0, 0, 0);
-							
+
      					study_submodule_id = this.getAttribute("studysubmoduleid");
 
      					//console.debug("new_finalDate: " . new_finalDate);
@@ -610,15 +610,15 @@
      					if (initialDate_plannedValue != "") {
      						//console.debug("initialDate_plannedValue: " + initialDate_plannedValue);
      						//Compare dates
-							var new_initialDate_planned_array = initialDate_plannedValue.split("-"); 
-	     					var _new_initialDate_planned_object = new Date(new_initialDate_planned_array[2], parseInt(new_initialDate_planned_array[1],10)-1, parseInt(new_initialDate_planned_array[0],10), 0, 0, 0, 0); 
+							var new_initialDate_planned_array = initialDate_plannedValue.split("-");
+	     					var _new_initialDate_planned_object = new Date(new_initialDate_planned_array[2], parseInt(new_initialDate_planned_array[1],10)-1, parseInt(new_initialDate_planned_array[0],10), 0, 0, 0, 0);
 
      						//console.debug("_new_initialDate_planned_object:" + _new_initialDate_planned_object.toDateString());
      						//console.debug("_new_finalDate_planned_object:" + _new_finalDate_planned_object.toDateString());
 							if (_new_finalDate_planned_object < _new_initialDate_planned_object) {
 				            	alert("La data final és anterior a la data inicial! No podeu fer aquesta modificació");
 				            	return "";
-				            }	
+				            }
      					}
 
      					$.ajax({
@@ -672,10 +672,10 @@
 							        class_name: 'gritter-error'
 							      });
 							    }
-				             
+
 				          });
 
-				        $("#" + this.id).addClass("strong");  
+				        $("#" + this.id).addClass("strong");
 				        return value;
 				    }, {
 				        type: 'datepicker',
@@ -689,13 +689,13 @@
 				    }
 				);
 
-			
-              
+
+
 
               $("#select_class_list_classgroup_filter").select2( { width: "100%", placeholder: "Seleccioneu un grup de classe", allowClear: true });
 
-              $('#select_class_list_classgroup_filter').on("change", function(e) {  
-                  
+              $('#select_class_list_classgroup_filter').on("change", function(e) {
+
                   academic_period_id = $("#select_study_submodules_academic_period_filter").select2("val");
                   teacher_code = $("#teacher").select2("val");
                   classroom_group_id = $("#select_class_list_classgroup_filter").select2("val");
@@ -716,10 +716,10 @@
               });
 
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_study_submodules_academic_period_filter").select2();
 
-              $('#select_study_submodules_academic_period_filter').on("change", function(e) {  
+              $('#select_study_submodules_academic_period_filter').on("change", function(e) {
                   academic_period_id = $("#select_study_submodules_academic_period_filter").select2("val");
                   teacher_code = $("#teacher").select2("val");
                   classroom_group_id = $("#select_class_list_classgroup_filter").select2("val");
@@ -740,9 +740,9 @@
               });
 
 
-              $("#teacher").select2({width: 'resolve', placeholder: "Seleccioneu un professor", allowClear: true }); 
+              $("#teacher").select2({width: 'resolve', placeholder: "Seleccioneu un professor", allowClear: true });
 
-			  $('#teacher').on("change", function(e) { 
+			  $('#teacher').on("change", function(e) {
 
 			  	academic_period_id = $("#select_study_submodules_academic_period_filter").select2("val");
                 teacher_code = $("#teacher").select2("val");
@@ -767,7 +767,7 @@
                       "columnDefs": [
                                       { "type": "html", "targets": 3 }
                                     ],
-                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],                      
+                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
                               "oTableTools": {
                       "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -811,12 +811,12 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-             
-        }); 
+
+        });
 
 });
 </script>
@@ -830,11 +830,11 @@
 
                 <i class="icon-ok red"></i>
 
-                
+
                 <strong class="red">
-                  ATENCIÓ : 
+                  ATENCIÓ :
                 </strong>
-                 Podeu consultar totes les unitats formatives/unitats didàctiques del centre però només podreu modificar les unitats formatives que pertanyin a un Mòdul professional o Crèdit que impartiu. 
+                 Podeu consultar totes les unitats formatives/unitats didàctiques del centre però només podreu modificar les unitats formatives que pertanyin a un Mòdul professional o Crèdit que impartiu.
                  En el cas dels tutors, podeu modificar totes les unitats formatives del vostre grup. Els administradors poden modificar totes les UFs/UDs
               </div>
 
@@ -844,7 +844,7 @@
       <td colspan=4 style="text-align: center;"> <h4>Filtres
         </h4></td>
     </tr>
-    <tr> 
+    <tr>
        <td ><?php echo lang('study_submodules_academic_period')?>: </td>
        <td>
           <select id="select_study_submodules_academic_period_filter">
@@ -856,13 +856,13 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
@@ -876,15 +876,15 @@
 		   <?php foreach( (array) $teachers as $teacher_id => $teacher_name): ?>
 				   <?php if( $teacher_id == $default_teacher): ?>
 		            <option value="<?php echo $teacher_id; ?>" selected="selected"><?php echo $teacher_name; ?></option>
-		           <?php else: ?> 
+		           <?php else: ?>
 		            <option value="<?php echo $teacher_id; ?>" ><?php echo $teacher_name; ?></option>
-		           <?php endif; ?> 
-		   <?php endforeach; ?>	
-		  </select> 
+		           <?php endif; ?>
+		   <?php endforeach; ?>
+		  </select>
       </td>
    	</tr>
 
-    <tr> 
+    <tr>
        <td><?php echo lang('lesson_classroom_group')?>:</td>
        <td>
         <select id="select_class_list_classgroup_filter">
@@ -896,21 +896,21 @@
                     <option value="<?php echo $classgroup_key ;?>"><?php echo $classgroup_value->code . " - " .  $classgroup_value->name . " (" . $classgroup_value->id. ")";?></option>
                   <?php endif;?>
                 <?php endforeach; ?>
-        </select> 
-       </td>       
+        </select>
+       </td>
        <td><?php echo lang('lesson_course_code')?>:</td>
        <td>
        	Pendent d'implementar
         <!--<select id="select_study_submodules_course_code_filter">
           <option value=""></option>
         </select>-->
-      </td>      	
-      
+      </td>
+
     </tr>
     <tr>
-     
+
        <td><?php echo lang('lesson_study_code')?>:</td>
-       
+
        <td>
        	Pendent d'implementar
         <!--<select id="select_study_submodules_study_code_filter"><option value=""></option></select>-->
@@ -923,15 +923,15 @@
       </td>
 
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 <?php /* DEBUG
 foreach ($editable_study_submodules_ids as $value) {
  echo $value . " | " ;
 }*/
-?> 
-        
+?>
+
 <table class="table table-striped table-bordered table-hover table-condensed" id="study_submodules_table">
  <thead style="background-color: #d9edf7;">
   <tr>
@@ -949,7 +949,7 @@ foreach ($editable_study_submodules_ids as $value) {
      <th><?php echo lang('study_submodules_module')?></th>
      <th><?php echo lang('study_submodules_course')?></th>
      <th><?php echo lang('study_submodules_study')?></th>
-     <th><?php echo lang('study_submodules_order')?></th>     
+     <th><?php echo lang('study_submodules_order')?></th>
      <th><?php echo lang('study_submodules_initialDate')?></th>
      <th><?php echo lang('study_submodules_endDate')?></th>
      <th><?php echo lang('study_submodules_initialDate_planned')?></th>
@@ -957,18 +957,18 @@ foreach ($editable_study_submodules_ids as $value) {
      <th><?php echo lang('study_submodules_academic_periods_totalHours')?></th>
   </tr>
  </thead>
- <tbody> 
+ <tbody>
 
   <!-- Iteration that shows study_submodules-->
 
   <?php if (is_array($study_submodules) ) : ?>
   <?php foreach ($study_submodules as $study_submodule_key => $study_submodule) : ?>
-   <tr align="center" class="{cycle values='tr0,tr1'}">   
+   <tr align="center" class="{cycle values='tr0,tr1'}">
      <!--<td><label><input class="ace" type="checkbox" name="form-field-checkbox" id="<?php echo $study_submodule->id;?>"><span class="lbl">&nbsp;</span></label></td>-->
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_submodules/read/' . $study_submodule->id ) ;?>">
           <?php echo $study_submodule->id;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/study_submodules/edit/' . $study_submodule->id ) ;?>">
           edit
       </a>)
@@ -986,7 +986,7 @@ foreach ($editable_study_submodules_ids as $value) {
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_module/read/' . $study_submodule->module_id ) ;?>">
           <?php echo $study_submodule->module_shortname . ". " . $study_submodule->module_name ;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/study_module/edit/' . $study_submodule->module_id ) ;?>">
           <?php echo $study_submodule->module_id;?>
       </a> )
@@ -995,7 +995,7 @@ foreach ($editable_study_submodules_ids as $value) {
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/course/read/' . $study_submodule->course_id ) ;?>">
           <?php echo $study_submodule->course_shortname . ". " . $study_submodule->course_name ;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/course/edit/' . $study_submodule->course_id ) ;?>">
           <?php echo $study_submodule->course_id;?>
       </a> )
@@ -1004,7 +1004,7 @@ foreach ($editable_study_submodules_ids as $value) {
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/studies/read/' . $study_submodule->study_id ) ;?>">
           <?php echo $study_submodule->study_shortname . ". " . $study_submodule->study_name . ". " . $study_submodule->study_law_shortname . " " . $study_submodule->study_law_name ;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/studies/edit/' . $study_submodule->study_id ) ;?>">
           <?php echo $study_submodule->study_id;?>
       </a> )
@@ -1012,51 +1012,51 @@ foreach ($editable_study_submodules_ids as $value) {
 
 	 <td>
         <?php echo $study_submodule->study_submodules_order;?>
-     </td> 
+     </td>
 
      <td>
      	<?php if ( in_array( $study_submodule->id ,$editable_study_submodules_ids) ) : ?>
      		<span id="initial_date_<?php echo $study_submodule->id;?>" studysubmoduleid="<?php echo $study_submodule->id;?>"class="editable_initialDate" title="Feu click per editar la data">
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_initialDate == "0000-00-00") {
 	        		echo "";
 	        	} else {
 	        		echo date('d-m-Y', strtotime($study_submodule->study_submodule_initialDate));
 	        	}
-	        	?>        	
+	        	?>
 	        </span>
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_initialDate == "0000-00-00") {
 	        		echo '<br/><i class="icon-warning-sign red bigger-130" title="Feu click per editar la data!"></i>';
 	        	} else {
 	        		echo '<br/><i class="icon-warning-sign red bigger-130" title="Feu click per editar la data!"></i><span title="Feu click per editar la data"> Editable</span>';
 	        	}
-	        	?>      
+	        	?>
      	<?php else: ?>
-		   	<?php 
+		   	<?php
 	       	if ($study_submodule->study_submodule_initialDate == "0000-00-00") {
 	       		echo "";
 	       	} else {
 	       		echo date('d-m-Y', strtotime($study_submodule->study_submodule_initialDate));
 	       	}
-	       	?>        	
+	       	?>
      	<?php endif; ?>
-     	 
-        
+
+
      </td>
 
      <td>
      	<?php if ( in_array( $study_submodule->id ,$editable_study_submodules_ids) ) : ?>
 	     	<span id="final_date_<?php echo $study_submodule->id;?>" studysubmoduleid="<?php echo $study_submodule->id;?>"class="editable_finalDate" title="Feu click per editar la data">
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_endDate == "0000-00-00") {
 	        		echo "";
 	        	} else {
 	        		echo date('d-m-Y', strtotime($study_submodule->study_submodule_endDate));
 	        	}
-	        	?>        	
+	        	?>
 	        </span>
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_endDate == "0000-00-00") {
 	        		echo '<br/><i class="icon-warning-sign red bigger-130" title="Feu click per editar la data!"></i>';
 	        	} else {
@@ -1064,59 +1064,59 @@ foreach ($editable_study_submodules_ids as $value) {
 	        	}
 	        	?>
 	    <?php else: ?>
-		   	<?php 
+		   	<?php
 	       	if ($study_submodule->study_submodule_endDate == "0000-00-00") {
 	       		echo "";
 	       	} else {
 	       		echo date('d-m-Y', strtotime($study_submodule->study_submodule_endDate));
 	       	}
-	       	?>        	
-     	<?php endif; ?>    	
+	       	?>
+     	<?php endif; ?>
      </td>
 
      <td>
      	<?php if ( in_array( $study_submodule->id ,$editable_study_submodules_ids) ) : ?>
      		<span id="initial_date_planned_<?php echo $study_submodule->id;?>" studysubmoduleid="<?php echo $study_submodule->id;?>"class="editable_initialDate_planned" title="Feu click per editar la data">
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_initialDate_planned == "0000-00-00") {
 	        		echo "";
 	        	} else {
 	        		echo date('d-m-Y', strtotime($study_submodule->study_submodule_initialDate_planned));
 	        	}
-	        	?>        	
+	        	?>
 	        </span>
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_initialDate_planned == "0000-00-00") {
 	        		echo '<br/><i class="icon-warning-sign red bigger-130" title="Feu click per editar la data!"></i>';
 	        	} else {
 	        		echo '<br/><i class="icon-warning-sign red bigger-130" title="Feu click per editar la data!"></i><span title="Feu click per editar la data"> Editable</span>';
 	        	}
-	        	?>      
+	        	?>
      	<?php else: ?>
-		   	<?php 
+		   	<?php
 	       	if ($study_submodule->study_submodule_initialDate_planned == "0000-00-00") {
 	       		echo "";
 	       	} else {
 	       		echo date('d-m-Y', strtotime($study_submodule->study_submodule_initialDate));
 	       	}
-	       	?>        	
+	       	?>
      	<?php endif; ?>
-     	 
-        
+
+
      </td>
 
      <td>
      	<?php if ( in_array( $study_submodule->id ,$editable_study_submodules_ids) ) : ?>
 	     	<span id="final_date_planned_<?php echo $study_submodule->id;?>" studysubmoduleid="<?php echo $study_submodule->id;?>"class="editable_finalDate_planned" title="Feu click per editar la data">
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_endDate_planned == "0000-00-00") {
 	        		echo "";
 	        	} else {
 	        		echo date('d-m-Y', strtotime($study_submodule->study_submodule_endDate_planned));
 	        	}
-	        	?>        	
+	        	?>
 	        </span>
-	        	<?php 
+	        	<?php
 	        	if ($study_submodule->study_submodule_endDate_planned == "0000-00-00") {
 	        		echo '<br/><i class="icon-warning-sign red bigger-130" title="Feu click per editar la data!"></i>';
 	        	} else {
@@ -1124,21 +1124,21 @@ foreach ($editable_study_submodules_ids as $value) {
 	        	}
 	        	?>
 	    <?php else: ?>
-		   	<?php 
+		   	<?php
 	       	if ($study_submodule->study_submodule_endDate_planned == "0000-00-00") {
 	       		echo "";
 	       	} else {
 	       		echo date('d-m-Y', strtotime($study_submodule->study_submodule_endDate_planned));
 	       	}
-	       	?>        	
-     	<?php endif; ?>    	
+	       	?>
+     	<?php endif; ?>
      </td>
 
      <td>
      	<?php if ( in_array( $study_submodule->id ,$editable_study_submodules_ids) ) : ?>
 	     	<span id="total_hours_<?php echo $study_submodule->id;?>" studysubmoduleid="<?php echo $study_submodule->id;?>" class="editable_num" title="Feu click per editar la data"><?php echo $study_submodule->study_submodules_totalHours;?></span>
 	        <br/><i class="icon-warning-sign red bigger-130" title="Feu click per editar la data!"></i><span title="Feu click per editar la data">Editable</span>
-	    <?php else: ?> 
+	    <?php else: ?>
 	        <?php echo $study_submodule->study_submodules_totalHours;?>
 	    <?php endif; ?>
      </td>
@@ -1146,11 +1146,11 @@ foreach ($editable_study_submodules_ids as $value) {
   <?php endforeach; ?>
   <?php endif; ?>
  </tbody>
-</table> 
+</table>
 
 </div>
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

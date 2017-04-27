@@ -27,17 +27,17 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
 
 
 
       <script>
       $(function(){
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_study_module_academic_period_filter").select2();
 
-              $('#select_study_module_academic_period_filter').on("change", function(e) {  
+              $('#select_study_module_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_study_module_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -96,12 +96,12 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-             
-        });  
+
+        });
 
         $("#select_study_module_study_code_filter").select2({ width: 'resolve',placeholder: "Seleccioneu un estudi", allowClear: true });
         $("#select_study_module_study_code_filter").on( 'change', function () {
@@ -113,7 +113,7 @@
         all_study_modules_table.column(4).data().unique().sort().each( function ( d, j ) {
                 $("#select_study_module_study_code_filter").append( '<option value="'+d+'">'+d+'</option>' )
         } );
-        
+
         $("#select_study_module_bcourse_code_filter").select2({ width: 'resolve', placeholder: "Seleccioneu un curs", allowClear: true });
         $("#select_study_module_bcourse_code_filter").on( 'change', function () {
             var val = $(this).val();
@@ -136,8 +136,8 @@
       <td colspan="13" style="text-align: center;"> <h4>Filtres per columnes
         </h4></td>
     </tr>
-    <tr> 
-       <td><?php echo lang('study_module_academic_period')?>: 
+    <tr>
+       <td><?php echo lang('study_module_academic_period')?>:
           <select id="select_study_module_academic_period_filter">
           <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
 
@@ -147,13 +147,13 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
@@ -162,8 +162,8 @@
        <td><?php echo lang('study_module_study_code')?>: <select id="select_study_module_study_code_filter"><option value=""></option></select></td>
        <td><?php echo lang('study_module_bcourse_code')?>: <select id="select_study_module_bcourse_code_filter"><option value=""></option></select></td>
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_study_modules">
  <thead style="background-color: #d9edf7;">
@@ -174,7 +174,7 @@
       </a>
       </h4></td>
   </tr>
-  <tr> 
+  <tr>
      <th><?php echo lang('study_module_id')?></th>
      <th><?php echo lang('study_module_code')?></th>
      <th><?php echo lang('study_module_shortname')?></th>
@@ -191,31 +191,31 @@
      <th><?php echo lang('study_module_subtype')?></th>
   </tr>
  </thead>
- <tbody> 
+ <tbody>
 
   <!-- Iteration that shows study_modules-->
   <?php if (is_array($all_studymodules)): ?>
   <?php foreach ($all_studymodules as $study_module_key => $study_module) : ?>
-   <tr align="center" class="{cycle values='tr0,tr1'}">   
+   <tr align="center" class="{cycle values='tr0,tr1'}">
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_module/edit/' . $study_module->id ) ;?>">
           <?php echo $study_module->id;?>
-      </a> 
+      </a>
      </td>
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ;?>">
           <?php echo $study_module->code;?>
-      </a> 
+      </a>
      </td>
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ;?>">
           <?php echo $study_module->shortname;?>
-      </a> 
+      </a>
      </td>
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/study_module/read/' . $study_module->id ) ;?>">
           <?php echo $study_module->name;?>
-      </a> 
+      </a>
      </td>
 
      <td>
@@ -227,9 +227,9 @@
               echo "";
           }
         ?>
-        
+
      </td>
-     
+
      <td>
           <?php
 
@@ -240,14 +240,14 @@
           } else {
               echo "";
           }
-          
+
 
 
           ?>
      </td>
-     
+
      <td>
-          <?php 
+          <?php
 
           $num_courses = count($study_module->courses);
           $i=1;
@@ -263,12 +263,12 @@
      </td>
 
      <td>
-          <?php 
+          <?php
 
           $num_courses = count($study_module->courses);
           $i=1;
           foreach ($study_module->courses as $course_key => $course) {
-            echo "<a href=\"" . base_url('/index.php/curriculum/course/read/' . $course->id ) . "\">" . 
+            echo "<a href=\"" . base_url('/index.php/curriculum/course/read/' . $course->id ) . "\">" .
             $course->shortname . ". " . $course->name . "</a>" .
             " ( <a href=\" " . base_url('/index.php/curriculum/course/edit/' . $course->id ) . "\">" . $course->id . "</a> )";
             if ($i < $num_courses) {
@@ -284,7 +284,7 @@
      <td>
       <?php echo $study_module->study_module_hoursPerWeek;?>
     </td>
-    
+
     <td>
       <?php echo $study_module->study_module_order;?>
     </td>
@@ -312,11 +312,11 @@
    <?php endforeach; ?>
   <?php endif; ?>
  </tbody>
-</table> 
+</table>
 
 </div>
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

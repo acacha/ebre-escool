@@ -25,11 +25,11 @@
                 </h1>
 </div><!-- /.page-header -->
 
-	  
+
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
       <!--
       <div class="alert alert-block alert-success">
         <button type="button" class="close" data-dismiss="alert">
@@ -45,10 +45,10 @@
       <script>
       $(function(){
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_teacher_academic_period_filter").select2();
 
-              $('#select_teacher_academic_period_filter').on("change", function(e) {  
+              $('#select_teacher_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_teacher_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -77,8 +77,8 @@
       <td colspan="13" style="text-align: center;"> <h5>Seleccioneu el periode acadèmic
         </h5></td>
     </tr>
-    <tr> 
-       <td><?php echo lang('teacher_academic_period')?>: 
+    <tr>
+       <td><?php echo lang('teacher_academic_period')?>:
           <select id="select_teacher_academic_period_filter">
           <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
 
@@ -90,13 +90,13 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
@@ -107,13 +107,13 @@
            </a>
        </td>
     </tr>
-  </thead>  
-</table>    
+  </thead>
+</table>
 
 </div>
 
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

@@ -1,13 +1,13 @@
 
- 
+
 <div class="main-content">
 <?php
   if(isset($_GET['lock'])){
     bloquea($_GET ['lock']);
-   
+
   }elseif(isset($_GET['unlock'])){
     desbloquea($_GET['unlock']);
-   
+
   }
   ?>
 <div id="breadcrumbs" class="breadcrumbs">
@@ -21,7 +21,7 @@
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="http://localhost/ebre-escool/">
+            <a href="https://localhost/ebre-escool/">
 
                 Home
 
@@ -31,7 +31,7 @@
             </span>
         </li>
         <li class="">
-            <a href="http://localhost/ebre-escool/index.php/blockclass/lock_unlock">
+            <a href="https://localhost/ebre-escool/index.php/blockclass/lock_unlock">
 
                 Bloquear aulas
 
@@ -43,7 +43,7 @@
 
     <div class="page-header position-relative">
         <h1>
-            <a href="http://localhost/ebre-escool/index.php/blockclass/prueba">
+            <a href="https://localhost/ebre-escool/index.php/blockclass/prueba">
 
                Bloquear/Desbloquear aulas
 
@@ -59,7 +59,7 @@
    </div>
   <div class="well well-lg"><h4 class="blue">Desbloquear Aulas</h4>
            <?php echo $unlock; ?>
-  </div>        
+  </div>
   <div class="well well-lg"><h4 class="blue">Estado del Firewall</h4>
            <?php $msg=message(); ?>
            <button class="btn disabled btn-yellow">
@@ -69,10 +69,8 @@
 
   </div>
 
-    
-    		
-</div>
-</div>
-</div>
 
 
+</div>
+</div>
+</div>

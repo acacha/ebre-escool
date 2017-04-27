@@ -6,24 +6,24 @@
  * @package    	Ebre-escool inventory model
  * @author     	Sergi Tur <sergiturbadenas@gmail.com>
  * @version    	1.0
- * @link		http://www.acacha.com/index.php/ebre-escool
+ * @link		https://www.acacha.com/index.php/ebre-escool
  */
 class inventory_Model  extends CI_Model  {
-	
+
 	function __construct()
     {
         parent::__construct();
         $this->load->database();
     }
-    
+
     function get_primary_key($table_name) {
 		$fields = $this->db->field_data($table_name);
-		
+
 		foreach ($fields as $field)	{
 			if ($field->primary_key) {
 					return $field->name;
 			}
-		} 	
+		}
 		return false;
 	}
 
@@ -33,7 +33,7 @@ class inventory_Model  extends CI_Model  {
 			$primary_key_field_name=$this->get_primary_key($table_name);
 		else
 			$primary_key_field_name=$primary_key;
-		
+
 		$this->db->select($primary_key_field_name);
 		$this->db->order_by($primary_key_field_name, "desc");
 		$this->db->where("markedForDeletion", "n");
@@ -42,24 +42,24 @@ class inventory_Model  extends CI_Model  {
 			return $query->row()->$primary_key_field_name;
 		return false;
 	}
-    
+
     function get_dropdown_values($table_name,$field_name,$primary_key=null,$order_by="asc") {
-		
+
 		$primary_key_field_name;
 		if ($primary_key==null)
 			$primary_key_field_name=$this->get_primary_key($table_name);
 		else
 			$primary_key_field_name=$primary_key;
-		
+
 		$this->db->select("$primary_key_field_name,$field_name");
-		$this->db->order_by($field_name, $order_by); 
-		$this->db->where("markedForDeletion", "n"); 
+		$this->db->order_by($field_name, $order_by);
+		$this->db->where("markedForDeletion", "n");
 		$query = $this->db->get($table_name);
 		if ($query->num_rows() != 0)
 			return $query->result();
 		return false;
 	}
-    
+
     function user_have_preferences ($userid) {
 		$this->db->where('userId',$userid);
 		$query = $this->db->get('user_preferences');
@@ -67,7 +67,7 @@ class inventory_Model  extends CI_Model  {
 			return true;
 		return false;
 	}
-	
+
 	function get_user_preferencesId ($userid) {
 		$this->db->select('user_preferencesId');
 		$this->db->where('userId',$userid);
@@ -77,7 +77,7 @@ class inventory_Model  extends CI_Model  {
 		else
 			return false;
 	}
-	
+
 	function get_user_theme($userid){
 		$this->db->select('theme');
 		$this->db->where('userId',$userid);
@@ -87,7 +87,7 @@ class inventory_Model  extends CI_Model  {
 		else
 			return false;
 	}
-	
+
 	function get_user_dialogforms($userid){
 		$this->db->select('dialogforms');
 		$this->db->where('userId',$userid);
@@ -97,14 +97,14 @@ class inventory_Model  extends CI_Model  {
 		else
 			return false;
 	}
-	
+
 	function get_user_theme_by_username($username){
 		$userid="TODO";
 		return $this->get_user_theme($userid);
 	}
-	
+
 	function get_organizational_units(){
-		
+
 		$this->db->select('organizational_unitId, name');
 		$query = $this->db->get('organizational_unit');
 		return $query->result_array();
@@ -114,14 +114,14 @@ class inventory_Model  extends CI_Model  {
 		$this->db->select('organizational_unit_Id, organizational_unit_name');
 		$this->db->order_by("organizational_unit_name", "asc");
 		$query = $this->db->get('organizational_unit');
-		
+
 		$organizational_units_array = array();
 
 		foreach ($query->result_array() as $row)	{
    			$organizational_units_array[$row['organizational_unit_Id']] = $row['organizational_unit_name'];
 		}
 		return $organizational_units_array;
-	}	
+	}
 
 /*
 `inventory_objectId` int(11) NOT NULL AUTO_INCREMENT,
@@ -170,7 +170,7 @@ class inventory_Model  extends CI_Model  {
       <td style="font-size:x-small;" field-name="inventory_object_quantityInStock"><?php echo $inventory_object->inventory_object_quantityInStock;?></td>
       <td style="font-size:x-small;" field-name="inventory_object_price"><?php echo $inventory_object->inventory_object_price;?></td>
       <td style="font-size:x-small;" field-name="inventory_object_preservationState"><?php echo $inventory_object->inventory_object_preservationState;?></td>
-      <td style="font-size:x-small;" field-name="inventory_object_file_url"><?php echo $inventory_object->inventory_object_file_url;?></td>      
+      <td style="font-size:x-small;" field-name="inventory_object_file_url"><?php echo $inventory_object->inventory_object_file_url;?></td>
       <td style="font-size:x-small;" field-name="inventory_object_entryDate"><?php echo $inventory_object->inventory_object_entryDate;?></td>
       <td style="font-size:x-small;" field-name="inventory_object_manualEntryDate"><?php echo $inventory_object->inventory_object_manualEntryDate;?></td>
       <td style="font-size:x-small;" field-name="inventory_object_markedForDeletion"><?php echo $inventory_object->inventory_object_markedForDeletion;?></td>
@@ -212,7 +212,7 @@ class inventory_Model  extends CI_Model  {
 			$row->lastupdateUser = $this->getUserNameByUserId($row->inventory_object_lastupdateUserId);
 			$all_inventory_objects_array[$row->inventory_objectId] = $row;
 		}
-		
+
 		return $all_inventory_objects_array;
 	}
 
@@ -226,7 +226,7 @@ class inventory_Model  extends CI_Model  {
 		if ($query->num_rows() == 1) {
 			$row = $query->row();
 			return $row->organizational_unit_name;
-		}			
+		}
 		else {
 			return "";
 		}
@@ -249,12 +249,12 @@ class inventory_Model  extends CI_Model  {
 
 	}
 
-	function getUserNameByUserId($userid) {	
+	function getUserNameByUserId($userid) {
 		$username = "";
 
 		$this->db->select('username');
 		$this->db->from('users');
-		$this->db->where('id', $userid); 
+		$this->db->where('id', $userid);
 
 		$row = $this->db->get()->row();
 
@@ -263,9 +263,9 @@ class inventory_Model  extends CI_Model  {
 
 	function getAllProviders() {
 		$this->db->select('provider_id, provider_shortName');
-		$this->db->order_by("provider_shortName", "asc"); 
+		$this->db->order_by("provider_shortName", "asc");
 		$query = $this->db->get('provider');
-		
+
 		$providers_array = array();
 
 		foreach ($query->result_array() as $row)	{
@@ -276,9 +276,9 @@ class inventory_Model  extends CI_Model  {
 
 	function getAllProvidersByOrganizationalUnit($organizational_unit_id) {
 		$this->db->select('provider_id, provider_shortName');
-		$this->db->order_by("provider_shortName", "asc"); 
+		$this->db->order_by("provider_shortName", "asc");
 		$query = $this->db->get('provider');
-		
+
 		$providers_array = array();
 
 		foreach ($query->result_array() as $row)	{
@@ -290,7 +290,7 @@ class inventory_Model  extends CI_Model  {
 
 	function getAllLocations() {
 		$this->db->select('location_id, location_shortName');
-		$this->db->order_by("location_shortName", "asc"); 
+		$this->db->order_by("location_shortName", "asc");
 		$query = $this->db->get('location');
 
 		$locations_array = array();
@@ -305,7 +305,7 @@ class inventory_Model  extends CI_Model  {
 		$this->db->select('material_id, material_shortName');
 		$this->db->order_by("material_shortName", "asc");
 		$query = $this->db->get('material');
-		
+
 		$materials_array = array();
 
 		foreach ($query->result_array() as $row)	{
@@ -318,7 +318,7 @@ class inventory_Model  extends CI_Model  {
 		$this->db->select('brand_id, brand_shortName');
 		$this->db->order_by("brand_shortName", "asc");
 		$query = $this->db->get('brand');
-		
+
 		$brands_array = array();
 
 		foreach ($query->result_array() as $row)	{
@@ -331,7 +331,7 @@ class inventory_Model  extends CI_Model  {
 		$this->db->select('model_id, model_shortName');
 		$this->db->order_by("model_shortName", "asc");
 		$query = $this->db->get('model');
-		
+
 		$models_array = array();
 
 		foreach ($query->result_array() as $row)	{
@@ -344,7 +344,7 @@ class inventory_Model  extends CI_Model  {
 		$this->db->select('id, first_name, last_name');
 		$this->db->order_by("first_name", "asc");
 		$query = $this->db->get('users');
-		
+
 		$users_array = array();
 
 		foreach ($query->result_array() as $row)	{
@@ -357,7 +357,7 @@ class inventory_Model  extends CI_Model  {
 		$this->db->select('moneySource_id, moneySource_shortName');
 		$this->db->order_by("moneySource_shortName", "asc");
 		$query = $this->db->get('moneySource');
-		
+
 		$money_sources_array = array();
 
 		foreach ($query->result_array() as $row)	{
@@ -365,17 +365,17 @@ class inventory_Model  extends CI_Model  {
 		}
 		return $money_sources_array;
 	}
-	
+
 	function get_main_organizational_unit_from_userid($userid){
-		
+
 		$this->db->select('mainOrganizationaUnitId');
 		$this->db->where('id',$userid);
 		$query = $this->db->get('users');
 		return $query->row()->mainOrganizationaUnitId;
 	}
-	
+
 	function get_main_organizational_unit_name_from_userid($userid){
-		
+
 		$unitid=$this->get_main_organizational_unit_from_userid($userid);
 		$this->db->select('name');
 		$this->db->where('organizational_unitId',$unitid);
@@ -386,7 +386,7 @@ class inventory_Model  extends CI_Model  {
 			return "";
 
 	}
-	
+
 	function get_username_from_userid($userid){
 		$this->db->select('username');
 		$this->db->where('id',$userid);
@@ -397,7 +397,7 @@ class inventory_Model  extends CI_Model  {
 			return "";
 
 	}
-	
+
 
 	function get_externalIdInfoByInventoryObjectId($inventory_objectid)	{
 		$this->db->select('inventory_object_externalID,inventory_object_externalIDType');
@@ -409,7 +409,7 @@ class inventory_Model  extends CI_Model  {
 		else
 			return false;
 	}
-	
+
 	function get_barcodetype_byExternalIDTypeID($externalIDTypeID)	{
 		//Shortname is barcodetype (php-barcode format)
 		$this->db->select('barcode.barcode_shortname');
@@ -423,5 +423,5 @@ class inventory_Model  extends CI_Model  {
 		else
 			return false;
 	}
-	
+
 }

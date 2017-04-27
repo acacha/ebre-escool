@@ -4,7 +4,7 @@ include "application/third_party/skeleton/application/controllers/skeleton_main.
 
 
 class teachers extends skeleton_main {
-	
+
 	public $body_header_view ='include/ebre_escool_body_header.php' ;
 
     public $body_header_lang_file ='ebre_escool_body_header' ;
@@ -16,16 +16,16 @@ class teachers extends skeleton_main {
 	function __construct()
     {
         parent::__construct();
-        
+
         //GROCERY CRUD
 		    $this->load->add_package_path(APPPATH.'third_party/grocery-crud/application/');
         $this->load->library('grocery_CRUD');
         $this->load->add_package_path(APPPATH.'third_party/image-crud/application/');
-    		$this->load->library('image_CRUD');  
+    		$this->load->library('image_CRUD');
 
-        // Load FPDF        
+        // Load FPDF
         $this->load->add_package_path(APPPATH.'third_party/fpdf-codeigniter/application/');
-        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');        
+        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');
         $this->load->library('pdf',$params); // Load library
 
 		    /* Set language */
@@ -33,7 +33,7 @@ class teachers extends skeleton_main {
 		    if ($current_language == "") {
 		      $current_language= $this->config->item('default_language');
 		    }
-		    $this->lang->load('teachers', $current_language);	       
+		    $this->lang->load('teachers', $current_language);
 
         //LANGUAGE HELPER:
         $this->load->helper('language');
@@ -44,14 +44,14 @@ class teachers extends skeleton_main {
         $active_menu = $menu;
 
         //CSS URLS
-        $jquery_ui_css_url = "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
-        $jquery_ui_editable_css_url = "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
-        $select2_css_url = "http://cdn.jsdelivr.net/select2/3.4.5/select2.css";
+        $jquery_ui_css_url = "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
+        $jquery_ui_editable_css_url = "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
+        $select2_css_url = "https://cdn.jsdelivr.net/select2/3.4.5/select2.css";
         //JS URLS
-        $jquery_url= "http://code.jquery.com/jquery-1.9.1.js";
-        $jquery_ui_url= "http://code.jquery.com/ui/1.10.3/jquery-ui.js";
-        $select2_url= "http://cdn.jsdelivr.net/select2/3.4.5/select2.js";
-        $jquery_ui_editable_url= "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
+        $jquery_url= "https://code.jquery.com/jquery-1.9.1.js";
+        $jquery_ui_url= "https://code.jquery.com/ui/1.10.3/jquery-ui.js";
+        $select2_url= "https://cdn.jsdelivr.net/select2/3.4.5/select2.js";
+        $jquery_ui_editable_url= "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
 
         if (defined('ENVIRONMENT') && ENVIRONMENT=="development") {
             $jquery_ui_css_url = base_url('assets/css/jquery-ui.css');
@@ -75,7 +75,7 @@ class teachers extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css'));  
+            base_url('assets/css/datepicker.css'));
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
@@ -83,9 +83,9 @@ class teachers extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/tribal-timetable.css')); 
+            base_url('assets/css/tribal-timetable.css'));
 
-        
+
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/css/bootstrap-switch.min.css'));
@@ -93,7 +93,7 @@ class teachers extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/bootstrap.min.extracolours.css')); 
+            base_url('assets/css/bootstrap.min.extracolours.css'));
 
 //ACE
         $header_data= $this->add_css_to_html_header_data(
@@ -116,15 +116,15 @@ class teachers extends skeleton_main {
             $header_data,
             base_url('assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css'));
 
-/*        
+/*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));        
+            base_url('assets/css/no_padding_top.css'));
 
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/chosen.min.css'));        
+            base_url('assets/css/chosen.min.css'));
 */
         //JS Already load at skeleton main!!!
         $header_data= $this->add_javascript_to_html_header_data(
@@ -133,7 +133,7 @@ class teachers extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            $jquery_ui_url);    
+            $jquery_ui_url);
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -168,7 +168,7 @@ class teachers extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/bootstrap-collapse.js'));                
+            base_url('assets/js/bootstrap-collapse.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -178,7 +178,7 @@ class teachers extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/tribal-shared.js'));        
+            base_url('assets/js/tribal-shared.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -200,7 +200,7 @@ class teachers extends skeleton_main {
                     $header_data,
                     base_url('assets/js/bootstrap-switch.min.js'));
 
- //ACE        
+ //ACE
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace-extra.min.js'));
@@ -210,7 +210,7 @@ class teachers extends skeleton_main {
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace.min.js'));
-                    
+
 /*
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
@@ -225,8 +225,8 @@ class teachers extends skeleton_main {
                     base_url('assets/js/ebre-escool.js'));
 
         $header_data['menu']= $active_menu;
-        return $header_data; 
-        
+        return $header_data;
+
     }
 
     public function report_teachers_list($academic_period_id = null) {
@@ -261,14 +261,14 @@ class teachers extends skeleton_main {
 
         if ($academic_period_id == null) {
             $database_current_academic_period =  $this->teachers_model->get_current_academic_period();
-            
+
             if ($database_current_academic_period->id) {
                 $current_academic_period_id = $database_current_academic_period->id;
             } else {
-                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');  
+                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
             }
-            
-            $academic_period_id=$current_academic_period_id ;   
+
+            $academic_period_id=$current_academic_period_id ;
         }
 
         $academic_periods = $this->teachers_model->get_all_academic_periods();
@@ -280,9 +280,9 @@ class teachers extends skeleton_main {
         $data['academic_periods'] = $academic_periods;
         $data['selected_academic_period_id'] = $academic_period_id;
 
-        $this->load->view('report_teachers_list.php',$data);     
+        $this->load->view('report_teachers_list.php',$data);
 
-        $this->_load_body_footer(); 
+        $this->_load_body_footer();
 
 
     }
@@ -333,7 +333,7 @@ class teachers extends skeleton_main {
         $active_menu['menu']='#reports';
         $active_menu['submenu1']='#teachers_reports';
         $active_menu['submenu2']='#teachers_sheet_report';
-        
+
         $this->load->model('teachers_model');
 
         if ($academic_period_id==null) {
@@ -398,7 +398,7 @@ class teachers extends skeleton_main {
 
 
         $count = count($professor);
-     
+
 
         //Crido la classe
         $pdf = new FPDF('P', 'mm', 'A4','font/');
@@ -406,7 +406,7 @@ class teachers extends skeleton_main {
         $pdf->SetMargins(10,10,10);
         //Obro una pàgina
         $pdf->AddPage();
-                //$pdf->Image($jpeg_file_cons[0],166,222,10);        
+                //$pdf->Image($jpeg_file_cons[0],166,222,10);
         //$pdf->AddPage("P","A3");
         //Es la posicio exacta on comença a escriure
         $x=7;//10
@@ -419,7 +419,7 @@ class teachers extends skeleton_main {
         $pdf->SetFont('Arial','B',15);
         //$pdf->Cell(Amplada, altura, text, marc, on es comença a escriure després, alineació)
         $pdf->SetXY(10,10);
-       
+
         $pdf->Cell(190,6,"PROFESSORAT ".$academic_period->shortname,0,0,'C');
         $y=$y+6;
 
@@ -433,7 +433,7 @@ class teachers extends skeleton_main {
 
         //Paràmetres de tamany de les fotos, $xx indica l'amplada de la foto, $yy indica
         //l'altura de cada camp del professor, l'altura de la foto es 3 vegades aquest valor
-        //En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files  
+        //En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files
         $xx=11;//10//Amplada horitzontal de cada professor es tocada segons el nombre de professors que hi haguin
 
         //Sergi Tur
@@ -446,7 +446,7 @@ class teachers extends skeleton_main {
         $yy=4.75;
 
         //Amb aquestes fòrmules defineixo les coordenades de cada camp de cada professor
-        //Fòrmula: posició inicial de x/y * columna * camps de cada professor 
+        //Fòrmula: posició inicial de x/y * columna * camps de cada professor
 
         //Ampla de la columna amb el nom i cognoms del professor
         $x_name=12;
@@ -468,7 +468,7 @@ class teachers extends skeleton_main {
 
         //Imprimeixo sempre els conserges i secretàries en una posició fixa el primer cop
         //TODO: Obtenir les dades de les carpetes personal de Gosa:
-                
+
         //Posició inicial conserges:
 
             $initial_x_personal=166;
@@ -485,11 +485,11 @@ class teachers extends skeleton_main {
 
                 $pdf->SetFont('Arial','B',6);
                 $pdf->SetTextColor(255,0,0);
-                
+
                 $pdf->Text($x+22,$y,utf8_decode($professor[$j]['code']));
-                
+
                 $pdf->SetFont('Arial','',4);
-                $pdf->SetTextColor(0,0,0);      
+                $pdf->SetTextColor(0,0,0);
                 $pdf->Text($x+44,$y,utf8_decode($professor[$j]['carrec_line1']));
                 $pdf->Text($x+44,$y1-1,utf8_decode($professor[$j]['carrec_line2']));
                 $pdf->Text($x+22,$y1-1,utf8_decode($professor[$j]['name']));
@@ -497,8 +497,8 @@ class teachers extends skeleton_main {
                 $pdf->Text($x+44,$y2-2,utf8_decode($professor[$j]['carrec_line3']));
                 $pdf->Text($x+22,$y+11,utf8_decode($professor[$j]['sn2']));
                 $pdf->Text($x+44,$y+11,utf8_decode($professor[$j]['carrec_line4']));
-                //$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);                
-                $pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);                
+                //$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);
+                $pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);
             //incremento la fila
             $row++;
             //incremento el marge
@@ -509,7 +509,7 @@ class teachers extends skeleton_main {
             $y1=$y_start+$i+$row*$yy*3+$yy;
             $y2=$y_start+$i+$row*$yy*3+$yy*2;
 
-            //màxim de files per pàgina 
+            //màxim de files per pàgina
             if($row>17){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
                 //incremento la columna
                 $col++;
@@ -517,10 +517,10 @@ class teachers extends skeleton_main {
                 $row=0;
                 $i=0;
                 //Recàlculo les coordenades
-                $x=$x_start+$col*($xx+$x_name+$x_post)-22;   
+                $x=$x_start+$col*($xx+$x_name+$x_post)-22;
                 $x1=$x_start+$col*($xx+$x_name+$x_post)+$x_name;
                 $x2=$x_start+$col*($xx+$x_name+$x_post)+$x_name+$x_post;
-                
+
                 $y=$y_start+$i+$row*$yy*3;
                 $y1=$y_start+$i+$row*$yy*3+$yy;
                 $y2=$y_start+$i+$row*$yy*3+$yy*2;
@@ -548,7 +548,7 @@ class teachers extends skeleton_main {
         //enviem tot al pdf
         $pdf->Output("Professorat_".$academic_period->shortname."_(".date("d-m-Y").").pdf", "I");
 
-        
+
 //    }
 
     }
@@ -584,20 +584,20 @@ class teachers extends skeleton_main {
         $data['classgroup_table_title'] = "Tutors dels grups de classe";
 
         $selected_academic_period_id = false;
-        
+
 
         $current_academic_period_id = null;
 
         if ($academic_period_id == null) {
             $database_current_academic_period =  $this->teachers_model->get_current_academic_period();
-            
+
             if ($database_current_academic_period->id) {
                 $current_academic_period_id = $database_current_academic_period->id;
             } else {
-                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');  
+                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
             }
-            
-            $academic_period_id=$current_academic_period_id ;   
+
+            $academic_period_id=$current_academic_period_id ;
         } else {
             $selected_academic_period_id = $academic_period_id;
         }
@@ -609,11 +609,11 @@ class teachers extends skeleton_main {
         $data['academic_periods'] = $academic_periods;
         $data['selected_academic_period_id'] = $selected_academic_period_id;
 
-        $this->load->view('llistat_grup_tutor.php',$data);     
+        $this->load->view('llistat_grup_tutor.php',$data);
 
-        $this->_load_body_footer();     
+        $this->_load_body_footer();
 
-    }     
+    }
 
     public function teachers_by_academic_period($department_id = "") {
 
@@ -621,36 +621,36 @@ class teachers extends skeleton_main {
         MIGRATION SCRIPT:
         INSERT INTO teacher_academic_periods (`teacher_academic_periods_teacher_id`,`teacher_academic_periods_academic_period_id`,`teacher_academic_periods_code`,`teacher_academic_periods_department_id`,`teacher_academic_periods_charge_full`,`teacher_academic_periods_charge_short`,`teacher_academic_periods_charge2_full`,`teacher_academic_periods_charge2_short`,`teacher_academic_periods_charge_sheet_line1`,`teacher_academic_periods_charge_sheet_line2`,`teacher_academic_periods_charge_sheet_line3`,`teacher_academic_periods_charge_sheet_line4`,`teacher_academic_periods_entryDate`,`teacher_academic_periods_creationUserId`,`teacher_academic_periods_lastupdateUserId`)
         SELECT `teacher_id`,5,`teacher_code`,`teacher_department_id`,`teacher_charge_full`,`teacher_charge_short`,`teacher_charge2_full`,`teacher_charge2_short`,`teacher_charge_sheet_line1`,`teacher_charge_sheet_line2`,`teacher_charge_sheet_line3`,`teacher_charge_sheet_line4`,"2011-09-19 00:00:00",2,2
-        FROM teacher; 
+        FROM teacher;
         */
-    
+
         $active_menu = array();
         $active_menu['menu']='#maintenances';
         $active_menu['submenu1']='#persons';
         $active_menu['submenu2']='#teachers_by_academic_period';
 
-        $this->check_logged_user(); 
+        $this->check_logged_user();
 
         /* Ace */
-        $header_data= $this->load_ace_files($active_menu);  
+        $header_data= $this->load_ace_files($active_menu);
 
-        /* Grocery Crud */ 
+        /* Grocery Crud */
         $this->current_table="teacher_academic_periods";
         $this->grocery_crud->set_table($this->current_table);
-            
-        $this->session->set_flashdata('table_name', $this->current_table); 
-        
+
+        $this->session->set_flashdata('table_name', $this->current_table);
+
         //Establish subject:
         $this->grocery_crud->set_subject(lang('teachers_by_academic_period'));
 
         $this->common_callbacks($this->current_table);
-            
+
         //SPECIFIC COLUMNS
         $this->grocery_crud->display_as($this->current_table.'_id',lang($this->current_table.'_academic_period_id'));
         $this->grocery_crud->display_as($this->current_table.'_teacher_id',lang($this->current_table.'_teacher_id'));
         $this->grocery_crud->display_as($this->current_table.'_academic_period_id',lang($this->current_table.'_academic_period_id'));
-        $this->grocery_crud->display_as($this->current_table.'_code',lang($this->current_table.'_code'));  
-        $this->grocery_crud->display_as($this->current_table.'_department_id',lang($this->current_table.'_department_id'));   
+        $this->grocery_crud->display_as($this->current_table.'_code',lang($this->current_table.'_code'));
+        $this->grocery_crud->display_as($this->current_table.'_department_id',lang($this->current_table.'_department_id'));
         $this->grocery_crud->display_as($this->current_table.'_charge_full',lang($this->current_table.'_charge_full'));
         $this->grocery_crud->display_as($this->current_table.'_charge_short',lang($this->current_table.'_charge_short'));
         $this->grocery_crud->display_as($this->current_table.'_charge2_full',lang($this->current_table.'_charge2_full'));
@@ -660,23 +660,23 @@ class teachers extends skeleton_main {
         $this->grocery_crud->display_as($this->current_table.'_charge_sheet_line3',lang($this->current_table.'_charge_sheet_line3'));
         $this->grocery_crud->display_as($this->current_table.'_charge_sheet_line4',lang($this->current_table.'_charge_sheet_line4'));
 
-        $this->grocery_crud->display_as($this->current_table.'_entryDate',lang('entryDate'));        
+        $this->grocery_crud->display_as($this->current_table.'_entryDate',lang('entryDate'));
         $this->grocery_crud->display_as($this->current_table.'_last_update',lang('last_update'));
         $this->grocery_crud->display_as($this->current_table.'_creationUserId',lang('creationUserId'));
-        $this->grocery_crud->display_as($this->current_table.'_lastupdateUserId',lang('lastupdateUserId'));          
-        $this->grocery_crud->display_as($this->current_table.'_markedForDeletion',lang('markedForDeletion'));   
-        $this->grocery_crud->display_as($this->current_table.'_markedForDeletionDate',lang('markedForDeletionDate')); 
+        $this->grocery_crud->display_as($this->current_table.'_lastupdateUserId',lang('lastupdateUserId'));
+        $this->grocery_crud->display_as($this->current_table.'_markedForDeletion',lang('markedForDeletion'));
+        $this->grocery_crud->display_as($this->current_table.'_markedForDeletionDate',lang('markedForDeletionDate'));
 
         //RELATIONS
-        $this->grocery_crud->set_relation($this->current_table.'_department_id','department','{department_shortname}');   
-        $this->grocery_crud->set_relation($this->current_table.'_academic_period_id','academic_periods','{academic_periods_shortname}');   
+        $this->grocery_crud->set_relation($this->current_table.'_department_id','department','{department_shortname}');
+        $this->grocery_crud->set_relation($this->current_table.'_academic_period_id','academic_periods','{academic_periods_shortname}');
 
         //UPDATE AUTOMATIC FIELDS
         $this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
         $this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-            
+
         $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-            
+
         $this->userCreation_userModification($this->current_table);
 
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId',$this->current_table.'_lastupdateUserId');
@@ -685,15 +685,15 @@ class teachers extends skeleton_main {
 
         $teachers_by_department = $this->session->flashdata('teachers_by_department');
         $this->session->keep_flashdata('teachers_by_department');
-        
+
         if ( is_array($teachers_by_department) && $department_id != "" ) {
             $teachers = $teachers_by_department[$department_id];
             foreach ($teachers as $condition) {
                 $this->grocery_crud->or_where($this->current_table.'_id',$condition);
-            }            
+            }
         }
 
-        $this->renderitzar($this->current_table,$header_data); 
+        $this->renderitzar($this->current_table,$header_data);
 
 
             //$this->grocery_crud->set_rules('person_official_id',lang('person_official_id'),'callback_valida_nif_cif_nie['.$this->input->post('person_official_id_type').']');
@@ -707,51 +707,51 @@ class teachers extends skeleton_main {
         MIGRATION SCRIPT:
         INSERT INTO teacher_academic_periods (`teacher_academic_periods_teacher_id`,`teacher_academic_periods_academic_period_id`,`teacher_academic_periods_code`,`teacher_academic_periods_department_id`,`teacher_academic_periods_charge_full`,`teacher_academic_periods_charge_short`,`teacher_academic_periods_charge2_full`,`teacher_academic_periods_charge2_short`,`teacher_academic_periods_charge_sheet_line1`,`teacher_academic_periods_charge_sheet_line2`,`teacher_academic_periods_charge_sheet_line3`,`teacher_academic_periods_charge_sheet_line4`,`teacher_academic_periods_entryDate`,`teacher_academic_periods_creationUserId`,`teacher_academic_periods_lastupdateUserId`)
         SELECT `teacher_id`,5,`teacher_code`,`teacher_department_id`,`teacher_charge_full`,`teacher_charge_short`,`teacher_charge2_full`,`teacher_charge2_short`,`teacher_charge_sheet_line1`,`teacher_charge_sheet_line2`,`teacher_charge_sheet_line3`,`teacher_charge_sheet_line4`,"2011-09-19 00:00:00",2,2
-        FROM teacher; 
+        FROM teacher;
         */
-    
+
         $active_menu = array();
         $active_menu['menu']='#maintenances';
         $active_menu['submenu1']='#persons';
         $active_menu['submenu2']='#teachers';
 
-        $this->check_logged_user(); 
+        $this->check_logged_user();
 
         /* Ace */
-        $header_data= $this->load_ace_files($active_menu);  
+        $header_data= $this->load_ace_files($active_menu);
 
-        /* Grocery Crud */ 
+        /* Grocery Crud */
         $this->current_table="teacher";
         $this->grocery_crud->set_table($this->current_table);
-            
-        $this->session->set_flashdata('table_name', $this->current_table); 
-        
+
+        $this->session->set_flashdata('table_name', $this->current_table);
+
         //Establish subject:
         $this->grocery_crud->set_subject(lang('teacher'));
 
         $this->common_callbacks($this->current_table);
-            
+
         //SPECIFIC COLUMNS
-        $this->grocery_crud->display_as($this->current_table.'_person_id',lang($this->current_table.'_person_id'));          
+        $this->grocery_crud->display_as($this->current_table.'_person_id',lang($this->current_table.'_person_id'));
         $this->grocery_crud->display_as($this->current_table.'_user_id',lang($this->current_table.'_user_id'));
         $this->grocery_crud->display_as($this->current_table.'_person_id',lang($this->current_table.'_person_id'));
-        $this->grocery_crud->display_as($this->current_table.'_entryDate',lang('entryDate'));        
+        $this->grocery_crud->display_as($this->current_table.'_entryDate',lang('entryDate'));
         $this->grocery_crud->display_as($this->current_table.'_last_update',lang('last_update'));
         $this->grocery_crud->display_as($this->current_table.'_creationUserId',lang('creationUserId'));
-        $this->grocery_crud->display_as($this->current_table.'_lastupdateUserId',lang('lastupdateUserId'));          
-        $this->grocery_crud->display_as($this->current_table.'_markedForDeletion',lang('markedForDeletion'));   
-        $this->grocery_crud->display_as($this->current_table.'_markedForDeletionDate',lang('markedForDeletionDate')); 
+        $this->grocery_crud->display_as($this->current_table.'_lastupdateUserId',lang('lastupdateUserId'));
+        $this->grocery_crud->display_as($this->current_table.'_markedForDeletion',lang('markedForDeletion'));
+        $this->grocery_crud->display_as($this->current_table.'_markedForDeletionDate',lang('markedForDeletionDate'));
 
         //RELATIONS
-        $this->grocery_crud->set_relation('teacher_person_id','person','{person_sn1} {person_sn2},{person_givenName} ({person_official_id}) - {person_id} '); 
-        $this->grocery_crud->set_relation('teacher_user_id','users','{username}');   
+        $this->grocery_crud->set_relation('teacher_person_id','person','{person_sn1} {person_sn2},{person_givenName} ({person_official_id}) - {person_id} ');
+        $this->grocery_crud->set_relation('teacher_user_id','users','{username}');
 
         //UPDATE AUTOMATIC FIELDS
         $this->grocery_crud->callback_before_insert(array($this,'before_insert_object_callback'));
         $this->grocery_crud->callback_before_update(array($this,'before_update_object_callback'));
-            
+
         $this->grocery_crud->unset_add_fields($this->current_table.'_last_update');
-            
+
         $this->userCreation_userModification($this->current_table);
 
         $this->grocery_crud->unset_dropdowndetails($this->current_table.'_creationUserId',$this->current_table.'_lastupdateUserId');
@@ -760,15 +760,15 @@ class teachers extends skeleton_main {
 
         $teachers_by_department = $this->session->flashdata('teachers_by_department');
         $this->session->keep_flashdata('teachers_by_department');
-        
+
         if ( is_array($teachers_by_department) && $department_id != "" ) {
             $teachers = $teachers_by_department[$department_id];
             foreach ($teachers as $condition) {
                 $this->grocery_crud->or_where($this->current_table.'_id',$condition);
-            }            
+            }
         }
 
-        $this->renderitzar($this->current_table,$header_data); 
+        $this->renderitzar($this->current_table,$header_data);
 
 
            	//$this->grocery_crud->set_rules('person_official_id',lang('person_official_id'),'callback_valida_nif_cif_nie['.$this->input->post('person_official_id_type').']');
@@ -780,16 +780,16 @@ class teachers extends skeleton_main {
   //CALLBACKS
 function common_callbacks()
 {
-        //CALLBACKS        
+        //CALLBACKS
         $this->grocery_crud->callback_add_field($this->session->flashdata('table_name').'_entryDate',array($this,'add_field_callback_entryDate'));
         $this->grocery_crud->callback_edit_field($this->session->flashdata('table_name').'_entryDate',array($this,'edit_field_callback_entryDate'));
-        
-        //Camps last update no editable i automàtic        
+
+        //Camps last update no editable i automàtic
         $this->grocery_crud->callback_edit_field($this->session->flashdata('table_name').'_last_update',array($this,'edit_callback_last_update'));
 }
 
   public function edit_field_callback_entryDate($value, $primary_key){
-    return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', strtotime($value)) .'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';    
+    return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'. date('d/m/Y H:i:s', strtotime($value)) .'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';
   }
 
   public function edit_callback_last_update($value, $primary_key){
@@ -805,26 +805,26 @@ function common_callbacks()
     $post_array[$this->session->flashdata('table_name').'_last_update'] = $data;
     //$post_array['lastupdateUserId'] = $this->session->userdata('user_id');
     return $post_array;
-}  
-
-public function add_field_callback_entryDate(){  
-
-    $data= date('d/m/Y H:i:s', time());
-    //return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="person_entryDate" id="field-entryDate" readonly>';    
-    return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';    
 }
 
-public function add_callback_last_update(){  
-   
+public function add_field_callback_entryDate(){
+
+    $data= date('d/m/Y H:i:s', time());
+    //return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="person_entryDate" id="field-entryDate" readonly>';
+    return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" value="'.$data.'" name="'.$this->session->flashdata('table_name').'_entryDate" id="field-entryDate" readonly>';
+}
+
+public function add_callback_last_update(){
+
     return '<input type="text" class="datetime-input hasDatepicker" maxlength="19" name="'.$this->session->flashdata('table_name').'_last_update" id="field-last_update" readonly>';
-}  
+}
 
 protected function _unique_field_name($field_name)
     {
     	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not with a number
     }
 
-	
+
 public function index() {
 		$this->teacher();
 	}
@@ -849,7 +849,7 @@ function check_logged_user()
 
 
 function userCreation_userModification($table_name)
-{   
+{
     //USER ID: show only active users and by default select current userid. IMPORTANT: Field is not editable, always forced to current userid by before_insert_object_callback
     $this->grocery_crud->set_relation($table_name.'_creationUserId','users','{username}',array('active' => '1'));
     $this->grocery_crud->set_default_value($table_name,$table_name.'_creationUserId',$this->session->userdata('user_id'));
@@ -864,25 +864,25 @@ function renderitzar($table_name,$header_data)
        $output = $this->grocery_crud->render();
 
        // HTML HEADER
-       
-       $this->_load_html_header($header_data,$output); 
-    
-       // BODY       
+
+       $this->_load_html_header($header_data,$output);
+
+       // BODY
 
        $this->_load_body_header();
-       
+
        $default_values=$this->_get_default_values();
        $default_values["table_name"]=$table_name;
        $default_values["field_prefix"]=$table_name."_";
-       $this->load->view('defaultvalues_view.php',$default_values); 
+       $this->load->view('defaultvalues_view.php',$default_values);
 
-       //$this->load->view('course.php',$output);     
-       $this->load->view($table_name.'.php',$output);     
-       
-       //      FOOTER     
-       $this->_load_body_footer();  
+       //$this->load->view('course.php',$output);
+       $this->load->view($table_name.'.php',$output);
 
-}    
+       //      FOOTER
+       $this->_load_body_footer();
+
+}
 
 public function load_data_tables($header_data){
         $header_data= $this->add_javascript_to_html_header_data(
@@ -908,11 +908,11 @@ public function load_data_tables($header_data){
                 base_url('assets/css/ace-responsive.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace-skins.min.css'));      
+                base_url('assets/css/ace-skins.min.css'));
 /*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));  
+            base_url('assets/css/no_padding_top.css'));
 */
         //JS
         $header_data= $this->add_javascript_to_html_header_data(
@@ -923,12 +923,12 @@ public function load_data_tables($header_data){
                 base_url('assets/js/ace-elements.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/js/ace.min.js')); 
+                base_url('assets/js/ace.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ebre-escool.js'));
 
-        
+
         if($active_menu==false){
             $header_data['menu']= $active_menu;
         }

@@ -7,7 +7,7 @@
  * @subpackage  API
  * @category    Controller
  * @author         Sergi Tur Badenas
- * @link        http://acacha.org/meidawiki/index.php/ebre-escool
+ * @link        https://acacha.org/meidawiki/index.php/ebre-escool
 */
 
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
@@ -22,7 +22,7 @@ class ebreescool extends REST_Controller
     {
         // Construct our parent class
         parent::__construct();
-        
+
         // Configure limits on our controller methods. Ensure
         // you have created the 'limits' table and enabled 'limits'
         // within application/config/rest.php
@@ -52,11 +52,11 @@ class ebreescool extends REST_Controller
     */
     /*function login_post()
     {
-        
-        
+
+
     }*/
 
-    
+
     function person_get()
     {
         if(!$this->get('id'))
@@ -66,18 +66,18 @@ class ebreescool extends REST_Controller
 
         $person = $this->api_model->getPerson( $this->get('id') );
         //$person = $this->api_model->getPersonAlt( $this->get('id') );
-        
+
         /*$persons = array(
             1 => array('id' => 1, 'name' => 'Some Guy', 'email' => 'example1@example.com', 'fact' => 'Loves swimming'),
             2 => array('id' => 2, 'name' => 'Person Face', 'email' => 'example2@example.com', 'fact' => 'Has a huge face'),
             3 => array('id' => 3, 'name' => 'Scotty', 'email' => 'example3@example.com', 'fact' => 'Is a Scott!', array('hobbies' => array('fartings', 'bikes'))),
         );
-        
+
         $person = @$persons[$this->get('id')];
         */
         if($person)
         {
-            $this->response($person, 200); // 200 being the HTTP response code
+            $this->response($person, 200); // 200 being the https response code
         }
 
         else
@@ -85,23 +85,23 @@ class ebreescool extends REST_Controller
             $this->response(array('error' => 'person could not be found'), 404);
         }
     }
-    
+
     function person_post()
     {
         //$this->some_model->updateperson( $this->get('id') );
         $message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
-        
-        $this->response($message, 200); // 200 being the HTTP response code
+
+        $this->response($message, 200); // 200 being the https response code
     }
-    
+
     function person_delete()
     {
         //$this->some_model->deletesomething( $this->get('id') );
         $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
-        
-        $this->response($message, 200); // 200 being the HTTP response code
+
+        $this->response($message, 200); // 200 being the https response code
     }
-    
+
     function persons_get()
     {
         //$persons = $this->some_model->getSomething( $this->get('limit') );
@@ -110,10 +110,10 @@ class ebreescool extends REST_Controller
             array('id' => 2, 'name' => 'Person Face', 'email' => 'example2@example.com'),
             3 => array('id' => 3, 'name' => 'Scotty', 'email' => 'example3@example.com', 'fact' => array('hobbies' => array('fartings', 'bikes'))),
         );
-        
+
         if($persons)
         {
-            $this->response($persons, 200); // 200 being the HTTP response code
+            $this->response($persons, 200); // 200 being the https response code
         }
 
         else
@@ -155,10 +155,10 @@ class ebreescool extends REST_Controller
     //mètode previous_lesson
     //->
 
-    //Partim del professor obtenir les lliçons setmanals a la taula lessons. 
+    //Partim del professor obtenir les lliçons setmanals a la taula lessons.
 
     /*
-    
+
     BUCLE TOTES LES LLIÇONS {
         //INFO LLIÇO:
     }
@@ -180,7 +180,7 @@ class ebreescool extends REST_Controller
         //$teacher_code
         //$selected_study_module_id
         //$lesson_id
-        //$day 
+        //$day
         //$month
         //$year
         //$selected_time_slot_id

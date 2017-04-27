@@ -6,10 +6,10 @@
  * @package    	Ebre-escool
  * @author     	Sergi Tur <sergiturbadenas@gmail.com>
  * @version    	1.0
- * @link		http://www.acacha.com/index.php/ebre-escool
+ * @link		https://www.acacha.com/index.php/ebre-escool
  */
 class ebre_escool_auth_model  extends CI_Model  {
-	
+
 	function __construct()
     {
         parent::__construct();
@@ -31,10 +31,10 @@ class ebre_escool_auth_model  extends CI_Model  {
 
       if ($query->num_rows() > 0) {
         return true;
-      }     
+      }
         return false;
 
-    } 
+    }
 
     function is_user_a_teacher ($person_id,$academic_period_id = null) {
 
@@ -44,7 +44,7 @@ class ebre_escool_auth_model  extends CI_Model  {
 
       $this->db->select('teacher_id');
       $this->db->from('teacher');
-      $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');  
+      $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
       $this->db->where('teacher_academic_periods_academic_period_id', $academic_period_id );
 
 
@@ -55,9 +55,9 @@ class ebre_escool_auth_model  extends CI_Model  {
 
       if ($query->num_rows() > 0) {
         return true;
-      }     
+      }
         return false;
-    } 
+    }
 
     public function is_set_force_change_password ($username) {
       /*
@@ -67,14 +67,14 @@ class ebre_escool_auth_model  extends CI_Model  {
       */
 
       $this->db->select('force_change_password_next_login');
-      $this->db->from('users');      
+      $this->db->from('users');
       $this->db->where('users.username',$username);
       $this->db->limit(1);
-       
+
       $query = $this->db->get();
 
       //echo $this->db->last_query()."<br/>";
-    
+
       if ($query->num_rows() == 1) {
         $row = $query->row();
         $force_change_password_next_login = $row->force_change_password_next_login;
@@ -88,7 +88,7 @@ class ebre_escool_auth_model  extends CI_Model  {
 
     function save_google_plus_profile_with_username($user_profile,$username) {
       log_message('debug', 'Executing save_google_plus_profile_with_username...');
-      
+
       $person_id = $this->getPersonIdFromUsername($username);
 
       if ($person_id!=null) {
@@ -100,7 +100,7 @@ class ebre_escool_auth_model  extends CI_Model  {
           return null;
         } else {
           // Insert/update person_id anf google_plus_id (is $result!) to table n-nrelationship
-          $this->insert_update_person_google_plus($person_id,$result);          
+          $this->insert_update_person_google_plus($person_id,$result);
         }
       } else {
         log_message('debug', 'Not person found for username' . $username);
@@ -120,9 +120,9 @@ class ebre_escool_auth_model  extends CI_Model  {
       $query = $this->db->get();
 
       if ($query->num_rows() == 1){
-        $row = $query->row(); 
+        $row = $query->row();
         return $row->person_id;
-      } 
+      }
       else
         return null;
     }
@@ -136,7 +136,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       $data = array(
            'person_google_plus_person_id' => $person_id ,
            'person_google_plus_gplus_id' => $google_plus_id,
-        );    
+        );
 
       if($result) {
         //UPDATE
@@ -144,17 +144,17 @@ class ebre_escool_auth_model  extends CI_Model  {
       } else {
         //INSERT
         log_message('debug', 'Inserting new record to table person_google_plus!');
-        $this->db->insert('person_google_plus', $data); 
+        $this->db->insert('person_google_plus', $data);
         if ($this->db->affected_rows() == 1) {
           //INSERTED OK
           $inserted_id = $this->db->insert_id();
-          log_message('debug', 'Inserted ok with id ' .$inserted_id);          
-          return $inserted_id;  
+          log_message('debug', 'Inserted ok with id ' .$inserted_id);
+          return $inserted_id;
         } else {
           //ERROR INSERTING
-          log_message('debug', 'ERROR inserting record to table person_google_plus. Affected rows:' . $this->db->affected_rows()); 
-          return null; 
-        }  
+          log_message('debug', 'ERROR inserting record to table person_google_plus. Affected rows:' . $this->db->affected_rows());
+          return null;
+        }
       }
 
     }
@@ -162,7 +162,7 @@ class ebre_escool_auth_model  extends CI_Model  {
     function check_person_google_plus($person_id,$google_plus_id) {
 
       /*
-      SELECT `person_google_plus_id` FROM `person_google_plus` WHERE `person_google_plus_person_id`=PERSON_ID 
+      SELECT `person_google_plus_id` FROM `person_google_plus` WHERE `person_google_plus_person_id`=PERSON_ID
       AND `person_google_plus_gplus_id`=GOOGLE_PLUS_ID
       */
       $this->db->select('person_google_plus_id');
@@ -174,17 +174,17 @@ class ebre_escool_auth_model  extends CI_Model  {
       //log_message('debug',$this->db->last_query());
 
       if ($query->num_rows() == 1){
-        $row = $query->row(); 
+        $row = $query->row();
         return $row->person_google_plus_id;
-      } 
+      }
       else
         return false;
-    }    
+    }
 
     function save_google_plus_profile($user_profile) {
       log_message('debug', 'Executing save_google_plus_profile...');
-      
-      $google_plus_profile_database_id = 
+
+      $google_plus_profile_database_id =
           $this->check_if_google_plus_profile_exists($user_profile->identifier);
       $data = array(
            'google_plus_identifier' => $user_profile->identifier,
@@ -213,43 +213,43 @@ class ebre_escool_auth_model  extends CI_Model  {
            'google_plus_lastupdateUserId' => 2,
            'google_plus_markedForDeletion' => 'n',
            'google_plus_markedForDeletionDate' => '',
-        );    
+        );
       if ($google_plus_profile_database_id != false) {
         //UPDATE
         log_message('debug', 'Updating Google_plus_profile with id ' . $google_plus_profile_database_id);
         $this->db->where('google_plus_id', $google_plus_profile_database_id);
-        $this->db->update('google_plus', $data); 
+        $this->db->update('google_plus', $data);
         //log_message('debug',$this->db->last_query());
         if ($this->db->affected_rows() == 1) {
           //UPDATE OK
-          log_message('debug', 'Google_plus_profile updated ok with id');          
-          return $google_plus_profile_database_id;  
+          log_message('debug', 'Google_plus_profile updated ok with id');
+          return $google_plus_profile_database_id;
         } else {
-          if ($this->db->affected_rows() == 0) {            
+          if ($this->db->affected_rows() == 0) {
             //NOTHING UPDATED -> CONTINUE (we use all data, maybe is zero because no changes applied)!
-            log_message('debug', 'ERROR? updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
+            log_message('debug', 'ERROR? updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows());
             return $google_plus_profile_database_id;
           } else{
-            log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
-            return null;   
+            log_message('debug', 'ERROR updating Google_plus_profile. Affected rows: ' . $this->db->affected_rows());
+            return null;
           }
-          
-        }  
+
+        }
       } else {
         //INSERT
-        log_message('debug', 'Inserting Google_plus_profile to database!');        
-        $this->db->insert('google_plus', $data); 
+        log_message('debug', 'Inserting Google_plus_profile to database!');
+        $this->db->insert('google_plus', $data);
         $inserted_id = $this->db->insert_id();
         if ($this->db->affected_rows() == 1) {
-          //INSERTED OK          
-          log_message('debug', 'Google_plus_profile inserted ok with id ' . $inserted_id);          
-          return $inserted_id;  
+          //INSERTED OK
+          log_message('debug', 'Google_plus_profile inserted ok with id ' . $inserted_id);
+          return $inserted_id;
         } else {
           //ERROR INSERTING
-          log_message('debug', 'ERROR inserting Google_plus_profile. Affected rows: ' . $this->db->affected_rows()); 
-          return null; 
-        }      
-        
+          log_message('debug', 'ERROR inserting Google_plus_profile. Affected rows: ' . $this->db->affected_rows());
+          return null;
+        }
+
       }
     }
 
@@ -264,15 +264,15 @@ class ebre_escool_auth_model  extends CI_Model  {
       $query = $this->db->get();
       //log_message('debug',$this->db->last_query());
       if ($query->num_rows() == 1){
-        $row = $query->row(); 
+        $row = $query->row();
         log_message('debug', 'Google_plus_profile with identifier ' . $google_plus_profile_identifier. ' already exists!');
         return $row->google_plus_id;
-      } 
+      }
       else {
         log_message('debug', 'Google_plus_profile with identifier ' .  $google_plus_profile_identifier . ' not exists on database!');
         return false;
       }
-        
+
     }
 
     function get_current_academic_period_id() {
@@ -287,9 +287,9 @@ class ebre_escool_auth_model  extends CI_Model  {
       $query = $this->db->get();
 
       if ($query->num_rows() == 1){
-        $row = $query->row(); 
+        $row = $query->row();
         return $row->academic_periods_id;
-      } 
+      }
       else
         return false;
     }
@@ -304,7 +304,7 @@ class ebre_escool_auth_model  extends CI_Model  {
 
         return $api_user_profile;
     }
-  
+
     public function getSessionData($username) {
 
       $this->db->select('users.person_id');
@@ -339,16 +339,16 @@ class ebre_escool_auth_model  extends CI_Model  {
           $this->db->select('id,users.username,mainOrganizationaUnitId,person_email,person_secondary_email,person.person_terciary_email ,users.person_id,mainOrganizationaUnitId,
           person.person_id,person_givenName,person_sn1,person_sn2,person_photo,person.person_official_id,person.person_official_id_type,person.person_date_of_birth,person.person_gender,
           person.person_secondary_official_id,person.person_secondary_official_id_type,person.person_homePostalAddress,person.person_locality_id,person.person_telephoneNumber,person.person_mobile,
-          person.person_notes,locality.locality_name,person.person_entryDate');       
+          person.person_notes,locality.locality_name,person.person_entryDate');
       }
-      
 
-      // 	first_name 	last_name and others from table person: person table (person_id)	
+
+      // 	first_name 	last_name and others from table person: person table (person_id)
 		  $this->db->join('person', 'users.person_id = person.person_id','left');
       $this->db->join('locality', 'person.person_locality_id = locality.locality_id','left');
       if ($is_user_a_teacher) {
         $this->db->join('teacher', 'person.person_id = teacher.teacher_person_id');
-        $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');  
+        $this->db->join('teacher_academic_periods','teacher_academic_periods.teacher_academic_periods_teacher_id = teacher.teacher_id');
         $this->db->join('department', 'teacher_academic_periods_department_id = department.department_id','left');
       }
 
@@ -362,7 +362,7 @@ class ebre_escool_auth_model  extends CI_Model  {
       //echo $this->db->last_query()."<br/>";
 
       $sessiondata = array();
-		
+
 		if ($query->num_rows() > 0)	{
 			$row = $query->row();
 
@@ -378,12 +378,12 @@ class ebre_escool_auth_model  extends CI_Model  {
       if ( isset($row->teacher_academic_periods_department_id) ) {
         $teacher_department_id=$row->teacher_academic_periods_department_id;
       }
-      
+
       $teacher_department_shortname="";
       if ( isset($row->department_shortname) ) {
         $teacher_department_shortname=$row->department_shortname;
       }
-      
+
 			$sessiondata = array(
                    'id'  				=> $row->id,
                    'username'  			=> $row->username,
@@ -391,7 +391,7 @@ class ebre_escool_auth_model  extends CI_Model  {
                    'secondary_email'    => $row->person_secondary_email ,
                    'terciary_email'    => $row->person_terciary_email,
                    'person_id'   		=> $row->person_id,
-                   'mainOrganizationaUnitId' => $row->mainOrganizationaUnitId,    
+                   'mainOrganizationaUnitId' => $row->mainOrganizationaUnitId,
                    'person_id' => $row->person_id,
                    'givenName' => $row->person_givenName,
                    'sn1' => $row->person_sn1,
@@ -407,7 +407,7 @@ class ebre_escool_auth_model  extends CI_Model  {
                    'person_homePostalAddress' => $row->person_homePostalAddress,
                    'person_locality_id' => $row->person_locality_id,
                    'locality_name' => $row->locality_name,
-                   'person_entryDate' => $row->person_entryDate,                                      
+                   'person_entryDate' => $row->person_entryDate,
                    'person_telephoneNumber' => $row->person_telephoneNumber,
                    'person_mobile' => $row->person_mobile,
                    'person_notes' => $row->person_notes,
@@ -421,7 +421,7 @@ class ebre_escool_auth_model  extends CI_Model  {
                    'teacher_id' => $teacher_id,
                    'teacher_department_id' => $teacher_department_id,
                    'department_shortname' => $teacher_department_shortname,
-                   
+
                );
 		}
    		else {
@@ -430,6 +430,6 @@ class ebre_escool_auth_model  extends CI_Model  {
 
     	return $sessiondata;
     }
-	
-	
+
+
 }

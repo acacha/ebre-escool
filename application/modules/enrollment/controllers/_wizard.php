@@ -4,17 +4,17 @@ include "application/third_party/skeleton/application/controllers/skeleton_main.
 
 
 class wizard extends skeleton_main {
-	
+
 	public $body_header_view ='include/ebre_escool_body_header.php' ;
     public $body_header_lang_file ='ebre_escool_body_header' ;
     public $html_header_view ='include/ebre_escool_html_header' ;
 
-    public $body_footer_view ='include/ebre_escool_body_footer' ;   
-	
+    public $body_footer_view ='include/ebre_escool_body_footer' ;
+
 	function __construct()
     {
         parent::__construct();
-        
+
             /* Model */
             $this->load->model('wizard_model');
 
@@ -23,7 +23,7 @@ class wizard extends skeleton_main {
 		    if ($current_language == "") {
 		      $current_language= $this->config->item('default_language');
 		    }
-		    $this->lang->load('wizard', $current_language);	       
+		    $this->lang->load('wizard', $current_language);
 
             $this->config->load('config');
 
@@ -35,32 +35,32 @@ class wizard extends skeleton_main {
 
 	public function wizard($study=false,$classroom_group=false,$study_modules=false) {
 
-    $this->check_logged_user(); 
+    $this->check_logged_user();
 
     /* Wizard */
-    $header_data= $this->load_wizard_files();    
+    $header_data= $this->load_wizard_files();
 
     /* Ace */
-    $header_data= $this->load_ace_files($header_data);  
+    $header_data= $this->load_ace_files($header_data);
 
 
     if($study == false){
         $study = 2;
-    }    
-    
-    if($classroom_group == false){
-        $classroom_group = 3;  
     }
-    
+
+    if($classroom_group == false){
+        $classroom_group = 3;
+    }
+
     if($study_modules == false){
         $study_modules = array();
         $study_modules[]=282;   //  "M1"
         $study_modules[]=268;   //  "M2";
-    }    
+    }
 
-       $this->_load_html_header($header_data); 
+       $this->_load_html_header($header_data);
        $data = array();
-       
+
        $enrollment_studies = $this->wizard_model->get_enrollment_studies();
        $data['enrollment_studies'] = $enrollment_studies;
        $enrollment_classroom_groups = $this->wizard_model->get_enrollment_classroom_groups($study);
@@ -68,23 +68,23 @@ class wizard extends skeleton_main {
        $enrollment_study_modules = $this->wizard_model->get_enrollment_study_modules($classroom_group);
        $data['enrollment_study_modules'] = $enrollment_study_modules;
        $enrollment_study_submodules = $this->wizard_model->get_enrollment_study_submodules($study_modules);
-       $data['enrollment_study_submodules'] = $enrollment_study_submodules;       
+       $data['enrollment_study_submodules'] = $enrollment_study_submodules;
        $enrollment_students = $this->wizard_model->get_students();
-       $data['enrollment_students'] = $enrollment_students;              
+       $data['enrollment_students'] = $enrollment_students;
 
       // print_r($enrollment_students);
-       
-       // BODY       
+
+       // BODY
        $this->_load_body_header();
-       $this->load->view('wizard.php',$data);     
-       
-       // FOOTER     
-       $this->_load_body_footer(); 
+       $this->load->view('wizard.php',$data);
+
+       // FOOTER
+       $this->_load_body_footer();
 
 	}
 
     public function check_student() {
-        
+
         if(isset($_POST['student_official_id'])){
             $official_id = $_POST['student_official_id'];
             $student_data = $this->wizard_model->get_student_data($official_id);
@@ -103,7 +103,7 @@ class wizard extends skeleton_main {
         foreach($enrollment_classroom_groups as $key => $value){
             $resultat[$key]=$value;
         }
-*/        
+*/
 
 
     }
@@ -127,7 +127,7 @@ class wizard extends skeleton_main {
         $resultat = array();
 
         $enrollment_study_modules = $this->wizard_model->get_enrollment_study_modules($classroom_group);
-        
+
         foreach($enrollment_study_modules as $key => $value){
             $resultat[$key]=$value;
         }
@@ -137,18 +137,18 @@ class wizard extends skeleton_main {
 
     public function study_submodules($modules = false) {
         $modules = explode("-",$modules);
-        
+
         $resultat = array();
 
         $enrollment_study_submodules = $this->wizard_model->get_enrollment_study_submodules($modules);
-      
+
            foreach($enrollment_study_submodules as $key => $value){
                $resultat[$key]=$value;
             }
 
         print_r(json_encode($resultat));
     }
-   
+
     public function enrollment() {
 
             $resultat = array();
@@ -180,7 +180,7 @@ class wizard extends skeleton_main {
             $resultat['enrollment_submodules'] = $enrollment_submodules;
 
             print_r(json_encode($resultat));
-    }	
+    }
 
     public function index() {
 		$this->wizard();
@@ -209,24 +209,24 @@ function load_wizard_files($header_data=false){
         //CSS
         $header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");    
+            "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/select2.css')); 
+                base_url('assets/css/select2.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/modifications_select2.css')); 
+                base_url('assets/css/modifications_select2.css'));
 
         //JS
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/jquery-1.9.1.js");
+            "https://code.jquery.com/jquery-1.9.1.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/ui/1.10.3/jquery-ui.js");  
+            "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/select2.min.js'));           
+            base_url('assets/js/select2.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
             base_url('assets/js/fuelux.wizard.min.js'));
@@ -244,8 +244,8 @@ function load_wizard_files($header_data=false){
             base_url('assets/js/jquery.maskedinput.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/fuelux.wizard.min.js'));                                                  
-      
+            base_url('assets/js/fuelux.wizard.min.js'));
+
 
         return $header_data;
 
@@ -267,12 +267,12 @@ function load_ace_files($header_data){
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
                 base_url('assets/css/ace-skins.min.css'));
- 
+
 
 /*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));  
+            base_url('assets/css/no_padding_top.css'));
 */
 
         //JS
@@ -285,7 +285,7 @@ function load_ace_files($header_data){
                 base_url('assets/js/ace-elements.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/js/ace.min.js'));    
+                base_url('assets/js/ace.min.js'));
 
         return $header_data;
 }

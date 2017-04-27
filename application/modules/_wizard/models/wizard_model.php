@@ -6,24 +6,24 @@
  * @package    	Ebre-escool
  * @author     	Sergi Tur <sergiturbadenas@gmail.com>
  * @version    	1.0
- * @link		http://www.acacha.com/index.php/ebre-escool
+ * @link		https://www.acacha.com/index.php/ebre-escool
  */
 class Wizard_model  extends CI_Model  {
-	
+
 	function __construct()
     {
         parent::__construct();
         $this->load->database();
     }
-    
+
     function get_primary_key($table_name) {
 		$fields = $this->db->field_data($table_name);
-		
+
 		foreach ($fields as $field)	{
 			if ($field->primary_key) {
 					return $field->name;
 			}
-		} 	
+		}
 		return false;
 	}
 
@@ -34,7 +34,7 @@ class Wizard_model  extends CI_Model  {
 		$this->db->from('student');
 		$this->db->join('person','student_person_id=person_id');
 		$this->db->order_by('student_id', $orderby);
-		       
+
         $query = $this->db->get();
 
 		if ($query->num_rows() > 0) {
@@ -51,10 +51,10 @@ class Wizard_model  extends CI_Model  {
    				$i++;
 			}
 			return $student_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Estudis */
 	public function get_enrollment_studies($orderby="asc") {
@@ -62,10 +62,10 @@ class Wizard_model  extends CI_Model  {
         $this->db->select('studies_id,studies_shortname,studies_name');
 		$this->db->from('studies');
 		$this->db->order_by('studies_id', $orderby);
-		       
+
         $query = $this->db->get();
 		$this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$studies_array = array();
@@ -77,10 +77,10 @@ class Wizard_model  extends CI_Model  {
    				$i++;
 			}
 			return $studies_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Grups de classe */
 	public function get_enrollment_classroom_groups($study=false,$orderby="asc") {
@@ -95,7 +95,7 @@ class Wizard_model  extends CI_Model  {
 		$this->db->join('studies','course_estudies_id=studies_id');
 		$this->db->where('studies_id',$study);
 		$this->db->order_by('classroom_group_id', $orderby);
-		
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -111,15 +111,15 @@ class Wizard_model  extends CI_Model  {
    				$i++;
 			}
 			return $classroom_group_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	function get_current_academic_period_id() {
 
 		/*
-		SELECT academic_periods_id,academic_periods_shortname, academic_periods_name,academic_periods_alt_name,academic_periods_current 
+		SELECT academic_periods_id,academic_periods_shortname, academic_periods_name,academic_periods_alt_name,academic_periods_current
 		FROM academic_periods WHERE academic_periods_current=1
 		*/
 		$this->db->select('academic_periods_id,academic_periods_shortname, academic_periods_name,academic_periods_alt_name,academic_periods_current');
@@ -130,9 +130,9 @@ class Wizard_model  extends CI_Model  {
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->academic_periods_id;
-		}	
+		}
 		else
 			return false;
 	}
@@ -141,10 +141,10 @@ class Wizard_model  extends CI_Model  {
 	public function get_enrollment_study_modules($classroom_group=false,$orderby="asc") {
 
 		$current_academic_period_id = $this->get_current_academic_period_id();
-		
+
 		if(!$classroom_group){
 			//$classroom_group=3;	//	"1ASIX-DAM"
-		}		
+		}
 		//echo $classroom_group."<br />";
 
 		//GT
@@ -157,7 +157,7 @@ class Wizard_model  extends CI_Model  {
 		INNER JOIN classroom_group ON course.course_id = classroom_group.classroom_group_course_id
 		WHERE classroom_group_id = 1 AND `study_module_academic_periods_academic_period_id`=5
 		ORDER BY study_module_shortname ASC
-		*/	
+		*/
 
         $this->db->select('study_module_id, study_module_shortname, study_module_name');
 		$this->db->from('study_module');
@@ -168,7 +168,7 @@ class Wizard_model  extends CI_Model  {
 		$this->db->where('classroom_group_id',$classroom_group);
 		$this->db->where('study_module_academic_periods_academic_period_id',$current_academic_period_id);
 		$this->db->order_by('study_module_shortname', $orderby);
-		       
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -183,10 +183,10 @@ class Wizard_model  extends CI_Model  {
    				$i++;
 			}
 			return $study_module_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Unitats formatives */
 	public function get_enrollment_study_submodules($study_modules=false,$orderby="asc") {
@@ -194,14 +194,14 @@ class Wizard_model  extends CI_Model  {
 		if(!$study_modules){
 			//$study_modules[]=282;	//	"M1"
 			//$study_modules[]=268;	//	"M2"
-		}	
+		}
 
         $this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_module_shortname,study_submodules_study_module_id');
 		$this->db->from('study_submodules');
 		$this->db->join('study_module','study_submodules_study_module_id=study_module_id');
 		$this->db->where_in('study_submodules_study_module_id',$study_modules);
 		$this->db->order_by('study_submodules_id', $orderby);
-		       
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -214,31 +214,31 @@ class Wizard_model  extends CI_Model  {
    				$study_submodules_array[$i]['study_submodules_id'] = $row['study_submodules_id'];
    				$study_submodules_array[$i]['study_submodules_shortname'] = $row['study_submodules_shortname'];
    				$study_submodules_array[$i]['study_submodules_name'] = $row['study_submodules_name'];
-   				$study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];   				
+   				$study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];
    				$i++;
 			}
 			return $study_submodules_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Student Data */
 	public function get_student_data($official_id) {
         $this->db->select('person_id, person_photo, person_secondary_official_id, person_givenName, person_sn1, person_sn2, person_email, person_date_of_birth, person_gender, person_homePostalAddress, person_locality_name, person_telephoneNumber, person_mobile');
 		$this->db->from('person');
 		$this->db->where('person_official_id',$official_id);
-		$this->db->limit(1);		       
+		$this->db->limit(1);
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() == 1) {
 
 			return $query->row();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 
 	/* ENROLLMENT */
@@ -248,20 +248,20 @@ class Wizard_model  extends CI_Model  {
 
         $data = array(
         	'enrollment_periodid' => $period_id,
-        	'enrollment_personid' => $person_id 
+        	'enrollment_personid' => $person_id
         );
 
         $this->db->insert('enrollment',$data);
-		       
+
 		echo $this->db->last_query();
 
 		if ($this->db->affected_rows() > 0) {
 
 			return $this->db->affected_rows();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Enrollment Studies */
 	public function insert_enrollment_studies($period_id=false,$person_id=false,$study_id=false) {
@@ -273,16 +273,16 @@ class Wizard_model  extends CI_Model  {
         );
 
         $this->db->insert('enrollment_studies',$data);
-		       
+
 		echo $this->db->last_query();
 
 		if ($this->db->affected_rows() > 0) {
 
 			return $this->db->affected_rows();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Enrollment Classroom Group */
 	public function insert_enrollment_class_group($period_id=false,$person_id=false,$study_id=false,$class_group_id=false) {
@@ -295,16 +295,16 @@ class Wizard_model  extends CI_Model  {
         );
 
         $this->db->insert('enrollment_class_group',$data);
-		       
+
 		echo $this->db->last_query();
 
 		if ($this->db->affected_rows() > 0) {
 
 			return $this->db->affected_rows();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Enrollment Modules */
 	public function insert_enrollment_modules($period_id=false,$person_id=false,$study_id=false,$class_group_id=false,$modules_id=false) {
@@ -322,19 +322,19 @@ class Wizard_model  extends CI_Model  {
         	);
 
         $this->db->insert('enrollment_modules',$data);
-		
+
         $affected_rows += $this->db->affected_rows();
 
-		}       
+		}
 		//echo $this->db->last_query();
 		return $affected_rows;
 		//if ($this->db->affected_rows() > 0) {
 
 		//	return $this->db->affected_rows();
-		//}			
+		//}
 		//else
 		//	return false;
-	}	
+	}
 
 	/* Enrollment Submodules */
 	public function insert_enrollment_submodules($period_id=false,$person_id=false,$study_id=false,$class_group_id=false,$modules_id=false,$submodules_id=false) {
@@ -361,7 +361,7 @@ class Wizard_model  extends CI_Model  {
         );
 
         $this->db->insert('enrollment_submodules',$data);
-		       
+
 		//echo $this->db->last_query();
 		$affected_rows += $this->db->affected_rows();
 
@@ -378,7 +378,7 @@ class Wizard_model  extends CI_Model  {
         );
 */
       //  $this->db->insert('enrollment_submodules',$data);
-		       
+
 		//echo $this->db->last_query();
 
 		//if ($this->db->affected_rows() > 0) {
@@ -387,9 +387,9 @@ class Wizard_model  extends CI_Model  {
 		//echo "Files rebudes = count($submodules_id)<br />";
 		//if($affected_rows == count($submodules_id)){
 			return $affected_rows;
-		//}			
+		//}
 		//else
 		//	return false;
-	}	
+	}
 
 }

@@ -27,7 +27,7 @@
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
 
 
 
@@ -38,22 +38,22 @@
 
                 $('input:checkbox').map(function () {
                   this.checked = true;
-                }).get(); 
-                
+                }).get();
+
               });
 
               $("#unselect_all").click(function() {
 
                 $('input:checkbox').map(function () {
                   this.checked = false;
-                }).get(); 
-                
+                }).get();
+
               });
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_lessons_academic_period_filter").select2();
 
-              $('#select_lessons_academic_period_filter').on("change", function(e) {  
+              $('#select_lessons_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_lessons_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -67,7 +67,7 @@
                       "columnDefs": [
                                       { "type": "html", "targets": 3 }
                                     ],
-                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],                      
+                      "aLengthMenu": [[10, 25, 50,100,200,-1], [10, 25, 50,100,200, "<?php echo lang('All');?>"]],
                               "oTableTools": {
                   "sSwfPath": "<?php echo base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf');?>",
                               "aButtons": [
@@ -111,12 +111,12 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-             
-        }); 
+
+        });
 
         $("#calculate_study_module").click(function() {
               var txt;
@@ -125,8 +125,8 @@
 
                   var values = $('input:checkbox:checked.ace').map(function () {
                     return this.id;
-                  }).get(); 
-                  
+                  }).get();
+
                   //AJAX
                   $.ajax({
                   url:'<?php echo base_url("index.php/managment/calculate_study_module");?>',
@@ -167,7 +167,7 @@
                   }
                 }).done(function(data){
                     //TODO: Something to check?
-                
+
 
                 });
               }
@@ -186,7 +186,7 @@
                 var textToSearch = StrippedString.slice(0,StrippedString.indexOf("(")-1).trim();
                 $("#select_all_lessons_study_code_filter").append( '<option value="'+ textToSearch  +'">'+ textToSearch +'</option>' )
         } );
-        
+
         $("#select_all_lessons_course_code_filter").select2({ width: 'resolve', placeholder: "Seleccioneu un curs", allowClear: true });
         $("#select_all_lessons_course_code_filter").on( 'change', function () {
             var val = $(this).val();
@@ -290,7 +290,7 @@
       <td colspan="6" style="text-align: center;"> <h4>Filtres per columnes
         </h4></td>
     </tr>
-    <tr> 
+    <tr>
        <td><?php echo lang('lessons_academic_period')?>: </td>
        <td>
           <select id="select_lessons_academic_period_filter">
@@ -302,13 +302,13 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
@@ -326,13 +326,13 @@
       </td>
     </tr>
 
-    <tr> 
+    <tr>
        <td><?php echo lang('lesson_classroom_group')?>:</td>
        <td>
         <select id="select_all_lessons_classroomgroup_filter">
           <option value=""></option>
         </select>
-       </td>       
+       </td>
       <td><?php echo lang('lesson_study_module')?>:</td>
       <td>
         <select id="select_all_lessons_study_module_filter"><option value=""></option></select>
@@ -344,13 +344,13 @@
         </select>
       </td>
     </tr>
-    <tr> 
+    <tr>
        <td><?php echo lang('lesson_location')?>:</td>
        <td>
         <select id="select_all_lessons_location_filter">
           <option value=""></option>
         </select>
-       </td>       
+       </td>
       <td><?php echo lang('lessons_day')?>:</td>
       <td>
         <select id="select_all_lessons_day_filter"><option value=""></option></select>
@@ -366,7 +366,7 @@
       <td colspan="7" style="text-align: center;"> <strong>Accions massives (aplica l'acció sobre tots els usuaris seleccionats)
         </strong></td>
     </tr>
-    <tr> 
+    <tr>
        <td>
         <button class="btn btn-mini btn-danger" id="select_all">
           <i class="icon-bolt"></i>
@@ -389,8 +389,8 @@
         </button>
        </td>
     </tr>
-  </thead>  
-</table> 
+  </thead>
+</table>
 
 <table class="table table-striped table-bordered table-hover table-condensed" id="all_lessons">
  <thead style="background-color: #d9edf7;">
@@ -419,18 +419,18 @@
      <th><?php echo lang('lesson_order')?></th>
   </tr>
  </thead>
- <tbody> 
+ <tbody>
 
   <!-- Iteration that shows lessons-->
 
   <?php if (is_array($all_lessons) ) : ?>
   <?php foreach ($all_lessons as $lesson_key => $lesson) : ?>
-   <tr align="center" class="{cycle values='tr0,tr1'}">   
+   <tr align="center" class="{cycle values='tr0,tr1'}">
      <td><label><input class="ace" type="checkbox" name="form-field-checkbox" id="<?php echo $lesson->id;?>"><span class="lbl">&nbsp;</span></label></td>
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/lessons/read/' . $lesson->id ) ;?>">
           <?php echo $lesson->id;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/lessons/edit/' . $lesson->id ) ;?>">
           edit
       </a>)
@@ -439,20 +439,20 @@
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/academic_periods/read/' . $lesson->academic_period ) ;?>">
           <?php echo $lesson->academic_period_shortname;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/academic_periods/edit/' . $lesson->academic_period ) ;?>">
           <?php echo $lesson->academic_period;?>
       </a> )
      </td>
 
      <td>
-      <?php echo $lesson->code;?>      
+      <?php echo $lesson->code;?>
      </td>
 
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/studies/read/' . $lesson->studies_id ) ;?>">
           <?php echo $lesson->studies_shortname . ". " . $lesson->studies_name ;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/studies/edit/' . $lesson->studies_id ) ;?>">
           <?php echo $lesson->studies_id;?>
       </a> )
@@ -461,7 +461,7 @@
      <td>
       <a href="<?php echo base_url('/index.php/curriculum/course/read/' . $lesson->course_id ) ;?>">
           <?php echo $lesson->course_shortname . ". " . $lesson->course_name ;?>
-      </a> 
+      </a>
       (<a href="<?php echo base_url('/index.php/curriculum/course/edit/' . $lesson->course_id ) ;?>">
           <?php echo $lesson->course_id;?>
       </a> )
@@ -470,7 +470,7 @@
      <td>
           <a href="<?php echo base_url('/index.php/curriculum/classroom_group/read/' . $lesson->classroom_group_id ) ;?>">
             <?php echo $lesson->classroom_group_code . " - " . $lesson->classroom_group_shortName . ". " . $lesson->classroom_group_name ;?>
-          </a> 
+          </a>
           (<a href="<?php echo base_url('/index.php/curriculum/classroom_group/edit/' . $lesson->classroom_group_id ) ;?>">
             <?php echo $lesson->classroom_group_id;?>
           </a> )
@@ -479,12 +479,12 @@
      <td>
           <a href="<?php echo base_url('/index.php/teachers/index/read/' . $lesson->teacher_id ) ;?>">
             <?php echo $lesson->teacher_code . " - " . $lesson->givenName . " " . $lesson->sn1 . " " .  $lesson->sn2;?>
-          </a> 
+          </a>
           (<a href="<?php echo base_url('/index.php/teachers/index/edit/' . $lesson->teacher_id ) ;?>">
             <?php echo $lesson->teacher_id;?>
           </a> )
      </td>
-     
+
      <td>
         <?php echo $lesson->codi_assignatura;?>
      </td>
@@ -512,7 +512,7 @@
 
     <?php endif; ?>
      </td>
- 
+
     <td>
       <?php echo $lesson->day;?>
     </td>
@@ -538,11 +538,11 @@
   <?php endforeach; ?>
   <?php endif; ?>
  </tbody>
-</table> 
+</table>
 
 </div>
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

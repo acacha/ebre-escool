@@ -7,7 +7,7 @@
  * @subpackage  Login API
  * @category    Controller
  * @author         Sergi Tur Badenas
- * @link        http://acacha.org/meidawiki/index.php/ebre-escool
+ * @link        https://acacha.org/meidawiki/index.php/ebre-escool
 */
 
 
@@ -25,8 +25,8 @@ class ebreescool_login_api_test extends CI_Controller
 
         // Set config options (only 'server' is required to work)
 
-        //http://localhost/ebre-escool/index.php/api/ebreescool/person/id/1
-        $config = array('server'          => 'http://localhost/ebre-escool/index.php/api/ebreescool_login/',
+        //https://localhost/ebre-escool/index.php/api/ebreescool/person/id/1
+        $config = array('server'          => 'https://localhost/ebre-escool/index.php/api/ebreescool_login/',
                         'api_key'         => $this->config->item('api_login_key'),
                         'api_name'        => 'X-API-KEY',
                         //'http_user'       => 'username',
@@ -50,14 +50,14 @@ class ebreescool_login_api_test extends CI_Controller
         $realm = "mysql";
 
         $post_array = array("username" => $username, "password" => $password, "realm" => $realm);
-        
-        // Pull in an array of tweets        
+
+        // Pull in an array of tweets
         $result = $this->rest->post('login',$post_array);
         echo "<br> STATUS CODE: " . $result = $this->rest->status() . "</br>";
         $result = $this->rest->debug();
 
         echo json_encode($result);
-        
+
     }
-    
+
 }

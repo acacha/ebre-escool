@@ -11,7 +11,7 @@ class inventory_reports extends skeleton_main {
 
     public $html_header_view ='include/ebre_escool_html_header' ;
 
-    public $body_footer_view ='include/ebre_escool_body_footer' ;   
+    public $body_footer_view ='include/ebre_escool_body_footer' ;
 
 function __construct()	{
 		parent::__construct();
@@ -24,13 +24,13 @@ function __construct()	{
 		if ($current_language == "") {
 			$current_language= $this->config->item('default_language');
 		}
-		
+
 		$this->config->load('config');
 
-		$this->lang->load('inventory', $current_language);		
+		$this->lang->load('inventory', $current_language);
         //LANGUAGE HELPER:
         $this->load->helper('language');
-	}	
+	}
 
 public function inventory($filter=null)	{
 	$this->index($filter);
@@ -49,7 +49,7 @@ public function index($filter=null)	{
         }
     }
 
-    // Active menu element 
+    // Active menu element
     $active_menu = array();
     $active_menu['menu']='#reports';
     $active_menu['submenu1']='#inventory_reports';
@@ -57,11 +57,11 @@ public function index($filter=null)	{
 
     $this->check_logged_user();
 
-	// Ace 
-    $header_data = $this->load_ace_files($active_menu);  
+	// Ace
+    $header_data = $this->load_ace_files($active_menu);
 
-    $output = array();   
-    
+    $output = array();
+
     $all_inventory_objects = array();
     $all_inventory_objects = $this->inventory_model->getAllInventoryObjects();
 
@@ -84,10 +84,10 @@ public function index($filter=null)	{
     }
     if(isset($selected['creation_user'])){
         $filter['inventory_object_creationUserId'] = $selected['creation_user'];
-    }    
+    }
     if(isset($selected['modification_user'])){
         $filter['inventory_object_lastupdateUserId'] = $selected['modification_user'];
-    }    
+    }
     if(isset($selected['organizational_unit'])){
         $filter['inventory_object_mainOrganizationalUnitId'] = $selected['organizational_unit'];
     }
@@ -97,7 +97,7 @@ public function index($filter=null)	{
 
     // Get all inventory objects
     $all_organizational_units = array();
-    $all_organizational_units = $this->inventory_model->getAllorganizationalUnits();    
+    $all_organizational_units = $this->inventory_model->getAllorganizationalUnits();
 
 
     // Get only filtered objects from Database
@@ -108,22 +108,22 @@ public function index($filter=null)	{
     $all_materials = $this->inventory_model->getAllMaterials();
 
     $all_locations = array();
-    $all_locations = $this->inventory_model->getAllLocations();    
+    $all_locations = $this->inventory_model->getAllLocations();
 
     $all_brands = array();
-    $all_brands = $this->inventory_model->getAllBrands(); 
+    $all_brands = $this->inventory_model->getAllBrands();
 
     $all_models = array();
-    $all_models = $this->inventory_model->getAllModels(); 
+    $all_models = $this->inventory_model->getAllModels();
 
     $all_providers = array();
-    $all_providers = $this->inventory_model->getAllProviders(); 
+    $all_providers = $this->inventory_model->getAllProviders();
 
     $all_users = array();
-    $all_users = $this->inventory_model->getAllUsers(); 
+    $all_users = $this->inventory_model->getAllUsers();
 
     $all_money_sources = array();
-    $all_money_sources = $this->inventory_model->getAllMoneySources(); 
+    $all_money_sources = $this->inventory_model->getAllMoneySources();
 
 
     //Aply filters TODO
@@ -133,7 +133,7 @@ public function index($filter=null)	{
     } else {
        $output['inventory_objects'] = $filtered_inventory_object;
     }
-    
+
     //echo count(array_filter($selected));
     $output['organizational_units'] = $all_organizational_units;
     $output['materials'] = $all_materials;
@@ -146,25 +146,25 @@ public function index($filter=null)	{
     $output['selected'] = $selected;
 
 
-	$this->_load_html_header($header_data,$output); 
-    $this->_load_body_header();      
-    
-    $this->load->view('inventory_reports.php',$output);     
-       
-    $this->_load_body_footer();  
-                
+	$this->_load_html_header($header_data,$output);
+    $this->_load_body_header();
+
+    $this->load->view('inventory_reports.php',$output);
+
+    $this->_load_body_footer();
+
 }
-	
+
 function load_ace_files($active_menu){
 
 	$header_data= $this->add_css_to_html_header_data(
             $this->_get_html_header_data(),
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+            "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
 /*
 	$header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));  
-*/ 
+            base_url('assets/css/no_padding_top.css'));
+*/
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));
@@ -182,13 +182,13 @@ function load_ace_files($active_menu){
                 base_url('assets/css/ace.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace-responsive.min.css'));        
+                base_url('assets/css/ace-responsive.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                base_url('assets/css/ace-skins.min.css'));      
+                base_url('assets/css/ace-skins.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-                "http://cdn.jsdelivr.net/select2/3.4.5/select2.css");        
+                "https://cdn.jsdelivr.net/select2/3.4.5/select2.css");
 
 
         //JS
@@ -197,10 +197,10 @@ function load_ace_files($active_menu){
             "https://code.jquery.com/jquery-1.11.0.min.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/jquery-migrate-1.2.1.min.js");
+            "https://code.jquery.com/jquery-migrate-1.2.1.min.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            "http://code.jquery.com/ui/1.10.3/jquery-ui.js");  
+            "https://code.jquery.com/ui/1.10.3/jquery-ui.js");
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
                 base_url('assets/grocery_crud/themes/datatables/js/jquery.dataTables.min.js'));
@@ -227,14 +227,14 @@ function load_ace_files($active_menu){
                 base_url('assets/grocery_crud/themes/datatables/extras/ColReorder/media/js/ColReorder.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-                base_url('assets/grocery_crud/themes/datatables/extras/ColVis/media/js/ColVis.min.js')); 
+                base_url('assets/grocery_crud/themes/datatables/extras/ColVis/media/js/ColVis.min.js'));
         $header_data= $this->add_javascript_to_html_header_data(
                 $header_data,
-                "http://cdn.jsdelivr.net/select2/3.4.5/select2.js");
+                "https://cdn.jsdelivr.net/select2/3.4.5/select2.js");
 
 
         $header_data['menu']= $active_menu;
-        return $header_data; 
+        return $header_data;
 }
 
 function check_logged_user()

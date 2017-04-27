@@ -25,11 +25,11 @@
                 </h1>
 </div><!-- /.page-header -->
 
-	  
+
 
 <div style='height:10px;'></div>
 	<div style="margin:10px;">
-   		
+
       <!--
       <div class="alert alert-block alert-success">
         <button type="button" class="close" data-dismiss="alert">
@@ -45,10 +45,10 @@
       <script>
       $(function(){
 
-              //Jquery select plugin: http://ivaynberg.github.io/select2/
+              //Jquery select plugin: https://ivaynberg.github.io/select2/
               $("#select_teacher_academic_period_filter").select2();
 
-              $('#select_teacher_academic_period_filter').on("change", function(e) {  
+              $('#select_teacher_academic_period_filter').on("change", function(e) {
                   var selectedValue = $("#select_teacher_academic_period_filter").select2("val");
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[1];
@@ -103,12 +103,12 @@
                         "oPaginate": {
                                 "sFirst":    "Primer",
                                 "sPrevious": "Anterior",
-                                "sNext":     "Següent", 
-                                "sLast":     "Últim"    
+                                "sNext":     "Següent",
+                                "sLast":     "Últim"
                         }
             }
-             
-        });  
+
+        });
 
 });
 </script>
@@ -121,8 +121,8 @@
       <td colspan="13" style="text-align: center;"> <h5>Filtres
         </h5></td>
     </tr>
-    <tr> 
-       <td><?php echo lang('teacher_academic_period')?>: 
+    <tr>
+       <td><?php echo lang('teacher_academic_period')?>:
           <select id="select_teacher_academic_period_filter">
           <?php foreach ($academic_periods as $academic_period_key => $academic_period_value) : ?>
 
@@ -134,21 +134,21 @@
               <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
               <?php endif; ?>
-            <?php else: ?>   
+            <?php else: ?>
                 <?php if ( $academic_period_value->current == 1) : ?>
                   <option selected="selected" value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
                 <?php else: ?>
                   <option value="<?php echo $academic_period_key ;?>"><?php echo $academic_period_value->shortname ;?></option>
-                <?php endif; ?> 
-            <?php endif; ?> 
+                <?php endif; ?>
+            <?php endif; ?>
 
 
           <?php endforeach; ?>
           </select>
        </td>
     </tr>
-  </thead>  
-</table>    
+  </thead>
+</table>
 
 </div>
 
@@ -162,7 +162,7 @@
       </a>
       </h4></td>
   </tr>
-  <tr>      
+  <tr>
   	 <th><?php echo lang('teacher_id')?></th>
      <th><?php echo lang('teacher_photo')?></th>
      <th><?php echo lang('teacher_code')?></th>
@@ -186,14 +186,14 @@
      <th><?php echo lang('teacher_charge_on_sheet')?></th>
   </tr>
 
- </thead>        
+ </thead>
 
  <tbody>
   <!-- Iteration that shows teachers-->
   <?php if (is_array($all_teachers)) : ?>
    <?php foreach ($all_teachers as $teacher_key => $teacher) : ?>
-   
-   <tr align="center" class="{cycle values='tr0,tr1'}">   
+
+   <tr align="center" class="{cycle values='tr0,tr1'}">
      <td>
           <a href="<?php echo base_url('/index.php/teachers/index/read/' . $teacher->id ) ;?>">
            <?php echo $teacher->id;?>
@@ -219,7 +219,7 @@
      </td>
 
      <td>
-           <?php 
+           <?php
            $teacher_person_full_name = $teacher->person_sn1 . " " . $teacher->person_sn2 . ", " . $teacher->givenName;
            echo $teacher_person_full_name;
            ?>
@@ -242,24 +242,24 @@
      </td>
 
      <td>
-         <?php 
+         <?php
          if ($teacher->real_ldap_dn) {
             echo $teacher->real_ldap_dn;
          } else {
             echo "ERROR: No trobat!";
          }
-         
+
          ;?>
      </td>
 
      <td>
-         <?php 
+         <?php
          if ($teacher->ldap_dn == "") {
             echo "&nbsp;";
          } else {
             echo $teacher->ldap_dn;
          }
-         
+
          ;?>
      </td>
 
@@ -307,10 +307,10 @@
   <?php endif; ?>
  </tbody>
 
-</table> 
+</table>
 
 
 <div class="space-30"></div>
 
-	</div>	
+	</div>
 </div>

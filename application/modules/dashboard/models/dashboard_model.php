@@ -6,10 +6,10 @@
  * @package    	Ebre-escool
  * @author     	Sergi Tur <sergiturbadenas@gmail.com>
  * @version    	1.0
- * @link		http://www.acacha.com/index.php/ebre-escool
+ * @link		https://www.acacha.com/index.php/ebre-escool
  */
 class dashboard_model  extends CI_Model  {
-	
+
 	function __construct()
     {
         parent::__construct();
@@ -17,7 +17,7 @@ class dashboard_model  extends CI_Model  {
     }
 
     function getTeachersStatistics() {
-        
+
         $teachers_statistics = array();
         $teachers_statistics['total_teachers'] = 69;
         return $teachers_statistics;
@@ -26,7 +26,7 @@ class dashboard_model  extends CI_Model  {
     function getEnrollmentStatistics() {
 
         $enrollment_statistics = array();
-        
+
         $this->db->from('enrollment');
         //TODO: get current period from config
         $this->db->where('enrollment_periodid',"2016-17");
@@ -34,12 +34,12 @@ class dashboard_model  extends CI_Model  {
 
         $enrollment_statistics['total_number_of_current_period_enrolled_persons'] = $query->num_rows();
 
-        /*SELECT 
+        /*SELECT
         FROM enrollment
         INNER JOIN enrollment_submodules ON enrollment.enrollment_id = enrollment_submodules.enrollment_submodules_enrollment_id
         WHERE enrollment.`enrollment_periodid`="2014-15"
         */
-        
+
         $this->db->from('enrollment');
         //TODO: get current period from config
         $this->db->where('enrollment_periodid',"2016-17");
@@ -47,11 +47,11 @@ class dashboard_model  extends CI_Model  {
         $query = $this->db->get();
 
         $enrollment_statistics['total_study_submodules'] = $query->num_rows();
-        
+
         return $enrollment_statistics;
 
     }
-    
+
 
     function getCurriculumStatistics() {
 
@@ -90,7 +90,7 @@ class dashboard_model  extends CI_Model  {
         return $curriculum_statistics;
     }
 
-    
+
 
     function getStudentsStatistics() {
 
@@ -120,7 +120,7 @@ class dashboard_model  extends CI_Model  {
     	$this->db->from('person');
         //$this->db->select('organizational_unit_name');
         //$this->db->where('organizational_unit_Id',$ou_id);
-	       
+
         $query = $this->db->get();
 
         $person_statistics['total_number_of_persons'] = $query->num_rows();
@@ -141,16 +141,16 @@ class dashboard_model  extends CI_Model  {
         }
 
         //PHOTOS
-        //SELECT `person_photo` FROM `person` 
+        //SELECT `person_photo` FROM `person`
         $person_statistics['without_photo_persons'] = $photos_url_filenotexists;
         $person_statistics['without_photo_persons_id'] = $photos_url_filenotexists_id;
 
-		
+
 		//All persons without person_official_id (DNI p.ex.) duplicates!
 		$this->db->from('person');
 		$this->db->select('person_official_id');
         $this->db->distinct();
-        	       
+
         $query = $this->db->get();
 
         $person_statistics['total_number_of_distinct_persons'] = $query->num_rows();
@@ -161,7 +161,7 @@ class dashboard_model  extends CI_Model  {
 
         //Get Duplicated ids
 		/*
-        SELECT `person_official_id` 
+        SELECT `person_official_id`
 		FROM person
 		GROUP BY `person_official_id`
 		HAVING count( * ) >1
@@ -170,9 +170,9 @@ class dashboard_model  extends CI_Model  {
 		//All persons without person_official_id (DNI p.ex.) duplicates!
 		$this->db->from('person');
 		$this->db->select('person_official_id');
-        $this->db->group_by("person_official_id"); 
-        $this->db->having('count( * ) > 1'); 
-        	       
+        $this->db->group_by("person_official_id");
+        $this->db->having('count( * ) > 1');
+
         $query = $this->db->get();
         $duplicated_person_ids = array();
 
@@ -180,19 +180,19 @@ class dashboard_model  extends CI_Model  {
    			foreach ($query->result() as $row)	{
       			$duplicated_person_ids[] = $row->person_official_id;
    			}
-		} 	
+		}
 
         $person_statistics['duplicated_person_ids'] = $duplicated_person_ids;
 
         /*
-        /* SELECT `person_gender`,count(`person_id`) FROM `person` GROUP BY  `person_gender` 
-        /* 
+        /* SELECT `person_gender`,count(`person_id`) FROM `person` GROUP BY  `person_gender`
+        /*
         */
 
         $this->db->from('person');
         $this->db->select('person_gender,count(person_id) as total');
-        $this->db->group_by("person_gender"); 
-                   
+        $this->db->group_by("person_gender");
+
         $query = $this->db->get();
 
         $male_persons = 0;
@@ -205,20 +205,20 @@ class dashboard_model  extends CI_Model  {
                 if ($row->person_gender == "F")
                     $female_persons  = $row->total;
             }
-        }   
+        }
 
         $person_statistics['male_persons'] = $male_persons;
         $person_statistics['female_persons'] = $female_persons;
         $person_statistics['not_gender_defined_persons'] = $person_statistics['total_number_of_persons'] - $female_persons - $male_persons;
 
         //emails
-        //SELECT `person_email`,count(`person_id`) as total FROM `person` GROUP BY  `person_email`HAVING total > 1 ORDER BY total DESC 
+        //SELECT `person_email`,count(`person_id`) as total FROM `person` GROUP BY  `person_email`HAVING total > 1 ORDER BY total DESC
 
         $this->db->from('person');
         $this->db->select('person_email,count(person_id) as total');
-        $this->db->group_by("person_email"); 
-        $this->db->having('total > 1'); 
-                   
+        $this->db->group_by("person_email");
+        $this->db->having('total > 1');
+
         $query = $this->db->get();
 
         $male_persons = 0;
@@ -231,27 +231,27 @@ class dashboard_model  extends CI_Model  {
                     $undefined_emails = $row->total;
                 }
             }
-        }   
+        }
 
         $person_statistics['undefined_emails'] = $undefined_emails;
         $person_statistics['duplicated_emails'] = $query->num_rows() -1;
 
         return $person_statistics;
     }
-    
-   
+
+
 
     function get_primary_key($table_name) {
 		$fields = $this->db->field_data($table_name);
-		
+
 		foreach ($fields as $field)	{
 			if ($field->primary_key) {
 					return $field->name;
 			}
-		} 	
+		}
 		return false;
 	}
 
-	
-	
+
+
 }

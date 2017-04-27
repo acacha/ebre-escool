@@ -7,7 +7,7 @@
  * @subpackage  API
  * @category    Controller
  * @author         Sergi Tur Badenas
- * @link        http://acacha.org/meidawiki/index.php/ebre-escool
+ * @link        https://acacha.org/meidawiki/index.php/ebre-escool
 */
 
 
@@ -25,8 +25,8 @@ class ebreescool_api_test extends CI_Controller
 
         // Set config options (only 'server' is required to work)
 
-        //http://localhost/ebre-escool/index.php/api/ebreescool/person/id/1
-        $config = array('server'          => 'http://localhost/ebre-escool/index.php/api/ebreescool/',
+        //https://localhost/ebre-escool/index.php/api/ebreescool/person/id/1
+        $config = array('server'          => 'https://localhost/ebre-escool/index.php/api/ebreescool/',
                         'api_key'         => $this->config->item('api_key'),
                         'api_name'        => 'X-API-KEY',
                         //'http_user'       => 'username',
@@ -46,35 +46,35 @@ class ebreescool_api_test extends CI_Controller
         $person = $this->rest->get('person/id/1');
 
         echo json_encode($person);
-        
+
     }
 
     public function person_post(){
         // Pull in an array of tweets
-        
+
         $givenName = "Sergi";
         $sn1 = "Tur";
         $sn2 = "Badenas";
-        
+
         // altres camps...
 
         $post_array = array(
-            "givenName" => $givenName, 
-            "sn1" => $sn1, 
+            "givenName" => $givenName,
+            "sn1" => $sn1,
             "sn2" => $sn2
             //other field...
             );
-        
-        // Pull in an array of tweets        
+
+        // Pull in an array of tweets
         $result = $this->rest->post('person',$post_array);
-        
-        echo "<br> STATUS CODE: " . $result = 
+
+        echo "<br> STATUS CODE: " . $result =
             $this->rest->status() . "</br>";
-        
+
         $result = $this->rest->debug();
 
         echo json_encode($result);
-        
+
     }
 
     /*
@@ -83,9 +83,9 @@ class ebreescool_api_test extends CI_Controller
     */
     public function test_login(){
 
-        echo "DEPRECATED! Use <a href=\"http://" . $_SERVER['SERVER_NAME'] . "/ebre-escool/index.php/api/ebreescool_login_api_test/test_login\">http://" . $_SERVER['SERVER_NAME'] . "/ebre-escool/index.php/api/ebreescool_login_api_test/test_login</a> instead";
-        
-        
+        echo "DEPRECATED! Use <a href=\"https://" . $_SERVER['SERVER_NAME'] . "/ebre-escool/index.php/api/ebreescool_login_api_test/test_login\">https://" . $_SERVER['SERVER_NAME'] . "/ebre-escool/index.php/api/ebreescool_login_api_test/test_login</a> instead";
+
+
     }
-    
+
 }

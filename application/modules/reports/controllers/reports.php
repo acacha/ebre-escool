@@ -16,14 +16,14 @@ class reports extends skeleton_main {
 	function __construct()
     {
         parent::__construct();
-        
+
         $this->load->library('ebre_escool_ldap');
 
         $this->load->library('ebre_escool');
-        
-        // Load FPDF        
+
+        // Load FPDF
         $this->load->add_package_path(APPPATH.'third_party/fpdf-codeigniter/application/');
-        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');        
+        $params = array ('orientation' => 'P', 'unit' => 'mm', 'size' => 'A4', 'font_path' => 'font/');
         $this->load->library('pdf',$params); // Load library
 
         /* Set language */
@@ -31,11 +31,11 @@ class reports extends skeleton_main {
         if ($current_language == "") {
             $current_language= $this->config->item('default_language');
         }
-        
+
         // Load the language file
         $this->lang->load('reports',$current_language);
         $this->load->helper('language');
-        
+
 	}
 
 	public function load_header_data($menu = false){
@@ -43,14 +43,14 @@ class reports extends skeleton_main {
 		$active_menu = $menu;
 
 		//CSS URLS
-		$jquery_ui_css_url = "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
-		$jquery_ui_editable_css_url = "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
-		$select2_css_url = "http://cdn.jsdelivr.net/select2/3.4.5/select2.css";
+		$jquery_ui_css_url = "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
+		$jquery_ui_editable_css_url = "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
+		$select2_css_url = "https://cdn.jsdelivr.net/select2/3.4.5/select2.css";
 		//JS URLS
-		$jquery_url= "http://code.jquery.com/jquery-1.9.1.js";
-		$jquery_ui_url= "http://code.jquery.com/ui/1.10.3/jquery-ui.js";
-		$select2_url= "http://cdn.jsdelivr.net/select2/3.4.5/select2.js";
-		$jquery_ui_editable_url= "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
+		$jquery_url= "https://code.jquery.com/jquery-1.9.1.js";
+		$jquery_ui_url= "https://code.jquery.com/ui/1.10.3/jquery-ui.js";
+		$select2_url= "https://cdn.jsdelivr.net/select2/3.4.5/select2.js";
+		$jquery_ui_editable_url= "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
 
 		if (defined('ENVIRONMENT') && ENVIRONMENT=="development") {
   			$jquery_ui_css_url = base_url('assets/css/jquery-ui.css');
@@ -74,7 +74,7 @@ class reports extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css'));  
+            base_url('assets/css/datepicker.css'));
 
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
@@ -82,9 +82,9 @@ class reports extends skeleton_main {
 
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-            base_url('assets/css/tribal-timetable.css')); 
+            base_url('assets/css/tribal-timetable.css'));
 
-		
+
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/css/bootstrap-switch.min.css'));
@@ -92,7 +92,7 @@ class reports extends skeleton_main {
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/bootstrap.min.extracolours.css')); 
+            base_url('assets/css/bootstrap.min.extracolours.css'));
 
 //ACE
         $header_data= $this->add_css_to_html_header_data(
@@ -116,7 +116,7 @@ class reports extends skeleton_main {
             base_url('assets/grocery_crud/css/jquery_plugins/fancybox/jquery.fancybox.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            'http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css');
+            'https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css');
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/grocery_crud/themes/datatables/extras/TableTools/media/css/TableTools.css'));
@@ -134,15 +134,15 @@ class reports extends skeleton_main {
             $header_data,
             base_url('assets/css/daterangepicker.css'));
 
-/*        
+/*
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/no_padding_top.css'));        
+            base_url('assets/css/no_padding_top.css'));
 
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/chosen.min.css'));        
+            base_url('assets/css/chosen.min.css'));
 */
 		//JS Already load at skeleton main!!!
 		$header_data= $this->add_javascript_to_html_header_data(
@@ -151,7 +151,7 @@ class reports extends skeleton_main {
 
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			$jquery_ui_url);	
+			$jquery_ui_url);
 
 
 		$header_data= $this->add_javascript_to_html_header_data(
@@ -186,7 +186,7 @@ class reports extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/bootstrap-collapse.js'));                
+            base_url('assets/js/bootstrap-collapse.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -196,7 +196,7 @@ class reports extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/tribal-shared.js'));        
+            base_url('assets/js/tribal-shared.js'));
 
 
         $header_data= $this->add_javascript_to_html_header_data(
@@ -206,7 +206,7 @@ class reports extends skeleton_main {
 
         $header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			"http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");
+			"https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js");
 
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
@@ -231,7 +231,7 @@ class reports extends skeleton_main {
                     $header_data,
                     base_url('assets/js/bootstrap-switch.min.js'));
 
- //ACE        
+ //ACE
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace-extra.min.js'));
@@ -241,7 +241,7 @@ class reports extends skeleton_main {
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
                     base_url('assets/js/ace.min.js'));
-                    
+
 /*
         $header_data= $this->add_javascript_to_html_header_data(
                     $header_data,
@@ -271,8 +271,8 @@ class reports extends skeleton_main {
 
 
 		$header_data['menu']= $active_menu;
-		return $header_data; 
-        
+		return $header_data;
+
     }
 
 	function check_logged_user() {
@@ -305,15 +305,15 @@ class reports extends skeleton_main {
 			} elseif (isset($_GET['classroom_group_id'])) {
 				$classroom_group_id = $_GET['classroom_group_id'];
 			}
-		} 
+		}
 
 		if ($academic_period == null) {
 			if(isset($_POST['academic_period_id'])) {
 				$academic_period = $_POST['academic_period_id'];
 			} elseif (isset($_GET['academic_period_id'])) {
 				$classroom_group_id = $_GET['academic_period_id'];
-			}	
-		} 
+			}
+		}
 
         if ($checkbox_show_all_group_enrolled_students == null) {
             if(isset($_POST['checkbox_show_all_group_enrolled_students'])) {
@@ -321,7 +321,7 @@ class reports extends skeleton_main {
             } elseif (isset($_GET['checkbox_show_all_group_enrolled_students'])) {
                 $checkbox_show_all_group_enrolled_students = $_GET['checkbox_show_all_group_enrolled_students'];
             }
-        } 
+        }
 
         if ($checkbox_show_all_students == null) {
             if(isset($_POST['checkbox_show_all_students'])) {
@@ -329,7 +329,7 @@ class reports extends skeleton_main {
             } elseif (isset($_GET['checkbox_show_all_students'])) {
                 $checkbox_show_all_students = $_GET['checkbox_show_all_students'];
             }
-        } 
+        }
 
         if ($checkbox_show_hide_students == null) {
             if(isset($_POST['checkbox_show_hide_students'])) {
@@ -345,7 +345,7 @@ class reports extends skeleton_main {
             } elseif (isset($_GET['teacher_id'])) {
                 $teacher_id = $_GET['teacher_id'];
             }
-        } 
+        }
 
         //DEBUG
         //echo "classroom_group_id 2: " . $classroom_group_id . " || ";
@@ -360,9 +360,9 @@ class reports extends skeleton_main {
 		$class_list = array();
 		if ($classroom_group_id != null &&  $academic_period != null) {
 			$class_list = $this->reports_model->get_class_list($classroom_group_id,$academic_period,
-                $checkbox_show_all_group_enrolled_students,$checkbox_show_all_students,$checkbox_show_hide_students,$teacher_id);    	
+                $checkbox_show_all_group_enrolled_students,$checkbox_show_all_students,$checkbox_show_hide_students,$teacher_id);
 		}
-	    
+
 	    if (is_array($class_list)) {
 	    	echo '{
 		    "aaData": ';
@@ -382,7 +382,7 @@ class reports extends skeleton_main {
 		    echo '}';
 	    }
 
-	    
+
 	}
 
     function hide_unhide_student_on_classroom_group( $person_id = null, $classroom_group_id = null, $teacher_id = null, $academic_period_id = null, $action = null) {
@@ -404,7 +404,7 @@ class reports extends skeleton_main {
             } else {
                 return $result;
             }
-        } 
+        }
 
         if ($classroom_group_id == null) {
             if(isset($_POST['classroom_group_id'])) {
@@ -413,8 +413,8 @@ class reports extends skeleton_main {
                 $classroom_group_id = $_GET['classroom_group_id'];
             } else {
                 return $result;
-            }   
-        } 
+            }
+        }
 
         if ($teacher_id == null) {
             if(isset($_POST['teacher_id'])) {
@@ -424,7 +424,7 @@ class reports extends skeleton_main {
             } else {
                 return $result;
             }
-        } 
+        }
 
         if ($academic_period_id == null) {
             if(isset($_POST['academic_period_id'])) {
@@ -434,7 +434,7 @@ class reports extends skeleton_main {
             } else {
                 return $result;
             }
-        } 
+        }
 
         if ($action == null) {
             if(isset($_POST['action'])) {
@@ -444,7 +444,7 @@ class reports extends skeleton_main {
             } else {
                 return $result;
             }
-        } 
+        }
 
         $this->load->model('reports_model');
         if ($action == "hide") {
@@ -477,7 +477,7 @@ class reports extends skeleton_main {
 		$header_data = $this->load_header_data($active_menu);
 
         $this->_load_html_header($header_data);
-		
+
 		$this->_load_body_header();
 
 		//Check if user is manager -> Show all groups
@@ -493,14 +493,14 @@ class reports extends skeleton_main {
 
         if ($academic_period_id == null) {
             $database_current_academic_period =  $this->reports_model->get_current_academic_period();
-            
+
             if ($database_current_academic_period->id) {
                 $current_academic_period_id = $database_current_academic_period->id;
             } else {
-                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');  
+                $current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
             }
-            
-            $academic_period_id=$current_academic_period_id ;   
+
+            $academic_period_id=$current_academic_period_id ;
         } else {
             $selected_academic_period_id = $academic_period_id;
         }
@@ -531,8 +531,8 @@ class reports extends skeleton_main {
             }
         }
 
-        
-        
+
+
         $all_classgroups = array();
         if ($mentor_id == null) {
         	$all_classgroups = $this->reports_model->get_all_classgroups_report_info($academic_period_id);
@@ -540,15 +540,15 @@ class reports extends skeleton_main {
             if ($mentor_id == "void") {
                 $all_classgroups = $this->reports_model->get_all_classgroups_report_info($academic_period_id);
             } else {
-                $all_classgroups = $this->reports_model->get_all_classgroups_report_info_by_mentor_id($academic_period_id,$mentor_id);    
+                $all_classgroups = $this->reports_model->get_all_classgroups_report_info_by_mentor_id($academic_period_id,$mentor_id);
             }
         }
-        
+
 
 		$data['all_classgroups'] = $all_classgroups;
 
-        $data['default_classroom_group_id'] = $default_classroom_group_id;    
-       
+        $data['default_classroom_group_id'] = $default_classroom_group_id;
+
         $data['academic_periods'] = $academic_periods;
         $data['selected_academic_period_id'] = $selected_academic_period_id;
         $data['academic_period_id'] = $academic_period_id;
@@ -556,16 +556,16 @@ class reports extends skeleton_main {
         $data['mentor_id'] = $mentor_id;
 
         $person_id=$this->session->userdata('person_id');
-        
+
         //$user_teacher_code = $this->reports_model->get_teacher_code_by_personid($person_id);
-        
+
         $user_teacher_id = $this->reports_model->get_teacher_id_by_personid($person_id);
 
         if ($teacher_id == null) {
             $teacher_id = $user_teacher_id;
         } else {
-            if (!$user_is_admin) { 
-                $teacher_id = $user_teacher_id; 
+            if (!$user_is_admin) {
+                $teacher_id = $user_teacher_id;
             }
         }
 
@@ -587,9 +587,9 @@ class reports extends skeleton_main {
         //$data['default_teacher_code'] = $teacher_code;
         $data['default_teacher'] = $teacher_id;
 
-		$this->load->view('mentoring_classlists',$data);	
+		$this->load->view('mentoring_classlists',$data);
 
-		$this->_load_body_footer();		
+		$this->_load_body_footer();
 	}
 
     function general_sheet_by_ap($academic_period_id = null) {
@@ -645,7 +645,7 @@ class reports extends skeleton_main {
 
         $this->_load_body_footer();
     }
-	
+
 	/*
 	 * Include teachers sheet and other info like employees
 	 */
@@ -656,7 +656,7 @@ class reports extends skeleton_main {
             //redirect them to the login page
             redirect($this->skeleton_auth->login_page, 'refresh');
         }
-		
+
 		$this->load->model('reports_model');
 
         if ($academic_period_id==null) {
@@ -673,7 +673,7 @@ class reports extends skeleton_main {
 
         $all_conserges = $this->reports_model->get_all_conserges();
         $all_secretaria = $this->reports_model->get_all_secretaria();
-        
+
         $default_group_code = $this->config->item('default_group_code');
 
         $group_code=$default_group_code;
@@ -681,7 +681,7 @@ class reports extends skeleton_main {
         $organization = $this->config->item('organization','skeleton_auth');
 
         $header_data['header_title']=lang("all_teachers") . ". " . $organization;
-    
+
 //        $all_teachers = $this->ebre_escool_ldap->getAllTeachers("ou=Profes,ou=All,dc=iesebre,dc=com");
 //        $all_conserges = $this->ebre_escool_ldap->getAllTeachers("ou=Consergeria,ou=Personal,ou=All,dc=iesebre,dc=com");
 //        $all_secretaria = $this->ebre_escool_ldap->getAllTeachers("ou=Secretaria,ou=Personal,ou=All,dc=iesebre,dc=com");
@@ -740,7 +740,7 @@ foreach($all_secretaria as $secretaria){
 */
 
         //print_r(array_keys($all_teachers[0]));
-        
+
 		$contador = 0;
 		$professor = array();
 		$conserge = array();
@@ -764,7 +764,7 @@ echo $cons->photo_url;
 			$conserge[$contador]['photo']=base_url('uploads/person_photos')."/".$cons->photo_url;
 
 			if( file_exists(getcwd().'/uploads/person_photos/'.$cons->photo_url)) {
-			
+
 				$conserge[$contador]['photo']=base_url('uploads/person_photos')."/".$cons->photo_url;
 			} else {
 				$conserge[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -811,7 +811,7 @@ echo $cons->photo_url;
 			$secretaria[$contador]['photo']=base_url('uploads/person_photos')."/".$secr->photo_url;
 
 			if( file_exists(getcwd().'/uploads/person_photos/'.$secr->photo_url)) {
-			
+
 				$secretaria[$contador]['photo']=base_url('uploads/person_photos')."/".$secr->photo_url;
 			} else {
 				$secretaria[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -929,7 +929,7 @@ echo $cons->photo_url;
 		$pdf->SetMargins(10,10,10);
 		//Obro una pàgina
 		$pdf->AddPage();
-				//$pdf->Image($jpeg_file_cons[0],166,222,10);        
+				//$pdf->Image($jpeg_file_cons[0],166,222,10);
 		//$pdf->AddPage("P","A3");
 		//Es la posicio exacta on comença a escriure
 		$x=7;//10
@@ -950,7 +950,7 @@ echo $cons->photo_url;
 		$pdf->SetFont('Arial','B',15);
 		//$pdf->Cell(Amplada, altura, text, marc, on es comença a escriure després, alineació)
 		$pdf->SetXY(10,10);
-	
+
 		$pdf->Cell(190,6,"PROFESSORAT ". $academic_period->shortname ,0,0,'C');
 		$y=$y+6;
 
@@ -964,7 +964,7 @@ echo $cons->photo_url;
 
 		//Paràmetres de tamany de les fotos, $xx indica l'amplada de la foto, $yy indica
 		//l'altura de cada camp del professor, l'altura de la foto es 3 vegades aquest valor
-		//En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files  
+		//En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files
 		$xx=11;//10//Amplada horitzontal de cada professor es tocada segons el nombre de professors que hi haguin
 
 		//Sergi Tur
@@ -977,7 +977,7 @@ echo $cons->photo_url;
 		$yy=4.75;
 
 		//Amb aquestes fòrmules defineixo les coordenades de cada camp de cada professor
-		//Fòrmula: posició inicial de x/y * columna * camps de cada professor 
+		//Fòrmula: posició inicial de x/y * columna * camps de cada professor
 
 		//Ampla de la columna amb el nom i cognoms del professor
 		$x_name=12;
@@ -999,7 +999,7 @@ echo $cons->photo_url;
 
 		//Imprimeixo sempre els conserges i secretàries en una posició fixa el primer cop
 		//TODO: Obtenir les dades de les carpetes personal de Gosa:
-				
+
 		//Posició inicial conserges:
 
 			$initial_x_personal=166;
@@ -1007,72 +1007,72 @@ echo $cons->photo_url;
 			$initial_y_personal_=229;
 
 			$width_personal_foto=10;
-					
+
 			$pdf->SetFont('Arial','B',8);
-			$pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));                
-			$pdf->SetFont('Arial','',4); 	
-			
+			$pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));
+			$pdf->SetFont('Arial','',4);
+
 			$x_personal=$initial_x_personal;
 			$y_personal=$initial_y_personal;
 			for($cont=0;$cont<count($conserge);$cont++){
 
-				$pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-				$pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));                
-				$pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));   
+				$pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto);
+				$pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));
+				$pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));
 				$x_personal=$x_personal+14;
 				if(($cont+1)%3==0){
 					$x_personal=$initial_x_personal;
-					$y_personal=$initial_y_personal+40;			
-				}		
-			}	
+					$y_personal=$initial_y_personal+40;
+				}
+			}
 
-			$pdf->SetFont('Arial','B',8);   
-			$pdf->Text($initial_x_personal+3,$initial_y_personal_+22,utf8_decode("SECRETÀRIES"));	
-			$pdf->SetFont('Arial','',4); 
+			$pdf->SetFont('Arial','B',8);
+			$pdf->Text($initial_x_personal+3,$initial_y_personal_+22,utf8_decode("SECRETÀRIES"));
+			$pdf->SetFont('Arial','',4);
 
 			$x_personal=$initial_x_personal;
 			$y_personal=$initial_y_personal_+24;
 			for($cont=0;$cont<count($secretaria);$cont++){
 
-				$pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-				$pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));                
-				$pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));   
+				$pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto);
+				$pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));
+				$pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));
 				$x_personal=$x_personal+14;
 				if(($cont+1)%3==0){
 					$x_personal=$initial_x_personal;
-					$y_personal=$initial_y_personal_+42;			
+					$y_personal=$initial_y_personal_+42;
 				}
-			}	
+			}
 
-		/*	
-			//Foto                
-			$pdf->Image($jpeg_file_cons[0],$initial_x_personal,$initial_y_personal,$width_personal_foto);                
-			$pdf->SetFont('Arial','',5);                
-			//Nom                
-			$pdf->Text($initial_x_personal+1,$initial_y_personal+15,utf8_decode($conserge[0]['name']));                
-			//Cognom                
-			$pdf->Text($initial_x_personal+1,$initial_y_personal+17,utf8_decode($conserge[0]['sn']));                
-			$pdf->Image($jpeg_file_cons[1],$initial_x_personal+14,$initial_y_personal,$width_personal_foto);                
-			$pdf->Text($initial_x_personal+15,$initial_y_personal+14,utf8_decode($conserge[1]['name']));                  
-			$pdf->Text($initial_x_personal+15,$initial_y_personal+16,utf8_decode($conserge[1]['sn']));                
-			$pdf->Image($jpeg_file_cons[2],$initial_x_personal+28,$initial_y_personal,$width_personal_foto);                
-			$pdf->Text($initial_x_personal+30,$initial_y_personal+14,utf8_decode($conserge[2]['name']));                
-			$pdf->Text($initial_x_personal+30,$initial_y_personal+16,utf8_decode($conserge[2]['sn']));                
+		/*
+			//Foto
+			$pdf->Image($jpeg_file_cons[0],$initial_x_personal,$initial_y_personal,$width_personal_foto);
+			$pdf->SetFont('Arial','',5);
+			//Nom
+			$pdf->Text($initial_x_personal+1,$initial_y_personal+15,utf8_decode($conserge[0]['name']));
+			//Cognom
+			$pdf->Text($initial_x_personal+1,$initial_y_personal+17,utf8_decode($conserge[0]['sn']));
+			$pdf->Image($jpeg_file_cons[1],$initial_x_personal+14,$initial_y_personal,$width_personal_foto);
+			$pdf->Text($initial_x_personal+15,$initial_y_personal+14,utf8_decode($conserge[1]['name']));
+			$pdf->Text($initial_x_personal+15,$initial_y_personal+16,utf8_decode($conserge[1]['sn']));
+			$pdf->Image($jpeg_file_cons[2],$initial_x_personal+28,$initial_y_personal,$width_personal_foto);
+			$pdf->Text($initial_x_personal+30,$initial_y_personal+14,utf8_decode($conserge[2]['name']));
+			$pdf->Text($initial_x_personal+30,$initial_y_personal+16,utf8_decode($conserge[2]['sn']));
 		*/
 			/*
-			$pdf->SetFont('Arial','B',8);                
-			$pdf->Text($initial_x_personal+3,$initial_y_personal+21,utf8_decode("SECRETÀRIES"));                
+			$pdf->SetFont('Arial','B',8);
+			$pdf->Text($initial_x_personal+3,$initial_y_personal+21,utf8_decode("SECRETÀRIES"));
 
-			$pdf->Image(base_url()."application/views/attendance_reports/foto.jpg",$initial_x_personal,$initial_y_personal+22,$width_personal_foto);                
-			$pdf->SetFont('Arial','',5);                
-			$pdf->Text($initial_x_personal+1,$initial_y_personal+36,utf8_decode("Cinta"));                
-			$pdf->Text($initial_x_personal+1,$initial_y_personal+38,utf8_decode("Tomas"));                
-			$pdf->Image(base_url()."application/views/attendance_reports/foto.jpg",$initial_x_personal+14,$initial_y_personal+22,$width_personal_foto);                
-			$pdf->Text($initial_x_personal+15,$initial_y_personal+36,utf8_decode("Yolanda"));                
-			$pdf->Text($initial_x_personal+15,$initial_y_personal+38,utf8_decode("Domingo"));                
-			$pdf->Image(base_url()."application/views/attendance_reports/foto.jpg",$initial_x_personal+28,$initial_y_personal+22,$width_personal_foto);                
-			$pdf->Text($initial_x_personal+29,$initial_y_personal+36,utf8_decode("Lluisa"));                
-			$pdf->Text($initial_x_personal+29,$initial_y_personal+38,utf8_decode("Gárcia"));                
+			$pdf->Image(base_url()."application/views/attendance_reports/foto.jpg",$initial_x_personal,$initial_y_personal+22,$width_personal_foto);
+			$pdf->SetFont('Arial','',5);
+			$pdf->Text($initial_x_personal+1,$initial_y_personal+36,utf8_decode("Cinta"));
+			$pdf->Text($initial_x_personal+1,$initial_y_personal+38,utf8_decode("Tomas"));
+			$pdf->Image(base_url()."application/views/attendance_reports/foto.jpg",$initial_x_personal+14,$initial_y_personal+22,$width_personal_foto);
+			$pdf->Text($initial_x_personal+15,$initial_y_personal+36,utf8_decode("Yolanda"));
+			$pdf->Text($initial_x_personal+15,$initial_y_personal+38,utf8_decode("Domingo"));
+			$pdf->Image(base_url()."application/views/attendance_reports/foto.jpg",$initial_x_personal+28,$initial_y_personal+22,$width_personal_foto);
+			$pdf->Text($initial_x_personal+29,$initial_y_personal+36,utf8_decode("Lluisa"));
+			$pdf->Text($initial_x_personal+29,$initial_y_personal+38,utf8_decode("Gárcia"));
 			$pdf->Image(base_url()."application/views/attendance_reports/foto.jpg",$initial_x_personal,$initial_y_personal+40,$width_personal_foto);
 			$pdf->Text($initial_x_personal,$initial_y_personal+54,utf8_decode("Sònia"));
 			$pdf->Text($initial_x_personal,$initial_y_personal+56,utf8_decode("Alegria"));
@@ -1092,11 +1092,11 @@ echo $cons->photo_url;
 
 				$pdf->SetFont('Arial','B',6);
 				$pdf->SetTextColor(255,0,0);
-				
+
 				$pdf->Text($x+22,$y,utf8_decode($professor[$j]['code']));
-				
+
 				$pdf->SetFont('Arial','',4);
-				$pdf->SetTextColor(0,0,0);		
+				$pdf->SetTextColor(0,0,0);
 				$pdf->Text($x+44,$y,utf8_decode($professor[$j]['carrec_line1']));
 				$pdf->Text($x+44,$y1-1,utf8_decode($professor[$j]['carrec_line2']));
 				$pdf->Text($x+22,$y1-1,utf8_decode($professor[$j]['name']));
@@ -1104,8 +1104,8 @@ echo $cons->photo_url;
 				$pdf->Text($x+44,$y2-2,utf8_decode($professor[$j]['carrec_line3']));
 				$pdf->Text($x+22,$y+11,utf8_decode($professor[$j]['sn2']));
 				$pdf->Text($x+44,$y+11,utf8_decode($professor[$j]['carrec_line4']));
-				//$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);                
-				$pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);                
+				//$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);
+				$pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);
 			//incremento la fila
 			$row++;
 			//incremento el marge
@@ -1116,7 +1116,7 @@ echo $cons->photo_url;
 			$y1=$y_start+$i+$row*$yy*3+$yy;
 			$y2=$y_start+$i+$row*$yy*3+$yy*2;
 
-			//màxim de files per pàgina 
+			//màxim de files per pàgina
 			if($row>18){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
 				//incremento la columna
 				$col++;
@@ -1124,10 +1124,10 @@ echo $cons->photo_url;
 				$row=0;
 				$i=0;
 				//Recàlculo les coordenades
-				$x=$x_start+$col*($xx+$x_name+$x_post)-22;   
+				$x=$x_start+$col*($xx+$x_name+$x_post)-22;
 				$x1=$x_start+$col*($xx+$x_name+$x_post)+$x_name;
 				$x2=$x_start+$col*($xx+$x_name+$x_post)+$x_name+$x_post;
-				
+
 				$y=$y_start+$i+$row*$yy*3;
 				$y1=$y_start+$i+$row*$yy*3+$yy;
 				$y2=$y_start+$i+$row*$yy*3+$yy*2;
@@ -1155,7 +1155,7 @@ echo $cons->photo_url;
 		//enviem tot al pdf
 		$pdf->Output("Professorat_". $academic_period->shortname ."_(".date("d-m-Y").").pdf", "I");
 
-		
+
 	}
 
     function general_sheet_dep($academic_period_id = null) {
@@ -1165,7 +1165,7 @@ echo $cons->photo_url;
             //redirect them to the login page
             redirect($this->skeleton_auth->login_page, 'refresh');
         }
-        
+
         $this->load->model('reports_model');
 
         if ($academic_period_id==null) {
@@ -1182,7 +1182,7 @@ echo $cons->photo_url;
 
         $all_conserges = $this->reports_model->get_all_conserges();
         $all_secretaria = $this->reports_model->get_all_secretaria();
-        
+
         $default_group_code = $this->config->item('default_group_code');
 
         $group_code=$default_group_code;
@@ -1190,10 +1190,10 @@ echo $cons->photo_url;
         $organization = $this->config->item('organization','skeleton_auth');
 
         $header_data['header_title']=lang("all_teachers") . ". " . $organization;
-    
+
 
         //print_r(array_keys($all_teachers[0]));
-        
+
         $contador = 0;
         $professor = array();
         $conserge = array();
@@ -1210,7 +1210,7 @@ echo $cons->photo_url;
             $conserge[$contador]['photo']=base_url('uploads/person_photos')."/".$cons->photo_url;
 
             if( file_exists(getcwd().'/uploads/person_photos/'.$cons->photo_url)) {
-            
+
                 $conserge[$contador]['photo']=base_url('uploads/person_photos')."/".$cons->photo_url;
             } else {
                 $conserge[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -1233,7 +1233,7 @@ echo $cons->photo_url;
             $secretaria[$contador]['photo']=base_url('uploads/person_photos')."/".$secr->photo_url;
 
             if( file_exists(getcwd().'/uploads/person_photos/'.$secr->photo_url)) {
-            
+
                 $secretaria[$contador]['photo']=base_url('uploads/person_photos')."/".$secr->photo_url;
             } else {
                 $secretaria[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -1250,7 +1250,7 @@ echo $cons->photo_url;
         //echo "TEACHERS:<br/<";
         foreach($all_teachers as $teacher) {
             //echo "$teacher->givenName $teacher->sn1 $teacher->sn2 FOTO: $teacher->photo_url | teacher code: $teacher->teacher_code<br/>";
-            
+
             $professor[$contador]['code']=$teacher->teacher_code;
             $professor[$contador]['teacher_charge_short']=$teacher->teacher_charge_short;
             $professor[$contador]['teacher_charge_full']=$teacher->teacher_charge_full;
@@ -1266,7 +1266,7 @@ echo $cons->photo_url;
 
             if ($photo_url != "") {
                 if( file_exists(getcwd().'/uploads/person_photos/'.$photo_url )) {
-            
+
                     $professor[$contador]['photo']=base_url('uploads/person_photos')."/".$teacher->photo_url;
                 } else {
                     $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -1274,13 +1274,13 @@ echo $cons->photo_url;
             } else {
                 $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
             }
-            
+
 
             $professor[$contador]['carrec_line1']=$professor[$contador]['teacher_charge_sheet_line1'];
             $professor[$contador]['carrec_line2']=$professor[$contador]['teacher_charge_sheet_line2'];
             $professor[$contador]['carrec_line3']=$professor[$contador]['teacher_charge_sheet_line3'];
             $professor[$contador]['carrec_line4']=$professor[$contador]['teacher_charge_sheet_line4'];
-            
+
 
             $contador++;
         }
@@ -1293,7 +1293,7 @@ echo $cons->photo_url;
         $pdf->SetMargins(10,10,10);
         //Obro una pàgina
         $pdf->AddPage();
-                //$pdf->Image($jpeg_file_cons[0],166,222,10);        
+                //$pdf->Image($jpeg_file_cons[0],166,222,10);
         //$pdf->AddPage("P","A3");
         //Es la posicio exacta on comença a escriure
         $x=7;//10
@@ -1308,7 +1308,7 @@ echo $cons->photo_url;
         $pdf->SetFont('Arial','B',15);
         //$pdf->Cell(Amplada, altura, text, marc, on es comença a escriure després, alineació)
         $pdf->SetXY(10,10);
-    
+
         $pdf->Cell(190,6,"PROFESSORAT ". $academic_period->shortname ,0,0,'C');
         $y=$y+6;
 
@@ -1322,7 +1322,7 @@ echo $cons->photo_url;
 
         //Paràmetres de tamany de les fotos, $xx indica l'amplada de la foto, $yy indica
         //l'altura de cada camp del professor, l'altura de la foto es 3 vegades aquest valor
-        //En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files  
+        //En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files
         $xx=11;//10//Amplada horitzontal de cada professor es tocada segons el nombre de professors que hi haguin
 
         //Sergi Tur
@@ -1335,7 +1335,7 @@ echo $cons->photo_url;
         $yy=4.75;
 
         //Amb aquestes fòrmules defineixo les coordenades de cada camp de cada professor
-        //Fòrmula: posició inicial de x/y * columna * camps de cada professor 
+        //Fòrmula: posició inicial de x/y * columna * camps de cada professor
 
         //Ampla de la columna amb el nom i cognoms del professor
         $x_name=12;
@@ -1365,40 +1365,40 @@ echo $cons->photo_url;
             $initial_y_personal_=229;
 
             $width_personal_foto=10;
-                    
+
             $pdf->SetFont('Arial','B',6);
-            $pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));                
-            $pdf->SetFont('Arial','',4);    
-            
+            $pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));
+            $pdf->SetFont('Arial','',4);
+
             $x_personal=$initial_x_personal;
             $y_personal=$initial_y_personal;
             for($cont=0;$cont<count($conserge);$cont++){
 
-                $pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-                $pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));                
-                $pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));   
+                $pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto);
+                $pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));
+                $pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));
                 $x_personal=$x_personal+14;
                 if(($cont+1)%3==0){
                     $x_personal=$initial_x_personal;
-                    $y_personal=$initial_y_personal+40;         
-                }       
-            }   
+                    $y_personal=$initial_y_personal+40;
+                }
+            }
 
-            $pdf->SetFont('Arial','B',6);   
-            $pdf->Text($initial_x_personal+3,$initial_y_personal+22,utf8_decode("SECRETÀRIES"));    
-            $pdf->SetFont('Arial','',4); 
+            $pdf->SetFont('Arial','B',6);
+            $pdf->Text($initial_x_personal+3,$initial_y_personal+22,utf8_decode("SECRETÀRIES"));
+            $pdf->SetFont('Arial','',4);
 
             $x_personal=$initial_x_personal;
             $y_personal=$initial_y_personal+24;
             for($cont=0;$cont<count($secretaria);$cont++){
 
-                $pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-                $pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));                
-                $pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));   
+                $pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto);
+                $pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));
+                $pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));
                 $x_personal=$x_personal+14;
                 if(($cont+1)%3==0){
                     $x_personal=$initial_x_personal;
-                    $y_personal=$initial_y_personal+42;         
+                    $y_personal=$initial_y_personal+42;
                 }
             }
 
@@ -1415,11 +1415,11 @@ echo $cons->photo_url;
 
                 $pdf->SetFont('Arial','B',6);
                 $pdf->SetTextColor(255,0,0);
-                
+
                 $pdf->Text($x+22,$y,utf8_decode($professor[$j]['code']));
-                
+
                 $pdf->SetFont('Arial','',4);
-                $pdf->SetTextColor(0,0,0);      
+                $pdf->SetTextColor(0,0,0);
                 $pdf->Text($x+44,$y,utf8_decode($professor[$j]['carrec_line1']));
                 $pdf->Text($x+44,$y1-1,utf8_decode($professor[$j]['carrec_line2']));
                 $pdf->Text($x+22,$y1-1,utf8_decode($professor[$j]['name']));
@@ -1427,8 +1427,8 @@ echo $cons->photo_url;
                 $pdf->Text($x+44,$y2-2,utf8_decode($professor[$j]['carrec_line3']));
                 $pdf->Text($x+22,$y+11,utf8_decode($professor[$j]['sn2']));
                 $pdf->Text($x+44,$y+11,utf8_decode($professor[$j]['carrec_line4']));
-                //$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);                
-                $pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);                
+                //$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);
+                $pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);
             //incremento la fila
             $row++;
             //incremento el marge
@@ -1439,7 +1439,7 @@ echo $cons->photo_url;
             $y1=$y_start+$i+$row*$yy*3+$yy;
             $y2=$y_start+$i+$row*$yy*3+$yy*2;
 
-            //màxim de files per pàgina 
+            //màxim de files per pàgina
             if($row>18){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
                 //incremento la columna
                 $col++;
@@ -1447,10 +1447,10 @@ echo $cons->photo_url;
                 $row=0;
                 $i=0;
                 //Recàlculo les coordenades
-                $x=$x_start+$col*($xx+$x_name+$x_post)-22;   
+                $x=$x_start+$col*($xx+$x_name+$x_post)-22;
                 $x1=$x_start+$col*($xx+$x_name+$x_post)+$x_name;
                 $x2=$x_start+$col*($xx+$x_name+$x_post)+$x_name+$x_post;
-                
+
                 $y=$y_start+$i+$row*$yy*3;
                 $y1=$y_start+$i+$row*$yy*3+$yy;
                 $y2=$y_start+$i+$row*$yy*3+$yy*2;
@@ -1476,7 +1476,7 @@ echo $cons->photo_url;
         }
 
         //enviem tot al pdf
-        $pdf->Output("Professorat_". $academic_period->shortname ."_(".date("d-m-Y").").pdf", "I");       
+        $pdf->Output("Professorat_". $academic_period->shortname ."_(".date("d-m-Y").").pdf", "I");
     }
 
     function general_sheet_dep_2($academic_period_id = null) {
@@ -1486,7 +1486,7 @@ echo $cons->photo_url;
             //redirect them to the login page
             redirect($this->skeleton_auth->login_page, 'refresh');
         }
-        
+
         $this->load->model('reports_model');
 
         if ($academic_period_id==null) {
@@ -1503,7 +1503,7 @@ echo $cons->photo_url;
 
         $all_conserges = $this->reports_model->get_all_conserges();
         $all_secretaria = $this->reports_model->get_all_secretaria();
-        
+
         $default_group_code = $this->config->item('default_group_code');
 
         $group_code=$default_group_code;
@@ -1511,10 +1511,10 @@ echo $cons->photo_url;
         $organization = $this->config->item('organization','skeleton_auth');
 
         $header_data['header_title']=lang("all_teachers") . ". " . $organization;
-    
+
 
         //print_r(array_keys($all_teachers[0]));
-        
+
         $contador = 0;
         $professor = array();
         $conserge = array();
@@ -1531,7 +1531,7 @@ echo $cons->photo_url;
             $conserge[$contador]['photo']=base_url('uploads/person_photos')."/".$cons->photo_url;
 
             if( file_exists(getcwd().'/uploads/person_photos/'.$cons->photo_url)) {
-            
+
                 $conserge[$contador]['photo']=base_url('uploads/person_photos')."/".$cons->photo_url;
             } else {
                 $conserge[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -1554,7 +1554,7 @@ echo $cons->photo_url;
             $secretaria[$contador]['photo']=base_url('uploads/person_photos')."/".$secr->photo_url;
 
             if( file_exists(getcwd().'/uploads/person_photos/'.$secr->photo_url)) {
-            
+
                 $secretaria[$contador]['photo']=base_url('uploads/person_photos')."/".$secr->photo_url;
             } else {
                 $secretaria[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -1571,7 +1571,7 @@ echo $cons->photo_url;
         //echo "TEACHERS:<br/<";
         foreach($all_teachers as $teacher) {
             //echo "$teacher->givenName $teacher->sn1 $teacher->sn2 FOTO: $teacher->photo_url | teacher code: $teacher->teacher_code<br/>";
-            
+
             $professor[$contador]['code']=$teacher->teacher_code;
             $professor[$contador]['teacher_charge_short']=$teacher->teacher_charge_short;
             $professor[$contador]['teacher_charge_full']=$teacher->teacher_charge_full;
@@ -1587,7 +1587,7 @@ echo $cons->photo_url;
 
             if ($photo_url != "") {
                 if( file_exists(getcwd().'/uploads/person_photos/'.$photo_url )) {
-            
+
                     $professor[$contador]['photo']=base_url('uploads/person_photos')."/".$teacher->photo_url;
                 } else {
                     $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
@@ -1595,13 +1595,13 @@ echo $cons->photo_url;
             } else {
                 $professor[$contador]['photo']=base_url('assets/img/alumnes/foto.png');
             }
-            
+
 
             $professor[$contador]['carrec_line1']=$professor[$contador]['teacher_charge_sheet_line1'];
             $professor[$contador]['carrec_line2']=$professor[$contador]['teacher_charge_sheet_line2'];
             $professor[$contador]['carrec_line3']=$professor[$contador]['teacher_charge_sheet_line3'];
             $professor[$contador]['carrec_line4']=$professor[$contador]['teacher_charge_sheet_line4'];
-            
+
 
             $contador++;
         }
@@ -1614,7 +1614,7 @@ echo $cons->photo_url;
         $pdf->SetMargins(10,10,10);
         //Obro una pàgina
         $pdf->AddPage();
-                //$pdf->Image($jpeg_file_cons[0],166,222,10);        
+                //$pdf->Image($jpeg_file_cons[0],166,222,10);
         //$pdf->AddPage("P","A3");
         //Es la posicio exacta on comença a escriure
         $pdf->SetAutoPageBreak('auto');
@@ -1630,7 +1630,7 @@ echo $cons->photo_url;
         $pdf->SetFont('Arial','B',15);
         //$pdf->Cell(Amplada, altura, text, marc, on es comença a escriure després, alineació)
         $pdf->SetXY(10,10);
-    
+
         $pdf->Cell(190,6,"PROFESSORAT ". $academic_period->shortname ,0,0,'C');
         $y=$y+6;
 
@@ -1644,7 +1644,7 @@ echo $cons->photo_url;
 
         //Paràmetres de tamany de les fotos, $xx indica l'amplada de la foto, $yy indica
         //l'altura de cada camp del professor, l'altura de la foto es 3 vegades aquest valor
-        //En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files  
+        //En cas de tocar aquest paràmetres caldria revisar el màxim de columnes i files
         $xx=11;//10//Amplada horitzontal de cada professor es tocada segons el nombre de professors que hi haguin
 
         //Sergi Tur
@@ -1657,7 +1657,7 @@ echo $cons->photo_url;
         $yy=4.75;
 
         //Amb aquestes fòrmules defineixo les coordenades de cada camp de cada professor
-        //Fòrmula: posició inicial de x/y * columna * camps de cada professor 
+        //Fòrmula: posició inicial de x/y * columna * camps de cada professor
 
         //Ampla de la columna amb el nom i cognoms del professor
         $x_name=12;
@@ -1689,11 +1689,11 @@ echo $cons->photo_url;
 
                 $pdf->SetFont('Arial','B',6);
                 $pdf->SetTextColor(255,0,0);
-                
+
                 $pdf->Text($x+22,$y,utf8_decode($professor[$j]['code']));
-                
+
                 $pdf->SetFont('Arial','',4);
-                $pdf->SetTextColor(0,0,0);      
+                $pdf->SetTextColor(0,0,0);
                 $pdf->Text($x+44,$y,utf8_decode($professor[$j]['carrec_line1']));
                 $pdf->Text($x+44,$y1-1,utf8_decode($professor[$j]['carrec_line2']));
                 $pdf->Text($x+22,$y1-1,utf8_decode($professor[$j]['name']));
@@ -1701,8 +1701,8 @@ echo $cons->photo_url;
                 $pdf->Text($x+44,$y2-2,utf8_decode($professor[$j]['carrec_line3']));
                 $pdf->Text($x+22,$y+11,utf8_decode($professor[$j]['sn2']));
                 $pdf->Text($x+44,$y+11,utf8_decode($professor[$j]['carrec_line4']));
-                //$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);                
-                $pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);                
+                //$pdf->Image($jpeg_file[$j],$x1-2,$y-2,$xx);
+                $pdf->Image($professor[$j]['photo'],$x1-2,$y-2,$xx);
             //incremento la fila
             $row++;
             //incremento el marge
@@ -1713,7 +1713,7 @@ echo $cons->photo_url;
             $y1=$y_start+$i+$row*$yy*3+$yy;
             $y2=$y_start+$i+$row*$yy*3+$yy*2;
 
-            //màxim de files per pàgina 
+            //màxim de files per pàgina
             if($row>17){//26//Maxim de registre per columnes si es toca el tamny del professor tambe es tocara aquesta dada.
                 //incremento la columna
                 $col++;
@@ -1721,10 +1721,10 @@ echo $cons->photo_url;
                 $row=0;
                 $i=0;
                 //Recàlculo les coordenades
-                $x=$x_start+$col*($xx+$x_name+$x_post)-22;   
+                $x=$x_start+$col*($xx+$x_name+$x_post)-22;
                 $x1=$x_start+$col*($xx+$x_name+$x_post)+$x_name;
                 $x2=$x_start+$col*($xx+$x_name+$x_post)+$x_name+$x_post;
-                
+
                 $y=$y_start+$i+$row*$yy*3;
                 $y1=$y_start+$i+$row*$yy*3+$yy;
                 $y2=$y_start+$i+$row*$yy*3+$yy*2;
@@ -1750,7 +1750,7 @@ echo $cons->photo_url;
 
         //Imprimeixo sempre els conserges i secretàries en una posició fixa el primer cop
         //TODO: Obtenir les dades de les carpetes personal de Gosa:
-        
+
         $page_one=false;
         $pdf->AddPage();
 
@@ -1760,49 +1760,49 @@ echo $cons->photo_url;
             $initial_y_personal=24;
 
             $width_personal_foto=10;
-            
+
             $pdf->SetFont('Arial','B',8);
-            $pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));                
-            $pdf->SetFont('Arial','',4);    
-            
+            $pdf->Text($initial_x_personal+3,$initial_y_personal-2,utf8_decode("CONSERGES"));
+            $pdf->SetFont('Arial','',4);
+
             $x_personal=$initial_x_personal;
             $y_personal=$initial_y_personal;
             for($cont=0;$cont<count($conserge);$cont++){
 
-                $pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-                $pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));                
-                $pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));   
+                $pdf->Image($conserge[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto);
+                $pdf->Text($x_personal,$y_personal+15,utf8_decode($conserge[$cont]['name']));
+                $pdf->Text($x_personal,$y_personal+17,utf8_decode($conserge[$cont]['sn']));
                 $x_personal=$x_personal+14;
                 if(($cont+1)%3==0){
                     $x_personal=$initial_x_personal;
-                    $y_personal=$initial_y_personal+40;         
-                }       
+                    $y_personal=$initial_y_personal+40;
+                }
             }
             $initial_x_personal_=70;
             $initial_y_personal_=0;
 
-            $pdf->SetFont('Arial','B',8);   
-            $pdf->Text($initial_x_personal_+3,$initial_y_personal_+22,utf8_decode("SECRETÀRIES"));    
-            $pdf->SetFont('Arial','',4); 
+            $pdf->SetFont('Arial','B',8);
+            $pdf->Text($initial_x_personal_+3,$initial_y_personal_+22,utf8_decode("SECRETÀRIES"));
+            $pdf->SetFont('Arial','',4);
 
             $x_personal=$initial_x_personal_;
             $y_personal=$initial_y_personal_+24;
             for($cont=0;$cont<count($secretaria);$cont++){
 
-                $pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto); 
-                $pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));                
-                $pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));   
+                $pdf->Image($secretaria[$cont]['photo'],$x_personal,$y_personal,$width_personal_foto);
+                $pdf->Text($x_personal,$y_personal+15,utf8_decode(ucfirst($secretaria[$cont]['name'])));
+                $pdf->Text($x_personal,$y_personal+17,utf8_decode(ucfirst($secretaria[$cont]['sn'])));
                 $x_personal=$x_personal+14;
                 if(($cont+1)%4==0){
                     $x_personal=$initial_x_personal_;
-                    $y_personal=$initial_y_personal_+42;         
+                    $y_personal=$initial_y_personal_+42;
                 }
             }
 
         }
 
         //enviem tot al pdf
-        $pdf->Output("Professorat_". $academic_period->shortname ."_(".date("d-m-Y").").pdf", "I");       
+        $pdf->Output("Professorat_". $academic_period->shortname ."_(".date("d-m-Y").").pdf", "I");
     }
 
 	/*

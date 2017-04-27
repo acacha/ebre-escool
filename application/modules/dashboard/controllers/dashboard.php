@@ -4,7 +4,7 @@
 include "application/third_party/skeleton/application/controllers/skeleton_main.php";
 
 class dashboard extends skeleton_main {
-	
+
 	public $body_header_view ='include/ebre_escool_body_header' ;
 
 	public $body_header_lang_file ='ebre_escool_body_header' ;
@@ -17,14 +17,14 @@ class dashboard extends skeleton_main {
 
 		$active_menu = $menu;
 		//CSS URLS
-		$jquery_ui_css_url = "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
-		$jquery_ui_editable_css_url = "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
-		$select2_css_url = "http://cdn.jsdelivr.net/select2/3.4.5/select2.css";
+		$jquery_ui_css_url = "https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css";
+		$jquery_ui_editable_css_url = "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css";
+		$select2_css_url = "https://cdn.jsdelivr.net/select2/3.4.5/select2.css";
 		//JS URLS
-		$jquery_url= "http://code.jquery.com/jquery-1.9.1.js";
-		$jquery_ui_url= "http://code.jquery.com/ui/1.10.3/jquery-ui.js";
-		$select2_url= "http://cdn.jsdelivr.net/select2/3.4.5/select2.js";
-		$jquery_ui_editable_url= "http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
+		$jquery_url= "https://code.jquery.com/jquery-1.9.1.js";
+		$jquery_ui_url= "https://code.jquery.com/ui/1.10.3/jquery-ui.js";
+		$select2_url= "https://cdn.jsdelivr.net/select2/3.4.5/select2.js";
+		$jquery_ui_editable_url= "https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js";
 
 		if (defined('ENVIRONMENT') && ENVIRONMENT=="development") {
   			$jquery_ui_css_url = base_url('assets/css/jquery-ui.css');
@@ -44,20 +44,20 @@ class dashboard extends skeleton_main {
 			$jquery_ui_editable_css_url);
 		$header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/datepicker.css'));  
+            base_url('assets/css/datepicker.css'));
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
 			$select2_css_url);
 		$header_data= $this->add_css_to_html_header_data(
 			$header_data,
-            base_url('assets/css/tribal-timetable.css')); 
-		
+            base_url('assets/css/tribal-timetable.css'));
+
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
             base_url('assets/css/bootstrap-switch.min.css'));
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
-            base_url('assets/css/bootstrap.min.extracolours.css')); 
+            base_url('assets/css/bootstrap.min.extracolours.css'));
 
         $header_data= $this->add_css_to_html_header_data(
             $header_data,
@@ -86,7 +86,7 @@ class dashboard extends skeleton_main {
 		//	$jquery_url);
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
-			$jquery_ui_url);	
+			$jquery_ui_url);
 		$header_data= $this->add_javascript_to_html_header_data(
 			$header_data,
 			$select2_url);
@@ -107,13 +107,13 @@ class dashboard extends skeleton_main {
             base_url('assets/js/bootstrap-tooltip.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/bootstrap-collapse.js'));                
+            base_url('assets/js/bootstrap-collapse.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
             base_url('assets/js/tribal.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
-            base_url('assets/js/tribal-shared.js'));        
+            base_url('assets/js/tribal-shared.js'));
         $header_data= $this->add_javascript_to_html_header_data(
             $header_data,
             base_url('assets/js/tribal-timetable.js'));
@@ -140,20 +140,20 @@ class dashboard extends skeleton_main {
                     base_url('assets/js/ebre-escool.js'));
 
 		$header_data['menu']= $active_menu;
-		return $header_data; 
-        
+		return $header_data;
+
     }
 
-	
+
 	function __construct()
     {
         parent::__construct();
 
         $this->load->model('dashboard_model');
-        
+
 	}
-	
-	public function index() {		
+
+	public function index() {
 
 		$active_menu = array();
 		$active_menu['menu']='#dashboard';
@@ -203,17 +203,17 @@ class dashboard extends skeleton_main {
 		$data['current_academic_period'] = "2014/15";
 
 		if ($this->session->userdata('is_student')) {
-			$this->load->view('dashboard_student',$data); 
+			$this->load->view('dashboard_student',$data);
 		} else {
-			$this->load->view('dashboard',$data); 
+			$this->load->view('dashboard',$data);
 		}
-		
-                
+
+
 		/*******************
 		/*      FOOTER     *
 		*******************/
-		$this->_load_body_footer();		 
-	}		
+		$this->_load_body_footer();
+	}
 
 	public function categories()
 	{
