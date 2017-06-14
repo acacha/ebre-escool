@@ -12,7 +12,7 @@ require_once '/usr/share/php/Crypt/CHAP.php';
  * @link		http://www.acacha.com/index.php/ebre-escool
  */
 class enrollment_model  extends CI_Model  {
-	
+
 	function __construct()
     {
         parent::__construct();
@@ -20,24 +20,24 @@ class enrollment_model  extends CI_Model  {
 
 
     }
-    
+
     function get_primary_key($table_name) {
 		$fields = $this->db->field_data($table_name);
-		
+
 		foreach ($fields as $field)	{
 			if ($field->primary_key) {
 					return $field->name;
 			}
-		} 	
+		}
 		return false;
 	}
 
 
 	function user_exists($uid,$basedn="") {
         $this->_init_ldap();
-        $filter = '(uid='.$uid.')';        
+        $filter = '(uid='.$uid.')';
         if ($basedn=="")     {
-            $basedn= $this->active_users_basedn;      
+            $basedn= $this->active_users_basedn;
         }
 
         echo "active_users_basedn : " . $this->active_users_basedn . "\echo";
@@ -88,7 +88,7 @@ class enrollment_model  extends CI_Model  {
         // Load the configuration
         $CI =& get_instance();
 
-        $CI->load->config('auth_ldap'); 
+        $CI->load->config('auth_ldap');
 
 
         // Verify that the LDAP extension has been loaded/built-in
@@ -114,10 +114,10 @@ class enrollment_model  extends CI_Model  {
 
         //echo "THIS:";
         //var_export($this);
-        
+
     }
 
-	function _bind() {        
+	function _bind() {
 	    //Connect
 	    foreach($this->hosts as $host) {
 	        $this->ldapconn = ldap_connect($host);
@@ -127,7 +127,7 @@ class enrollment_model  extends CI_Model  {
 	            log_message('info', lang('error_connecting_to'). ' ' .$uri);
 	        }
 	    }
-    
+
 	    // At this point, $this->ldapconn should be set.  If not... DOOM!
 	    if(! $this->ldapconn) {
 	        log_message('error', lang('could_not_connect_to_ldap'));
@@ -138,7 +138,7 @@ class enrollment_model  extends CI_Model  {
 	    // They should also work with any modern LDAP service.
 	    ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
 	    ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-	    
+
 	    // Find the DN of the user we are binding as
 	    // If proxy_user and proxy_pass are set, use those, else bind anonymously
 	    if($this->proxy_user) {
@@ -151,7 +151,7 @@ class enrollment_model  extends CI_Model  {
 	        log_message('error', lang('unable_anonymous'));
 	        show_error(lang('unable_bind'));
 	        return false;
-	    }   
+	    }
 
 	    return true;
 	}
@@ -164,13 +164,13 @@ function get_ldap_passwords($username) {
     $sambaLMPassword="";
 
     $this->_init_ldap();
-    $filter = "(uid=" . trim($username) . ")";    
+    $filter = "(uid=" . trim($username) . ")";
     //Get Ldap base DN for active users. It could be different from basedn
-    $active_users_basedn = $this->config->item('active_users_basedn');    
+    $active_users_basedn = $this->config->item('active_users_basedn');
     if ($this->_bind()) {
         $sr = ldap_search($this->ldapconn, $active_users_basedn, $filter);
         $entries = ldap_count_entries($this->ldapconn, $sr);
-        
+
         if ($entries == 1) {
             $entryid=ldap_first_entry($this->ldapconn, $sr);
             $userPasswordValues = ldap_get_values($this->ldapconn, $entryid, "userPassword");
@@ -229,9 +229,9 @@ function remove_diacritics_not_working($data){
         $CI =& get_instance();
 
         $CI->load->config('samba');
-        
+
         $this->_init_ldap();
-    
+
         if ($this->_bind()) {
             // Preparar los datos
             $user_data_array = array();
@@ -244,9 +244,9 @@ function remove_diacritics_not_working($data){
             $user_data_array["objectClass"][2]="posixAccount";
             $user_data_array["objectClass"][1]="person";
             $user_data_array["objectClass"][0]="top";
-            
+
             $user_data_array["cn"]= $user_data->cn;
-            
+
             if ($user_data->sn != "") {
                 $user_data_array["sn"]= $user_data->sn;
             }
@@ -269,38 +269,38 @@ function remove_diacritics_not_working($data){
             if ($user_data->telephoneNumber != "") {
                 $user_data_array["homePhone"]=$user_data->telephoneNumber;
             }
-            
+
             //$user_data_array["st"]=$user_data->st;
             if ($user_data->l != null && $user_data->l !="") {
-                $user_data_array["l"]=$user_data->l;    
+                $user_data_array["l"]=$user_data->l;
             }
             if ($user_data->postalCode != null && $user_data->postalCode !="") {
-                $user_data_array["postalCode"]=$user_data->postalCode;  
-            }           
-            
+                $user_data_array["postalCode"]=$user_data->postalCode;
+            }
+
             if ($user_data->dateOfBirth != "") {
                 $user_data_array["dateOfBirth"]=$user_data->dateOfBirth;
             }
             if ($user_data->email != "") {
                 $user_data_array["email"]=$user_data->email;
             }
-            if ($user_data->gender != "") { 
+            if ($user_data->gender != "") {
                 $user_data_array["gender"]=$user_data->gender;
             }
-            
+
             if ($user_data->homePostalAddress != "") {
                 $user_data_array["homePostalAddress"]=$user_data->homePostalAddress;
             }
-            
+
             $user_data_array["irisPersonalUniqueID"]=$user_data->irisPersonalUniqueID;
-            
+
             if ($user_data->irisPersonalUniqueIDType != "") {
                 $user_data_array["irisPersonalUniqueIDType"]=$user_data->irisPersonalUniqueIDType;
             }
 
             //TODO: PHOTO
             //$user_data_array["gender"]=$user_data->gender;
-        
+
             if(class_exists('Imagick')){
                 $photo_path = "/usr/share/ebre-escool/uploads/person_photos/" . $user_data->photo;
                 //echo $photo_path . "\n";
@@ -312,13 +312,13 @@ function remove_diacritics_not_working($data){
                         //$im->setCompressionQuality(90);
                         $im->setImageFormat('jpeg');
                         $user_data_array['jpegphoto'] = $im->getImageBlob();
-                    }   
+                    }
                 }
-                
+
             } else {
                 echo "Error: No Imagick class found<br/>";
             }
-                        
+
             $uidnumber = 1000 + (int )$user_data->id;
             $user_data_array["uidnumber"]= $uidnumber;
 
@@ -352,12 +352,12 @@ function remove_diacritics_not_working($data){
                         break;
                     case 3:                                         //STUDENT
                         $user_data_array["sambaLogonScript"]=$CI->config->item('samba_student_logonScript');
-                        break;    
+                        break;
                     default:
                         $user_data_array["sambaLogonScript"]=$CI->config->item('samba_default_logonScript');
                         break;
                 }
-                
+
             }
 
             $user_data_array["sambaHomeDrive"]=$CI->config->item('samba_homeDrive');
@@ -369,19 +369,19 @@ function remove_diacritics_not_working($data){
             $user_data_array["sambaMungedDial"]=$CI->config->item('samba_mungedDial');
             $user_data_array["sambaPrimaryGroupSID"]=$CI->config->item('samba_primaryGroupSID');
 
-            //TODO. Calculate Windows Passwords         
-            $cr = new Crypt_CHAP_MSv1();        
+            //TODO. Calculate Windows Passwords
+            $cr = new Crypt_CHAP_MSv1();
 
             if ( $ldap_passwords == false) {
                 $user_data_array["sambaNTPassword"]=strtoupper(bin2hex($cr->ntPasswordHash($user_data->password)));
-                $user_data_array["sambaLMPassword"]=strtoupper(bin2hex($cr->lmPasswordHash($user_data->password)));         
+                $user_data_array["sambaLMPassword"]=strtoupper(bin2hex($cr->lmPasswordHash($user_data->password)));
             } else {
                 $user_data_array["sambaNTPassword"]=$ldap_passwords->sambaNTPassword;
-                $user_data_array["sambaLMPassword"]=$ldap_passwords->sambaLMPassword;       
+                $user_data_array["sambaLMPassword"]=$ldap_passwords->sambaLMPassword;
             }
-            
-            
-            
+
+
+
             //echo "user dn: " . $user_data->dn . "<br/>";
             //echo "user_data_array: " . var_dump($user_data_array) . "<br/>";
 
@@ -427,7 +427,7 @@ function remove_diacritics_not_working($data){
             return true;
 
         }
-        
+
         return false;
     }
 
@@ -444,7 +444,7 @@ function add_uid_to_group($group_dn,$username) {
 
 		return false;
 
-	}    
+	}
 
 function get_group ($group_name) {
 
@@ -454,16 +454,16 @@ function get_group ($group_name) {
 		if ($this->_bind()) {
             //echo "basedn: " . $basedn;
 	     	$sr = ldap_search($this->ldapconn, $basedn, $filter);
-            
+
 	     	$entries = ldap_count_entries($this->ldapconn, $sr);
             //echo "entries: " . $entries;
 	     	//echo "Count entries: " . $entries ."<br/>";
 	     	if ($entries == 1) {
-            
+
 	     		$entryid=ldap_first_entry($this->ldapconn, $sr);
-            
+
 	     		$dn = ldap_get_dn($this->ldapconn, $entryid);
-        
+
 	     		$group = new stdClass();
 	     		$group->dn = $dn;
 	     		$values = ldap_get_values($this->ldapconn, $entryid, "memberUid");
@@ -478,13 +478,13 @@ function get_group ($group_name) {
 	     	}
 		}
 		return false;
-	}    
+	}
 
 function update_user_ldap_dn($username, $ldap_dn) {
 
         /*Example SQL
-        UPDATE `users` 
-        SET `ldap_dn`= "new_ldap_dn" 
+        UPDATE `users`
+        SET `ldap_dn`= "new_ldap_dn"
         WHERE `username`="username"
         */
 
@@ -525,7 +525,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $this->db->select('person_id,person_givenName,person_sn1,person_sn2,person_official_id');
 		$this->db->from('person');
 		$this->db->order_by('person_official_id', $orderby);
-		       
+
         $query = $this->db->get();
 
 		if ($query->num_rows() > 0) {
@@ -545,24 +545,24 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$i++;
 			}
 			return $student_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	public function get_student_by_username($username, $orderby="asc") {
 
         $this->db->select('username');
 		$this->db->from('users');
 		$this->db->where('username',$username);
-		       
+
         $query = $this->db->get();
         //echo $this->db->last_query();
 
 		if ($query->num_rows() > 0) {
 
 			return true;
-		}			
+		}
 		else
 			return false;
 	}
@@ -576,10 +576,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $this->db->select('person_official_id');
 		$this->db->from('person');
 		$this->db->order_by('person_official_id', $orderby);
-		       
+
         $query = $this->db->get();
 		$this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$person_official_ids = array();
@@ -588,7 +588,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
    					$person_official_ids[] = trim($row['person_official_id']);
    			}
 			return $person_official_ids;
-		}			
+		}
 		else
 			return false;
 	}
@@ -603,7 +603,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
         /*
         SELECT DISTINCT `person_official_id`
-        FROM `enrollment` 
+        FROM `enrollment`
         INNER JOIN person ON person.person_id = enrollment.`enrollment_personid`
         WHERE `enrollment_periodid`="2014-15"
         */
@@ -614,10 +614,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $this->db->join('person','person.person_id = enrollment.enrollment_personid');
         $this->db->where('enrollment_periodid', $current_academic_period_shortname);
         $this->db->order_by('person_official_id', $orderby);
-               
+
         $query = $this->db->get();
         $this->db->last_query();
-        
+
         if ($query->num_rows() > 0) {
 
             $person_official_ids = array();
@@ -626,7 +626,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
                     $person_official_ids[] = trim($row['person_official_id']);
             }
             return $person_official_ids;
-        }           
+        }
         else
             return false;
     }
@@ -638,28 +638,28 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->from('enrollment');
 		$this->db->join('person','person.person_id = enrollment.enrollment_personid');
 		$this->db->join('studies','studies.studies_id = enrollment.enrollment_study_id');
-		
+
 		$this->db->where('person_id',$person_id);
-		$this->db->limit(1);		
+		$this->db->limit(1);
 		$this->db->order_by('enrollment_periodid', "DESC");
-		       
+
         $query = $this->db->get();
 
 		//echo $this->db->last_query();
 
 		$last_study_id = array();
-		
+
 		if ($query->num_rows() == 1) {
 			return $query->row();
-		}			
+		}
 
 		return false;
-	}	
+	}
 
 	public function get_previous_enrollments($person_official_id,$orderby="desc") {
 
 		/*
-	    
+
 		WHERE person_official_id = "47623732R"
 	    */
 
@@ -679,13 +679,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 		$this->db->order_by('enrollment_periodid', $orderby);
 
-		       
+
         $query = $this->db->get();
 
 		//echo $this->db->last_query();
 
 		$previous_enrollments = array();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$i=0;
@@ -693,7 +693,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 				$previous_enrollments[$i]['enrollment_periodid'] = $row['enrollment_periodid'];
 				$previous_enrollments[$i]['enrollment_id'] = $row['enrollment_id'];
    				$previous_enrollments[$i]['studies_shortname'] = $row['studies_shortname'];
-   				$previous_enrollments[$i]['studies_name'] = $row['studies_name'];   				
+   				$previous_enrollments[$i]['studies_name'] = $row['studies_name'];
    				$previous_enrollments[$i]['studies'] = $row['studies_shortname'] . ". " . $row['studies_name'] . " - " . $row['studies_law_shortname'] . " - " . $row['studies_organizational_unit_shortname'] . " (" . $row['studies_id'] . ")" ;
    				$previous_enrollments[$i]['studies_id'] = $row['studies_id'];
                 $previous_enrollments[$i]['course_id'] = $row['course_id'];
@@ -706,18 +706,18 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$previous_enrollments[$i]['classroomgroup_fullname'] = $row['classroom_group_code'] . ". " . $row['classroom_group_shortName'] . " (" . $row['classroom_group_id'] . ")";
    				$i++;
 			}
-		}			
+		}
 		return $previous_enrollments;
 	}
 
 	public function get_simultaneous_studies($person_id,$period,$orderby="desc") {
 
 		/*
-	    
+
 		SELECT `enrollment_periodid`,`enrollment_study_id`,studies.studies_shortname,studies.studies_name,`enrollment_course_id`,
-		       course.course_shortname,course.course_name,`enrollment_group_id`, classroom_group.classroom_group_code, 
+		       course.course_shortname,course.course_name,`enrollment_group_id`, classroom_group.classroom_group_code,
 		       classroom_group.classroom_group_name
-			FROM `enrollment` 
+			FROM `enrollment`
 			LEFT JOIN studies ON studies.studies_id = enrollment.`enrollment_study_id`
 			LEFT JOIN course ON course.course_id = enrollment.`enrollment_course_id`
 			LEFT JOIN classroom_group ON classroom_group.classroom_group_id 	 = enrollment.`enrollment_group_id`
@@ -739,13 +739,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 		$this->db->order_by('enrollment_periodid', $orderby);
 
-		       
+
         $query = @$this->db->get();
 
 		//echo $this->db->last_query();
 
 		$simultaneous_studies = array();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$i=0;
@@ -753,14 +753,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
 				$simultaneous_studies[$i]['enrollment_periodid'] = $row['enrollment_periodid'];
 				$simultaneous_studies[$i]['enrollment_id'] = $row['enrollment_id'];
    				$simultaneous_studies[$i]['studies_shortname'] = $row['studies_shortname'];
-   				$simultaneous_studies[$i]['studies_name'] = $row['studies_name'];   				
+   				$simultaneous_studies[$i]['studies_name'] = $row['studies_name'];
    				$simultaneous_studies[$i]['studies'] = $row['studies_shortname'] . ". " . $row['studies_name'] . " - " . $row['studies_law_shortname'] . " - " . $row['studies_organizational_unit_shortname'] ;
    				$simultaneous_studies[$i]['studies_id'] = $row['studies_id'];
    				$simultaneous_studies[$i]['course'] = $row['course_shortname'] . ". " . $row['course_name'];
    				$simultaneous_studies[$i]['classroomgroup_shortname'] = $row['classroom_group_code'] . ". " . $row['classroom_group_shortName'];
    				$i++;
 			}
-		}			
+		}
 		return $simultaneous_studies;
 	}
 
@@ -770,7 +770,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $period_id = $this->get_academic_period_id_by_period($period);
 
 		/*
-		SELECT DISTINCT enrollment_periodid,enrollment_id,study_submodules_id, study_module_shortname, study_module_name , study_submodules_shortname, study_submodules_name, study_submodules_courseid,course.course_shortName,course.course_name, 
+		SELECT DISTINCT enrollment_periodid,enrollment_id,study_submodules_id, study_module_shortname, study_module_name , study_submodules_shortname, study_submodules_name, study_submodules_courseid,course.course_shortName,course.course_name,
 		study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,study_submodules_order
 		FROM  study_submodules_academic_periods
 		INNER JOIN study_submodules ON study_submodules.study_submodules_id =  study_submodules_academic_periods.study_submodules_academic_periods_study_submodules_id
@@ -782,7 +782,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		ORDER BY study_module_order ASC,study_submodules_order ASC
 		*/
 
-	    $this->db->select('enrollment_periodid,enrollment_id,study_submodules_id, study_module_shortname, study_module_name , 
+	    $this->db->select('enrollment_periodid,enrollment_id,study_submodules_id, study_module_shortname, study_module_name ,
 	    				   study_submodules_shortname, study_submodules_name, study_submodules_courseid,course.course_shortName,
 	    				   course.course_name,study_submodules_academic_periods_initialDate, study_submodules_academic_periods_endDate, study_submodules_academic_periods_totalHours,
 	    				   study_module_order, study_submodules_order');
@@ -801,13 +801,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->order_by('study_module_order', $orderby);
 		$this->db->order_by('study_submodules_order', $orderby);
 
-		       
+
         $query = $this->db->get();
 
 		//echo $this->db->last_query();
 
 		$enrollment_study_submodules = array();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$i=0;
@@ -826,12 +826,12 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$enrollment_study_submodules[$i]['study_submodules_course'] = $row['course_shortName'] . " - " . $row['course_name'];
    				$enrollment_study_submodules[$i]['study_submodules_initialDate'] = $row['study_submodules_academic_periods_initialDate'];
    				$enrollment_study_submodules[$i]['study_submodules_endDate'] = $row['study_submodules_academic_periods_endDate'];
-   				$enrollment_study_submodules[$i]['study_submodules_totalHours'] = $row['study_submodules_academic_periods_totalHours'];   				
-   				$enrollment_study_submodules[$i]['study_module_order'] = $row['study_module_order'];   				
-   				$enrollment_study_submodules[$i]['study_submodules_order'] = $row['study_submodules_order'];   				
+   				$enrollment_study_submodules[$i]['study_submodules_totalHours'] = $row['study_submodules_academic_periods_totalHours'];
+   				$enrollment_study_submodules[$i]['study_module_order'] = $row['study_module_order'];
+   				$enrollment_study_submodules[$i]['study_submodules_order'] = $row['study_submodules_order'];
    				$i++;
 			}
-		}			
+		}
 		return $enrollment_study_submodules;
 	}
 
@@ -848,9 +848,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row;
-		}	
+		}
 		else
 			return false;
 	}
@@ -868,9 +868,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->academic_periods_id;
-		}	
+		}
 		else
 			return false;
 	}
@@ -888,9 +888,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1){
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->academic_periods_id;
-		}	
+		}
 		else
 			return false;
 	}
@@ -908,9 +908,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $query = $this->db->get();
 
         if ($query->num_rows() == 1){
-            $row = $query->row(); 
+            $row = $query->row();
             return $row->academic_periods_shortname;
-        }   
+        }
         else
             return false;
     }
@@ -921,7 +921,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
         //GET period_id
         $period_id = $this->get_current_academic_period_id();
         if ($period!=null) {
-            $period_id = $this->get_academic_period_id_by_period($period);    
+            $period_id = $this->get_academic_period_id_by_period($period);
         }
 
         /*
@@ -945,27 +945,27 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
         $this->db->order_by('course_number', $order_by);
 
-               
+
         $query = $this->db->get();
 
         //echo $this->db->last_query();
 
-        $courses_study_module = array();        
+        $courses_study_module = array();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row)    {
-                $course = new stdClass();   
+                $course = new stdClass();
 
                 $course->id = $row->study_module_ap_courses_course_id;
                 $course->shortname = $row->course_shortname;
                 $course->name = $row->course_name;
                 $course->number = $row->course_number;
 
-                $course->cycle_id = $row->course_cycle_id;                
+                $course->cycle_id = $row->course_cycle_id;
                 $course->study_id = $row->course_study_id;
 
                 $courses_study_module[]=$course;
             }
-        }   
+        }
         return $courses_study_module;
 
     }
@@ -976,7 +976,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$period_id = $this->get_academic_period_id_by_period($period);
 
 		/*
-		
+
 		*/
 
 	    $this->db->select('enrollment_periodid,enrollment_id,study_module_id, study_module_academic_periods_external_code,study_module_shortname, study_module_name,
@@ -992,13 +992,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->where('study_module_academic_periods_academic_period_id',$period_id);
 
 		$this->db->order_by('study_module_order', $orderby);
- 
+
         $query = $this->db->get();
 
 		//echo(arg1)o $this->db->last_query();
 
 		$enrollment_study_modules = array();
-		
+
 		if ($query->num_rows() > 0) {
 			$i=0;
 			foreach ($query->result_array() as $row)	{
@@ -1007,14 +1007,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
 				$enrollment_study_modules[$i]['enrollment_id'] = $row['enrollment_id'];
    				$enrollment_study_modules[$i]['study_module_id'] = $row['study_module_id'];
    				$enrollment_study_modules[$i]['study_module_external_code'] = $row['study_module_academic_periods_external_code'];
-   				$enrollment_study_modules[$i]['study_module_shortname'] = $row['study_module_shortname'];   				
+   				$enrollment_study_modules[$i]['study_module_shortname'] = $row['study_module_shortname'];
    				$enrollment_study_modules[$i]['study_module_name'] = $row['study_module_name'];
                 $enrollment_study_modules[$i]['courses'] = $courses;
    				$enrollment_study_modules[$i]['study_module_hoursPerWeek'] = $row['study_module_hoursPerWeek'];
-   				$enrollment_study_modules[$i]['study_module_order'] = $row['study_module_order'];   				
+   				$enrollment_study_modules[$i]['study_module_order'] = $row['study_module_order'];
    				$i++;
 			}
-		}			
+		}
 		return $enrollment_study_modules;
 	}
 
@@ -1029,14 +1029,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		ORDER BY `locality_name` ASC
 		*/
 		$this->db->select('locality_id,locality_name,postalcode_code,postalcode_name');
-		$this->db->from('locality');	
+		$this->db->from('locality');
 		$this->db->join('postalcode','postalcode.postalcode_localityid = locality.locality_id');
-	
+
 		$this->db->order_by('locality_name', $orderby);
-		       
+
         $query = $this->db->get();
 		$this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$localities = array();
@@ -1044,11 +1044,11 @@ function update_user_ldap_dn($username, $ldap_dn) {
 			foreach ($query->result_array() as $row)	{
    				$localities[$i]['locality_id'] = $row['locality_id'];
    				$localities[$i]['locality_name'] = $row['locality_name'];
-   				$localities[$i]['locality_postal_code'] = $row['postalcode_code'];   				
+   				$localities[$i]['locality_postal_code'] = $row['postalcode_code'];
    				$i++;
 			}
 			return $localities;
-		}			
+		}
 		else
 			return false;
 	}
@@ -1057,7 +1057,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	/* Studies */
 	public function get_enrollment_studies($orderby="asc") {
 
-        $academic_period = 7;
+        $academic_period = 8;
 
         $this->db->select('studies_id,studies_shortname,studies_name,studies_studies_law_id,studies_law_shortname,studies_organizational_unit_shortname');
 		$this->db->from('studies');
@@ -1068,10 +1068,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 		//$this->db->order_by('studies_id', $orderby);
         $this->db->order_by('studies_shortname', $orderby);
-		       
+
         $query = $this->db->get();
 		$this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$studies_array = array();
@@ -1080,24 +1080,24 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$studies_array[$i]['studies_id'] = $row['studies_id'];
    				$studies_array[$i]['studies_shortname'] = $row['studies_shortname'];
    				$studies_array[$i]['studies_name'] = $row['studies_name'];
-   				$studies_array[$i]['studies_law_shortname'] = $row['studies_law_shortname']; 
-   				$studies_array[$i]['studies_organizational_unit_shortname'] = $row['studies_organizational_unit_shortname']; 
-   				  				
+   				$studies_array[$i]['studies_law_shortname'] = $row['studies_law_shortname'];
+   				$studies_array[$i]['studies_organizational_unit_shortname'] = $row['studies_organizational_unit_shortname'];
+
    				$i++;
 			}
 			return $studies_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
     public function is_study_multiple($study_id) {
         //SELECT `studies_multiple` FROM `studies` WHERE `studies_id`=2
-        
+
         $this->db->select('studies_multiple');
         $this->db->from('studies');
         $this->db->where('studies_id',$study_id);
-        
+
         $query = $this->db->get();
         //echo $this->db->last_query();
 
@@ -1111,14 +1111,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
             }
         } else {
             return false;
-        }        
+        }
 
     }
 
 	/* Cursos */
 	public function get_enrollment_courses($study=false,$orderby="asc") {
 
-        $academic_period = 7;
+        $academic_period = 8;
 
 		if(!$study){
 			$study=2;	//	"ASIX-DAM"
@@ -1135,13 +1135,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
         // DAM : 31
         // ASIX: 29
 
-        // COURSE: ASIX-DAM ha de pertanyar a 3 studies: DAM (31) ASIX (29) i ASIX-DAM (2) 
+        // COURSE: ASIX-DAM ha de pertanyar a 3 studies: DAM (31) ASIX (29) i ASIX-DAM (2)
         // TAULA course_studies relació 1 a n? NO. Camp 3x2 true o false. Si true el codi curs es busqui a un altre taula?
 
         if ($is_study_multiple) {
             /*
             SELECT `course_studies_course_id`,`course_shortname`,`course_name`
-            FROM `course_studies` 
+            FROM `course_studies`
             INNER JOIN course ON course_studies.`course_studies_course_id` =course.course_id
             WHERE `course_studies_study_id`=29
             */
@@ -1156,11 +1156,11 @@ function update_user_ldap_dn($username, $ldap_dn) {
             $this->db->where('courses_academic_periods_academic_period_id',$academic_period);
             $this->db->where('studies_academic_periods_academic_period_id',$academic_period);
 
-            
+
             $query = $this->db->get();
             //echo $this->db->last_query();
 
-            if ($query->num_rows() > 0) { 
+            if ($query->num_rows() > 0) {
                 $courses_array = array();
                 $i=0;
                 foreach ($query->result_array() as $row)    {
@@ -1183,7 +1183,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
             $this->db->where('studies_academic_periods_academic_period_id',$academic_period);
 
 
-            
+
             $query = $this->db->get();
             //echo $this->db->last_query();
 
@@ -1198,17 +1198,17 @@ function update_user_ldap_dn($username, $ldap_dn) {
                     $i++;
                 }
                 return $courses_array;
-            }           
+            }
             else
                 return false;
 
         }
-	}	
+	}
 
 	/* Grups de classe */
 	public function get_enrollment_classroom_groups($study=false,$course_id=false,$orderby="asc") {
 
-        $academic_period = 7;
+        $academic_period = 8;
 
 		if(!$study){
 			$study=2;	//	"ASIX-DAM"
@@ -1223,7 +1223,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->where('course_id',$course_id);
         $this->db->where('classroom_group_academic_periods_academic_period_id',$academic_period);
 		$this->db->order_by('classroom_group_id', $orderby);
-		
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -1239,10 +1239,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$i++;
 			}
 			return $classroom_group_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Classroom Groups Names from Classroom Groups ID */
 	public function get_enrollment_classroom_groups_from_id($groups_id,$orderby="asc") {
@@ -1251,7 +1251,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->from('classroom_group');
 		$this->db->where_in('classroom_group_id',$groups_id);
 		$this->db->order_by('classroom_group_id', $orderby);
-		
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -1266,21 +1266,21 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$i++;
 			}
 			return $classroom_group_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 
 	/* Mòduls */
 	public function get_enrollment_study_modules($courses=false, $course_id=false, $orderby="asc",$order_field = "") {
-		
+
         $current_academic_period = $this->get_current_academic_period_id();
 
 		if(!$courses){
 			//$course_id=3;	//	"1ASIX-DAM"
-		}		
-		
+		}
+
         /*
         SELECT DISTINCT study_module_ap_courses_course_id, study_module_academic_periods_study_module_id, course_shortname, course_name, study_module_shortname, study_module_name
         FROM study_module_ap_courses
@@ -1305,14 +1305,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
 				$this->db->order_by('study_module_order', $orderby);
 			}
 		} else {
-			$this->db->order_by('study_module_shortname', $orderby);	
+			$this->db->order_by('study_module_shortname', $orderby);
 		}
-		
-		       
+
+
         $query = $this->db->get();
 
    		//echo $this->db->last_query();
-		
+
 		if ($query->num_rows() > 0) {
 
 			$study_module_array = array();
@@ -1325,7 +1325,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
                 $study_module_array[$i]['course_id'] = $row['course_id'];
    				$study_module_array[$i]['course_shortname'] = $row['course_shortname'];
    				$study_module_array[$i]['course_name'] = $row['course_name'];
-   				
+
    				if($row['study_module_ap_courses_course_id'] == $course_id){
    					$study_module_array[$i]['selected_course'] = 'yes';
    				} else {
@@ -1335,10 +1335,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$i++;
 			}
 			return $study_module_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 
 	/* Unitats formatives */
@@ -1352,7 +1352,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $current_academic_period_id = $this->get_current_academic_period_id();
 
         //Check if study is multiple
-        $is_study_multiple = $this->is_study_multiple($study_id);        
+        $is_study_multiple = $this->is_study_multiple($study_id);
 
         if (!$is_study_multiple) {
             $this->db->select('study_submodules_id,study_submodules_shortname,study_submodules_name,study_module_shortname,study_submodules_courseid,
@@ -1368,17 +1368,17 @@ function update_user_ldap_dn($username, $ldap_dn) {
             if ( $order_field != "") {
                 if ( $order_field == "order") {
                     $this->db->order_by('study_module_order', $orderby);
-                    $this->db->order_by('study_submodules_order', $orderby);                
+                    $this->db->order_by('study_submodules_order', $orderby);
                 }
             } else {
                 $this->db->order_by ('study_submodules_id', $orderby);
             }
-           
+
             $query = $this->db->get();
             //echo $this->db->last_query();
 
             $study_submodules_array = array();
-            
+
             if ($query->num_rows() > 0) {
                 $i=0;
                 foreach ($query->result_array() as $row)    {
@@ -1388,10 +1388,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
                     $study_submodules_array[$i]['study_submodules_shortname'] = $row['study_submodules_shortname'];
                     $study_submodules_array[$i]['study_submodules_name'] = $row['study_submodules_name'];
                     $study_submodules_array[$i]['study_submodules_courseid'] = $row['study_submodules_courseid'];
-                    $study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];                 
+                    $study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];
                     $i++;
-                }  
-            }           
+                }
+            }
             return $study_submodules_array;
         } else {
             /*
@@ -1417,17 +1417,17 @@ function update_user_ldap_dn($username, $ldap_dn) {
             if ( $order_field != "") {
                 if ( $order_field == "order") {
                     $this->db->order_by('study_module_order', $orderby);
-                    $this->db->order_by('study_submodules_order', $orderby);                
+                    $this->db->order_by('study_submodules_order', $orderby);
                 }
             } else {
                 $this->db->order_by ('study_submodules_id', $orderby);
             }
-           
+
             $query = $this->db->get();
             //echo $this->db->last_query();
 
             $study_submodules_array = array();
-            
+
             if ($query->num_rows() > 0) {
                 $i=0;
                 foreach ($query->result_array() as $row)    {
@@ -1437,14 +1437,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
                     $study_submodules_array[$i]['study_submodules_shortname'] = $row['study_submodules_shortname'];
                     $study_submodules_array[$i]['study_submodules_name'] = $row['study_submodules_name'];
                     $study_submodules_array[$i]['study_submodules_courseid'] = $row['study_submodules_courseid'];
-                    $study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];                 
+                    $study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];
                     $i++;
-                }  
-            }           
+                }
+            }
             return $study_submodules_array;
 
         }
-    }	
+    }
 
 	/* Unitats formatives */
 	public function get_enrollment_all_study_submodules_by_modules($study_modules=false,$course_id=false,$orderby="asc",$order_field="") {
@@ -1470,21 +1470,21 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		if ( $order_field != "") {
 			if ( $order_field == "order") {
 				$this->db->order_by('study_module_order', $orderby);
-				$this->db->order_by('study_submodules_order', $orderby);				
+				$this->db->order_by('study_submodules_order', $orderby);
 			}
 		} else {
 			$this->db->order_by ('study_submodules_id', $orderby);
 		}
 
-		
-		       
+
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 		$study_submodules_array = array();
 
 		if ($query->num_rows() > 0) {
 
-			
+
 			$i=0;
 			foreach ($query->result_array() as $row)	{
 				$study_submodules_array[$i]['study_module_shortname'] = $row['study_module_shortname'];
@@ -1492,14 +1492,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$study_submodules_array[$i]['study_submodules_id'] = $row['study_submodules_id'];
    				$study_submodules_array[$i]['study_submodules_shortname'] = $row['study_submodules_shortname'];
    				$study_submodules_array[$i]['study_submodules_name'] = $row['study_submodules_name'];
-   				$study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];   				
+   				$study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];
    				$i++;
 			}
-			
-		}			
-		
+
+		}
+
 		return $study_submodules_array;
-	}	
+	}
 
 	/* Unitats formatives */
 	public function get_enrollment_study_submodules($study_modules=false,$classroom_group=false,$orderby="asc",$order_field="") {
@@ -1509,7 +1509,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		if(!$study_modules){
 			//$study_modules[]=282;	//	"M1"
 			//$study_modules[]=268;	//	"M2"
-		}	
+		}
 
         /*
         SELECT DISTINCT study_submodules_id, study_submodules_shortname, study_submodules_name, study_module_shortname, study_module_order, study_submodules_study_module_id, classroom_group_code
@@ -1521,7 +1521,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
         WHERE study_module_ap_courses_course_id IN (1,2) AND study_module_academic_periods_academic_period_id=5
         */
 
-        $this->db->select('study_submodules_id, study_submodules_shortname, study_submodules_name, study_submodules_order , study_module_shortname, study_module_order, 
+        $this->db->select('study_submodules_id, study_submodules_shortname, study_submodules_name, study_submodules_order , study_module_shortname, study_module_order,
             study_submodules_study_module_id, classroom_group_code');
         $this->db->distinct();
 		$this->db->from('study_module_ap_courses');
@@ -1534,14 +1534,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		if ( $order_field != "") {
 			if ( $order_field == "order") {
 				$this->db->order_by('study_module_order', $orderby);
-				$this->db->order_by('study_submodules_order', $orderby);				
+				$this->db->order_by('study_submodules_order', $orderby);
 			}
 		} else {
 			$this->db->order_by ('study_submodules_id', $orderby);
 		}
 
-		
-		       
+
+
         $query = $this->db->get();
 		//echo $this->db->last_query();
 
@@ -1556,14 +1556,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$study_submodules_array[$i]['study_submodules_id'] = $row['study_submodules_id'];
    				$study_submodules_array[$i]['study_submodules_shortname'] = $row['study_submodules_shortname'];
    				$study_submodules_array[$i]['study_submodules_name'] = $row['study_submodules_name'];
-   				$study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];   				
+   				$study_submodules_array[$i]['study_submodules_study_module_id'] = $row['study_submodules_study_module_id'];
    				$i++;
 			}
 			return $study_submodules_array;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* STUDY LAW */
 	public function get_study_law($study_id) {
@@ -1572,16 +1572,16 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->from('studies');
 		$this->db->join('studies_law','studies.studies_studies_law_id = studies_law.studies_law_id');
 		$this->db->where('studies.studies_id',$study_id);
-		$this->db->limit(1);		
+		$this->db->limit(1);
 
         $query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
 			return $query->row();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* STUDY TYPE */
 	public function get_study_type($study_id) {
@@ -1590,16 +1590,16 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->from('studies');
 		$this->db->join('studies_organizational_unit','studies_organizational_unit.studies_organizational_unit_id = studies.studies_studies_organizational_unit_id');
 		$this->db->where('studies.studies_id',$study_id);
-		$this->db->limit(1);		
+		$this->db->limit(1);
 
         $query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
 			return $query->row();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* STUDY TYPE */
 	public function check_enrollment($selected_student,$academic_period) {
@@ -1610,13 +1610,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->from('enrollment');
 		$this->db->where('enrollment.enrollment_periodid',$academic_period);
 		$this->db->where('enrollment.enrollment_personid',$selected_student);
-		$this->db->limit(1);		
+		$this->db->limit(1);
 
         $query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
 			return $query->row();
-		}			
+		}
 		else
 			return false;
 	}
@@ -1624,7 +1624,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
     public function get_study_id_from_classroom_group_id($classroom_group_id) {
         /*
         SELECT `course_study_id`
-        FROM `classroom_group_academic_periods` 
+        FROM `classroom_group_academic_periods`
         INNER JOIN classroom_group ON classroom_group.`classroom_group_id` = `classroom_group_academic_periods`.`classroom_group_academic_periods_classroom_group_id`
         INNER JOIN course ON course.`course_id` = classroom_group.`classroom_group_course_id`
         WHERE `classroom_group_academic_periods_academic_period_id`=5 AND `classroom_group_academic_periods_classroom_group_id`=3
@@ -1640,14 +1640,14 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $this->db->where('classroom_group_academic_periods_academic_period_id',$current_academic_period_id);
         $this->db->limit(1);
 
-        $query = $this->db->get();  
+        $query = $this->db->get();
         //echo $this->db->last_query();
 
         if ($query->num_rows() == 1) {
 
-            $row = $query->row(); 
+            $row = $query->row();
             return $row->course_study_id;
-        }           
+        }
         else
             return false;
     }
@@ -1656,10 +1656,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
         $study_id = $this->get_study_id_from_classroom_group_id($classroom_group_id);
         $current_academic_period_id = $this->get_current_academic_period_id();
-        
+
         /*
         SELECT `course_id`
-        FROM `course` 
+        FROM `course`
         INNER JOIN courses_academic_periods ON courses_academic_periods.`courses_academic_periods_course_id`= course.course_id
         WHERE `course_study_id`=2 AND `courses_academic_periods_academic_period_id`=5
         */
@@ -1670,7 +1670,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $this->db->where('course_study_id',$study_id);
         $this->db->where('courses_academic_periods_academic_period_id',$current_academic_period_id);
 
-        $query = $this->db->get();  
+        $query = $this->db->get();
         //echo $this->db->last_query();
 
         $sibling_courses = array();
@@ -1679,7 +1679,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
                 $sibling_courses[]= $row->course_id;
             }
             return $sibling_courses;
-        }           
+        }
         else {
             return $sibling_courses;
         }
@@ -1701,25 +1701,25 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->where('classroom_group_academic_periods_academic_period_id',$current_academic_period_id);
 		$this->db->limit(1);
 
-		$query = $this->db->get();	
+		$query = $this->db->get();
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() == 1) {
 
-			$row = $query->row(); 
+			$row = $query->row();
 			return $row->classroom_group_course_id;
-		}			
+		}
 		else
 			return false;
 
 
 	}
 
-	
+
 	public function get_classroom_groups_from_same_study($current_group) {
 
 		//GET COURSE
-		//$course_id = $this->get_course_id_from_classroom_group_id($current_group); <-- PERMIT GROUP CHANGE IN SAME STUDY NOT ONLY SAME COURSE        
+		//$course_id = $this->get_course_id_from_classroom_group_id($current_group); <-- PERMIT GROUP CHANGE IN SAME STUDY NOT ONLY SAME COURSE
         $sibling_courses_array = $this->get_courses_id_from_classroom_group_id($current_group);
 		/*
 		SELECT classroom_group_id, classroom_group_code, classroom_group_shortName, classroom_group_name, classroom_group_description, classroom_group_course_id
@@ -1736,10 +1736,10 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->where('classroom_group_academic_periods_academic_period_id', $current_academic_period_id );
 
         $this->db->where_in('classroom_group_course_id',$sibling_courses_array);
- 
-		
+
+
 		$query = $this->db->get();
-	
+
 		//echo $this->db->last_query();
 
 		$groups_array = array();
@@ -1755,19 +1755,19 @@ function update_user_ldap_dn($username, $ldap_dn) {
    				$i++;
 			}
 			return $groups_array;
-		}			
+		}
 		else {
 			return $groups_array;
 		}
-			
-	}	
+
+	}
 
 	function delete_enrollments($values) {
-		
+
 		//echo "values: " . print_r($values). "\n";
 		foreach ($values as $value) {
 			if ($value != "") {
-				
+
 				//DELETE ON CASCADE
 				//1) enrollment table
 				// DELETE FROM `enrollment` WHERE `enrollment_id`=1
@@ -1779,17 +1779,17 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 				if ($this->db->affected_rows() == 1) {
 					$this->db->where('enrollment_submodules_enrollment_id', $value);
-					$this->db->delete('enrollment_submodules');	
+					$this->db->delete('enrollment_submodules');
 				}
 			}
-		}		
+		}
 		return true;
 	}
 
     public function get_course_if_from_classroomgroupid($classroomgroup_id) {
         /*
-        SELECT `classroom_group_course_id` 
-        FROM `classroom_group` 
+        SELECT `classroom_group_course_id`
+        FROM `classroom_group`
         WHERE `classroom_group_id`=1
         */
 
@@ -1797,13 +1797,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
         $this->db->from('classroom_group');
         $this->db->where('classroom_group_id',$classroomgroup_id);
 
-        $query = $this->db->get();    
+        $query = $this->db->get();
         //echo $this->db->last_query();
 
         if ($query->num_rows() == 1) {
             $row = $query->row();
             return $row->classroom_group_course_id;
-        }           
+        }
         else
             return false;
     }
@@ -1817,12 +1817,12 @@ function update_user_ldap_dn($username, $ldap_dn) {
         }
 
         //Obtain course of new group:
-		
+
         // IMPORTANT: BE SURE NOT TO USE THIS FUNCTION WITHOUT CHANGING OR VERIFYING OTHER DATA TO BE CONSISTENT!
         // FOR EXAMPLE: if we change classroom group from classrooom group first course to second course then course have to be changes
         // or changing classroom group to another study study have to change too
         /*
-		UPDATE `enrollment` 
+		UPDATE `enrollment`
 		SET enrollment_group_id= 5, enrollment_course_id = 6
 		WHERE enrollment_group_id= 6 AND enrollment_id= ID_ENROLLMENT
 		*/
@@ -1840,20 +1840,20 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 		if ($this->db->affected_rows() == 1) {
 			return true;
-		}			
+		}
 		else {
 			return false;
 		}
-			
+
 	}
 
     public function change_enrollment_classroom_group_and_course($enrollment_id,$current_group,$new_group,$current_course,$new_course) {
-        
+
         // IMPORTANT: BE SURE NOT TO USE THIS FUNCTION WITHOUT CHANGING OR VERIFYING OTHER DATA TO BE CONSISTENT!
         // FOR EXAMPLE: if we change classroom group from classrooom group first course to second course then course have to be changes
         // or changing classroom group to another study study have to change too
         /*
-        UPDATE `enrollment` 
+        UPDATE `enrollment`
         SET enrollment_group_id= 5, enrollment_course_id = 7
         WHERE enrollment_group_id= 6 AND enrollment_course_id = 4 enrollment_id= ID_ENROLLMENT
         */
@@ -1872,11 +1872,11 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
         if ($this->db->affected_rows() == 1) {
             return true;
-        }           
+        }
         else {
             return false;
         }
-            
+
     }
 
 	/* Student Data */
@@ -1897,8 +1897,8 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		*/
 
         $this->db->select('enrollment_id,enrollment_study_id,studies_shortname,studies_name,enrollment_course_id,enrollment_group_id,classroom_group_code,
-        	classroom_group_shortName,classroom_group_name,person_official_id, person.person_id, person_photo, person_secondary_official_id, person_givenName, 
-        	person_sn1, person_sn2, person_email, person_secondary_email, person_date_of_birth, person_gender, person_homePostalAddress, person_telephoneNumber, 
+        	classroom_group_shortName,classroom_group_name,person_official_id, person.person_id, person_photo, person_secondary_official_id, person_givenName,
+        	person_sn1, person_sn2, person_email, person_secondary_email, person_date_of_birth, person_gender, person_homePostalAddress, person_telephoneNumber,
         	person_mobile, person_locality_id, locality_name, postalcode_code, users.username');
 		$this->db->from('person');
 		$this->db->join('locality','locality.locality_id = person.person_locality_id',"left");
@@ -1913,21 +1913,21 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->limit(1);
 
 		$query = $this->db->get();
-	
+
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() == 1) {
 
 			return $query->row();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Student Data */
 	public function get_student_data($official_id) {
 
-        $this->db->select('person_official_id,person_official_id_type,person.person_id, person_photo, person_secondary_official_id, person_givenName, person_sn1, person_sn2, person_email,person_secondary_email, person_date_of_birth, person_gender, 
+        $this->db->select('person_official_id,person_official_id_type,person.person_id, person_photo, person_secondary_official_id, person_givenName, person_sn1, person_sn2, person_email,person_secondary_email, person_date_of_birth, person_gender,
             				   person_homePostalAddress, person_telephoneNumber, person_mobile, person_locality_id , locality_name, postalcode_code,users.username, users.id as userid');
 		$this->db->from('person');
 		$this->db->join('locality','locality.locality_id = person.person_locality_id',"left");
@@ -1935,17 +1935,17 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->join('users','users.person_id = person.person_id',"left");
 
 		$this->db->where('person_official_id',$official_id);
-		$this->db->limit(1);		       
+		$this->db->limit(1);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() == 1) {
 
 			return $query->row();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	public function get_student_enrollment_data($person_id,$period_id) {
 
@@ -1961,17 +1961,17 @@ function update_user_ldap_dn($username, $ldap_dn) {
 
 		$this->db->where('person.person_id',$person_id);
 		$this->db->where('enrollment.enrollment_periodid',$period_id);
-		$this->db->limit(1);		       
+		$this->db->limit(1);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() == 1) {
 
 			return $query->row();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	public function get_student_enrollment_data_by_enrollment_id($enrollment_id) {
 
@@ -1986,42 +1986,42 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->join('classroom_group','classroom_group.classroom_group_id = enrollment.enrollment_group_id');
 
 		$this->db->where('enrollment.enrollment_id',$enrollment_id);
-		$this->db->limit(1);		       
+		$this->db->limit(1);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 
 		if ($query->num_rows() == 1) {
 
 			return $query->row();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Update Student Data */
 	public function update_student_data($person_id,$student) {
 
 
         $this->db->where('person_id', $person_id);
-		$this->db->update('person', $student); 
+		$this->db->update('person', $student);
 		//echo $this->db->last_query();
 
 		if ($this->db->affected_rows() == 1) {
 			return true;
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	public function update_user_data($username,$user) {
 
 		$this->db->where('username', $username);
-		$this->db->update('users', $user); 
+		$this->db->update('users', $user);
 		//echo $this->db->last_query();
 
 		if ($this->db->affected_rows() == 1) {
 			return true;
-		}			
+		}
 		else
 			return false;
 
@@ -2045,16 +2045,16 @@ function update_user_ldap_dn($username, $ldap_dn) {
 		$this->db->where('person.person_id',$person_id);
 
 		$this->db->limit(1);
-		       
+
         $query = $this->db->get();
         //echo $this->db->last_query();
 
 		if ($query->num_rows() == 1) {
 			return $query->row();
-		}			
+		}
 
 		return false;
-		
+
 	}
 
 
@@ -2065,26 +2065,26 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	public function insert_student_data($student) {
 
 		//First INSERT DATA AT PESON TABLE
-        $this->db->insert('person', $student); 
+        $this->db->insert('person', $student);
 		//echo $this->db->last_query();
 
 		if ($this->db->affected_rows() == 1) {
 			return $this->db->insert_id();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 	/* Insert User Data */
 	public function insert_user_data($user) {
 
 		//First INSERT DATA AT PESON TABLE
-        $this->db->insert('users', $user); 
+        $this->db->insert('users', $user);
 		//echo $this->db->last_query();
 
 		if ($this->db->affected_rows() == 1) {
             return $this->db->insert_id();
-		}			
+		}
 		else
 			return false;
 	}
@@ -2127,21 +2127,21 @@ function update_user_ldap_dn($username, $ldap_dn) {
         );
 
         $this->db->insert('enrollment',$data);
-		       
+
 		//echo $this->db->last_query();
 
 		if ($this->db->affected_rows() > 0) {
 
 			return $this->db->affected_rows();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 
 
 
 	/* Enrollment Submodules */
-	// $enrollment_submodules = $this->enrollment_model->insert_enrollment_submodules($enrollment_id, $study_submodules_ids);   
+	// $enrollment_submodules = $this->enrollment_model->insert_enrollment_submodules($enrollment_id, $study_submodules_ids);
 
 	public function insert_enrollment_submodules($enrollment_id=false,$submodules_id=false) {
 
@@ -2163,7 +2163,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 			        	'enrollment_submodules_lastupdateUserId' => $this->session->userdata("user_id"),
 			        	'enrollment_submodules_markedForDeletion' => 'n',
 			        	'enrollment_submodules_markedForDeletionDate' => '0000-00-00 00:00:00'
-			        );	
+			        );
 			} else {
 				if ($submodules_id[1]=="NULL") {
 					$data = array(
@@ -2174,9 +2174,9 @@ function update_user_ldap_dn($username, $ldap_dn) {
 			        	'enrollment_submodules_lastupdateUserId' => $this->session->userdata("user_id"),
 			        	'enrollment_submodules_markedForDeletion' => 'n',
 			        	'enrollment_submodules_markedForDeletionDate' => '0000-00-00 00:00:00'
-			        );	
+			        );
 				} else {
-				
+
 					$data = array(
 			        	'enrollment_submodules_enrollment_id' => $enrollment_id,
 			        	'enrollment_submodules_moduleid' => $submodules_id[0],
@@ -2186,15 +2186,15 @@ function update_user_ldap_dn($username, $ldap_dn) {
 			        	'enrollment_submodules_lastupdateUserId' => $this->session->userdata("user_id"),
 			        	'enrollment_submodules_markedForDeletion' => 'n',
 			        	'enrollment_submodules_markedForDeletionDate' => '0000-00-00 00:00:00'
-			        );	
+			        );
 				}
 			}
-			
+
 	        $result = $this->db->insert('enrollment_submodules',$data);
 
 	        if ($result) {
 	        	//echo $this->db->last_query();
-				$affected_rows += $this->db->affected_rows();	
+				$affected_rows += $this->db->affected_rows();
 	        } else {
 	        	return false;
 	        }
@@ -2247,7 +2247,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	        );
 
 	        $this->db->insert('enrollment_submodules',$data);
-			       
+
 			//echo $this->db->last_query();
 			$affected_rows += $this->db->affected_rows();
 
@@ -2273,16 +2273,16 @@ function update_user_ldap_dn($username, $ldap_dn) {
         	);
 
         $this->db->insert('enrollment_modules',$data);
-		
+
         $affected_rows += $this->db->affected_rows();
 
-		}       
+		}
 		//echo $this->db->last_query();
 		return $affected_rows;
 		//if ($this->db->affected_rows() > 0) {
 
 		//	return $this->db->affected_rows();
-		//}			
+		//}
 		//else
 		//	return false;
 	}	*/
@@ -2298,16 +2298,16 @@ function update_user_ldap_dn($username, $ldap_dn) {
         );
 
         $this->db->insert('enrollment_studies',$data);
-		       
+
 		echo $this->db->last_query();
 
 		if ($this->db->affected_rows() > 0) {
 
 			return $this->db->affected_rows();
-		}			
+		}
 		else
 			return false;
-	}	
+	}
 	*/
 
 	/* Enrollment Classroom Group */
@@ -2322,13 +2322,13 @@ function update_user_ldap_dn($username, $ldap_dn) {
         );
 
         $this->db->insert('enrollment_class_group',$data);
-		       
+
 		echo $this->db->last_query();
 
 		if ($this->db->affected_rows() > 0) {
 
 			return $this->db->affected_rows();
-		}			
+		}
 		else
 			return false;
 	}	*/
