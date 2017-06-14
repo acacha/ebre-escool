@@ -3083,7 +3083,7 @@ class managment_model  extends CI_Model  {
 		$this->db->from('enrollment');
 		$this->db->join('studies','studies.studies_id = enrollment.enrollment_study_id');
 		$this->db->group_by('enrollment_study_id,studies_shortname,studies_name');
-		$this->db->where('enrollment_periodid','2016-17');
+		$this->db->where('enrollment_periodid','2017-18');
 		$query = $this->db->get();
 
 		$enrollment_by_study = array();
@@ -3191,7 +3191,7 @@ class managment_model  extends CI_Model  {
 		GROUP BY course_study_id
 		 */
 
-		$academic_period = 7;
+		$academic_period = 8;
 
 		//courses
 		$this->db->select('course_study_id,count(classroom_group_id) as total');
@@ -3243,7 +3243,7 @@ class managment_model  extends CI_Model  {
 		GROUP BY course_study_id
 		 */
 
-		$academic_period = 7;
+		$academic_period = 8;
 
 		//courses
 		$this->db->select('course_study_id,count(course_id) as total');
