@@ -2297,7 +2297,7 @@ class managment extends skeleton_main {
 				$current_academic_period_id = $this->config->item('current_academic_period_id','ebre-escool');
 			}
 
-			$academic_period_id=$current_academic_period_id ;
+			$academic_period_id = $current_academic_period_id;
 		} else {
 			$selected_academic_period_id = $academic_period_id;
 		}
@@ -2308,7 +2308,7 @@ class managment extends skeleton_main {
 
 		$data['courses_table_title'] = "Cursos";
 
-		$all_courses = $this->managment_model->get_all_courses_report_info();
+		$all_courses = $this->managment_model->get_all_courses_report_info($academic_period_id);
 
 		//$studies_by_studymodule = $this->managment_model->get_studies_by_department(false);
 		//$teachers_by_department = $this->managment_model->get_teachers_by_department(false);
