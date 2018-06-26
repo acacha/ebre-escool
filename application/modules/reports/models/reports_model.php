@@ -340,7 +340,7 @@ class reports_model  extends CI_Model  {
 	function get_class_list($classroom_group_id,$academic_period_id=null,$checkbox_show_all_group_enrolled_students=null,
 						    $checkbox_show_all_students=null, $checkbox_show_hide_students=null, $teacher_id = null) {
 
-		$academic_period_shortname = "2017-18";
+		$academic_period_shortname = "2018-19";
 
 		if ($academic_period_id == null) {
 			//SELECT academic_periods_shortname FROM academic_periods WHERE academic_periods_current=1

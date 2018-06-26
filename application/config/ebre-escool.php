@@ -9,8 +9,8 @@
 |
 */
 // 5 = 2014-15 in academic_periods table
-$config['current_academic_period_id'] = 8;
-$config['current_academic_period'] = 2017-18;
+$config['current_academic_period_id'] = 9;
+$config['current_academic_period'] = 2018-19;
 
 
 /* End of file ebre-escool.php */

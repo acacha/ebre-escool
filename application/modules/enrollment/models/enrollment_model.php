@@ -1057,7 +1057,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	/* Studies */
 	public function get_enrollment_studies($orderby="asc") {
 
-        $academic_period = 8;
+        $academic_period = 9;
 
         $this->db->select('studies_id,studies_shortname,studies_name,studies_studies_law_id,studies_law_shortname,studies_organizational_unit_shortname');
 		$this->db->from('studies');
@@ -1118,7 +1118,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	/* Cursos */
 	public function get_enrollment_courses($study=false,$orderby="asc") {
 
-        $academic_period = 8;
+        $academic_period = 9;
 
 		if(!$study){
 			$study=2;	//	"ASIX-DAM"
@@ -1208,7 +1208,7 @@ function update_user_ldap_dn($username, $ldap_dn) {
 	/* Grups de classe */
 	public function get_enrollment_classroom_groups($study=false,$course_id=false,$orderby="asc") {
 
-        $academic_period = 8;
+        $academic_period = 9;
 
 		if(!$study){
 			$study=2;	//	"ASIX-DAM"

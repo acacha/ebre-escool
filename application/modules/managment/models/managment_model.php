@@ -3083,7 +3083,7 @@ class managment_model  extends CI_Model  {
 		$this->db->from('enrollment');
 		$this->db->join('studies','studies.studies_id = enrollment.enrollment_study_id');
 		$this->db->group_by('enrollment_study_id,studies_shortname,studies_name');
-		$this->db->where('enrollment_periodid','2017-18');
+		$this->db->where('enrollment_periodid','2018-19');
 		$query = $this->db->get();
 
 		$enrollment_by_study = array();
@@ -3191,7 +3191,7 @@ class managment_model  extends CI_Model  {
 		GROUP BY course_study_id
 		 */
 
-		$academic_period = 8;
+		$academic_period = 9;
 
 		//courses
 		$this->db->select('course_study_id,count(classroom_group_id) as total');
@@ -3243,7 +3243,7 @@ class managment_model  extends CI_Model  {
 		GROUP BY course_study_id
 		 */
 
-		$academic_period = 8;
+		$academic_period = 9;
 
 		//courses
 		$this->db->select('course_study_id,count(course_id) as total');
@@ -4643,7 +4643,7 @@ class managment_model  extends CI_Model  {
 	}
 
 
-	function get_all_courses_report_info($orderby = "DESC") {
+	function get_all_courses_report_info($academic_period,$orderby = "DESC") {
 
 
 		//$teachers_by_department = $this->get_teachers_by_department();
@@ -4653,12 +4653,13 @@ class managment_model  extends CI_Model  {
 		//courses
 		//Example SQL:
 		/*
-		SELECT course_id, course_shortname, course_name, course_number course_cycle_id, course_study_id, cycle_id, cycle_shortname, cycle_name, studies_id, studies_shortname, studies_name, studies_studies_organizational_unit_id, studies_studies_law_id, studies_law_shortname, studies_law_name
-		FROM `course`
-		LEFT JOIN cycle ON cycle.cycle_id = course.course_cycle_id
-		LEFT JOIN studies ON studies.studies_id = course.course_study_id
-		LEFT JOIN studies_law ON studies_law.studies_law_id = studies.studies_studies_law_id
-		WHERE 1
+		SELECT `course_id`, `course_shortname`, `course_name`, `course_number`, `course_cycle_id`, `course_study_id`, `cycle_shortname`, `cycle_name`, `studies_shortname`, `studies_name`, `studies_studies_organizational_unit_id`, `studies_studies_law_id`, `studies_law_shortname`, `studies_law_name` FROM (`course`)
+		LEFT JOIN `cycle` ON `cycle`.`cycle_id` = `course`.`course_cycle_id`
+		LEFT JOIN `studies` ON `studies`.`studies_id` = `course`.`course_study_id`
+		LEFT JOIN `studies_law` ON `studies_law`.`studies_law_id` = `studies`.`studies_studies_law_id`
+		LEFT JOIN `courses_academic_periods` ON `courses_academic_periods`.`courses_academic_periods_course_id` = `course`.`course_id`
+		WHERE `courses_academic_periods_academic_period_id` = 8
+		ORDER BY `studies_shortname` DESC
 		*/
 
 		$this->db->select('course_id, course_shortname, course_name, course_number, course_cycle_id, course_study_id, cycle_shortname, cycle_name,
@@ -4668,9 +4669,12 @@ class managment_model  extends CI_Model  {
 		$this->db->join('cycle','cycle.cycle_id = course.course_cycle_id', 'left');
 		$this->db->join('studies','studies.studies_id = course.course_study_id', 'left');
 		$this->db->join('studies_law','studies_law.studies_law_id = studies.studies_studies_law_id', 'left');
+		$this->db->join('courses_academic_periods','courses_academic_periods.courses_academic_periods_course_id = course.course_id');
+		$this->db->where('courses_academic_periods.courses_academic_periods_academic_period_id', $academic_period);
 		$this->db->order_by('studies_shortname', $orderby);
 
 		$query = $this->db->get();
+		//echo $this->db->last_query();
 
 		if ($query->num_rows() > 0){
 			$all_courses = array();
