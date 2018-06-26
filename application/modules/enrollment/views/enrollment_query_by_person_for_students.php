@@ -436,7 +436,7 @@
 <script type="text/javascript">
 
 //DEFAULT PERIOD
-var periode = "2017-18";
+var periode = "2018-19";
 var enrollment_id = "";
 $('#period_title').html(periode);
 

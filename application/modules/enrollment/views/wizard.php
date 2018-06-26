@@ -36,7 +36,7 @@
       <div class="widget-box">
         <div class="widget-header widget-header-blue widget-header-flat">
           <h4 class="lighter"><?php echo lang('new_enrollment');?></h4> <i class="icon-double-angle-right"></i>
-              2017-18 <i class="icon-double-angle-right"></i>
+              2018-19 <i class="icon-double-angle-right"></i>
 
               <span name="step0_title" id="enrollment_breadcump_step1_student" class="step1_student green">
                 <small>
